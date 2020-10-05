@@ -1,1 +1,1 @@
-@include('layouts.layout1')
+@include('layouts.layout2')
