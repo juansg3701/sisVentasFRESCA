@@ -1,0 +1,9 @@
+body{
+  text-align: center;
+}
+#form-group{
+  width: 550px;
+  margin: 10px auto;
+  text-align: right;
+  border: 2px solid black;
+}
