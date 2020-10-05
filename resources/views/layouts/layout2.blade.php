@@ -443,7 +443,7 @@
                 <div class="section__content section__content--p30">
                     <div>
                         
-                    @yield('home')
+                    @yield('contenido')
                     </div>
                     <div>
                         
@@ -480,7 +480,7 @@
     </script>
 
     <!-- Main JS-->
-    <script src="js/main.js"></script>
+    <script src="{{asset('js/main.js')}}"></script>
 
 </body>
 
