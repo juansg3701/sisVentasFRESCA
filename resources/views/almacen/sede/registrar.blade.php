@@ -4,7 +4,6 @@
 <head>
 	<title>Sede</title>
     <!--<link rel="stylesheet" href="{{ asset('css/Almacen/usuario/styles-iniciar.css') }}" />-->
-
 </head>
 <body>
 	<div class="row">
@@ -24,23 +23,15 @@
 	{!!Form::open(array('url'=>'almacen/sede','method'=>'POST','autocomplete'=>'off'))!!}
     {{Form::token()}}
 
-
-
-
-
-
-		
-		
-<div class="row" align="center">	
-	<div class="col-sm-12" align="center">
-		<div class="card" align="center">
-			<div class="row" align="center">
-				<div class="col-sm-12" align="center">
-					<h2>REGISTRAR SEDE</h2><br>
+	<div class="row" align="center">	
+		<div class="col-sm-12" align="center">
+			<div class="card" align="center">
+				<div class="row" align="center">
+					<div class="col-sm-12" align="center">
+						<h2>REGISTRAR SEDE</h2><br>
+					</div>
 				</div>
-			</div>
-
-			<div class="row" align="center">	
+				<div class="row" align="center">	
 					<div class="col-sm-3" align="center"></div>
 					 	<div class="col-sm-6" align="center">
 							<div class="card" align="center">
@@ -88,29 +79,21 @@
 											<input type="number" class="form-control" name="telefono">
 										</div>
 									</div>
-
 									<div class="form-row">
 										<div class="form-group col-sm-12">
 											<button class="btn btn-info" type="submit">Registrar</button>
 											<a href="{{url('almacen/sede')}}" class="btn btn-danger">Regresar</a>
 										</div>
 									</div>
-
 				               </div>
 				        	</div>
 						</div>
 					<div class="col-sm-3" align="center"></div>
 				</div>
-
-
-
         	</div>
 		</div>
-</div>
+	</div>
 			                       
-		
-
-	
 {!!Form::close()!!}		
 </body>
 

@@ -95,10 +95,14 @@
 	                    <div class="table-data-feature">
 							<a href="{{URL::action('SedeController@edit',$sed->id_sede)}}"><button class="item" data-toggle="tooltip" data-placement="top" title="Edit"><i class="zmdi zmdi-edit"></i></button></a>
 							<a href="" data-target="#modal-delete-{{$sed->id_sede}}" data-toggle="modal"><button class="item" data-toggle="tooltip" data-placement="top" title="Delete"><i class="zmdi zmdi-delete"></i></button></a>
+							<button type="button" class="btn btn-secondary mb-1" data-toggle="modal" data-target="#smallmodal">
+											Small
+							</button>
 	                    </div>
                 	</td>
 				</tr>
 				@include('almacen.sede.modal')
+				@include('almacen.sede.mod')
 				@endforeach
             </table>
         </div>
