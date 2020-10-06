@@ -192,7 +192,7 @@
                         </li>
                         <li>
                             <a href="{{url('almacen/sede')}}">
-                                <i class="far fa-check-square"></i>Forms</a>
+                                <i class="far fa-check-square"></i>Sedes</a>
                         </li>
                         <li>
                             <a href="calendar.html">
