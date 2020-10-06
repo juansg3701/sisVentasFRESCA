@@ -9,7 +9,7 @@
 <body>
 	<div class="row">
 		<div class="col-lg-8 col-md-8 col-sm-8 col-xs-12">
-			<h3>Editar Datos Sede: {{$sede->nombre_sede}}</h3>
+			
 			@if (count($errors)>0)
 			<div class="alert alert-danger">
 				<ul>
@@ -30,9 +30,10 @@
 			<div class="card" align="center">
 				<div class="row" align="center">
 					<div class="col-sm-12" align="center">
-						<h2>EDITAR SEDE</h2><br>
+						<h3>EDITAR SEDE</h3><br>
+						Editar Datos Sede: {{$sede->nombre_sede}}
 					</div>
-				</div>
+				</div><br>
 				<div class="row" align="center">	
 					<div class="col-sm-3" align="center"></div>
 					 	<div class="col-sm-6" align="center">

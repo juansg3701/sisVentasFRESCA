@@ -29,19 +29,16 @@ class SedeController extends Controller
 
 	 			$sedesP=DB::table('sede')->get();
 	 			
-
 	 			return view('almacen.sede.index',["sedes"=>$sedes,"searchText"=>$query, "modulos"=>$modulos,"sedesP"=>$sedesP]);
 	 		}
 	 	}
 
 	 	public function create(){
-
 	 		$cargoUsuario=auth()->user()->tipo_cargo_id_cargo;
 	 			$modulos=DB::table('cargo_modulo')
 	 			->where('id_cargo','=',$cargoUsuario)
 	 			->orderBy('id_cargo', 'desc')->get();
 	 			
-
 	 		return view("almacen.sede.registrar", ["modulos"=>$modulos]);
 	 	}
 
@@ -69,7 +66,6 @@ class SedeController extends Controller
 	 			->where('id_cargo','=',$cargoUsuario)
 	 			->orderBy('id_cargo', 'desc')->get();
 	 			
-
 	 		return view("almacen.sede.edit",["sede"=>Sede::findOrFail($id), "modulos"=>$modulos]);
 	 	}
 

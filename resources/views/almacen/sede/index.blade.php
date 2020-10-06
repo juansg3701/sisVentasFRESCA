@@ -9,55 +9,37 @@
 
 <body>
 	
-
-
-<div class="row" align="center">	
-	 	<div class="col-sm-12" align="center">
-			<div class="card" align="center">
-				<div class="row" align="center">
-					<div class="col-sm-12" align="center">
-						<h2>SEDES</h2>
-					</div>
-				</div>
-
-				<div class="row" align="center">	
-					<div class="col-sm-3" align="center"></div>
-					 	<div class="col-sm-6" align="center">
-							<div class="card" align="center">
-				                <div class="card-header" align="center">
-				                     <strong>Establecer filtros</strong>
-				                </div>
-				                <div class="card-body card-block" align="center">
-									<div id=formulario>
-										<div class="form-group">
-											<!--Incluir la ventana modal de búsqueda y carga de excel-->	
-											@include('almacen.sede.search')
-											<div align="center">
-												<!--Enlaces y botones para llamar las funciones de registro, descarga de excel y la ventana modal para carga de excel-->
-												<a href="{{URL::action('SedeController@create',0)}}"><button class="btn btn-info">Registrar Sede</button></a>	
-												<a href="{{url('/')}}" class="btn btn-danger">Regresar</a>
-											</div>
-										</div>
-									</div>
-				               </div>
-				        	</div>
-						</div>
-					<div class="col-sm-3" align="center"></div>
-				</div>
-
-
-
-        	</div>
+	<div class="row" align="center">
+		<div class="col-sm-12" align="center">
+			<h1 class="pb-2 display-4">SEDES</h1>
+			
 		</div>
-</div>
+	</div>
 
-
-
-
-
-
-
-
+	<div class="row" align="center">	
+		<div class="col-sm-3" align="center"></div>
+			<div class="col-sm-6" align="center">
+				<div class="card" align="center">
+				   <div class="card-header" align="center">
+				    	<strong></strong>
+				    </div>
+				    <div class="card-body card-block" align="center">
+						<div id=formulario>
+							<div class="form-group">
+								<!--Incluir la ventana modal de búsqueda y carga de excel-->	
+								@include('almacen.sede.search')
+								<div align="center">
+									<!--Enlaces y botones para llamar las funciones de registro, descarga de excel y la ventana modal para carga de excel-->
+									<a href="{{URL::action('SedeController@create',0)}}"><button class="btn btn-info">Registrar Sede</button></a>	
+									<a href="{{url('/')}}" class="btn btn-danger">Regresar</a>
+								</div>
+							</div>
+						</div>
+				    </div>
+				</div>
+			</div>
+		<div class="col-sm-3" align="center"></div>
+	</div>
 
 </body>
 @endsection
@@ -65,9 +47,9 @@
 <!--Tabla de registros realizados en la tabla de proveedor en la base de datos-->	
 <div class="row" align="center">
 	<div class="col-sm-12" align="center">
-		<h3>SEDES REGISTRADAS</h3>
+		<h3><font face="Comic Sans MS,Arial,Verdana">SEDES REGISTRADAS</font></h3>
 	</div>
-</div><br>
+</div>
 
 <div class="row m-t-30">
     <div class="col-md-12">
