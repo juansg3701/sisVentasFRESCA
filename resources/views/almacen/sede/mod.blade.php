@@ -1,4 +1,4 @@
-			<!-- modal small -->
+<!-- modal small -->
 			<div class="modal fade" id="smallmodal" tabindex="-1" role="dialog" aria-labelledby="smallmodalLabel" aria-hidden="true">
 				<div class="modal-dialog modal-sm" role="document">
 					<div class="modal-content">

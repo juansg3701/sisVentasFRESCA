@@ -60,7 +60,7 @@
 
 
 </body>
-@stop
+@endsection
 @section('tabla')
 <!--Tabla de registros realizados en la tabla de proveedor en la base de datos-->	
 <div class="row" align="center">
@@ -94,20 +94,29 @@
 					<td>		
 	                    <div class="table-data-feature">
 							<a href="{{URL::action('SedeController@edit',$sed->id_sede)}}"><button class="item" data-toggle="tooltip" data-placement="top" title="Edit"><i class="zmdi zmdi-edit"></i></button></a>
-							<a href="" data-target="#modal-delete-{{$sed->id_sede}}" data-toggle="modal"><button class="item" data-toggle="tooltip" data-placement="top" title="Delete"><i class="zmdi zmdi-delete"></i></button></a>
-							<button type="button" class="btn btn-secondary mb-1" data-toggle="modal" data-target="#smallmodal">
-											Small
-							</button>
+							
+							@if(isset($sed->id_sede))
+@include('almacen.sede.modal')
+							<a href="" data-target="#modal-delete-{{$sed->id_sede}}" data-toggle="modal"><button class="item" ><i class="zmdi zmdi-delete"></i></button></a>
+							<a href="" data-target="#modal-delete-{{$sed->id_sede}}" data-toggle="modal"><button class="btn btn-danger">Eliminar</button></a>
+							@endif
+							
 	                    </div>
                 	</td>
 				</tr>
-				@include('almacen.sede.modal')
-				@include('almacen.sede.mod')
+				
+				
 				@endforeach
             </table>
         </div>
         {{$sedes->render()}}
 		<!-- END DATA TABLE-->
     </div>
+
 </div>
-@stop
+
+@endsection
+
+
+
+@include('almacen.sede.mod')
