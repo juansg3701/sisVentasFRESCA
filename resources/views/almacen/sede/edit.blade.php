@@ -30,7 +30,8 @@
 			<div class="card" align="center">
 				<div class="row" align="center">
 					<div class="col-sm-12" align="center">
-						<h3>EDITAR SEDE</h3><br>
+						<!--<h3>EDITAR SEDE</h3><br>-->
+						<br><h1 class="text-center title-1">Editar Sede</h1><br>
 						Editar Datos Sede: {{$sede->nombre_sede}}
 					</div>
 				</div><br>

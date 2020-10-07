@@ -28,7 +28,7 @@
 			<div class="card" align="center">
 				<div class="row" align="center">
 					<div class="col-sm-12" align="center">
-						<h2>REGISTRAR SEDE</h2><br>
+						<br><h1 class="text-center title-1">Registrar Sede</h1><br>
 					</div>
 				</div>
 				<div class="row" align="center">	
