@@ -42,8 +42,6 @@
 	</div>
 
 </body>
-@endsection
-@section('tabla')
 <!--Tabla de registros realizados en la tabla de proveedor en la base de datos-->	
 <div class="row" align="center">
 	<div class="col-sm-12" align="center">
@@ -77,10 +75,10 @@
 	                    <div class="table-data-feature">
 							<a href="{{URL::action('SedeController@edit',$sed->id_sede)}}"><button class="item" data-toggle="tooltip" data-placement="top" title="Edit"><i class="zmdi zmdi-edit"></i></button></a>
 							
-							@if(isset($sed->id_sede))
+							@if($sed->id_sede)
 							@include('almacen.sede.modal')
 							<a href="" data-target="#modal-delete-{{$sed->id_sede}}" data-toggle="modal"><button class="item" ><i class="zmdi zmdi-delete"></i></button></a>
-							<a href="" data-target="#modal-delete-{{$sed->id_sede}}" data-toggle="modal"><button class="btn btn-danger">Eliminar</button></a>
+							
 							@endif
 							
 	                    </div>
@@ -97,6 +95,6 @@
 
 </div>
 
+@include('almacen.sede.mod')
 @endsection
 
-@include('almacen.sede.mod')
