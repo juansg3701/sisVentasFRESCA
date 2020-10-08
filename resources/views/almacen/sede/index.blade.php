@@ -98,7 +98,7 @@
 							@if(isset($sed->id_sede))
 							@include('almacen.sede.modal')
 							<a href="" data-target="#modal-delete-{{$sed->id_sede}}" data-toggle="modal"><button class="item" ><i class="zmdi zmdi-delete"></i></button></a>
-							<a href="" data-target="#modal-delete-{{$sed->id_sede}}" data-toggle="modal"><button class="btn btn-danger">Eliminar</button></a>
+			
 							@endif
 							
 	                    </div>
