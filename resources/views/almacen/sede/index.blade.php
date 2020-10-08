@@ -9,10 +9,17 @@
 
 <body>
 	
+	
+
+
+	<div class="row" align="center">	
+		<div class="col-sm-12" align="center">
+			<div class="card" align="center">
+
 	<div class="row" align="center">
 		<div class="col-sm-12" align="center">
-			<h1 class="pb-2 display-4">SEDES</h1>
-			
+			<!--<h1 class="pb-2 display-4">SEDES</h1>-->
+			<br><h1 class="text-center title-1">MÓDULO DE SEDES</h1><br>
 		</div>
 	</div>
 
@@ -40,12 +47,25 @@
 			</div>
 		<div class="col-sm-3" align="center"></div>
 	</div>
+</div></div></div>
+
+
 
 </body>
+@endsection
+@section('tabla')
+
+	<div class="row" align="center">	
+		<div class="col-sm-12" align="center">
+			<div class="card" align="center">
+
+
 <!--Tabla de registros realizados en la tabla de proveedor en la base de datos-->	
 <div class="row" align="center">
 	<div class="col-sm-12" align="center">
-		<h3><font face="Comic Sans MS,Arial,Verdana">SEDES REGISTRADAS</font></h3>
+		<!--<h3><font font="Raleway, Garamond, Arial">SEDES REGISTRADAS</font></h3>
+		<span style=" font-style: italic;">Este texto tiene un estilo it&aacute;lico</span>-->
+		<br><h1 class="text-center title-1">Sedes Registradas</h1>
 	</div>
 </div>
 
@@ -75,10 +95,10 @@
 	                    <div class="table-data-feature">
 							<a href="{{URL::action('SedeController@edit',$sed->id_sede)}}"><button class="item" data-toggle="tooltip" data-placement="top" title="Edit"><i class="zmdi zmdi-edit"></i></button></a>
 							
-							@if($sed->id_sede)
+							@if(isset($sed->id_sede))
 							@include('almacen.sede.modal')
 							<a href="" data-target="#modal-delete-{{$sed->id_sede}}" data-toggle="modal"><button class="item" ><i class="zmdi zmdi-delete"></i></button></a>
-							
+							<a href="" data-target="#modal-delete-{{$sed->id_sede}}" data-toggle="modal"><button class="btn btn-danger">Eliminar</button></a>
 							@endif
 							
 	                    </div>
@@ -94,7 +114,7 @@
     </div>
 
 </div>
-
-@include('almacen.sede.mod')
+</div></div></div>
 @endsection
 
+@include('almacen.sede.mod')
