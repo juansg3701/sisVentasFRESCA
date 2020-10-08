@@ -68,7 +68,7 @@
 		<br><h1 class="text-center title-1">Sedes Registradas</h1>
 	</div>
 </div>
-
+<div class="container">
 <div class="row m-t-30">
     <div class="col-md-12">
         <!-- DATA TABLE-->
@@ -113,6 +113,7 @@
 		<!-- END DATA TABLE-->
     </div>
 
+</div>
 </div>
 </div></div></div>
 @endsection
