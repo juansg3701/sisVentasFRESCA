@@ -8,10 +8,7 @@
 </head>
 
 <body>
-	
-	
-
-
+<div class="container">
 	<div class="row" align="center">	
 		<div class="col-sm-12" align="center">
 			<div class="card" align="center">
@@ -24,8 +21,8 @@
 	</div>
 
 	<div class="row" align="center">	
-		<div class="col-sm-3" align="center"></div>
-			<div class="col-sm-6" align="center">
+		<div class="col-sm-2" align="center"></div>
+			<div class="col-sm-8" align="center">
 				<div class="card" align="center">
 				   <div class="card-header" align="center">
 				    	<strong></strong>
@@ -47,14 +44,14 @@
 			</div>
 		<div class="col-sm-3" align="center"></div>
 	</div>
-</div></div></div>
+</div></div></div></div>
 
 
 
 </body>
 @endsection
 @section('tabla')
-
+<div class="container">
 	<div class="row" align="center">	
 		<div class="col-sm-12" align="center">
 			<div class="card" align="center">
@@ -68,11 +65,11 @@
 		<br><h1 class="text-center title-1">Sedes Registradas</h1>
 	</div>
 </div>
-<div class="container">
-<div class="row m-t-30">
-    <div class="col-md-12">
+
+<div class="row">
+    <div class="col-sm-12">
         <!-- DATA TABLE-->
-        <div class="table-responsive m-b-40">
+        <div class="table-responsive">
             <table class="table table-borderless table-striped table-earning">
                 <thead>
 					<th>ID</th>
