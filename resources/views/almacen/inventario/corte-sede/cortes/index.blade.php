@@ -79,8 +79,8 @@
 
 @stop
 @section('tabla')
+<div class="container">
 <div class="row">
-<div class="col-lg-8 col-md-8 col-sm-8 col-xs-12">
 			<h3>Cortes Realizados</h3>
 		</div>
 	</div>
@@ -138,8 +138,6 @@
 						@endforeach
 					</table>
 				</div>
-		
-			</div>
 			</div><br>
-
+</div>
 @stop
