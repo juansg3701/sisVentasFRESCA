@@ -34,10 +34,8 @@
 @stop
 
 @section('tabla')
+<div class="container">
 <div class="row">
-	<div class="container">	
-	
-			<div>
 				<div class="table-responsive">
 					<table class="table table-striped table-bordered table-condensed table-hover">
 						<thead>
@@ -78,9 +76,9 @@
 					</table>
 				</div>
 				{{$clientes->render()}}
-			</div>
+			
 			</div><br>
-			</div>
+	</div>
 
 
 @stop

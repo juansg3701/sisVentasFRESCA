@@ -7,8 +7,8 @@
 </head>
 
 <body>
+<div class="container">
 	<div class="row">
-		<div class="col-lg-8 col-md-8 col-sm-8 col-xs-12">
 			<h3>Editar Caja: {{$caja->id_caja}}</h3>
 			@if (count($errors)>0)
 			<div class="alert alert-danger">
@@ -19,7 +19,6 @@
 				</ul>
 			</div>
 			@endif
-		</div>
 	</div>
 	{!!Form::model($caja,['method'=>'PATCH','route'=>['almacen.caja.update',$caja->id_caja]])!!}
     {{Form::token()}}
@@ -102,6 +101,7 @@
 
 	</div>
 {!!Form::close()!!}		
+</div>
 </body>
 
 @stop

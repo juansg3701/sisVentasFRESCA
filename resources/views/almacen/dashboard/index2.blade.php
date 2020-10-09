@@ -15,6 +15,7 @@
 @section('tabla')
 
   <body>
+  <div class="container">
       <?php
       setlocale(LC_TIME, "spanish");
       $mes= strftime("%B");
@@ -170,5 +171,6 @@ var chart = new Chart(ctx2, {
     options: {}
 });
 </script>
+</div>
 </body>
 @stop
