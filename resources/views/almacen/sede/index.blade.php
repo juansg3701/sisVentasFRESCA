@@ -2,117 +2,155 @@
 @section ('contenido')
 <!--Este archivo maneja la vista principal del módulo de sedes-->		
 <head>
-	<title>Proveedores</title>
-	<!--importar ajax para el manejo de algunos campos del formulario-->
-	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+<title>Proveedores</title>
+<!--importar ajax para el manejo de algunos campos del formulario-->
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 </head>
 
 <body>
-<div class="container">
-	<div class="row" align="center">	
-		<div class="col-sm-12" align="center">
-			<div class="card" align="center">
 
-	<div class="row" align="center">
-		<div class="col-sm-12" align="center">
-			<!--<h1 class="pb-2 display-4">SEDES</h1>-->
-			<br><h1 class="text-center title-1">MÓDULO DE SEDES</h1><br>
+<div class="breadcrumbs">
+	<div class="breadcrumbs-inner">
+		<div class="row m-0">
+			<div class="col-sm-4">
+				<div class="page-header float-left">
+					<div class="page-title">
+						<h1>Dashboard</h1>
+					</div>
+				</div>
+			</div>
+			<div class="col-sm-8">
+				<div class="page-header float-right">
+					<div class="page-title">
+						<ol class="breadcrumb text-right">
+							<li><a href="#">Dashboard</a></li>
+							<li><a href="#">Table</a></li>
+							<li class="active">Data table</li>
+						</ol>
+					</div>
+				</div>
+			</div>
 		</div>
 	</div>
+</div>
 
-	<div class="row" align="center">	
-		<div class="col-sm-2" align="center"></div>
-			<div class="col-sm-8" align="center">
-				<div class="card" align="center">
-				   <div class="card-header" align="center">
-				    	<strong></strong>
-				    </div>
-				    <div class="card-body card-block" align="center">
-						<div id=formulario>
-							<div class="form-group">
-								<!--Incluir la ventana modal de búsqueda y carga de excel-->	
-								@include('almacen.sede.search')
-								<div align="center">
-									<!--Enlaces y botones para llamar las funciones de registro, descarga de excel y la ventana modal para carga de excel-->
-									<a href="{{URL::action('SedeController@create',0)}}"><button class="btn btn-info">Registrar Sede</button></a>	
-									<a href="{{url('/')}}" class="btn btn-danger">Regresar</a>
+
+
+
+
+
+	<div class="content">
+		<div class="animated fadeIn">
+			<div class="row">
+
+				<div class="col-md-12">
+					<div class="card">
+						<div class="card-header" align="center">
+							<h2 class="pb-2 display-5">MÓDULO DE SEDES</h2>
+						</div>
+
+
+			<div class="row" align="center">	
+				<div class="col-sm-3" align="center"></div>
+				<div class="col-sm-6" align="center">
+					<div class="card" align="center">
+						<div class="card-header" align="center">
+							<strong></strong>
+						</div>
+						<div class="card-body card-block" align="center">
+							<div id=formulario>
+								<div class="form-group">
+									<!--Incluir la ventana modal de búsqueda y carga de excel-->	
+									@include('almacen.sede.search')
+									<div align="center">
+										<!--Enlaces y botones para llamar las funciones de registro, descarga de excel y la ventana modal para carga de excel-->
+										<a href="{{URL::action('SedeController@create',0)}}"><button class="btn btn-info">Registrar Sede</button></a>	
+										<a href="{{url('/')}}" class="btn btn-danger">Regresar</a>
+									</div>
 								</div>
 							</div>
 						</div>
-				    </div>
+					</div>
+				</div>
+				<div class="col-sm-3" align="center"></div>
+			</div>
+
+
+					
+
+
 				</div>
 			</div>
-		<div class="col-sm-3" align="center"></div>
-	</div>
-</div></div></div></div>
+
+
+		</div>
+	</div><!-- .animated -->
+</div><!-- .content -->
 
 
 
-</body>
-@endsection
-@section('tabla')
-<div class="container">
-	<div class="row" align="center">	
-		<div class="col-sm-12" align="center">
-			<div class="card" align="center">
 
 
-<!--Tabla de registros realizados en la tabla de proveedor en la base de datos-->	
-<div class="row" align="center">
-	<div class="col-sm-12" align="center">
-		<!--<h3><font font="Raleway, Garamond, Arial">SEDES REGISTRADAS</font></h3>
-		<span style=" font-style: italic;">Este texto tiene un estilo it&aacute;lico</span>-->
-		<br><h1 class="text-center title-1">Sedes Registradas</h1>
-	</div>
-</div>
+	</body>
+	@endsection
+	@section('tabla')
 
-<div class="row">
-    <div class="col-sm-12">
-        <!-- DATA TABLE-->
-        <div class="table-responsive">
-            <table class="table table-borderless table-striped table-earning">
-                <thead>
-					<th>ID</th>
-					<th>NOMBRE</th>
-					<th>CIUDAD</th>
-					<th>DESCRIPCIÓN</th>
-					<th>DIRECCIÓN</th>
-					<th>TELÉFONO</th>
-					<th>OPCIONES</th>
-				</thead>
-				@foreach($sedes as $sed)
-				<tr>
-					<td>{{ $sed->id_sede}}</td>
-					<td>{{ $sed->nombre_sede}}</td>
-					<td>{{ $sed->ciudad}}</td>
-					<td>{{ $sed->descripcion}}</td>
-					<td>{{ $sed->direccion}}</td>
-					<td>{{ $sed->telefono}}</td>
-					<td>		
-	                    <div class="table-data-feature">
-							<a href="{{URL::action('SedeController@edit',$sed->id_sede)}}"><button class="item" data-toggle="tooltip" data-placement="top" title="Edit"><i class="zmdi zmdi-edit"></i></button></a>
-							
-							@if(isset($sed->id_sede))
-							@include('almacen.sede.modal')
-							<a href="" data-target="#modal-delete-{{$sed->id_sede}}" data-toggle="modal"><button class="item" ><i class="zmdi zmdi-delete"></i></button></a>
-			
-							@endif
-							
-	                    </div>
-                	</td>
-				</tr>
-				
-				
-				@endforeach
-            </table>
-        </div>
-        {{$sedes->render()}}
-		<!-- END DATA TABLE-->
-    </div>
+	<div class="content">
+		<div class="animated fadeIn">
+			<div class="row">
 
-</div>
-</div>
-</div></div></div>
+				<div class="col-md-12">
+					<div class="card">
+						<div class="card-header" align="center">
+							<h3 class="pb-2 display-5">SEDES REGISTRADAS</h3>
+						</div>
+						<div class="card-body">
+							<table id="bootstrap-data-table" class="table table-striped table-bordered">
+							<thead>
+								<th>ID</th>
+								<th>NOMBRE</th>
+								<th>CIUDAD</th>
+								<th>DESCRIPCIÓN</th>
+								<th>DIRECCIÓN</th>
+								<th>TELÉFONO</th>
+								<th>OPCIONES</th>
+							</thead>
+							@foreach($sedes as $sed)
+							<tr>
+								<td>{{ $sed->id_sede}}</td>
+								<td>{{ $sed->nombre_sede}}</td>
+								<td>{{ $sed->ciudad}}</td>
+								<td>{{ $sed->descripcion}}</td>
+								<td>{{ $sed->direccion}}</td>
+								<td>{{ $sed->telefono}}</td>
+								<td>		
+									<div class="table-data-feature">
+										<a href="{{URL::action('SedeController@edit',$sed->id_sede)}}"><button type="button" class="btn btn-outline-primary btn-sm">Editar</button><i class="zmdi zmdi-edit"></i></button></a>
+
+										@if(isset($sed->id_sede))
+										@include('almacen.sede.modal')
+										<a href="" data-target="#modal-delete-{{$sed->id_sede}}" data-toggle="modal"><button type="button" class="btn btn-outline-danger btn-sm">Eliminar</button></a>
+
+										@endif
+
+										
+
+									</div>
+								</td>
+							</tr>
+
+
+							@endforeach
+							</table>
+						</div>
+					{{$sedes->render()}}
+				</div>
+			</div>
+
+
+		</div>
+	</div><!-- .animated -->
+</div><!-- .content -->
 @endsection
 
 @include('almacen.sede.mod')
