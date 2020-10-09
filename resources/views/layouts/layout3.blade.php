@@ -274,8 +274,8 @@
                         
                     @yield('contenido')
                     </div>
-                    <div class="container">
-                        
+                    
+                    <div>                       
                     @yield('tabla')
                     </div>
         </div>
