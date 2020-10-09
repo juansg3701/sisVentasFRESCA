@@ -29,10 +29,9 @@
 </body>
 @stop
 @section('tabla')
+<div class="container">
 <h3>Lista de cuentas</h3>
 <div class="row">
-
-			<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
 				<div class="table-responsive">
 
 					
@@ -64,6 +63,6 @@
 					</table>
 				</div>
 				{{$bancos->render()}}
-			</div>
 			</div><br>
+			</div>
 @stop

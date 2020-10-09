@@ -1,3 +1,4 @@
+<div class="container">
 <div class="modal fade modal-slide-in-right" aria-hidden="true"
 role="dialog" tabindex="-1" id="modal-delete">
 
@@ -14,7 +15,6 @@ role="dialog" tabindex="-1" id="modal-delete">
 
 @include('almacen.nomina.horario.filtro.search')
 <div class="row">
-			<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
 				<div class="table-responsive">
 					<table class="table table-striped table-bordered table-condensed table-hover">
 						<thead>
@@ -45,9 +45,10 @@ role="dialog" tabindex="-1" id="modal-delete">
 					</table>
 				</div>
 				{{$nominas->render()}}
-			</div>
+
 </div><br>
 		</div>	
 		</div>
 	</div>
+</div>
 </div>
