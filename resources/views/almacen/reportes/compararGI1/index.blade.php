@@ -77,7 +77,7 @@
 
 
 @section('tabla')
-
+<div class="container">
 
 <div class="col-sm-6">  
    <div id="piechart" style="width: 500px; height: 500px;"></div>
@@ -85,5 +85,5 @@
 
 <div class="col-sm-6">  
   <div id="piechart2" style="width: 500px; height: 500px;"></div></div>
-     
+ </div>    
 @stop
