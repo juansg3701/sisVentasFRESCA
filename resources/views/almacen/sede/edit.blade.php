@@ -25,16 +25,19 @@
 	{!!Form::model($sede,['method'=>'PATCH','route'=>['almacen.sede.update',$sede->id_sede]])!!}
     {{Form::token()}}
 
-	<div class="row" align="center">	
-		<div class="col-sm-12" align="center">
-			<div class="card" align="center">
-				<div class="row" align="center">
-					<div class="col-sm-12" align="center">
-						<!--<h3>EDITAR SEDE</h3><br>-->
-						<br><h1 class="text-center title-1">Editar Sede</h1><br>
-						Editar Datos Sede: {{$sede->nombre_sede}}
-					</div>
+
+
+
+		<div class="col-md-12">
+			<div class="card">
+				<div class="card-header" align="center">
+					<h3 class="pb-2 display-5">EDITAR SEDE</h3>
 				</div><br>
+
+				<div class="col-sm-12" align="center">
+					Editar datos sede: {{$sede->nombre_sede}}
+				</div><br>
+
 				<div class="row" align="center">	
 					<div class="col-sm-3" align="center"></div>
 					 	<div class="col-sm-6" align="center">
@@ -94,9 +97,13 @@
 						</div>
 					<div class="col-sm-3" align="center"></div>
 				</div>
-        	</div>
+
+
+			</div>
 		</div>
-	</div>	
+
+
+
 {!!Form::close()!!}		
 </body>
 

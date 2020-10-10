@@ -23,21 +23,23 @@
 	{!!Form::open(array('url'=>'almacen/sede','method'=>'POST','autocomplete'=>'off'))!!}
     {{Form::token()}}
 
-	<div class="row" align="center">	
-		<div class="col-sm-12" align="center">
-			<div class="card" align="center">
-				<div class="row" align="center">
-					<div class="col-sm-12" align="center">
-						<br><h1 class="text-center title-1">Registrar Sede</h1><br>
-					</div>
-				</div>
+
+
+
+		<div class="col-md-12">
+			<div class="card">
+				<div class="card-header" align="center">
+					<h3 class="pb-2 display-5">REGISTRAR SEDE</h3>
+				</div><br>
+
+
 				<div class="row" align="center">	
 					<div class="col-sm-3" align="center"></div>
 					 	<div class="col-sm-6" align="center">
 							<div class="card" align="center">
 				                <div class="card-header" align="center">
 				                     <strong>Formulario de registro</strong>
-				                </div>
+				                </div><br>
 				                <div class="card-body card-block" align="center">
 									<div class="form-row">
 										<div class="form-group col-sm-4">
@@ -90,9 +92,11 @@
 						</div>
 					<div class="col-sm-3" align="center"></div>
 				</div>
-        	</div>
+
+
+			</div>
 		</div>
-	</div>
+
 			                       
 {!!Form::close()!!}		
 </body>
