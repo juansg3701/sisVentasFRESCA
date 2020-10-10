@@ -269,7 +269,25 @@
         </header>
         <!-- /#header -->
         <!-- Content -->
-        <div class="content">
+        <div class="content" align="center">
+             <div class="col-md-4" align="center" >
+
+                
+                      @if(session()->has('msj'))
+                      <div class="alert alert-info" role="alert">
+                         <button type="button" class="close" data-dismiss="alert">&times;</button>
+                      {{session('msj')}}
+                    </div>
+                      @endif
+
+                       @if(session()->has('errormsj'))
+                        <div class="alert alert-danger" role="alert">
+                           <button type="button" class="close" data-dismiss="alert">&times;</button>
+                        {{session('errormsj')}}
+                      </div>
+                        @endif
+
+                  </div>
           <div>
                         
                     @yield('contenido')

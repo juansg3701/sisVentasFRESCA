@@ -6,10 +6,11 @@
     <!--<link rel="stylesheet" href="{{ asset('css/Almacen/usuario/styles-iniciar.css') }}" />-->
 </head>
 <body>
-	<div class="row">
-		<div class="col-lg-8 col-md-8 col-sm-8 col-xs-12">
+	<div class="container col-sm-12" align="center">
+			<div class="row" align="center">
+		<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12" align="center">
 			@if (count($errors)>0)
-			<div class="alert alert-danger">
+			<div class="alert alert-danger" align="center">
 				<ul>
 				@foreach ($errors->all() as $error)
 					<li>{{$error}}</li>
@@ -19,6 +20,8 @@
 			@endif
 		</div>
 	</div>
+	</div>
+
 
 	{!!Form::open(array('url'=>'almacen/sede','method'=>'POST','autocomplete'=>'off'))!!}
     {{Form::token()}}
