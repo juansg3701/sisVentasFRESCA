@@ -6,20 +6,21 @@
     <!--<link rel="stylesheet" href="{{ asset('css/Almacen/usuario/styles-iniciar.css') }}" />-->
 </head>
 <body>
+
 	<div class="container col-sm-12" align="center">
-			<div class="row" align="center">
-		<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12" align="center">
-			@if (count($errors)>0)
-			<div class="alert alert-danger" align="center">
-				<ul>
-				@foreach ($errors->all() as $error)
-					<li>{{$error}}</li>
-				@endforeach
-				</ul>
+		<div class="row" align="center">
+			<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12" align="center">
+				@if (count($errors)>0)
+				<div class="alert alert-danger" align="center">
+					<ul>
+						@foreach ($errors->all() as $error)
+							<li>{{$error}}</li>
+						@endforeach
+					</ul>
+				</div>
+				@endif
 			</div>
-			@endif
 		</div>
-	</div>
 	</div>
 
 
