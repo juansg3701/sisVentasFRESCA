@@ -63,9 +63,7 @@ var chart = new Chart(ctx, {
           label:["Ingresos"],
             backgroundColor: '#64bca5',
             borderColor: 'gray',
-            data: [<?php echo $tp3[0]->ief?>,
-                    <?php echo $tp2[0]->ief?>,
-                    <?php echo $tp1[0]->ief?>]
+            data: []
         }]},
     options: {responsive: true,
         scales: {
@@ -97,17 +95,13 @@ var chart = new Chart(ctx, {
           label:'Pago',
             backgroundColor: '#42a5f5',
             borderColor: 'gray',
-            data: [<?php echo $carteraPago2[0]->total?>,
-                    <?php echo $carteraPago1[0]->total?>,
-                    <?php echo $carteraPago[0]->total?>]
+            data: []
         },
           {
           label:'Sin pagar',
             backgroundColor: '#ffab91',
             borderColor: 'gray',
-            data: [<?php echo $carteraCobro2[0]->total?>,
-                    <?php echo $carteraCobro1[0]->total?>,
-                    <?php echo $carteraCobro[0]->total?>]
+            data: []
         }
         ]},
     options: {responsive: true,
@@ -135,10 +129,7 @@ var chart = new Chart(ctx1, {
     data:   
     {
                 datasets: [{
-                     data: [<?php echo $tpD[0]->ief?>,
-                            <?php echo $tpD[0]->Eef?>,
-                            <?php echo $tpD[0]->iel?>,
-                            <?php echo $tpD[0]->Eel?>],
+                     data: [],
                     backgroundColor: ['#DB7093', '#ADD8E6', '#B28DFF','#5F9EA0']
                 }],
                 labels: [
@@ -155,10 +146,7 @@ var chart = new Chart(ctx2, {
     data:   
     {
                 datasets: [{
-                     data: [<?php echo $tp[0]->ief?>,
-                            <?php echo $tp[0]->Eef?>,
-                            <?php echo $tp[0]->iel?>,
-                            <?php echo $tp[0]->Eel?>],
+                     data: [],
                     backgroundColor: ['#42a5f5', '#fcb63e', '#64bca5','#a7a3bb']
                    
                 }],

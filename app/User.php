@@ -11,7 +11,7 @@ class User extends Authenticatable
      *
      * @var array
      */
-
+protected $connection = 'general';
 protected $table='users';
 protected $primaryKey='id';
 

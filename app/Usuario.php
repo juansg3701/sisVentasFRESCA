@@ -6,6 +6,8 @@ use Illuminate\Database\Eloquent\Model;
 
 class Usuario extends Model
 {
+	
+	protected $connection = 'general';
     protected $table = 'empleado';
     protected $primaryKey='id_empleado';
     public $timestamps =false;

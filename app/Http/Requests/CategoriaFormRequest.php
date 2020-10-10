@@ -14,6 +14,7 @@ class CategoriaFormRequest extends Request
     public function authorize()
     {
         return true;
+        protected $connection = 'general';
     }
 
     /**
@@ -23,6 +24,7 @@ class CategoriaFormRequest extends Request
      */
     public function rules()
     {
+            protected $connection = 'general';
         return [
             //'id_sede'=>'required|max:45',
             'nombre'=>'required|max:45',

@@ -13,6 +13,7 @@ class ProductoSedeFormRequest extends Request
      */
     public function authorize()
     {
+        protected $connection = 'general';
         return true;
     }
 
@@ -23,6 +24,7 @@ class ProductoSedeFormRequest extends Request
      */
     public function rules()
     {
+        protected $connection = 'general';
         return [
           
             'plu'=>'required|max:45',
