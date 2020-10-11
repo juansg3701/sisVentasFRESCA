@@ -1,8 +1,9 @@
+<!--Este es el archivo de la ventana modal para la eliminación de registros-->
 <div class="modal fade modal-slide-in-right" aria-hidden="true"
 role="dialog" tabindex="-1" id="modal-delete-{{$sed->id_sede}}">
-	
+	<!--Llamado a la función de eliminación en el controlador-->
 	{{Form::Open(array('action'=>array('SedeController@destroy',$sed->id_sede), 'method'=>'delete'))}}
-
+	<!--Información de la ventana emergente-->
 	<div class="modal-dialog">
 		<div class="modal-content">
 			<div class="modal-header">

@@ -1,8 +1,8 @@
 <!--Este es el archivo para la búsqueda de registros-->
 {!! Form::open(array('url'=>'almacen/sede','method'=>'GET','autocomplete'=>'off','role'=>'search')) !!}
+<!--Formulario para establecer los filtros de búsqueda-->
 <div class="container">
-	<div class="form-group">
-		
+	<div class="form-group">	
 		<div class="form-row">
 			<div class="form-group col-sm-3">
 				<label>Nombre:</label>
@@ -16,7 +16,6 @@
 				</span>
 			</div>
 		</div>
-
 	</div>
 </div>
 {{Form::close()}}

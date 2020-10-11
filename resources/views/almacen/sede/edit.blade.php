@@ -1,12 +1,13 @@
 @extends ('layouts.admin')
 @section ('contenido')
-	
+
+<!--Este archivo maneja la vista del formulario de edición del módulo de sedes-->		
 <head>
 	<title>Sede</title>
-    <!--<link rel="stylesheet" href="{{ asset('css/Almacen/usuario/styles-iniciar.css') }}" />-->
 </head>
 
 <body>
+	<!--Control de errores en los campos del formulario-->	
 	<div class="container col-sm-12" align="center">
 		<div class="row" align="center">
 			<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12" align="center">
@@ -23,9 +24,11 @@
 		</div>
 	</div>
 
+	<!--Llamado al método UPDATE para actualizar los datos en la ruta indicada-->
 	{!!Form::model($sede,['method'=>'PATCH','route'=>['almacen.sede.update',$sede->id_sede]])!!}
     {{Form::token()}}
 
+    <!--Formulario de edición-->	
 	<div class="col-md-12">
 		<div class="card">
 			<div class="card-header" align="center">
@@ -33,7 +36,7 @@
 			</div><br>
 
 			<div class="col-sm-12" align="center">
-				Editar datos sede: {{$sede->nombre_sede}}
+				Editar datos de: {{$sede->nombre_sede}}
 			</div><br>
 
 			<div class="row" align="center">	

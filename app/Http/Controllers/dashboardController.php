@@ -34,7 +34,7 @@ class dashboardController extends Controller
 	 			->where('id_cargo','=',$cargoUsuario)
 	 			->orderBy('id_cargo', 'desc')->get();
 
-	 	
+	 			//PARA BD GENERAL
 	 			$productos=ProductoSede::where('fecha_registro','>=',"01/01/2019")
 	 			->where('fecha_registro','<=',"12/12/2020")
 	 			->select('id_producto','nombre','plu','ean','c.nombre as categoria_id_categoria','unidad_de_medida','precio','i.nombre as impuestos_id_impuestos','stock_minimo')

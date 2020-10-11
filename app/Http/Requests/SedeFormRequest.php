@@ -1,8 +1,9 @@
 <?php
 
 namespace sisVentas\Http\Requests;
-
 use sisVentas\Http\Requests\Request;
+
+//Se define una clase para determinar las reglas de validación en los campos al enviar los datos a la tabla sede en la base de datos
 
 class SedeFormRequest extends Request
 {
@@ -24,7 +25,6 @@ class SedeFormRequest extends Request
     public function rules()
     {
         return [
-            //'id_sede'=>'required|max:45',
             'nombre_sede'=>'required|max:45',
             'ciudad'=>'required|max:45',
             'descripcion'=>'required|max:45',
