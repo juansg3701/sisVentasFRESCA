@@ -129,7 +129,10 @@
                         </ul>
                     </li>
                     <li>
-                        <a href="{{url('almacen/sede')}}"> <i class="menu-icon ti-email"></i>Sedes </a>
+                        <a href="{{url('almacen/cliente')}}"> <i class="menu-icon ti-email"></i>Clientes</a>
+                    </li>
+                    <li>
+                        <a href="{{url('almacen/sede')}}"> <i class="menu-icon ti-email"></i>Sedes</a>
                     </li>
                     <li class="menu-item-has-children dropdown">
                         <a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> <i class="menu-icon fa fa-bar-chart"></i>Charts</a>

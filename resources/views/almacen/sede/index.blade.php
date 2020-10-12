@@ -2,7 +2,7 @@
 @section ('contenido')
 <!--Este archivo maneja la vista principal del módulo de sedes-->		
 <head>
-<title>Proveedores</title>
+<title>Sedes</title>
 <!--importar ajax para el manejo de algunos campos del formulario-->
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 </head>
@@ -33,7 +33,7 @@
 			</div>
 		</div>
 	</div>
-	<!--Formulario de registro-->
+	<!--Formulario de búsqueda y opciones-->
 	<div class="content">
 		<div class="animated fadeIn">
 			<div class="row">
