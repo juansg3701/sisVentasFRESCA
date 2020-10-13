@@ -105,12 +105,12 @@
 									<div class="table-data-feature">
 										<a href="{{URL::action('SedeController@edit',$sed->id_sede)}}"><button type="button" class="btn btn-outline-primary btn-sm">Editar</button></a>
 										@if(isset($sed->id_sede))
-										@include('almacen.sede.modal')
 										<a href="" data-target="#modal-delete-{{$sed->id_sede}}" data-toggle="modal"><button type="button" class="btn btn-outline-danger btn-sm">Eliminar</button></a>
 										@endif
 									</div>
 								</td>
 							</tr>
+							@include('almacen.sede.modal')
 							@endforeach
 						</table>
 					</div>

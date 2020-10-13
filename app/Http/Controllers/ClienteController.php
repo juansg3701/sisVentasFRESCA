@@ -70,7 +70,7 @@ class ClienteController extends Controller
 			 		$cliente->documento=$documentoR;
 			 		$cliente->verificacion_nit=$request->get('verificacion_nit');
 			 		$cliente->nombre_empresa=$request->get('nombre_empresa');
-			 		$cliente->cartera_activa=$request->get('cartera_activa');
+			 		//$cliente->cartera_activa=$request->get('cartera_activa');
 			 		$cliente->save();	
 
 

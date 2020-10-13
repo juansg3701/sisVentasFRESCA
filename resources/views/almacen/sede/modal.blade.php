@@ -8,8 +8,7 @@ role="dialog" tabindex="-1" id="modal-delete-{{$sed->id_sede}}">
 		<div class="modal-content">
 			<div class="modal-header">
 				<h4 class="modal-title">Eliminar Sede</h4>
-				<button type="button" class="close" data-dismiss="modal" 
-				aria-label="Close">
+				<button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">×</span>
                 </button>
 			</div>
