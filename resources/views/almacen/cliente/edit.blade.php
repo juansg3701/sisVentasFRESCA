@@ -3,10 +3,11 @@
 	
 <head>
 	<title>Editar cliente</title>
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 </head>
 
 <body>
-<!--Control de errores en los campos del formulario-->	
+	<!--Control de errores en los campos del formulario-->	
 	<div class="container col-sm-12" align="center">
 		<div class="row" align="center">
 			<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12" align="center">
@@ -22,6 +23,29 @@
 			</div>
 		</div>
 	</div>
+
+	<!--Código de JQuery para mostrar/esconder los campos del atributo documento-->
+	<script type="text/javascript">
+		$( function() {
+    		$("#id_tipo_documento").change( function() {
+	       	 	if ($(this).val() === "1") {
+	            	$("#id_cedula").prop("disabled", false);
+	            	$("#id_falso").prop("disabled", false);
+	        	} else {
+	            	$("#id_cedula").prop("disabled", true);
+	            	$("#id_falso").prop("disabled", true);
+	        	}
+	        	if ($(this).val() === "2") {
+	            	$("#id_nit").prop("disabled", false);
+	            	$("#id_digito").prop("disabled", false);
+	        	} else {
+	            	$("#id_nit").prop("disabled", true);
+	            	$("#id_digito").prop("disabled", true);
+	        	}
+    		});
+		});
+	</script>
+
 	{!!Form::model($cliente,['method'=>'PATCH','route'=>['almacen.cliente.update',$cliente->id_cliente]])!!}
     {{Form::token()}}
 
@@ -79,6 +103,8 @@
 										<input type="text" class="form-control" name="nombre_empresa" value="{{$cliente->nombre_empresa}}">
 									</div>
 								</div>
+
+								@if($cliente->verificacion_nit=="")
 								<div class="form-row">
 									<div class="form-group col-sm-4">
 										<div>Documento:</div>
@@ -95,46 +121,58 @@
 										<div>Cédula:</div>
 									</div>
 									<div class="form-group col-sm-3">
-										<input id='id_cedula' class="form-control" type="number" class="" style="width:150px; heigth : 1px" name="documento" placeholder="- - - - - - -" size="30" maxlength="30" enabled>
-										<input id='id_falso' type="number" name="verificacion_nit" placeholder="------"  size="11" maxlength="11" style="display:none">
+										<input id='id_cedula' class="form-control" type="number" class="" name="documento" placeholder="- - - - - - -" min="0" value="{{$cliente->documento}}" enabled>
+										<input id='id_falso' type="number" name="verificacion_nit" placeholder="------" style="display:none">
 									</div>
 									<div class="form-group col-sm-2">
 										<div>NIT:</div>
 									</div>
 									<div class="form-group col-sm-3">
-										<input id='id_nit' type="number"  class="form-control" style="width:150px; heigth : 1px" name="documento" placeholder="- - - - - - -" size="30" maxlength="30" required pattern=""  disabled>
+										<input id='id_nit' type="number"  class="form-control" name="documento" placeholder="- - - - - - -" min="0" required disabled>
 									</div>
 									<div class="form-group col-sm-2">
-										
-										<input id='id_digito' type="number"  class="form-control" style="width:40px; heigth:1px" name="verificacion_nit" placeholder="y" size="1" maxlength="1" required disabled><br><br>
-									</div>
-									<script type="text/javascript">
-										$( function() {
-								    		$("#id_tipo_documento").change( function() {
-									       	 	if ($(this).val() === "1") {
-									            	$("#id_cedula").prop("disabled", false);
-									            	$("#id_falso").prop("disabled", false);
-									        	} else {
-									            	$("#id_cedula").prop("disabled", true);
-									            	$("#id_falso").prop("disabled", true);
-									        	}
-									        	if ($(this).val() === "2") {
-									            	$("#id_nit").prop("disabled", false);
-									            	$("#id_digito").prop("disabled", false);
-									        	} else {
-									            	$("#id_nit").prop("disabled", true);
-									            	$("#id_digito").prop("disabled", true);
-									        	}
-								    		});
-										});
-									</script>
+										<input id='id_digito' type="number" class="form-control" name="verificacion_nit" placeholder="-" min="0" max="9" required disabled><br><br>
+									</div>	
 								</div>
+								@else
+								<div class="form-row">
+									<div class="form-group col-sm-4">
+										<div>Documento:</div>
+									</div>
+									<div class="form-group col-sm-8">
+										<select id='id_tipo_documento' name="tipo_documento" class="form-control">
+											<option value="1">Cédula</option>
+											<option value="2" selected>NIT</option>
+										</select><br>
+									</div>
+								</div>
+								<div class="form-row">
+									<div class="form-group col-sm-2">
+										<div>Cédula:</div>
+									</div>
+									<div class="form-group col-sm-3">
+										<input id='id_cedula' class="form-control" type="number" name="documento" placeholder="- - - - - - -" min="0" disabled>
+										<input id='id_falso' type="number" name="verificacion_nit" placeholder="------" style="display:none">
+									</div>
+									<div class="form-group col-sm-2">
+										<div>NIT:</div>
+									</div>
+									<div class="form-group col-sm-3">
+										<input id='id_nit' type="number" class="form-control" name="documento" placeholder="- - - - - - -" min="0" value="{{$cliente->documento}}" required enabled>
+									</div>
+									<div class="form-group col-sm-2">
+										<input id='id_digito' type="number"  class="form-control" name="verificacion_nit" placeholder="-" min="0" max="9" value="{{$cliente->verificacion_nit}}" required enabled><br><br>
+									</div>	
+								</div>
+								@endif
+
 								<div class="form-row">
 									<div class="form-group col-sm-12">
 										<button class="btn btn-info" type="submit">Registrar</button>
 										<a href="{{url('almacen/cliente')}}" class="btn btn-danger">Regresar</a>
 									</div>
-								</div>	
+								</div>
+
 			               </div>
 			        	</div>
 					</div>
@@ -143,64 +181,6 @@
 		</div>
 	</div>	
 
-
-
-
-
-	<div id=formulario>
-		<div class="form-group">
-			Nombre<input type="text" class="form-control" name="nombre" value="{{$cliente->nombre}}">
-			Dirección<input type="text" class="form-control" name="direccion" value="{{$cliente->direccion}}">
-			Correo
-			<input type="text" class="form-control" name="correo" value="{{$cliente->correo}}">
-			Teléfono<input type="text" class="form-control" name="telefono" value="{{$cliente->telefono}}">
-			Nombre Empresa<input type="text" class="form-control" name="nombre_empresa" value="{{$cliente->nombre_empresa}}">
-			Cartera<br>
-			<select name="cartera_activa" class="form-control">
-				@if($cliente->cartera_activa=='1')
-				<option value="1">Activa</option>
-				<option value="0">Inactiva</option>
-				@endif
-				@if($cliente->cartera_activa=='0')
-				<option value="0">Inactiva</option>
-				<option value="1">Activa</option>
-				@endif
-			</select>	
-
-			<div>
-
-				Documento<br>
-				@if($cliente->verificacion_nit=="")
-				Cédula:
-				<input value="{{$cliente->documento}}" id='id_cedula' type="number" class=""style="width:150px; heigth : 1px" name="documento" placeholder="xxxxxxxxx"  size="30" maxlength="30" enabled>
-				<input id='id_falso' type="number" name="verificacion_nit" placeholder="- - - - - - - - -"  size="11" maxlength="11" style="display:none">
-				NIT:
-				<input value="{{$cliente->documento}}" id='id_nit' type="number" class=""style="width:150px; heigth : 1px" name="documento" placeholder="- - - - - - - - -"  size="30" maxlength="30" required pattern=""  disabled>-<input value="{{$cliente->verificacion_nit}}" id='id_digito' type="number"class=""style="width:40px; heigth:1px" name="verificacion_nit" placeholder="y" size="1" maxlength="1" required disabled>
-
-				@else
-				Cédula:
-				<input value="{{$cliente->documento}}" id='id_cedula' type="number" class=""style="width:150px; heigth : 1px" name="documento" placeholder="xxxxxxxxx"  size="30" maxlength="30" disabled>
-				<input id='id_falso' type="number" name="verificacion_nit" placeholder="- - - - - - - - -"  size="11" maxlength="11" style="display:none">
-				NIT:
-				<input value="{{$cliente->documento}}" id='id_nit' type="number" class=""style="width:150px; heigth : 1px" name="documento" placeholder="- - - - - - - - -"  size="30" maxlength="30" required pattern=""  enabled>-<input value="{{$cliente->verificacion_nit}}" id='id_digito' type="number"class=""style="width:40px; heigth:1px" name="verificacion_nit" placeholder="y" size="1" maxlength="1" required enabled>
-				@endif
-				
-				<div align="center">
-				<br><br>
-
-
-				</div>
-			</div>
-
-			<br>
-			<div align="center">
-			<button class="btn btn-info" type="submit">Registrar Cliente</button>
-			<a href="{{url('almacen/cliente')}}" class="btn btn-danger">Volver</a>
-
-		</div>
-		</div>
-	</div>
 {!!Form::close()!!}		
 </body>
-
 @stop

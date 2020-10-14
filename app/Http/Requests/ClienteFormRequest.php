@@ -31,7 +31,7 @@ class ClienteFormRequest extends Request
             'documento'=>'required|max:45',
             'verificacion_nit'=>'max:45',
             'nombre_empresa'=>'max:45',
-            'cartera_activa'=>'required|max:45',
+            //'cartera_activa'=>'required|max:45',
         ];
     }
 }

@@ -25,6 +25,29 @@
 		</div>
 	</div>
 
+	<!--Código de JQuery para mostrar/esconder los campos del atributo documento-->
+	<script type="text/javascript">
+		$( function() {
+    		$("#id_tipo_documento").change( function() {
+	       	 	if ($(this).val() === "1") {
+	            	$("#id_cedula").prop("disabled", false);
+	            	$("#id_falso").prop("disabled", false);
+	        	} else {
+	            	$("#id_cedula").prop("disabled", true);
+	            	$("#id_falso").prop("disabled", true);
+	        	}
+	        	if ($(this).val() === "2") {
+	            	$("#id_nit").prop("disabled", false);
+	            	$("#id_digito").prop("disabled", false);
+	        	} else {
+	            	$("#id_nit").prop("disabled", true);
+	            	$("#id_digito").prop("disabled", true);
+	        	}
+    		});
+		});
+	</script>
+
+
 	<!--Llamado al método POST para registrar los datos en la ruta indicada por medio del controlador-->
 	{!!Form::open(array('url'=>'almacen/cliente','method'=>'POST','autocomplete'=>'off'))!!}
     {{Form::token()}}
@@ -95,43 +118,24 @@
 									</div>
 								</div>
 								<div class="form-row">
+
 									<div class="form-group col-sm-2">
 										<div>Cédula:</div>
 									</div>
 									<div class="form-group col-sm-3">
-										<input id='id_cedula' class="form-control" type="number" class="" style="width:150px; heigth : 1px" name="documento" placeholder="- - - - - - -" size="30" maxlength="30" enabled>
+										<input id='id_cedula' class="form-control" type="number" class="" name="documento" placeholder="- - - - - - -" min="0" enabled>
 										<input id='id_falso' type="number" name="verificacion_nit" placeholder="------"  size="11" maxlength="11" style="display:none">
 									</div>
 									<div class="form-group col-sm-2">
 										<div>NIT:</div>
 									</div>
 									<div class="form-group col-sm-3">
-										<input id='id_nit' type="number"  class="form-control" style="width:150px; heigth : 1px" name="documento" placeholder="- - - - - - -" size="30" maxlength="30" required pattern=""  disabled>
+										<input id='id_nit' type="number"  class="form-control" name="documento" placeholder="- - - - - - -" min="0" required pattern=""  disabled>
 									</div>
 									<div class="form-group col-sm-2">
 										
-										<input id='id_digito' type="number"  class="form-control" style="width:40px; heigth:1px" name="verificacion_nit" placeholder="y" size="1" maxlength="1" required disabled><br><br>
+										<input id='id_digito' type="number"  class="form-control" name="verificacion_nit" placeholder="y" min="0" max="9" required disabled><br><br>
 									</div>
-									<script type="text/javascript">
-										$( function() {
-								    		$("#id_tipo_documento").change( function() {
-									       	 	if ($(this).val() === "1") {
-									            	$("#id_cedula").prop("disabled", false);
-									            	$("#id_falso").prop("disabled", false);
-									        	} else {
-									            	$("#id_cedula").prop("disabled", true);
-									            	$("#id_falso").prop("disabled", true);
-									        	}
-									        	if ($(this).val() === "2") {
-									            	$("#id_nit").prop("disabled", false);
-									            	$("#id_digito").prop("disabled", false);
-									        	} else {
-									            	$("#id_nit").prop("disabled", true);
-									            	$("#id_digito").prop("disabled", true);
-									        	}
-								    		});
-										});
-									</script>
 								</div>
 								<div class="form-row">
 									<div class="form-group col-sm-12">
