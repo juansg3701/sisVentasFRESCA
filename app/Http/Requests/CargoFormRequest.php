@@ -27,9 +27,7 @@ class CargoFormRequest extends Request
             //'id_sede'=>'required|max:45',
             'nombre'=>'required|max:45',
             'descripcion'=>'required|max:45',
-            'horaordinaria'=>'|max:45',
-            'horadominical'=>'|max:45',
-            'horaextra'=>'|max:45',
+            'empleado_id_empleado'=>'|max:45',
             'fecha'=>'|max:45',
         ];
     }

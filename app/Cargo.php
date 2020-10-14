@@ -10,6 +10,6 @@ class Cargo extends Model
     protected $primaryKey='id_cargo';
     public $timestamps =false;
     
-    protected $fillable=['nombre','descripcion','horaordinaria','horadominical','horaextra','fecha'];
+    protected $fillable=['nombre','descripcion','empleado_id_empleado','fecha'];
     protected $guarded=[];
 }
