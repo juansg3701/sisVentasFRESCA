@@ -18,9 +18,11 @@ class PermisoCargoController extends Controller
 	 	public function index(Request $request){
 	 		if ($request) {
 	 			$query=trim($request->get('searchText'));
-	 			$cargos=DB::table('tipo_cargo')
-	 			->where('nombre','LIKE', '%'.$query.'%')
-	 			->orderBy('id_cargo', 'desc')
+	 			$cargos=DB::table('tipo_cargo as tp')
+	 			->join('empleado as e','tp.empleado_id_empleado','=','e.id_empleado')
+	 			->select('tp.id_cargo as id_cargo','tp.nombre as nombre','tp.descripcion as descripcion','tp.fecha as fecha','e.nombre as empleado')
+	 			->where('tp.nombre','LIKE', '%'.$query.'%')
+	 			->orderBy('tp.id_cargo', 'asc')
 	 			->paginate(10);
 
 	 			$cargoUsuario=auth()->user()->tipo_cargo_id_cargo;
@@ -30,8 +32,10 @@ class PermisoCargoController extends Controller
 
 	 			$modulosP=DB::table('tipo_cargo')
 	 			->orderBy('id_cargo', 'desc')->get();
+
+	 			$usuarios=DB::table('empleado')->get();
 	 			
-	 			return view('almacen.usuario.permiso.cargo.index',["cargos"=>$cargos,"searchText"=>$query, "modulos"=>$modulos, "modulosP"=>$modulosP]);
+	 			return view('almacen.usuario.permiso.cargo.index',["cargos"=>$cargos,"searchText"=>$query, "modulos"=>$modulos, "modulosP"=>$modulosP,"usuarios"=>$usuarios]);
 	 		}
 	 	}
 
@@ -48,9 +52,7 @@ class PermisoCargoController extends Controller
 	 		$cargo = new Cargo;
 	 		$cargo->nombre=$request->get('nombre');
 	 		$cargo->descripcion=$request->get('descripcion');
-	 		$cargo->horaordinaria=$request->get('horaordinaria');
-	 		$cargo->horadominical=$request->get('horadominical');
-	 		$cargo->horaextra=$request->get('horaextra');
+	 		$cargo->empleado_id_empleado=$request->get('empleado_id_empleado');
 	 		$cargo->fecha=$request->get('fecha');
 			 		
 	 		$cargo->save();
@@ -77,9 +79,7 @@ class PermisoCargoController extends Controller
 	 		
 	 		$cargo->nombre=$request->get('nombre');
 	 		$cargo->descripcion=$request->get('descripcion');
-	 			$cargo->horaordinaria=$request->get('horaordinaria');
-	 		$cargo->horadominical=$request->get('horadominical');
-	 		$cargo->horaextra=$request->get('horaextra');
+	 		$cargo->empleado_id_empleado=$request->get('empleado_id_empleado');
 	 		$cargo->fecha=$request->get('fecha');
 	 		$cargo->update();
 	 		return back()->with('msj','Cargo editado');
