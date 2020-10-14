@@ -21,37 +21,40 @@ public function index(Request $request){
 	 			$query=trim($request->get('searchText'));
 	 			$query1=trim($request->get('searchText1'));
 	 			$query2=trim($request->get('searchText2'));
+
+	 			$usuarios=User::where('name','LIKE', '%'.$query.'%')
+    			->paginate(10);
+
+	 			if($query2!=""){
+		 			$nombreCargo=DB::table('tipo_cargo')
+		 			->where('nombre','LIKE','%'.$query2.'%')
+		 			->get();
+
+		 			$usuarios=User::where('name','LIKE', '%'.$query.'%')
+					->where('tipo_cargo_id_cargo','LIKE', '%'.$nombreCargo[0]->id_cargo.'%')
+	    			->paginate(10);
+	 			}
+	 			if($query1!=""){
+	 				$nombreSede=DB::table('sede')
+		 			->where('nombre_sede','LIKE','%'.$query1.'%')
+		 			->get();
+		 			$usuarios=User::where('name','LIKE', '%'.$query.'%')
+					->where('sede_id_sede','LIKE', '%'.$nombreSede[0]->id_sede.'%')
+	    			->paginate(10);
+	 			}
+
+
 	 			$cargos=DB::table('tipo_cargo')->get();
 	 			$sedes=DB::table('sede')->get();
-	 			$usuarios=DB::table('users')
-	 			->where('name','LIKE', '%'.$query.'%')
-	 			->orderBy('id','desc')
-	 			->paginate(10);
-
-	 			$usuarios=DB::table('users as u')
-	 			->join('tipo_cargo as c','u.tipo_cargo_id_cargo','=','c.id_cargo')
-	 			->join('sede as s','u.sede_id_sede','=','s.id_sede')
-	 			->select('u.id','u.name','u.email','u.password','c.nombre as tipo_cargo','s.nombre_sede as sede','u.sede_id_sede as sede_id_sede')
-	 			->where('u.name','LIKE', '%'.$query.'%')
-	 			->where('s.nombre_sede','LIKE', '%'.$query1.'%')
-	 			->where('c.nombre','LIKE', '%'.$query2.'%')
-	 			->orderBy('u.id', 'desc')
-	 			->paginate(10);
 
 	 			$cargoUsuario=auth()->user()->tipo_cargo_id_cargo;
 	 			$modulos=DB::table('cargo_modulo')
 	 			->where('id_cargo','=',$cargoUsuario)
 	 			->orderBy('id_cargo', 'desc')->get();
 
-	 			$usersP=DB::table('users')
-	 			->orderBy('id', 'desc')->get();
+	 			$usersP=User::get();
 
-	 			$modulosP=DB::table('tipo_cargo')
-	 			->orderBy('id_cargo', 'desc')->get();
-
-	 			$sedesP=DB::table('sede')->get();
-
-	 			return view('almacen.usuario.permiso.cuenta.index',["cargos"=>$cargos,"sedes"=>$sedes,"usuarios"=>$usuarios,"searchText"=>$query, "searchText1"=>$query1, "searchText2"=>$query2, "modulos"=>$modulos,"usersP"=>$usersP,"modulosP"=>$modulosP,"sedesP"=>$sedesP]);
+	 			return view('almacen.usuario.permiso.cuenta.index',["cargos"=>$cargos,"sedes"=>$sedes,"usuarios"=>$usuarios,"searchText"=>$query, "searchText1"=>$query1, "searchText2"=>$query2, "modulos"=>$modulos]);
 	 		}
 	 	}
 
@@ -91,8 +94,8 @@ public function index(Request $request){
 
 	 			$idEmpleado=DB::table('empleado')
 	 			->select('id_empleado as id')
-	 			->where('user_id_user','=',$id)
-	 			->orderBy('user_id_user', 'desc')->get();
+	 			->where('users_id','=',$id)
+	 			->orderBy('id_empleado', 'desc')->get();
 	 			
 	 		return view("almacen/usuario/permiso/cuenta.edit",["cargos"=>$cargos,"sedes"=>$sedes,"usuario"=>Usuario::findOrFail($idEmpleado[0]->id), "modulos"=>$modulos]);
 	 	}

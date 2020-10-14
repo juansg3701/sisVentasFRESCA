@@ -91,13 +91,26 @@ class PermisoUsuarioController extends Controller
 	 		return view("almacen.usuario.permiso.usuario.show",["cliente"=>CargoModulo::findOrFail($id)]);
 	 	}
 
-	 	public function update(CargoModuloFormRequest $request, $id){
-	 		$cm = CargoModulo::findOrFail($id);
-	 		$cm->id_cargo=$request->get('id_cargo');
-	 		$cm->id_modulo=$request->get('id_modulo');
-	 		
-	 		$cm->update();
-	 		return Redirect::to('almacen/usuario/permiso/usuario');
+	 	public function update(Request $request, $id){
+	 		$cargo=$request->get('id_cargo');
+	 		$modulo=$request->get('id_modulo');
+
+	 		$modulos=DB::table('cargo_modulo')
+	 		->where('id_cargo','=',$cargo)
+	 		->where('id_modulo','=',$modulo)
+	 		->orderBy('id_cargo', 'desc')->get();
+
+	 		if(count($modulos)>0){
+		 		foreach ($modulos as $m) {
+		 			$mo = CargoModulo::findOrFail($m->id_cargoModulo);
+		 			$mo->delete();
+		 		}
+
+	 		return back()->with('msj','Permiso eliminado');
+	 		}
+	 		else{
+	 			return back()->with('errormsj','¡Error al eliminar, el permiso no existe!');
+	 		}
 	 	}
 
 	 	public function destroy($id){
