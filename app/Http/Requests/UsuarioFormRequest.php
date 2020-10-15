@@ -29,9 +29,13 @@ class UsuarioFormRequest extends Request
             'correo'=>'required|max:45',
             'contrasena'=>'required|max:45',
             'tipo_cargo_id_cargo'=>'required|max:45',
-            'sede_id_sede'=>'required|max:45', 
+            'sede_id_sede'=>'required|max:45',
+            'users_id'=>'max:45', 
             'codigo'=>'max:45',
-            'contrasena2'=>'required|max:45',
+            'direccion'=>'required|max:45',
+            'telefono'=>'required|max:45',
+            'documento'=>'required|max:45',
+            'fecha'=>'required|max:45',
 
         ];
     }

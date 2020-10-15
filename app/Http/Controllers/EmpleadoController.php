@@ -118,20 +118,20 @@ class EmpleadoController extends Controller
 				 		$usuario->tipo_cargo_id_cargo=$cargoR;
 				 		$usuario->sede_id_sede=$sedeR;
 				 		$usuario->codigo=$codigoR;
-				 		$usuario->contrasena2=$request->get('contrasena2');
 				 		$usuario->update();
 
 				 		return back()->with('msj','Empleado actualizado');
 				 		}else{
 
 				 			$empleadoR=DB::table('empleado')
-				 			->select("user_id_user as user_id")
+				 			->select("users_id as user_id")
 					 		->where('id_empleado','=',$id)
 					 		->orderBy('id_empleado','desc')->get();
 
-				 			$usuarioR=DB::table('users')
-					 		->where('id','=',$empleadoR[0]->user_id)
-					 		->orderBy('id','desc')->get();
+				 		
+
+					 		$usuarioR=User::where('id','=',$empleadoR[0]->user_id)
+			    			->paginate(10);
 
 				 			if(count($usuarioR)==0){
 				 			$us = new User;
@@ -149,8 +149,7 @@ class EmpleadoController extends Controller
 					 		$usuario->tipo_cargo_id_cargo=$cargoR;
 					 		$usuario->sede_id_sede=$sedeR;
 					 		$usuario->codigo=$codigoR;
-					 		$usuario->contrasena2=$request->get('contrasena2');
-					 		$usuario->user_id_user=$us->id;
+					 		$usuario->users_id=$us->id;
 					 		$usuario->update();
 				 			}else{
 				 			
@@ -162,17 +161,16 @@ class EmpleadoController extends Controller
 					 		$usuario->tipo_cargo_id_cargo=$cargoR;
 					 		$usuario->sede_id_sede=$sedeR;
 					 		$usuario->codigo=$codigoR;
-					 		$usuario->contrasena2=$request->get('contrasena2');
 					 		
 
-					 		$us = User::findOrFail($usuario->user_id_user);
+					 		$us = User::findOrFail($usuario->users_id);
 							$us->name=$nombreR;
 							$us->email=$correoR;
 							$us->tipo_cargo_id_cargo=$cargoR;
 							$us->sede_id_sede=$sedeR;
 							$us->update();
 
-							$usuario->user_id_user=$us->id;
+							$usuario->users_id=$us->id;
 					 		$usuario->update();
 				 			}
 
