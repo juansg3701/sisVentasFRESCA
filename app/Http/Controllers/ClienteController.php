@@ -28,7 +28,7 @@ class ClienteController extends Controller
 	 			->join('empleado as u','c.empleado_id_empleado','=','u.id_empleado')
 	 			->join('sede as s','c.sede_id_sede','=','s.id_sede')
 	 			->join('categoria_cliente as cc','c.categoria_cliente_id_categoria','=','cc.id_categoria')
-	 			->select('c.id_cliente','c.nombre','c.nombre_empresa','c.direccion', 'c.telefono', 'c.correo', 'c.documento', 'c.verificacion_nit','cc.nombre as categoria_cliente_id_categoria','c.nombre_sede as sede_id_sede', 'u.nombre as empleado_id_empleado')
+	 			->select('c.id_cliente','c.nombre','c.nombre_empresa','c.direccion', 'c.telefono', 'c.correo', 'c.documento', 'c.verificacion_nit','cc.nombre as categoria_cliente_id_categoria','s.nombre_sede as sede_id_sede', 'u.nombre as empleado_id_empleado')
 	 			->where('c.nombre','LIKE', '%'.$query0.'%')
 	 			->where('c.documento','LIKE', '%'.$query1.'%')
 	 			->where('c.telefono','LIKE', '%'.$query2.'%')
@@ -64,7 +64,7 @@ class ClienteController extends Controller
 	 			->join('empleado as u','c.empleado_id_empleado','=','u.id_empleado')
 	 			->join('sede as s','c.sede_id_sede','=','s.id_sede')
 	 			->join('categoria_cliente as cc','c.categoria_cliente_id_categoria','=','cc.id_categoria')
-	 			->select('c.id_cliente','c.nombre','c.nombre_empresa','c.direccion', 'c.telefono', 'c.correo', 'c.documento', 'c.verificacion_nit','cc.nombre as categoria_cliente_id_categoria','c.nombre_sede as sede_id_sede', 'u.nombre as empleado_id_empleado')
+	 			->select('c.id_cliente','c.nombre','c.nombre_empresa','c.direccion', 'c.telefono', 'c.correo', 'c.documento', 'c.verificacion_nit','cc.nombre as categoria_cliente_id_categoria','s.nombre_sede as sede_id_sede', 'u.nombre as empleado_id_empleado')
 	 			->orderBy('c.nombre', 'desc')
 	 			->paginate(10);
 
@@ -124,8 +124,21 @@ class ClienteController extends Controller
 	 			$modulos=DB::table('cargo_modulo')
 	 			->where('id_cargo','=',$cargoUsuario)
 	 			->orderBy('id_cargo', 'desc')->get();
+
+
+	 			$usuarios=DB::table('empleado')->get();
+	 			$sedes=DB::table('sede')->get();
+	 			$categoria_cliente=DB::table('categoria_cliente')->get();
+
+	 			$clientes=DB::table('cliente as c')
+	 			->join('empleado as u','c.empleado_id_empleado','=','u.id_empleado')
+	 			->join('sede as s','c.sede_id_sede','=','s.id_sede')
+	 			->join('categoria_cliente as cc','c.categoria_cliente_id_categoria','=','cc.id_categoria')
+	 			->select('c.id_cliente','c.nombre','c.nombre_empresa','c.direccion', 'c.telefono', 'c.correo', 'c.documento', 'c.verificacion_nit','cc.nombre as categoria_cliente_id_categoria','s.nombre_sede as sede_id_sede', 'u.nombre as empleado_id_empleado')
+	 			->orderBy('c.nombre', 'desc')
+	 			->paginate(10);
 	 			
-	 		return view("almacen.cliente.edit",["cliente"=>Cliente::findOrFail($id), "modulos"=>$modulos]);
+	 		return view("almacen.cliente.edit",["cliente"=>Cliente::findOrFail($id), "modulos"=>$modulos, "usuarios"=>$usuarios, "sedes"=>$sedes, "categoria_cliente"=>$categoria_cliente]);
 	 	}
 	 		public function show($id){
 	 		return view("almacen.cliente.show",["cliente"=>Cliente::findOrFail($id)]);
