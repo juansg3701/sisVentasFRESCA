@@ -130,13 +130,83 @@
 										<div>NIT:</div>
 									</div>
 									<div class="form-group col-sm-3">
-										<input id='id_nit' type="number"  class="form-control" name="documento" placeholder="- - - - - - -" min="0" required pattern=""  disabled>
+										<input id='id_nit' type="number"  class="form-control" name="documento" placeholder="- - - - - - -" min="0" required pattern="" disabled>
 									</div>
 									<div class="form-group col-sm-2">
 										
 										<input id='id_digito' type="number"  class="form-control" name="verificacion_nit" placeholder="y" min="0" max="9" required disabled><br><br>
 									</div>
 								</div>
+								<div class="form-row">
+									<div class="form-group col-sm-4">
+										<div>Fecha:</div>
+									</div>
+									<div class="form-group col-sm-8">
+										<input type="datetime" name="fecha" value="<?php echo date("Y/m/d"); ?>" class="form-control" readonly>
+									</div>
+								</div>
+
+								<div class="form-row">
+									<div class="form-group col-sm-4">
+										<div>Categoría:</div>
+									</div>
+									<div class="form-group col-sm-8">
+										<select name="categoria_cliente_id_categoria" class="form-control">
+											@foreach($categoria_cliente as $car)
+											<option value="{{$car->id_categoria}}">{{$car->nombre}}</option>
+											@endforeach
+										</select>
+									</div>
+								</div>
+
+								<div class="form-row">
+									<div class="form-group col-sm-4">
+										<div>Empleado:</div>
+									</div>
+									<div class="form-group col-sm-8">
+										<input type="hidden" name="empleado_id_empleado" value="{{Auth::user()->id}}">
+
+										<select name="empleado_id_empleado" class="form-control" disabled="">
+											@foreach($usuarios as $usu)
+											@if(Auth::user()->id==$usu->users_id)
+											<option value="{{$usu->id_empleado}}">{{$usu->nombre}}</option>
+											@endif
+											@endforeach
+
+											@foreach($usuarios as $usu)
+											@if(Auth::user()->id!=$usu->users_id)
+											<option value="{{$usu->id_empleado}}">{{$usu->nombre}}</option>
+											@endif
+											@endforeach	
+										</select>
+									</div>
+								</div>
+
+								<div class="form-row">
+									<div class="form-group col-sm-4">
+										<div>Sede:</div>
+									</div>
+									<div class="form-group col-sm-8">
+										<input type="hidden" name="sede_id_sede" value="{{Auth::user()->id}}">
+
+										<select name="sede_id_sede" class="form-control" disabled="">
+											@foreach($sedes as $s)
+											@if( Auth::user()->sede_id_sede ==$s->id_sede)
+											<option value="{{$s->id_sede}}" >{{$s->nombre_sede}}</option>
+											aa
+											@endif
+											@endforeach
+
+											@foreach($sedes as $s)
+											@if( Auth::user()->sede_id_sede!=$s->id_sede)
+											<option value="{{$s->id_sede}}">{{$s->nombre_sede}}</option>
+											aa
+											@endif
+											@endforeach
+										</select><br>
+									</div>
+								</div>
+
 								<div class="form-row">
 									<div class="form-group col-sm-12">
 										<button class="btn btn-info" type="submit">Registrar</button>
