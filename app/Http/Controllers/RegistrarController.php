@@ -8,6 +8,7 @@ use sisVentas\User;
 use sisVentas\Usuario;
 use Illuminate\Support\Facades\Redirect;
 use sisVentas\Http\Requests\UsersFormRequest;
+use sisVentas\Http\Requests\UsuarioFormRequest;
 use DB;
 
 class RegistrarController extends Controller
@@ -49,7 +50,7 @@ class RegistrarController extends Controller
 	 		return view("almacen.usuario.iniciar.sesionIniciada", ["modulos"=>$modulos]);	
 	 	}
 
-	 	public function store(UsersFormRequest $request){
+	 	public function store(Request $request){
 
 	 		$nombreR=$request->get('name');
 	 		$correoR=$request->get('email');
@@ -74,17 +75,21 @@ class RegistrarController extends Controller
 			 		$usuario->password=$contrasenaR;
 			 		$usuario->tipo_cargo_id_cargo=$cargoR;
 			 		$usuario->sede_id_sede=$sedeR;
+			 		$usuario->superusuario=$request->get('superusuario');
 			 		$usuario->save();
 
 			 		$empleadoU= new Usuario;
 			 		$empleadoU->nombre=$nombreR;
-			 		$empleadoU->user_id_user=$usuario->id;
+			 		$empleadoU->users_id=$usuario->id;
 			 		$empleadoU->correo=$correoR;
 			 		$empleadoU->contrasena=$contrasenaR;	
 			 		$empleadoU->tipo_cargo_id_cargo=$cargoR;
 			 		$empleadoU->sede_id_sede=$sedeR;
 			 		$empleadoU->codigo=$codigoR;
-			 		$empleadoU->contrasena2=$contrasenaR;
+			 		$empleadoU->direccion=$request->get('direccion');
+			 		$empleadoU->telefono=$request->get('telefono');
+			 		$empleadoU->documento=$request->get('documento');
+			 		$empleadoU->fecha=$request->get('fecha');
 			 		$empleadoU->save();
    	
 					return back()->with('msj','Usuario guardado');

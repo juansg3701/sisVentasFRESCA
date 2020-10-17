@@ -14,7 +14,6 @@ class UsersFormRequest extends Request
     public function authorize()
     {
         return true;
-        protected $connection = 'general';
     }
 
     /**
@@ -24,7 +23,6 @@ class UsersFormRequest extends Request
      */
     public function rules()
     {
-        protected $connection = 'general';
         return [
             //'id_sede'=>'required|max:45',
             'name'=>'required|max:255',
@@ -32,6 +30,7 @@ class UsersFormRequest extends Request
             'password'=>'required|max:255',
             'tipo_cargo_id_cargo'=>'required|max:45',
             'sede_id_sede'=>'required|max:45',
+            'superusuario'=>'max:45',
         ];
     }
 }

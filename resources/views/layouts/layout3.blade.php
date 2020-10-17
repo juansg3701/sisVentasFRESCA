@@ -6,7 +6,7 @@
 <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <title>Ela Admin - HTML5 Admin Template</title>
+    <title>Cosecha Fresca</title>
     <meta name="description" content="Ela Admin - HTML5 Admin Template">
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
@@ -98,8 +98,12 @@
                          
                         </ul>
                     </li>
-                    <li class="active">
+                    <li>
                         <a href="{{url('almacen/usuario/registrar')}}"><i class="menu-icon fa fa-laptop"></i>Registrar Usuarios </a>
+                    </li>
+
+                    <li class="active">
+                        <a href="{{url('/logout')}}"><i class="menu-icon fa fa-laptop"></i>SALIR </a>
                     </li>
                     <li class="menu-title">UI elements</li><!-- /.menu-title -->
                     <li class="menu-item-has-children dropdown">
