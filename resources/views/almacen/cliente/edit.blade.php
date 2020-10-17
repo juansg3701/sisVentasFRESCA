@@ -92,7 +92,7 @@
 										<div>Teléfono:</div>
 									</div>
 									<div class="form-group col-sm-8">
-										<input type="text" class="form-control" name="telefono" value="{{$cliente->telefono}}">
+										<input type="number" class="form-control" name="telefono" value="{{$cliente->telefono}}">
 									</div>
 								</div>
 								<div class="form-row">
@@ -103,6 +103,25 @@
 										<input type="text" class="form-control" name="nombre_empresa" value="{{$cliente->nombre_empresa}}">
 									</div>
 								</div>
+
+								<div class="form-row">
+									<div class="form-group col-sm-4">
+										<div>Categoría:</div>
+									</div>
+									<div class="form-group col-sm-8">
+										<select name="categoria_cliente_id_categoria" class="form-control">
+											@foreach($categoria_cliente as $car)
+												@if($car->id_categoria==$cliente->categoria_cliente_id_categoria)
+												<option value="{{$car->id_categoria}}" selected>{{$car->nombre}}</option>
+												@else
+												<option value="{{$car->id_categoria}}">{{$car->nombre}}</option>
+												@endif
+											@endforeach
+										</select>
+									</div>
+								</div>
+
+
 
 								@if($cliente->verificacion_nit=="")
 								<div class="form-row">
@@ -165,6 +184,66 @@
 									</div>	
 								</div>
 								@endif
+
+								<div class="form-row">
+									<div class="form-group col-sm-4">
+										<div>Fecha:</div>
+									</div>
+									<div class="form-group col-sm-8">
+										<input type="datetime" name="fecha" value="<?php echo date("Y/m/d"); ?>" class="form-control" readonly>
+									</div>
+								</div>
+
+								<div class="form-row">
+									<div class="form-group col-sm-4">
+										<div>Empleado:</div>
+									</div>
+									<div class="form-group col-sm-8">
+										<input type="hidden" name="empleado_id_empleado" value="{{Auth::user()->id}}">
+
+										<select name="empleado_id_empleado" class="form-control" readonly>
+											@foreach($usuarios as $usu)
+											@if(Auth::user()->id==$usu->users_id)
+											<option value="{{$usu->id_empleado}}">{{$usu->nombre}}</option>
+											@endif
+											@endforeach
+
+											@foreach($usuarios as $usu)
+											@if(Auth::user()->id!=$usu->users_id)
+											<option value="{{$usu->id_empleado}}">{{$usu->nombre}}</option>
+											@endif
+											@endforeach	
+										</select>
+									</div>
+								</div>
+
+								<div class="form-row">
+									<div class="form-group col-sm-4">
+										<div>Sede:</div>
+									</div>
+									<div class="form-group col-sm-8">
+										<input type="hidden" name="sede_id_sede" value="{{Auth::user()->id}}">
+
+										<select name="sede_id_sede" class="form-control" readonly>
+											@foreach($sedes as $s)
+											@if( Auth::user()->sede_id_sede ==$s->id_sede)
+											<option value="{{$s->id_sede}}" >{{$s->nombre_sede}}</option>
+											aa
+											@endif
+											@endforeach
+
+											@foreach($sedes as $s)
+											@if( Auth::user()->sede_id_sede!=$s->id_sede)
+											<option value="{{$s->id_sede}}">{{$s->nombre_sede}}</option>
+											aa
+											@endif
+											@endforeach
+										</select><br>
+									</div>
+								</div>
+
+								
+
 
 								<div class="form-row">
 									<div class="form-group col-sm-12">
