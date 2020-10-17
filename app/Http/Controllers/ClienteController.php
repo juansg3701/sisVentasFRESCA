@@ -32,7 +32,7 @@ class ClienteController extends Controller
 	 			->where('c.nombre','LIKE', '%'.$query0.'%')
 	 			->where('c.documento','LIKE', '%'.$query1.'%')
 	 			->where('c.telefono','LIKE', '%'.$query2.'%')
-	 			->orderBy('c.nombre', 'desc')
+	 			->orderBy('c.id_cliente', 'desc')
 	 			->paginate(10);
 
 
@@ -51,7 +51,7 @@ class ClienteController extends Controller
 	 			$clientesP=DB::table('cliente')
 	 			->orderBy('id_cliente', 'desc')->get();
 
-	 			return view('almacen.cliente.index',["clientes"=>$clientes,"searchText0"=>$query0,"searchText1"=>$query1,"searchText2"=>$query2, "modulos"=>$modulos,"clientesP"=>$clientesP, "usuarios"=>$usuarios, "sedes"=>$sedes, "categoria_cliente"=>$categoria_cliente]);
+	 			return view('almacen.cliente.cliente.index',["clientes"=>$clientes,"searchText0"=>$query0,"searchText1"=>$query1,"searchText2"=>$query2, "modulos"=>$modulos,"clientesP"=>$clientesP, "usuarios"=>$usuarios, "sedes"=>$sedes, "categoria_cliente"=>$categoria_cliente]);
 	 		}
 	 	}
 	 	public function create(){
@@ -73,7 +73,7 @@ class ClienteController extends Controller
 	 			->where('id_cargo','=',$cargoUsuario)
 	 			->orderBy('id_cargo', 'desc')->get();
 	 			
-	 			return view("almacen.cliente.registrar",["modulos"=>$modulos, "usuarios"=>$usuarios, "sedes"=>$sedes, "categoria_cliente"=>$categoria_cliente]);
+	 			return view("almacen.cliente.cliente.registrar",["modulos"=>$modulos, "usuarios"=>$usuarios, "sedes"=>$sedes, "categoria_cliente"=>$categoria_cliente]);
 	 		
 	 	}
 
@@ -99,7 +99,7 @@ class ClienteController extends Controller
 			 		$cliente->documento=$documentoR;
 			 		$cliente->verificacion_nit=$request->get('verificacion_nit');
 			 		$cliente->nombre_empresa=$request->get('nombre_empresa');
-
+			 		$cliente->fecha=$request->get('fecha');
 			 		$cliente->empleado_id_empleado=$request->get('empleado_id_empleado');
 			 		$cliente->sede_id_sede=$request->get('sede_id_sede');
 			 		$cliente->categoria_cliente_id_categoria=$request->get('categoria_cliente_id_categoria');
@@ -138,10 +138,10 @@ class ClienteController extends Controller
 	 			->orderBy('c.nombre', 'desc')
 	 			->paginate(10);
 	 			
-	 		return view("almacen.cliente.edit",["cliente"=>Cliente::findOrFail($id), "modulos"=>$modulos, "usuarios"=>$usuarios, "sedes"=>$sedes, "categoria_cliente"=>$categoria_cliente]);
+	 		return view("almacen.cliente.cliente.edit",["cliente"=>Cliente::findOrFail($id), "modulos"=>$modulos, "usuarios"=>$usuarios, "sedes"=>$sedes, "categoria_cliente"=>$categoria_cliente]);
 	 	}
 	 		public function show($id){
-	 		return view("almacen.cliente.show",["cliente"=>Cliente::findOrFail($id)]);
+	 		return view("almacen.cliente.cliente.show",["cliente"=>Cliente::findOrFail($id)]);
 	 	}
 
 	 	public function update(ClienteFormRequest $request, $id){
@@ -169,6 +169,10 @@ class ClienteController extends Controller
 			 		$cliente->documento=$documentoR;
 			 		$cliente->verificacion_nit=$request->get('verificacion_nit');
 			 		$cliente->nombre_empresa=$request->get('nombre_empresa');
+			 		$cliente->fecha=$request->get('fecha');
+			 		$cliente->empleado_id_empleado=$request->get('empleado_id_empleado');
+			 		$cliente->sede_id_sede=$request->get('sede_id_sede');
+			 		$cliente->categoria_cliente_id_categoria=$request->get('categoria_cliente_id_categoria');
 			 		//$cliente->cartera_activa=$request->get('cartera_activa');
 			 		$cliente->update();
 			 		return back()->with('msj','Cliente actualizado');
@@ -184,9 +188,12 @@ class ClienteController extends Controller
 	 	}
 
 	 	public function destroy($id){
-	 	$id=$id;
+	 		$id=$id;
+	 		$cliente=Cliente::findOrFail($id);
+			$cliente->delete();
+			return back()->with('msj','Cliente eliminado');
 
-	 		$existe=DB::table('factura')
+	 		/*$existe=DB::table('factura')
 	 		->where('cliente_id_cliente','=',$id)
 	 		->orderBy('id_factura', 'desc')->get();
 
@@ -200,7 +207,10 @@ class ClienteController extends Controller
 		 		return back()->with('msj','Cliente eliminado');
 	 		}else{
 	 				return back()->with('errormsj','¡Cliente relacionado con factura o cartera!');
-	 			}
+	 			}*/
+
+
+
 
 	 		
 	 	}
