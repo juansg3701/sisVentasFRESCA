@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1:3306
--- Tiempo de generación: 18-10-2020 a las 15:44:04
+-- Tiempo de generación: 18-10-2020 a las 16:07:00
 -- Versión del servidor: 5.7.26
 -- Versión de PHP: 7.2.18
 
@@ -127,7 +127,7 @@ CREATE TABLE IF NOT EXISTS `cliente` (
   KEY `empleado_id_empleado` (`empleado_id_empleado`),
   KEY `sede_id_sede` (`sede_id_sede`) USING BTREE,
   KEY `categoria_cliente_id_categoria` (`categoria_cliente_id_categoria`)
-) ENGINE=InnoDB AUTO_INCREMENT=16 DEFAULT CHARSET=utf8 COLLATE=utf8_spanish2_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=19 DEFAULT CHARSET=utf8 COLLATE=utf8_spanish2_ci;
 
 --
 -- Volcado de datos para la tabla `cliente`
@@ -140,7 +140,8 @@ INSERT INTO `cliente` (`id_cliente`, `nombre`, `nombre_empresa`, `direccion`, `t
 (11, 'rr', '221cd', 'r', 123, 'r@gmail.com', 2131321, 0, 1, 1, '2020-10-16', 1),
 (12, 'Ricardo Sánchez', 'Mercados H', 'Carrera 14 ', 2147483647, 'ricar@gmail.com', 555888988, 7, 2, 1, '2020-10-17', 1),
 (13, 'Jhon Suárez', 'JS', 'Carrera 19 ', 317899872, 'js@gmail.com', 126789992, 2, 2, 1, '2020-10-18', 1),
-(14, 'Juan sanchéz', 'Empresa JP', 'Carrera 23', 132312123, 'juannn@gmail.com', 111111111, 2, 2, 3, '2020-10-18', 2);
+(14, 'Juan sanchéz', 'Empresa JP', 'Carrera 23', 132312123, 'juannn@gmail.com', 111111111, 2, 2, 3, '2020-10-18', 2),
+(18, 'k', 'k', 'k', 1, 'k@hotmail.com', 1743, 0, 1, 3, '2020-10-18', 10);
 
 -- --------------------------------------------------------
 
@@ -309,10 +310,9 @@ CREATE TABLE IF NOT EXISTS `proveedor` (
 
 DROP TABLE IF EXISTS `p_tiempo`;
 CREATE TABLE IF NOT EXISTS `p_tiempo` (
-  `id_periodo` int(11) NOT NULL,
+  `id_periodo` int(11) NOT NULL AUTO_INCREMENT,
   `nombre` varchar(45) COLLATE utf8_spanish2_ci NOT NULL,
-  `p_tiempo_id` double NOT NULL,
-  PRIMARY KEY (`p_tiempo_id`)
+  PRIMARY KEY (`id_periodo`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_spanish2_ci;
 
 -- --------------------------------------------------------
@@ -489,7 +489,6 @@ CREATE TABLE IF NOT EXISTS `t_movimiento` (
 --
 ALTER TABLE `cliente`
   ADD CONSTRAINT `categoria_cliente_id_categoria` FOREIGN KEY (`categoria_cliente_id_categoria`) REFERENCES `categoria_cliente` (`id_categoria`),
-  ADD CONSTRAINT `empleado_id_empleado` FOREIGN KEY (`empleado_id_empleado`) REFERENCES `empleado` (`id_empleado`),
   ADD CONSTRAINT `sede_id_sede` FOREIGN KEY (`sede_id_sede`) REFERENCES `sede` (`id_sede`);
 COMMIT;
 
