@@ -10,7 +10,7 @@ class Cliente extends Model
     protected $primaryKey='id_cliente';
     public $timestamps =false;
     
-    protected $fillable=['nombre', 'direccion', 'telefono','correo','documento','verificacion_nit','nombre_empresa','empleado_id_empleado','sede_id_sede','categoria_cliente_id_categoria'];
+    protected $fillable=['nombre', 'direccion', 'telefono','correo','documento','verificacion_nit','nombre_empresa','fecha','empleado_id_empleado','sede_id_sede','categoria_cliente_id_categoria'];
     protected $guarded=[];
 }
 

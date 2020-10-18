@@ -146,7 +146,7 @@
                         </ul>
                     </li>
                     <li>
-                        <a href="{{url('almacen/cliente')}}"> <i class="menu-icon ti-email"></i>Clientes</a>
+                        <a href="{{url('almacen/cliente/cliente')}}"> <i class="menu-icon ti-email"></i>Clientes</a>
                     </li>
                     <li>
                         <a href="{{url('almacen/sede')}}"> <i class="menu-icon ti-email"></i>Sedes</a>
