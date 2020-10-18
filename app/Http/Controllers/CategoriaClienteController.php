@@ -18,11 +18,9 @@ class CategoriaClienteController extends Controller
 	 	public function index(Request $request){
 	 		if ($request) {
 	 			$query=trim($request->get('searchText'));
-
 	 			$usuarios=DB::table('empleado')->get();
 	 			$sedes=DB::table('sede')->get();
-	 			
-
+	 		
 	 			$categorias=DB::table('categoria_cliente')
 	 			->where('nombre','LIKE', '%'.$query.'%')
 	 			->orderBy('id_categoria', 'desc')
@@ -59,16 +57,20 @@ class CategoriaClienteController extends Controller
 	 	}
 
 	 	public function show($id){
-	 		return view("almacen.inventario.producto-sede.categoriaProducto.show",["categoria"=>Categoria::findOrFail($id)]);
+	 		return view("almacen.cliente.categoria.show",["categoria"=>CategoriaCliente::findOrFail($id)]);
 	 	}
 
 	 	public function edit($id){
+
+	 		$usuarios=DB::table('empleado')->get();
+	 		$sedes=DB::table('sede')->get();
+
 	 		$cargoUsuario=auth()->user()->tipo_cargo_id_cargo;
 	 			$modulos=DB::table('cargo_modulo')
 	 			->where('id_cargo','=',$cargoUsuario)
 	 			->orderBy('id_cargo', 'desc')->get();
 	 			
-	 		return view("almacen.inventario.producto-sede.categoriaProducto.edit",["categoria"=>Categoria::findOrFail($id), "modulos"=>$modulos]);
+	 		return view("almacen.cliente.categoria.edit",["categoria"=>CategoriaCliente::findOrFail($id), "modulos"=>$modulos, "usuarios"=>$usuarios, "sedes"=>$sedes]);
 	 	}
 
 	 	public function update(CategoriaClienteFormRequest $request, $id){
@@ -76,6 +78,9 @@ class CategoriaClienteController extends Controller
 	 		
 	 		$categoria->nombre=$request->get('nombre');
 	 		$categoria->descripcion=$request->get('descripcion');
+	 		$categoria->fecha=$request->get('fecha');
+			$categoria->empleado_id_empleado=$request->get('empleado_id_empleado');
+			$categoria->sede_id_sede=$request->get('sede_id_sede');
 	 		$categoria->update();
 
 	 		return back()->with('msj','Categoria actualizada');

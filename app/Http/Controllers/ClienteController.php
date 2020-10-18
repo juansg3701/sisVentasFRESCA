@@ -208,10 +208,6 @@ class ClienteController extends Controller
 	 		}else{
 	 				return back()->with('errormsj','¡Cliente relacionado con factura o cartera!');
 	 			}*/
-
-
-
-
-	 		
+	
 	 	}
 }

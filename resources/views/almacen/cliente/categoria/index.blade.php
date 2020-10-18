@@ -51,7 +51,7 @@
 
 	{!!Form::open(array('url'=>'almacen/cliente/categoria','method'=>'POST','autocomplete'=>'off'))!!}
     {{Form::token()}}
-
+    
 	<!--Formulario de registro-->	
 	<div class="col-md-12">
 		<div class="card">
@@ -173,22 +173,19 @@
 						<h3 class="pb-2 display-5">CATEGORIAS REGISTRADAS</h3>
 					</div>
 					<div class="card-body">
-						Nombre de la categoria: 
 						@include('almacen.cliente.categoria.search')	
 						<table id="bootstrap-data-table" class="table table-striped table-bordered">
 							<thead>
-								<th>Id</th>
-								<th>Nombre</th>
-								<th>Descripción</th>
+								<th>NOMBRE</th>
+								<th>DESCRIPCIÓN</th>
 								<th>OPCIONES</th>
 							</thead>
 							@foreach($categorias as $cat)
 							<tr>
-								<td>{{ $cat->id_categoria}}</td>
 								<td>{{ $cat->nombre}}</td>
 								<td>{{ $cat->descripcion}}</td>
 								<td>
-									<a href="{{URL::action('CategoriaProducto@edit',$cat->id_categoria)}}"><button class="btn btn-info">Editar</button></a>
+									<a href="{{URL::action('CategoriaClienteController@edit',$cat->id_categoria)}}"><button class="btn btn-info">Editar</button></a>
 									<a href="" data-target="#modal-delete-{{$cat->id_categoria}}" data-toggle="modal"><button class="btn btn-danger">Eliminar</button></a>
 								</td>
 							</tr>
