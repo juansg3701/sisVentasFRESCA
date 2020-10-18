@@ -1,12 +1,12 @@
 @extends ('layouts.admin')
 @section ('contenido')
-	
+<!--Este archivo maneja la vista principal de la categoría del cliente-->	
 <head>
 	<title>Categoria cliente</title>
 </head>
 
 <body>
-
+	<!--Control de errores en los campos del formulario-->	
 	<div class="row">
 		<div class="col-lg-8 col-md-8 col-sm-8 col-xs-12">
 			@if (count($errors)>0)

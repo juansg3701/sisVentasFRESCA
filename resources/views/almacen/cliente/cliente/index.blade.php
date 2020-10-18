@@ -109,46 +109,51 @@
 
 @section('tabla')
 <!--Tabla de registros realizados-->
-<div class="content">
-	<div class="animated fadeIn">
-		<div class="row">
-			<div class="col-md-12">
-				<div class="card">
-					<div class="card-header" align="center">
-						<h3 class="pb-2 display-5">CLIENTES REGISTRADOS</h3>
+<div class="container">
+	<div class="content">
+		<div class="animated fadeIn">
+			<div class="row">
+				<div class="col-md-12">
+					<div class="card">
+						<div class="card-header" align="center">
+							<h3 class="pb-2 display-5">CLIENTES REGISTRADOS</h3>
+						</div>
+
+						<div class="card-body">
+							<div class="table-responsive">
+							<table id="bootstrap-data-table" class="table table-striped table-bordered">
+								<thead>
+									<th>CONTACTO</th>
+									<th>EMPRESA</th>
+									<th>DIRECCIÓN</th>
+									<th>TELÉFONO</th>
+									<th>CORREO</th>
+									<th>NO. DOCUMENTO</th>
+									<th>NO. NIT</th>
+									<th colspan="2">OPCIONES</th>
+								</thead>
+								@foreach($clientes as $cli)
+								<tr>
+									<td>{{ $cli->nombre}}</td>
+									<td>{{ $cli->nombre_empresa}}</td>
+									<td>{{ $cli->direccion}}</td>
+									<td>{{ $cli->telefono}}</td>
+									<td>{{ $cli->correo}}</td>
+									<td>{{ $cli->documento}}</td>
+									<td>{{ $cli->verificacion_nit}}</td>
+									<td>
+										<!--Botones editar y eliminar de la tabla-->
+										<a href="{{URL::action('ClienteController@edit',$cli->id_cliente)}}"><button class="btn btn-outline-primary btn-sm">Editar</button></a></td>
+										<td><a href="" data-target="#modal-delete-{{$cli->id_cliente}}" data-toggle="modal"><button class="btn btn-outline-danger btn-sm">Eliminar</button></a>
+									</td>
+								</tr>
+								@include('almacen.cliente.cliente.modal')
+								@endforeach
+							</table>
+							</div>
+						</div>
+					{{$clientes->render()}}
 					</div>
-					<div class="card-body">
-						<table id="bootstrap-data-table" class="table table-striped table-bordered">
-							<thead>
-								<th>CONTACTO</th>
-								<th>EMPRESA</th>
-								<th>DIRECCIÓN</th>
-								<th>TELÉFONO</th>
-								<th>CORREO</th>
-								<th>NO. DOCUMENTO</th>
-								<th>DÍGITO NIT</th>
-								<th>OPCIONES</th>
-							</thead>
-							@foreach($clientes as $cli)
-							<tr>
-								<td>{{ $cli->nombre}}</td>
-								<td>{{ $cli->nombre_empresa}}</td>
-								<td>{{ $cli->direccion}}</td>
-								<td>{{ $cli->telefono}}</td>
-								<td>{{ $cli->correo}}</td>
-								<td>{{ $cli->documento}}</td>
-								<td>{{ $cli->verificacion_nit}}</td>
-								<td>
-									<!--Botones editar y eliminar de la tabla-->
-									<a href="{{URL::action('ClienteController@edit',$cli->id_cliente)}}"><button class="btn btn-outline-primary btn-sm">Editar</button></a>
-									<a href="" data-target="#modal-delete-{{$cli->id_cliente}}" data-toggle="modal"><button class="btn btn-outline-danger btn-sm">Eliminar</button></a>
-								</td>
-							</tr>
-							@include('almacen.cliente.cliente.modal')
-							@endforeach
-						</table>
-					</div>
-				{{$clientes->render()}}
 				</div>
 			</div>
 		</div>

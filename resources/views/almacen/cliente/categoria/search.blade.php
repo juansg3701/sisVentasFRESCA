@@ -1,5 +1,6 @@
+<!--Este es el archivo para la búsqueda de registros-->
 {!! Form::open(array('url'=>'almacen/cliente/categoria','method'=>'GET','autocomplete'=>'off','role'=>'search')) !!}
-
+<!--Formulario para establecer los filtros de búsqueda-->
 <div class="container">
 	<div class="form-group">	
 		<div class="form-row col-sm-12">

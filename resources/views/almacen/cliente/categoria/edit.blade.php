@@ -28,7 +28,7 @@
     {{Form::token()}}
 
 
-    	<!--Formulario de registro-->	
+    <!--Formulario de edición-->	
 	<div class="col-md-12">
 		<div class="card">
 			<div class="card-header" align="center">
