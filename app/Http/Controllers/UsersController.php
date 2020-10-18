@@ -94,7 +94,7 @@ public function index(Request $request){
 
 	 			$idEmpleado=DB::table('empleado')
 	 			->select('id_empleado as id')
-	 			->where('users_id','=',$id)
+	 			->where('user_id_user','=',$id)
 	 			->orderBy('id_empleado', 'desc')->get();
 	 			
 	 		return view("almacen/usuario/permiso/cuenta.edit",["cargos"=>$cargos,"sedes"=>$sedes,"usuario"=>Usuario::findOrFail($idEmpleado[0]->id), "modulos"=>$modulos]);
@@ -138,7 +138,7 @@ public function index(Request $request){
 				 		}else{
 
 				 			$empleadoR=DB::table('empleado')
-				 			->select("users_id as user_id")
+				 			->select("user_id_user as user_id")
 					 		->where('id_empleado','=',$id)
 					 		->orderBy('id_empleado','desc')->get();
 
@@ -161,7 +161,7 @@ public function index(Request $request){
 					 		$usuario->tipo_cargo_id_cargo=$cargoR;
 					 		$usuario->sede_id_sede=$sedeR;
 					 		$usuario->codigo=$codigoR;
-					 		$usuario->users_id=$us->id;
+					 		$usuario->user_id_user=$us->id;
 					 		$usuario->update();
 				 			}else{
 				 			
@@ -175,14 +175,14 @@ public function index(Request $request){
 					 		$usuario->codigo=$codigoR;
 					 		
 
-					 		$us = User::findOrFail($usuario->users_id);
+					 		$us = User::findOrFail($usuario->user_id_user);
 							$us->name=$nombreR;
 							$us->email=$correoR;
 							$us->tipo_cargo_id_cargo=$cargoR;
 							$us->sede_id_sede=$sedeR;
 							$us->update();
 
-							$usuario->users_id=$us->id;
+							$usuario->user_id_user=$us->id;
 					 		$usuario->update();
 				 			}
 

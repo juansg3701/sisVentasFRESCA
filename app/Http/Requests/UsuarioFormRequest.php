@@ -30,7 +30,7 @@ class UsuarioFormRequest extends Request
             'contrasena'=>'required|max:45',
             'tipo_cargo_id_cargo'=>'required|max:45',
             'sede_id_sede'=>'required|max:45',
-            'users_id'=>'max:45', 
+            'user_id_user'=>'max:45', 
             'codigo'=>'max:45',
             'direccion'=>'required|max:45',
             'telefono'=>'required|max:45',

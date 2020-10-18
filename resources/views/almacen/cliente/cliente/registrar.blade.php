@@ -169,13 +169,13 @@
 
 										<select name="" class="form-control" disabled="true">
 											@foreach($usuarios as $usu)
-											@if(Auth::user()->id==$usu->users_id)
+											@if(Auth::user()->id==$usu->user_id_user)
 											<option value="{{$usu->id_empleado}}">{{$usu->nombre}}</option>
 											@endif
 											@endforeach
 
 											@foreach($usuarios as $usu)
-											@if(Auth::user()->id!=$usu->users_id)
+											@if(Auth::user()->id!=$usu->user_id_user)
 											<option value="{{$usu->id_empleado}}">{{$usu->nombre}}</option>
 											@endif
 											@endforeach	

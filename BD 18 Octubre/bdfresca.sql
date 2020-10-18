@@ -1,11 +1,11 @@
 -- phpMyAdmin SQL Dump
--- version 4.8.5
+-- version 4.8.0.1
 -- https://www.phpmyadmin.net/
 --
--- Servidor: 127.0.0.1:3306
--- Tiempo de generación: 18-10-2020 a las 16:07:00
--- Versión del servidor: 5.7.26
--- Versión de PHP: 7.2.18
+-- Servidor: 127.0.0.1
+-- Tiempo de generación: 18-10-2020 a las 20:42:14
+-- Versión del servidor: 10.1.32-MariaDB
+-- Versión de PHP: 7.2.5
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 SET AUTOCOMMIT = 0;
@@ -28,9 +28,8 @@ SET time_zone = "+00:00";
 -- Estructura de tabla para la tabla `caja`
 --
 
-DROP TABLE IF EXISTS `caja`;
-CREATE TABLE IF NOT EXISTS `caja` (
-  `id_caja` int(11) NOT NULL AUTO_INCREMENT,
+CREATE TABLE `caja` (
+  `id_caja` int(11) NOT NULL,
   `base_monetaria` double DEFAULT NULL,
   `ingresos_efectivo` double NOT NULL,
   `ingresos_electronicos` double NOT NULL,
@@ -41,10 +40,7 @@ CREATE TABLE IF NOT EXISTS `caja` (
   `pagos` double NOT NULL,
   `cierre` int(11) NOT NULL,
   `empleado_id_empleado` int(11) NOT NULL,
-  `sede_id_sede` int(11) NOT NULL,
-  PRIMARY KEY (`id_caja`),
-  KEY `caja_empleado_fk` (`empleado_id_empleado`),
-  KEY `caja_sede_fk` (`sede_id_sede`)
+  `sede_id_sede` int(11) NOT NULL
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_spanish2_ci;
 
 -- --------------------------------------------------------
@@ -53,12 +49,10 @@ CREATE TABLE IF NOT EXISTS `caja` (
 -- Estructura de tabla para la tabla `cargo_modulo`
 --
 
-DROP TABLE IF EXISTS `cargo_modulo`;
-CREATE TABLE IF NOT EXISTS `cargo_modulo` (
-  `id_cargoModulo` int(11) NOT NULL AUTO_INCREMENT,
+CREATE TABLE `cargo_modulo` (
+  `id_cargoModulo` int(11) NOT NULL,
   `id_cargo` int(11) NOT NULL,
-  `id_modulo` int(11) NOT NULL,
-  PRIMARY KEY (`id_cargoModulo`)
+  `id_modulo` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_spanish2_ci;
 
 -- --------------------------------------------------------
@@ -67,16 +61,14 @@ CREATE TABLE IF NOT EXISTS `cargo_modulo` (
 -- Estructura de tabla para la tabla `categoria_cliente`
 --
 
-DROP TABLE IF EXISTS `categoria_cliente`;
-CREATE TABLE IF NOT EXISTS `categoria_cliente` (
-  `id_categoria` int(11) NOT NULL AUTO_INCREMENT,
+CREATE TABLE `categoria_cliente` (
+  `id_categoria` int(11) NOT NULL,
   `nombre` varchar(45) COLLATE utf8_spanish2_ci NOT NULL,
   `descripcion` varchar(45) COLLATE utf8_spanish2_ci NOT NULL,
   `empleado_id_empleado` int(11) NOT NULL,
   `fecha` date NOT NULL,
-  `sede_id_sede` int(11) NOT NULL,
-  PRIMARY KEY (`id_categoria`)
-) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8 COLLATE=utf8_spanish2_ci;
+  `sede_id_sede` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_spanish2_ci;
 
 --
 -- Volcado de datos para la tabla `categoria_cliente`
@@ -93,14 +85,11 @@ INSERT INTO `categoria_cliente` (`id_categoria`, `nombre`, `descripcion`, `emple
 -- Estructura de tabla para la tabla `categoria_producto_trans`
 --
 
-DROP TABLE IF EXISTS `categoria_producto_trans`;
-CREATE TABLE IF NOT EXISTS `categoria_producto_trans` (
-  `id_categoria` int(11) NOT NULL AUTO_INCREMENT,
+CREATE TABLE `categoria_producto_trans` (
+  `id_categoria` int(11) NOT NULL,
   `nombre` varchar(255) COLLATE utf8_spanish2_ci NOT NULL,
   `fecha` date NOT NULL,
-  `empleado_id_empleado` int(11) NOT NULL,
-  PRIMARY KEY (`id_categoria`),
-  KEY `empleado_id_empleado` (`empleado_id_empleado`)
+  `empleado_id_empleado` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_spanish2_ci;
 
 -- --------------------------------------------------------
@@ -109,9 +98,8 @@ CREATE TABLE IF NOT EXISTS `categoria_producto_trans` (
 -- Estructura de tabla para la tabla `cliente`
 --
 
-DROP TABLE IF EXISTS `cliente`;
-CREATE TABLE IF NOT EXISTS `cliente` (
-  `id_cliente` int(11) NOT NULL AUTO_INCREMENT,
+CREATE TABLE `cliente` (
+  `id_cliente` int(11) NOT NULL,
   `nombre` varchar(45) COLLATE utf8_spanish2_ci NOT NULL,
   `nombre_empresa` varchar(45) COLLATE utf8_spanish2_ci NOT NULL,
   `direccion` varchar(45) COLLATE utf8_spanish2_ci NOT NULL,
@@ -122,12 +110,8 @@ CREATE TABLE IF NOT EXISTS `cliente` (
   `categoria_cliente_id_categoria` int(11) NOT NULL,
   `sede_id_sede` int(11) NOT NULL,
   `fecha` date NOT NULL,
-  `empleado_id_empleado` int(11) NOT NULL,
-  PRIMARY KEY (`id_cliente`),
-  KEY `empleado_id_empleado` (`empleado_id_empleado`),
-  KEY `sede_id_sede` (`sede_id_sede`) USING BTREE,
-  KEY `categoria_cliente_id_categoria` (`categoria_cliente_id_categoria`)
-) ENGINE=InnoDB AUTO_INCREMENT=19 DEFAULT CHARSET=utf8 COLLATE=utf8_spanish2_ci;
+  `empleado_id_empleado` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_spanish2_ci;
 
 --
 -- Volcado de datos para la tabla `cliente`
@@ -149,17 +133,14 @@ INSERT INTO `cliente` (`id_cliente`, `nombre`, `nombre_empresa`, `direccion`, `t
 -- Estructura de tabla para la tabla `descuento`
 --
 
-DROP TABLE IF EXISTS `descuento`;
-CREATE TABLE IF NOT EXISTS `descuento` (
-  `id_descuento` int(11) NOT NULL AUTO_INCREMENT,
+CREATE TABLE `descuento` (
+  `id_descuento` int(11) NOT NULL,
   `nombre` varchar(45) COLLATE utf8_spanish2_ci NOT NULL,
   `valor` double NOT NULL,
   `descripcion` varchar(45) COLLATE utf8_spanish2_ci NOT NULL,
   `sede_id_sede` int(11) NOT NULL,
   `fecha` date NOT NULL,
-  `empleado_id_empleado` int(11) NOT NULL,
-  PRIMARY KEY (`id_descuento`),
-  KEY `descuento_sede_fk` (`sede_id_sede`)
+  `empleado_id_empleado` int(11) NOT NULL
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_spanish2_ci;
 
 -- --------------------------------------------------------
@@ -168,9 +149,8 @@ CREATE TABLE IF NOT EXISTS `descuento` (
 -- Estructura de tabla para la tabla `detalle_factura`
 --
 
-DROP TABLE IF EXISTS `detalle_factura`;
-CREATE TABLE IF NOT EXISTS `detalle_factura` (
-  `id_detallef` int(11) NOT NULL AUTO_INCREMENT,
+CREATE TABLE `detalle_factura` (
+  `id_detallef` int(11) NOT NULL,
   `cantidad` int(11) NOT NULL,
   `precio_venta` double NOT NULL,
   `total_descuento` double NOT NULL,
@@ -181,12 +161,7 @@ CREATE TABLE IF NOT EXISTS `detalle_factura` (
   `descuento_id_descuento` int(11) NOT NULL,
   `impuesto_id_impuestos` int(11) NOT NULL,
   `fecha` date NOT NULL,
-  `empleado_id_empleado` int(11) NOT NULL,
-  PRIMARY KEY (`id_detallef`),
-  KEY `detalle_factura_descuento_fk` (`descuento_id_descuento`),
-  KEY `detalle_factura_factura_fk` (`factura_id_factura`),
-  KEY `detalle_factura_impuesto_fk` (`impuesto_id_impuestos`),
-  KEY `detalle_factura_producto_fk` (`stock_id_stock`)
+  `empleado_id_empleado` int(11) NOT NULL
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_spanish2_ci;
 
 -- --------------------------------------------------------
@@ -195,9 +170,8 @@ CREATE TABLE IF NOT EXISTS `detalle_factura` (
 -- Estructura de tabla para la tabla `empleado`
 --
 
-DROP TABLE IF EXISTS `empleado`;
-CREATE TABLE IF NOT EXISTS `empleado` (
-  `id_empleado` int(11) NOT NULL AUTO_INCREMENT,
+CREATE TABLE `empleado` (
+  `id_empleado` int(11) NOT NULL,
   `nombre` varchar(45) COLLATE utf8_spanish2_ci NOT NULL,
   `correo` varchar(45) COLLATE utf8_spanish2_ci NOT NULL,
   `contrasena` varchar(45) COLLATE utf8_spanish2_ci NOT NULL,
@@ -207,19 +181,15 @@ CREATE TABLE IF NOT EXISTS `empleado` (
   `documento` int(11) NOT NULL,
   `tipo_cargo_id_cargo` int(11) NOT NULL,
   `sede_id_sede` int(11) NOT NULL,
-  `users_id` int(11) NOT NULL,
-  `fecha` date NOT NULL,
-  PRIMARY KEY (`id_empleado`),
-  KEY `empleado_sede_fk` (`sede_id_sede`),
-  KEY `empleado_tipo_cargo_fk` (`tipo_cargo_id_cargo`),
-  KEY `empleado_users_fk` (`users_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8 COLLATE=utf8_spanish2_ci;
+  `user_id_user` int(11) NOT NULL,
+  `fecha` date NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_spanish2_ci;
 
 --
 -- Volcado de datos para la tabla `empleado`
 --
 
-INSERT INTO `empleado` (`id_empleado`, `nombre`, `correo`, `contrasena`, `codigo`, `direccion`, `telefono`, `documento`, `tipo_cargo_id_cargo`, `sede_id_sede`, `users_id`, `fecha`) VALUES
+INSERT INTO `empleado` (`id_empleado`, `nombre`, `correo`, `contrasena`, `codigo`, `direccion`, `telefono`, `documento`, `tipo_cargo_id_cargo`, `sede_id_sede`, `user_id_user`, `fecha`) VALUES
 (1, 'juan', 'juan@gmail.com', '123', '321', 'calle 12', 31289362, 3123, 1, 1, 1, '2020-09-13'),
 (2, 'holman ', 'holman@gmail.com', '123', '1', 'calle 12', 1234, 3123, 1, 1, 10, '2020-12-12');
 
@@ -229,9 +199,8 @@ INSERT INTO `empleado` (`id_empleado`, `nombre`, `correo`, `contrasena`, `codigo
 -- Estructura de tabla para la tabla `factura`
 --
 
-DROP TABLE IF EXISTS `factura`;
-CREATE TABLE IF NOT EXISTS `factura` (
-  `id_factura` int(11) NOT NULL AUTO_INCREMENT,
+CREATE TABLE `factura` (
+  `id_factura` int(11) NOT NULL,
   `pago_total` double NOT NULL,
   `noproductos` int(11) NOT NULL,
   `fecha` datetime NOT NULL,
@@ -239,11 +208,7 @@ CREATE TABLE IF NOT EXISTS `factura` (
   `tipo_pago_id_tpago` int(11) NOT NULL,
   `empleado_id_empleado` int(11) NOT NULL,
   `cliente_id_cliente` int(11) NOT NULL,
-  `sede_id_sede` int(11) NOT NULL,
-  PRIMARY KEY (`id_factura`),
-  KEY `factura_cliente_fk` (`cliente_id_cliente`),
-  KEY `factura_empleado_fk` (`empleado_id_empleado`),
-  KEY `factura_tipo_pago_fk` (`tipo_pago_id_tpago`)
+  `sede_id_sede` int(11) NOT NULL
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_spanish2_ci;
 
 -- --------------------------------------------------------
@@ -252,11 +217,9 @@ CREATE TABLE IF NOT EXISTS `factura` (
 -- Estructura de tabla para la tabla `modulos`
 --
 
-DROP TABLE IF EXISTS `modulos`;
-CREATE TABLE IF NOT EXISTS `modulos` (
-  `id_modulo` int(11) NOT NULL AUTO_INCREMENT,
-  `nombre` varchar(20) COLLATE utf8_spanish2_ci NOT NULL,
-  PRIMARY KEY (`id_modulo`)
+CREATE TABLE `modulos` (
+  `id_modulo` int(11) NOT NULL,
+  `nombre` varchar(20) COLLATE utf8_spanish2_ci NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_spanish2_ci;
 
 -- --------------------------------------------------------
@@ -265,20 +228,14 @@ CREATE TABLE IF NOT EXISTS `modulos` (
 -- Estructura de tabla para la tabla `m_stock`
 --
 
-DROP TABLE IF EXISTS `m_stock`;
-CREATE TABLE IF NOT EXISTS `m_stock` (
-  `id_mstock` int(11) NOT NULL AUTO_INCREMENT,
+CREATE TABLE `m_stock` (
+  `id_mstock` int(11) NOT NULL,
   `fecha` datetime NOT NULL,
   `stock_id_stock` int(11) NOT NULL,
   `sede_id_sede` int(11) NOT NULL,
   `sede_id_sede1` int(11) NOT NULL,
   `t_movimiento_id_tmovimiento` int(11) NOT NULL,
-  `empleado_id_empleado` int(11) NOT NULL,
-  PRIMARY KEY (`id_mstock`),
-  KEY `m_stock_sede_fk` (`sede_id_sede`),
-  KEY `m_stock_sede_fkv2` (`sede_id_sede1`),
-  KEY `m_stock_stock_fk` (`stock_id_stock`),
-  KEY `m_stock_t_movimiento_fk` (`t_movimiento_id_tmovimiento`)
+  `empleado_id_empleado` int(11) NOT NULL
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_spanish2_ci;
 
 -- --------------------------------------------------------
@@ -287,9 +244,8 @@ CREATE TABLE IF NOT EXISTS `m_stock` (
 -- Estructura de tabla para la tabla `proveedor`
 --
 
-DROP TABLE IF EXISTS `proveedor`;
-CREATE TABLE IF NOT EXISTS `proveedor` (
-  `id_proveedor` int(11) NOT NULL AUTO_INCREMENT,
+CREATE TABLE `proveedor` (
+  `id_proveedor` int(11) NOT NULL,
   `nombre_empresa` varchar(45) COLLATE utf8_spanish2_ci NOT NULL,
   `nombre_proveedor` varchar(45) COLLATE utf8_spanish2_ci NOT NULL,
   `direccion` varchar(45) COLLATE utf8_spanish2_ci NOT NULL,
@@ -298,8 +254,7 @@ CREATE TABLE IF NOT EXISTS `proveedor` (
   `documento` int(11) NOT NULL,
   `verificacion_nit` int(11) DEFAULT NULL,
   `fecha` date NOT NULL,
-  `empleado_id_empleado` int(11) NOT NULL,
-  PRIMARY KEY (`id_proveedor`)
+  `empleado_id_empleado` int(11) NOT NULL
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_spanish2_ci;
 
 -- --------------------------------------------------------
@@ -308,11 +263,9 @@ CREATE TABLE IF NOT EXISTS `proveedor` (
 -- Estructura de tabla para la tabla `p_tiempo`
 --
 
-DROP TABLE IF EXISTS `p_tiempo`;
-CREATE TABLE IF NOT EXISTS `p_tiempo` (
-  `id_periodo` int(11) NOT NULL AUTO_INCREMENT,
-  `nombre` varchar(45) COLLATE utf8_spanish2_ci NOT NULL,
-  PRIMARY KEY (`id_periodo`)
+CREATE TABLE `p_tiempo` (
+  `id_periodo` int(11) NOT NULL,
+  `nombre` varchar(45) COLLATE utf8_spanish2_ci NOT NULL
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_spanish2_ci;
 
 -- --------------------------------------------------------
@@ -321,17 +274,13 @@ CREATE TABLE IF NOT EXISTS `p_tiempo` (
 -- Estructura de tabla para la tabla `reporte_inventario`
 --
 
-DROP TABLE IF EXISTS `reporte_inventario`;
-CREATE TABLE IF NOT EXISTS `reporte_inventario` (
-  `id_rInventario` int(11) NOT NULL AUTO_INCREMENT,
+CREATE TABLE `reporte_inventario` (
+  `id_rInventario` int(11) NOT NULL,
   `fechaInicial` date NOT NULL,
   `fechaFinal` date NOT NULL,
   `fechaActual` date NOT NULL,
   `empleado_id_empleado` int(11) NOT NULL,
-  `sede_id_sede` int(11) NOT NULL,
-  PRIMARY KEY (`id_rInventario`),
-  KEY `empleado_id_empleado` (`empleado_id_empleado`),
-  KEY `sede_id_sede` (`sede_id_sede`)
+  `sede_id_sede` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_spanish2_ci;
 
 -- --------------------------------------------------------
@@ -340,15 +289,13 @@ CREATE TABLE IF NOT EXISTS `reporte_inventario` (
 -- Estructura de tabla para la tabla `reporte_ventas`
 --
 
-DROP TABLE IF EXISTS `reporte_ventas`;
-CREATE TABLE IF NOT EXISTS `reporte_ventas` (
-  `id_rVentas` int(11) NOT NULL AUTO_INCREMENT,
+CREATE TABLE `reporte_ventas` (
+  `id_rVentas` int(11) NOT NULL,
   `fechaInicial` date NOT NULL,
   `fechaFinal` date NOT NULL,
   `fechaActual` date NOT NULL,
   `sede_id_sede` int(11) NOT NULL,
-  `empleado_id_empleado` int(11) NOT NULL,
-  PRIMARY KEY (`id_rVentas`)
+  `empleado_id_empleado` int(11) NOT NULL
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_spanish2_ci;
 
 -- --------------------------------------------------------
@@ -357,19 +304,16 @@ CREATE TABLE IF NOT EXISTS `reporte_ventas` (
 -- Estructura de tabla para la tabla `sede`
 --
 
-DROP TABLE IF EXISTS `sede`;
-CREATE TABLE IF NOT EXISTS `sede` (
-  `id_sede` int(11) NOT NULL AUTO_INCREMENT,
+CREATE TABLE `sede` (
+  `id_sede` int(11) NOT NULL,
   `nombre_sede` varchar(45) COLLATE utf8_spanish2_ci NOT NULL,
   `ciudad` varchar(45) COLLATE utf8_spanish2_ci NOT NULL,
   `descripcion` varchar(45) COLLATE utf8_spanish2_ci NOT NULL,
   `direccion` varchar(45) COLLATE utf8_spanish2_ci NOT NULL,
   `telefono` int(11) NOT NULL,
   `fecha` date NOT NULL,
-  `empleado_id_empleado` int(11) NOT NULL,
-  PRIMARY KEY (`id_sede`),
-  KEY `empleado_id_empleado` (`empleado_id_empleado`)
-) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8 COLLATE=utf8_spanish2_ci;
+  `empleado_id_empleado` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_spanish2_ci;
 
 --
 -- Volcado de datos para la tabla `sede`
@@ -389,9 +333,8 @@ INSERT INTO `sede` (`id_sede`, `nombre_sede`, `ciudad`, `descripcion`, `direccio
 -- Estructura de tabla para la tabla `stock`
 --
 
-DROP TABLE IF EXISTS `stock`;
-CREATE TABLE IF NOT EXISTS `stock` (
-  `id_stock` int(11) NOT NULL AUTO_INCREMENT,
+CREATE TABLE `stock` (
+  `id_stock` int(11) NOT NULL,
   `disponibilidad` char(1) COLLATE utf8_spanish2_ci NOT NULL,
   `cantidad` int(11) NOT NULL,
   `fecha_registro` datetime NOT NULL,
@@ -400,11 +343,7 @@ CREATE TABLE IF NOT EXISTS `stock` (
   `proveedor_id_proveedor` int(11) NOT NULL,
   `empleado_id_empleado` int(11) NOT NULL,
   `dado_de_baja` tinyint(1) NOT NULL,
-  `transformacion_stock_id` int(11) NOT NULL,
-  PRIMARY KEY (`id_stock`),
-  KEY `stock_producto_fk` (`producto_id_producto`),
-  KEY `stock_proveedor_fk` (`proveedor_id_proveedor`),
-  KEY `stock_sede_fk` (`sede_id_sede`)
+  `transformacion_stock_id` int(11) NOT NULL
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_spanish2_ci;
 
 -- --------------------------------------------------------
@@ -413,15 +352,13 @@ CREATE TABLE IF NOT EXISTS `stock` (
 -- Estructura de tabla para la tabla `tipo_cargo`
 --
 
-DROP TABLE IF EXISTS `tipo_cargo`;
-CREATE TABLE IF NOT EXISTS `tipo_cargo` (
-  `id_cargo` int(11) NOT NULL AUTO_INCREMENT,
+CREATE TABLE `tipo_cargo` (
+  `id_cargo` int(11) NOT NULL,
   `nombre` varchar(45) COLLATE utf8_spanish2_ci NOT NULL,
   `descripcion` varchar(45) COLLATE utf8_spanish2_ci NOT NULL,
   `fecha` date NOT NULL,
-  `empleado_id_empleado` int(11) NOT NULL,
-  PRIMARY KEY (`id_cargo`)
-) ENGINE=InnoDB AUTO_INCREMENT=25 DEFAULT CHARSET=utf8 COLLATE=utf8_spanish2_ci;
+  `empleado_id_empleado` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_spanish2_ci;
 
 --
 -- Volcado de datos para la tabla `tipo_cargo`
@@ -442,12 +379,10 @@ INSERT INTO `tipo_cargo` (`id_cargo`, `nombre`, `descripcion`, `fecha`, `emplead
 -- Estructura de tabla para la tabla `tipo_pago`
 --
 
-DROP TABLE IF EXISTS `tipo_pago`;
-CREATE TABLE IF NOT EXISTS `tipo_pago` (
-  `id_tpago` int(11) NOT NULL AUTO_INCREMENT,
+CREATE TABLE `tipo_pago` (
+  `id_tpago` int(11) NOT NULL,
   `nombre` varchar(45) COLLATE utf8_spanish2_ci NOT NULL,
-  `descripción` varchar(45) COLLATE utf8_spanish2_ci NOT NULL,
-  PRIMARY KEY (`id_tpago`)
+  `descripción` varchar(45) COLLATE utf8_spanish2_ci NOT NULL
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_spanish2_ci;
 
 -- --------------------------------------------------------
@@ -456,15 +391,12 @@ CREATE TABLE IF NOT EXISTS `tipo_pago` (
 -- Estructura de tabla para la tabla `transformacion_stock`
 --
 
-DROP TABLE IF EXISTS `transformacion_stock`;
-CREATE TABLE IF NOT EXISTS `transformacion_stock` (
-  `id_transformacion` int(11) NOT NULL AUTO_INCREMENT,
+CREATE TABLE `transformacion_stock` (
+  `id_transformacion` int(11) NOT NULL,
   `nombre` varchar(255) COLLATE utf8_spanish2_ci NOT NULL,
   `descripcion` varchar(500) COLLATE utf8_spanish2_ci NOT NULL,
   `empleado_id_empleado` int(11) NOT NULL,
-  `fecha` date NOT NULL,
-  PRIMARY KEY (`id_transformacion`),
-  KEY `empleado_id_empleado` (`empleado_id_empleado`)
+  `fecha` date NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_spanish2_ci;
 
 -- --------------------------------------------------------
@@ -473,12 +405,298 @@ CREATE TABLE IF NOT EXISTS `transformacion_stock` (
 -- Estructura de tabla para la tabla `t_movimiento`
 --
 
-DROP TABLE IF EXISTS `t_movimiento`;
-CREATE TABLE IF NOT EXISTS `t_movimiento` (
-  `id_tmovimiento` int(11) NOT NULL AUTO_INCREMENT,
-  `descripcion` varchar(45) COLLATE utf8_spanish2_ci NOT NULL,
-  PRIMARY KEY (`id_tmovimiento`)
+CREATE TABLE `t_movimiento` (
+  `id_tmovimiento` int(11) NOT NULL,
+  `descripcion` varchar(45) COLLATE utf8_spanish2_ci NOT NULL
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_spanish2_ci;
+
+--
+-- Índices para tablas volcadas
+--
+
+--
+-- Indices de la tabla `caja`
+--
+ALTER TABLE `caja`
+  ADD PRIMARY KEY (`id_caja`),
+  ADD KEY `caja_empleado_fk` (`empleado_id_empleado`),
+  ADD KEY `caja_sede_fk` (`sede_id_sede`);
+
+--
+-- Indices de la tabla `cargo_modulo`
+--
+ALTER TABLE `cargo_modulo`
+  ADD PRIMARY KEY (`id_cargoModulo`);
+
+--
+-- Indices de la tabla `categoria_cliente`
+--
+ALTER TABLE `categoria_cliente`
+  ADD PRIMARY KEY (`id_categoria`);
+
+--
+-- Indices de la tabla `categoria_producto_trans`
+--
+ALTER TABLE `categoria_producto_trans`
+  ADD PRIMARY KEY (`id_categoria`),
+  ADD KEY `empleado_id_empleado` (`empleado_id_empleado`);
+
+--
+-- Indices de la tabla `cliente`
+--
+ALTER TABLE `cliente`
+  ADD PRIMARY KEY (`id_cliente`),
+  ADD KEY `empleado_id_empleado` (`empleado_id_empleado`),
+  ADD KEY `sede_id_sede` (`sede_id_sede`) USING BTREE,
+  ADD KEY `categoria_cliente_id_categoria` (`categoria_cliente_id_categoria`);
+
+--
+-- Indices de la tabla `descuento`
+--
+ALTER TABLE `descuento`
+  ADD PRIMARY KEY (`id_descuento`),
+  ADD KEY `descuento_sede_fk` (`sede_id_sede`);
+
+--
+-- Indices de la tabla `detalle_factura`
+--
+ALTER TABLE `detalle_factura`
+  ADD PRIMARY KEY (`id_detallef`),
+  ADD KEY `detalle_factura_descuento_fk` (`descuento_id_descuento`),
+  ADD KEY `detalle_factura_factura_fk` (`factura_id_factura`),
+  ADD KEY `detalle_factura_impuesto_fk` (`impuesto_id_impuestos`),
+  ADD KEY `detalle_factura_producto_fk` (`stock_id_stock`);
+
+--
+-- Indices de la tabla `empleado`
+--
+ALTER TABLE `empleado`
+  ADD PRIMARY KEY (`id_empleado`),
+  ADD KEY `empleado_sede_fk` (`sede_id_sede`),
+  ADD KEY `empleado_tipo_cargo_fk` (`tipo_cargo_id_cargo`),
+  ADD KEY `empleado_users_fk` (`user_id_user`);
+
+--
+-- Indices de la tabla `factura`
+--
+ALTER TABLE `factura`
+  ADD PRIMARY KEY (`id_factura`),
+  ADD KEY `factura_cliente_fk` (`cliente_id_cliente`),
+  ADD KEY `factura_empleado_fk` (`empleado_id_empleado`),
+  ADD KEY `factura_tipo_pago_fk` (`tipo_pago_id_tpago`);
+
+--
+-- Indices de la tabla `modulos`
+--
+ALTER TABLE `modulos`
+  ADD PRIMARY KEY (`id_modulo`);
+
+--
+-- Indices de la tabla `m_stock`
+--
+ALTER TABLE `m_stock`
+  ADD PRIMARY KEY (`id_mstock`),
+  ADD KEY `m_stock_sede_fk` (`sede_id_sede`),
+  ADD KEY `m_stock_sede_fkv2` (`sede_id_sede1`),
+  ADD KEY `m_stock_stock_fk` (`stock_id_stock`),
+  ADD KEY `m_stock_t_movimiento_fk` (`t_movimiento_id_tmovimiento`);
+
+--
+-- Indices de la tabla `proveedor`
+--
+ALTER TABLE `proveedor`
+  ADD PRIMARY KEY (`id_proveedor`);
+
+--
+-- Indices de la tabla `p_tiempo`
+--
+ALTER TABLE `p_tiempo`
+  ADD PRIMARY KEY (`id_periodo`);
+
+--
+-- Indices de la tabla `reporte_inventario`
+--
+ALTER TABLE `reporte_inventario`
+  ADD PRIMARY KEY (`id_rInventario`),
+  ADD KEY `empleado_id_empleado` (`empleado_id_empleado`),
+  ADD KEY `sede_id_sede` (`sede_id_sede`);
+
+--
+-- Indices de la tabla `reporte_ventas`
+--
+ALTER TABLE `reporte_ventas`
+  ADD PRIMARY KEY (`id_rVentas`);
+
+--
+-- Indices de la tabla `sede`
+--
+ALTER TABLE `sede`
+  ADD PRIMARY KEY (`id_sede`),
+  ADD KEY `empleado_id_empleado` (`empleado_id_empleado`);
+
+--
+-- Indices de la tabla `stock`
+--
+ALTER TABLE `stock`
+  ADD PRIMARY KEY (`id_stock`),
+  ADD KEY `stock_producto_fk` (`producto_id_producto`),
+  ADD KEY `stock_proveedor_fk` (`proveedor_id_proveedor`),
+  ADD KEY `stock_sede_fk` (`sede_id_sede`);
+
+--
+-- Indices de la tabla `tipo_cargo`
+--
+ALTER TABLE `tipo_cargo`
+  ADD PRIMARY KEY (`id_cargo`);
+
+--
+-- Indices de la tabla `tipo_pago`
+--
+ALTER TABLE `tipo_pago`
+  ADD PRIMARY KEY (`id_tpago`);
+
+--
+-- Indices de la tabla `transformacion_stock`
+--
+ALTER TABLE `transformacion_stock`
+  ADD PRIMARY KEY (`id_transformacion`),
+  ADD KEY `empleado_id_empleado` (`empleado_id_empleado`);
+
+--
+-- Indices de la tabla `t_movimiento`
+--
+ALTER TABLE `t_movimiento`
+  ADD PRIMARY KEY (`id_tmovimiento`);
+
+--
+-- AUTO_INCREMENT de las tablas volcadas
+--
+
+--
+-- AUTO_INCREMENT de la tabla `caja`
+--
+ALTER TABLE `caja`
+  MODIFY `id_caja` int(11) NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT de la tabla `cargo_modulo`
+--
+ALTER TABLE `cargo_modulo`
+  MODIFY `id_cargoModulo` int(11) NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT de la tabla `categoria_cliente`
+--
+ALTER TABLE `categoria_cliente`
+  MODIFY `id_categoria` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+
+--
+-- AUTO_INCREMENT de la tabla `categoria_producto_trans`
+--
+ALTER TABLE `categoria_producto_trans`
+  MODIFY `id_categoria` int(11) NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT de la tabla `cliente`
+--
+ALTER TABLE `cliente`
+  MODIFY `id_cliente` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=19;
+
+--
+-- AUTO_INCREMENT de la tabla `descuento`
+--
+ALTER TABLE `descuento`
+  MODIFY `id_descuento` int(11) NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT de la tabla `detalle_factura`
+--
+ALTER TABLE `detalle_factura`
+  MODIFY `id_detallef` int(11) NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT de la tabla `empleado`
+--
+ALTER TABLE `empleado`
+  MODIFY `id_empleado` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+
+--
+-- AUTO_INCREMENT de la tabla `factura`
+--
+ALTER TABLE `factura`
+  MODIFY `id_factura` int(11) NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT de la tabla `modulos`
+--
+ALTER TABLE `modulos`
+  MODIFY `id_modulo` int(11) NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT de la tabla `m_stock`
+--
+ALTER TABLE `m_stock`
+  MODIFY `id_mstock` int(11) NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT de la tabla `proveedor`
+--
+ALTER TABLE `proveedor`
+  MODIFY `id_proveedor` int(11) NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT de la tabla `p_tiempo`
+--
+ALTER TABLE `p_tiempo`
+  MODIFY `id_periodo` int(11) NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT de la tabla `reporte_inventario`
+--
+ALTER TABLE `reporte_inventario`
+  MODIFY `id_rInventario` int(11) NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT de la tabla `reporte_ventas`
+--
+ALTER TABLE `reporte_ventas`
+  MODIFY `id_rVentas` int(11) NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT de la tabla `sede`
+--
+ALTER TABLE `sede`
+  MODIFY `id_sede` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+
+--
+-- AUTO_INCREMENT de la tabla `stock`
+--
+ALTER TABLE `stock`
+  MODIFY `id_stock` int(11) NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT de la tabla `tipo_cargo`
+--
+ALTER TABLE `tipo_cargo`
+  MODIFY `id_cargo` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=25;
+
+--
+-- AUTO_INCREMENT de la tabla `tipo_pago`
+--
+ALTER TABLE `tipo_pago`
+  MODIFY `id_tpago` int(11) NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT de la tabla `transformacion_stock`
+--
+ALTER TABLE `transformacion_stock`
+  MODIFY `id_transformacion` int(11) NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT de la tabla `t_movimiento`
+--
+ALTER TABLE `t_movimiento`
+  MODIFY `id_tmovimiento` int(11) NOT NULL AUTO_INCREMENT;
 
 --
 -- Restricciones para tablas volcadas
