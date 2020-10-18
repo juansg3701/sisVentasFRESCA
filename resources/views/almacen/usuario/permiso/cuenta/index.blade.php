@@ -96,13 +96,13 @@
 								<td>{{ $usu->id}}</td>
 								<td>{{ $usu->name}}</td>
 								<td>{{ $usu->email}}</td>
-								@foreach($modulosP as $mp)
+								@foreach($cargos as $mp)
 								@if($mp->id_cargo==$usu->tipo_cargo_id_cargo)
 								<td>{{ $mp->nombre}}</td>
 								@endif
 								@endforeach
 
-								@foreach($sedesP as $sp)
+								@foreach($sedes as $sp)
 								@if($sp->id_sede==$usu->sede_id_sede)
 								<td>{{ $sp->nombre_sede}}</td>
 								@endif
