@@ -13,4 +13,7 @@ User: FzhnWzfWhw
 Contraseña: 4lwAqoEP8s
 
 
+USUARIO GENERAL: juan.sanchez13@uptc.edu.co
+CONTRASEÑA: juliana
+
 https://remotemysql.com/login.php
