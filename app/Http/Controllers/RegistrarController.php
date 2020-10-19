@@ -54,7 +54,7 @@ class RegistrarController extends Controller
 
 	 		$nombreR=$request->get('name');
 	 		$correoR=$request->get('email');
-	 		$contrasenaR=bcrypt($request->get('password'));
+	 		$contrasenaR=$request->get('password');
 	 		$cargoR=$request->get('tipo_cargo_id_cargo');
 	 		$sedeR=$request->get('sede_id_sede');
 	 		$codigoR=$request->get('codigo');
@@ -72,7 +72,7 @@ class RegistrarController extends Controller
 	 				$usuario = new User;
 			 		$usuario->name=$nombreR;
 			 		$usuario->email=$correoR;
-			 		$usuario->password=$contrasenaR;
+			 		$usuario->password=bcrypt($contrasenaR);
 			 		$usuario->tipo_cargo_id_cargo=$cargoR;
 			 		$usuario->sede_id_sede=$sedeR;
 			 		$usuario->superusuario=$request->get('superusuario');
@@ -80,7 +80,7 @@ class RegistrarController extends Controller
 
 			 		$empleadoU= new Usuario;
 			 		$empleadoU->nombre=$nombreR;
-			 		$empleadoU->users_id=$usuario->id;
+			 		$empleadoU->user_id_user=$usuario->id;
 			 		$empleadoU->correo=$correoR;
 			 		$empleadoU->contrasena=$contrasenaR;	
 			 		$empleadoU->tipo_cargo_id_cargo=$cargoR;

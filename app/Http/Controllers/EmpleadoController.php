@@ -86,6 +86,7 @@ class EmpleadoController extends Controller
 	 		return view("almacen/nomina/empleado.edit",["cargos"=>$cargos,"sedes"=>$sedes,"usuario"=>Usuario::findOrFail($id), "modulos"=>$modulos]);
 	 	}
 	 	
+	 	//Actualizacion de datos en las cuentas
 	 	public function update(NominaUsuFormRequest $request, $id){
 	 		$id=$id;
 	 		$correoR=$request->get('correo');
@@ -124,7 +125,7 @@ class EmpleadoController extends Controller
 				 		}else{
 
 				 			$empleadoR=DB::table('empleado')
-				 			->select("users_id as user_id")
+				 			->select("user_id_user as user_id")
 					 		->where('id_empleado','=',$id)
 					 		->orderBy('id_empleado','desc')->get();
 
@@ -149,7 +150,7 @@ class EmpleadoController extends Controller
 					 		$usuario->tipo_cargo_id_cargo=$cargoR;
 					 		$usuario->sede_id_sede=$sedeR;
 					 		$usuario->codigo=$codigoR;
-					 		$usuario->users_id=$us->id;
+					 		$usuario->user_id_user=$us->id;
 					 		$usuario->update();
 				 			}else{
 				 			
@@ -163,14 +164,14 @@ class EmpleadoController extends Controller
 					 		$usuario->codigo=$codigoR;
 					 		
 
-					 		$us = User::findOrFail($usuario->users_id);
+					 		$us = User::findOrFail($usuario->user_id_user);
 							$us->name=$nombreR;
 							$us->email=$correoR;
 							$us->tipo_cargo_id_cargo=$cargoR;
 							$us->sede_id_sede=$sedeR;
 							$us->update();
 
-							$usuario->users_id=$us->id;
+							$usuario->user_id_user=$us->id;
 					 		$usuario->update();
 				 			}
 
@@ -185,9 +186,6 @@ class EmpleadoController extends Controller
 	 				return back()->with('errormsj','¡Correo ya registrado!');
 	 			}	
 
-
-	 		
-	 		
 	 	}
 
 	 	public function destroy($id){
