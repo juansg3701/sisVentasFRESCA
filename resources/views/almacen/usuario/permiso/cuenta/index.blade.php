@@ -3,9 +3,25 @@
 	
 <head>
 	<title>Usuario-Cuentas</title>
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 </head>
 
 <body>
+	<!--Código de JQuery para mostrar/esconder los campos del atributo documento-->
+	<script type="text/javascript">
+		$(function() {
+    		$("#btn_search").on("click", function() {
+    			$("#divBuscar").prop("style", "display:hidden");
+    			$("#btn_search").prop("style", "display:none");
+    			$("#btn_search2").prop("style", "display:hidden");
+    		});
+    		$("#btn_search2").on("click", function() {
+    			$("#divBuscar").prop("style", "display:none");
+    			$("#btn_search2").prop("style", "display:none");
+    			$("#btn_search").prop("style", "display:hidden");
+    		});
+		});
+	</script>
 	<!--Panel superior-->
 	<div class="breadcrumbs">
 		<div class="breadcrumbs-inner">
@@ -49,9 +65,19 @@
 										<div class="card-body card-block" align="center">
 											<div id=formulario>
 												<div class="form-group">
-													<!--Incluir la ventana modal de búsqueda-->	
-													@include('almacen.usuario.permiso.cuenta.search')
-													<a href="{{url('/')}}" class="btn btn-danger">Volver</a>
+													<div align="center">
+														<a href="{{url('/')}}" class="btn btn-danger">Volver</a>
+													</div><br>
+
+													<div class="form-group">
+														<button id="btn_search" class="btn btn-outline-secondary btn-lg btn-block" style="display:hidden">Establecer filtros de búsqueda</button>
+														<button id="btn_search2" class="btn btn-outline-secondary btn-lg btn-block" style="display:none">Ocultar filtros de búsqueda</button>
+													</div>
+													<div id="divBuscar" class="form-group" style="display:none">
+														<!--Incluir la ventana modal de búsqueda-->	
+														@include('almacen.usuario.permiso.cuenta.search')
+													</div>
+													
 												</div>
 											</div>
 										</div>

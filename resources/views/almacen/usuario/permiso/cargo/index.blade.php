@@ -148,7 +148,6 @@
 						<h3 class="pb-2 display-5">CARGOS REGISTRADOS</h3>
 					</div>
 					<div class="card-body">
-						<h4 class="pb-2 display-5">Nombre del cargo:</h3>
 						@include('almacen.usuario.permiso.cargo.search')
 						<table id="bootstrap-data-table" class="table table-striped table-bordered">
 						<thead>
