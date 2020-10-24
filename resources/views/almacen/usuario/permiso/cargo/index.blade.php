@@ -86,20 +86,16 @@
 										<div>Empleado:</div>
 									</div>
 									<div class="form-group col-sm-8">
-										<input type="hidden" name="empleado_id_empleado" value="{{Auth::user()->id}}">
+										
 
 										<select name="empleado_id_empleado" class="form-control" disabled="">
 											@foreach($usuarios as $usu)
 											@if(Auth::user()->id==$usu->user_id_user)
 											<option value="{{$usu->id_empleado}}">{{$usu->nombre}}</option>
+											<input type="hidden" name="empleado_id_empleado" value="{{$usu->id_empleado}}">
 											@endif
 											@endforeach
 
-											@foreach($usuarios as $usu)
-											@if(Auth::user()->id!=$usu->user_id_user)
-											<option value="{{$usu->id_empleado}}">{{$usu->nombre}}</option>
-											@endif
-											@endforeach	
 										</select><br>
 									</div>
 								</div>
@@ -148,6 +144,7 @@
 						<h3 class="pb-2 display-5">CARGOS REGISTRADOS</h3>
 					</div>
 					<div class="card-body">
+						<div class="table-responsive">
 						@include('almacen.usuario.permiso.cargo.search')
 						<table id="bootstrap-data-table" class="table table-striped table-bordered">
 						<thead>
@@ -171,6 +168,7 @@
 						@include('almacen.usuario.permiso.cargo.modal')
 						@endforeach
 					</table>
+				</div>
 				</div>
 				{{$cargos->render()}}
 				</div>
