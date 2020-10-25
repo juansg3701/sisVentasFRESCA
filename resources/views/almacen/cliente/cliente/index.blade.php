@@ -77,17 +77,7 @@
 														<a href="{{URL::action('CategoriaClienteController@index',0)}}"><button class="btn btn-info">Categoría Cliente</button></a>
 														<!--<a href="{{url('almacen/facturacion/listaVentas')}}" class="btn btn-warning">Ventas</a>-->
 														<a href="{{url('/')}}" class="btn btn-danger">Regresar</a>
-													</div><br>
-
-													<div class="form-group">
-														<button id="btn_search" class="btn btn-outline-secondary btn-lg btn-block" style="display:hidden">Establecer filtros de búsqueda</button>
-														<button id="btn_search2" class="btn btn-outline-secondary btn-lg btn-block" style="display:none">Ocultar filtros de búsqueda</button>
 													</div>
-													<div id="divBuscar" class="form-group" style="display:none">
-														<!--Incluir la ventana modal de búsqueda-->	
-														@include('almacen.cliente.cliente.search')
-													</div>
-
 
 												</div>
 											</div>
@@ -101,7 +91,6 @@
 			</div>
 		</div>
 	</div>
-
 </body>
 @endsection
 
@@ -117,6 +106,17 @@
 					<div class="card">
 						<div class="card-header" align="center">
 							<h3 class="pb-2 display-5">CLIENTES REGISTRADOS</h3>
+							
+							<div class="form-group col-sm-8" align="center">
+								<button id="btn_search" class="btn btn-outline-secondary btn-lg btn-block" style="display:hidden">Establecer filtros de búsqueda</button>
+								<button id="btn_search2" class="btn btn-outline-secondary btn-lg btn-block" style="display:none">Ocultar filtros de búsqueda</button>
+							</div>
+			
+							<div id="divBuscar" class="form-group col-sm-8" align="center" style="display:none">
+								<!--Incluir la ventana modal de búsqueda-->	
+								@include('almacen.cliente.cliente.search')
+							</div>
+							
 						</div>
 
 						<div class="card-body">
@@ -129,7 +129,11 @@
 									<th>TELÉFONO</th>
 									<th>CORREO</th>
 									<th>NO. DOCUMENTO</th>
-									<th>NO. NIT</th>
+									<th>NIT</th>
+									<th>DÍGITO</th>
+									<th>EMPLEADO</th>
+									<th>SEDE</th>
+									<th>FECHA REG.</th>
 									<th colspan="2">OPCIONES</th>
 								</thead>
 								@foreach($clientes as $cli)
@@ -140,7 +144,11 @@
 									<td>{{ $cli->telefono}}</td>
 									<td>{{ $cli->correo}}</td>
 									<td>{{ $cli->documento}}</td>
+									<td>{{ $cli->nit}}</td>
 									<td>{{ $cli->verificacion_nit}}</td>
+									<td>{{ $cli->empleado_id_empleado}}</td>
+									<td>{{ $cli->sede_id_sede}}</td>
+									<td>{{ $cli->fecha}}</td>
 									<td>
 										<!--Botones editar y eliminar de la tabla-->
 										<a href="{{URL::action('ClienteController@edit',$cli->id_cliente)}}"><button class="btn btn-outline-primary btn-sm">Editar</button></a></td>
@@ -160,5 +168,3 @@
 	</div>
 </div>
 @endsection
-
-

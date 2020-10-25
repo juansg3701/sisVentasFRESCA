@@ -88,7 +88,8 @@
 										<div>Fecha:</div>
 									</div>
 									<div class="form-group col-sm-8">
-										<input type="datetime" name="fecha" value="<?php echo date("Y/m/d"); ?>" class="form-control" readonly>
+										<input type="datetime" name="" value="<?php echo date("Y/m/d"); ?>" class="form-control" disabled="true">
+										<input type="hidden" name="fecha" value="<?php echo date("Y/m/d"); ?>" class="form-control">
 									</div>
 								</div>
 
@@ -97,19 +98,13 @@
 										<div>Empleado:</div>
 									</div>
 									<div class="form-group col-sm-8">
-										<input type="hidden" name="empleado_id_empleado" value="{{Auth::user()->id}}">
-										<select name="empleado_id_empleado" class="form-control" readonly>
+										<select name="" class="form-control" disabled="true">
 											@foreach($usuarios as $usu)
 											@if(Auth::user()->id==$usu->user_id_user)
 											<option value="{{$usu->id_empleado}}">{{$usu->nombre}}</option>
+											<input type="hidden" name="empleado_id_empleado" value="{{$usu->id_empleado}}">
 											@endif
 											@endforeach
-
-											@foreach($usuarios as $usu)
-											@if(Auth::user()->id!=$usu->user_id_user)
-											<option value="{{$usu->id_empleado}}">{{$usu->nombre}}</option>
-											@endif
-											@endforeach	
 										</select>
 									</div>
 								</div>
@@ -119,20 +114,11 @@
 										<div>Sede:</div>
 									</div>
 									<div class="form-group col-sm-8">
-										<input type="hidden" name="sede_id_sede" value="{{Auth::user()->id}}">
-
-										<select name="sede_id_sede" class="form-control" readonly>
+										<select name="sede_id_sede" class="form-control" disabled="true">
 											@foreach($sedes as $s)
 											@if( Auth::user()->sede_id_sede ==$s->id_sede)
 											<option value="{{$s->id_sede}}" >{{$s->nombre_sede}}</option>
-											aa
-											@endif
-											@endforeach
-
-											@foreach($sedes as $s)
-											@if( Auth::user()->sede_id_sede!=$s->id_sede)
-											<option value="{{$s->id_sede}}">{{$s->nombre_sede}}</option>
-											aa
+											<input type="hidden" name="sede_id_sede" value="{{$s->id_sede}}">
 											@endif
 											@endforeach
 										</select><br>
@@ -177,13 +163,19 @@
 						<table id="bootstrap-data-table" class="table table-striped table-bordered">
 							<thead>
 								<th>NOMBRE</th>
-								<th>DESCRIPCIÓN</th>
+								<th>DESCRIPCIÓN</th>	
+								<th>EMPLEADO</th>
+								<th>SEDE</th>
+								<th>FECHA REG.</th>
 								<th>OPCIONES</th>
 							</thead>
 							@foreach($categorias as $cat)
 							<tr>
 								<td>{{ $cat->nombre}}</td>
 								<td>{{ $cat->descripcion}}</td>
+								<td>{{ $cat->empleado_id_empleado}}</td>
+								<td>{{ $cat->sede_id_sede}}</td>
+								<td>{{ $cat->fecha}}</td>
 								<td>
 									<a href="{{URL::action('CategoriaClienteController@edit',$cat->id_categoria)}}"><button class="btn btn-info">Editar</button></a>
 									<a href="" data-target="#modal-delete-{{$cat->id_categoria}}" data-toggle="modal"><button class="btn btn-danger">Eliminar</button></a>

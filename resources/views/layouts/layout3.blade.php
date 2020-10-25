@@ -133,7 +133,7 @@
               @foreach($modulos as $m)
                 @if($m->id_modulo==4)
                  <li>
-                        <a href="{{url('almacen/cliente')}}"><i class="menu-icon fa fa-group"></i>Clientes </a>
+                        <a href="{{url('almacen/cliente/cliente')}}"><i class="menu-icon fa fa-group"></i>Clientes </a>
                     </li>
                   @endif
               @endforeach
