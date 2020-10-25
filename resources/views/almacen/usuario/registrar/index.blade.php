@@ -156,7 +156,7 @@
 									</div>
 									<div class="form-group col-sm-8">
 										
-										<input id="codigo" type="text" class="form-control" name="telefono">
+										<input id="codigo" type="number" class="form-control" name="telefono">
 									</div>
 								</div>
 								<div class="form-row">
@@ -165,7 +165,7 @@
 									</div>
 									<div class="form-group col-sm-8">
 										
-										<input id="codigo" type="text" class="form-control" name="documento">
+										<input id="codigo" type="number" class="form-control" name="documento">
 									</div>
 								</div>
 								<div class="form-row">

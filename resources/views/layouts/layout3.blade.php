@@ -113,9 +113,9 @@
                         <a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> <i class="menu-icon fa fa-user"></i>Empleados</a>
                         <ul class="sub-menu children dropdown-menu">                        
 
-                            <li><i class="fa fa-sign-in"></i><a href="{{url('almacen/usuario/permiso/cargo')}}">Registrarse</a>
+                            <li><i class="fa fa-sign-in"></i><a href="{{url('almacen/usuario/registrar')}}">Registrarse</a>
                             </li>
-                            <li><i class="fa fa-users"></i><a href="{{url('almacen/usuario/permiso/usuario')}}">Lista de empleados</a>
+                            <li><i class="fa fa-users"></i><a href="{{url('almacen/nomina/empleado')}}">Lista de empleados</a>
                             </li>                         
                         </ul>
                     </li>
@@ -125,7 +125,7 @@
               @foreach($modulos as $m)
                 @if($m->id_modulo==3)
                      <li>
-                        <a href="{{url('almacen/usuario/registrar')}}"><i class="menu-icon fa fa-group"></i>Proveedores </a>
+                        <a href="{{url('almacen/proveedor')}}"><i class="menu-icon fa fa-group"></i>Proveedores </a>
                     </li>
                   @endif
               @endforeach
@@ -133,7 +133,7 @@
               @foreach($modulos as $m)
                 @if($m->id_modulo==4)
                  <li>
-                        <a href="{{url('almacen/usuario/registrar')}}"><i class="menu-icon fa fa-group"></i>Clientes </a>
+                        <a href="{{url('almacen/cliente')}}"><i class="menu-icon fa fa-group"></i>Clientes </a>
                     </li>
                   @endif
               @endforeach
@@ -141,7 +141,7 @@
               @foreach($modulos as $m)
                 @if($m->id_modulo==5)
                     <li>
-                        <a href="{{url('almacen/usuario/registrar')}}"><i class="menu-icon fa fa-globe"></i>Sedes </a>
+                        <a href="{{url('almacen/sede')}}"><i class="menu-icon fa fa-globe"></i>Sedes </a>
                     </li>
                   @endif
               @endforeach
@@ -149,7 +149,7 @@
               @foreach($modulos as $m)
                 @if($m->id_modulo==6)
                 <li>
-                        <a href="{{url('almacen/usuario/registrar')}}"><i class="menu-icon fa fa-truck"></i>Devoluciones </a>
+                        <a href="{{url('almacen/pedidosDevoluciones/devoluciones')}}"><i class="menu-icon fa fa-truck"></i>Devoluciones </a>
                     </li>
                   @endif
               @endforeach
@@ -160,11 +160,11 @@
                         <a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> <i class="menu-icon fa fa-archive"></i>Inventario</a>
                         <ul class="sub-menu children dropdown-menu">                        
 
-                            <li><i class="fa fa-leaf"></i><a href="{{url('almacen/usuario/permiso/cargo')}}">Productos</a>
+                            <li><i class="fa fa-leaf"></i><a href="{{url('almacen/inventario/producto-sede/productoCompleto')}}">Productos</a>
                             </li>
-                            <li><i class="fa fa-shopping-cart"></i><a href="{{url('almacen/usuario/permiso/usuario')}}">Stock</a>
+                            <li><i class="fa fa-shopping-cart"></i><a href="{{url('almacen/inventario/proveedor-sede')}}">Stock</a>
                             </li> 
-                            <li><i class="fa fa-truck"></i><a href="{{url('almacen/usuario/permiso/usuario')}}">Movimiento entre sedes</a>
+                            <li><i class="fa fa-truck"></i><a href="{{url('almacen/inventario/movimiento-sede')}}">Movimiento entre sedes</a>
                             </li>                
                         </ul>
                     </li>
@@ -178,9 +178,9 @@
                         <a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> <i class="menu-icon fa fa-barcode"></i>Facturación</a>
                         <ul class="sub-menu children dropdown-menu">                        
 
-                            <li><i class="fa fa-shopping-cart"></i><a href="{{url('almacen/usuario/permiso/cargo')}}">Nueva venta</a>
+                            <li><i class="fa fa-shopping-cart"></i><a href="{{url('almacen/facturacion/listaVentas')}}">Nueva venta</a>
                             </li>
-                            <li><i class="fa fa-list-alt"></i><a href="{{url('almacen/usuario/permiso/usuario')}}">Lista de ventas</a>
+                            <li><i class="fa fa-list-alt"></i><a href="{{URL::action('facturacionListaVentas@show',0)}}">Lista de ventas</a>
                             </li>                
                         </ul>
                     </li>
@@ -193,11 +193,11 @@
                         <a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> <i class="menu-icon fa fa-briefcase"></i>Reportes</a>
                         <ul class="sub-menu children dropdown-menu">                        
 
-                            <li><i class="fa fa-table"></i><a href="{{url('almacen/usuario/permiso/cargo')}}">Ventas</a>
+                            <li><i class="fa fa-table"></i><a href="{{url('almacen/reportes/ventas')}}">Ventas</a>
                             </li>
-                            <li><i class="fa fa-table"></i><a href="{{url('almacen/usuario/permiso/usuario')}}">Productos</a>
+                            <li><i class="fa fa-table"></i><a href="{{url('almacen/reportes/inventario')}}">Productos</a>
                             </li> 
-                            <li><i class="fa fa-table"></i><a href="{{url('almacen/usuario/permiso/usuario')}}">Inventario</a>
+                            <li><i class="fa fa-table"></i><a href="{{url('almacen/reportes/inventario2')}}">Inventario</a>
                             </li>                
                         </ul>
                     </li>

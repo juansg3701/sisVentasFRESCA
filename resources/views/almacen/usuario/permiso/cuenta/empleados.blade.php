@@ -29,7 +29,7 @@
 				<div class="col-sm-4">
 					<div class="page-header float-left">
 						<div class="page-title">
-							<h1>Cuentas</h1>
+							<h1>Empleados</h1>
 						</div>
 					</div>
 				</div>
@@ -37,8 +37,7 @@
 					<div class="page-header float-right">
 						<div class="page-title">
 							<ol class="breadcrumb text-right">
-								<li><a href="#">Permisos de administrador</a></li>
-								<li class="active">Cuentas</li>
+								<li><a href="#">Empleados</a></li>
 							</ol>
 						</div>
 					</div>
@@ -75,7 +74,7 @@
 													</div>
 													<div id="divBuscar" class="form-group" style="display:none">
 														<!--Incluir la ventana modal de búsqueda-->	
-														@include('almacen.usuario.permiso.cuenta.search')
+														@include('almacen.usuario.permiso.cuenta.empleadosBuscar')
 													</div>
 													
 												</div>
@@ -112,15 +111,19 @@
 								<th>Correo</th>
 								<th>Cargo</th>
 								<th>Sede</th>
+								<th>Código</th>
+								<th>Documento</th>
+								<th>Dirección</th>
+								<th>Telefono</th>
 								<th>OPCIONES</th>
 							</thead>
 
 							@foreach($usuarios as $usu)
 							@if($usu->sede_id_sede==auth()->user()->sede_id_sede && auth()->user()->superusuario==0)
 							<tr>
-								<td>{{ $usu->id}}</td>
-								<td>{{ $usu->name}}</td>
-								<td>{{ $usu->email}}</td>
+								<td>{{ $usu->id_empleado}}</td>
+								<td>{{ $usu->nombre}}</td>
+								<td>{{ $usu->correo}}</td>
 								@foreach($cargos as $mp)
 								@if($mp->id_cargo==$usu->tipo_cargo_id_cargo)
 								<td>{{ $mp->nombre}}</td>
@@ -132,6 +135,10 @@
 								<td>{{ $sp->nombre_sede}}</td>
 								@endif
 								@endforeach
+								<td>{{ $usu->codigo}}</td>
+								<td>{{ $usu->documento}}</td>
+								<td>{{ $usu->direccion}}</td>
+								<td>{{ $usu->telefono}}</td>
 								<td>
 									<a href="{{URL::action('UsersController@edit',$usu->id)}}"><button class="btn btn-outline-primary btn-sm">Editar</button></a>
 									
@@ -142,9 +149,9 @@
 
 							@if(auth()->user()->superusuario==1)
 							<tr>
-								<td>{{ $usu->id}}</td>
-								<td>{{ $usu->name}}</td>
-								<td>{{ $usu->email}}</td>
+								<td>{{ $usu->id_empleado}}</td>
+								<td>{{ $usu->nombre}}</td>
+								<td>{{ $usu->correo}}</td>
 								@foreach($cargos as $mp)
 								@if($mp->id_cargo==$usu->tipo_cargo_id_cargo)
 								<td>{{ $mp->nombre}}</td>
@@ -156,9 +163,12 @@
 								<td>{{ $sp->nombre_sede}}</td>
 								@endif
 								@endforeach
-								
+								<td>{{ $usu->codigo}}</td>
+								<td>{{ $usu->documento}}</td>
+								<td>{{ $usu->direccion}}</td>
+								<td>{{ $usu->telefono}}</td>
 								<td>
-									<a href="{{URL::action('UsersController@edit',$usu->id)}}"><button class="btn btn-outline-primary btn-sm">Editar</button></a>
+									<a href="{{URL::action('EmpleadoController@edit',$usu->user_id_user)}}"><button class="btn btn-outline-primary btn-sm">Editar</button></a>
 									
 								</td>	
 							</tr>

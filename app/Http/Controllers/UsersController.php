@@ -16,6 +16,8 @@ class UsersController extends Controller
     public function _contruct(){
     	$this->middleware('auth');
     }
+
+    //Redirecciona para mostrar las cuentas creadas
 public function index(Request $request){
 	 		if ($request) {
 	 			$query=trim($request->get('searchText'));
@@ -23,6 +25,7 @@ public function index(Request $request){
 	 			$query2=trim($request->get('searchText2'));
 
 	 			$usuarios=User::where('name','LIKE', '%'.$query.'%')
+	 			->orderBy('id', 'desc')
     			->paginate(10);
 
 	 			if($query2!=""){
@@ -82,6 +85,7 @@ public function index(Request $request){
 	 		
 	 	}
 
+	 	//redirige a la pantalla para editar la cuenta
 	 	public function edit($id){
 	 		$id=$id;
 	 		$cargos=DB::table('tipo_cargo')->get();

@@ -25,7 +25,7 @@ Route::resource('almacen/usuario/permiso/cuenta', 'UsersController');
 
 Route::resource('almacen/proveedor', 'ProveedorController');
 
-Route::resource('almacen/cliente/cliente', 'ClienteController');
+Route::resource('almacen/cliente', 'ClienteController');
 Route::resource('almacen/cliente/categoria', 'CategoriaClienteController');
 Route::resource('almacen/cliente2', 'ClienteController2');
 
@@ -34,7 +34,6 @@ Route::resource('almacen/caja', 'CajaController');
 Route::resource('almacen/caja/arqueo', 'CajaController');
 
 Route::resource('almacen/nomina/empleado', 'EmpleadoController');
-Route::resource('almacen/nomina/empleado/lista', 'EmpleadoController');
 Route::resource('almacen/nomina/horario', 'HorarioNominaController');
 Route::resource('almacen/nomina/lista_horarios', 'HorarioNominaController2');
 Route::resource('almacen/nomina/modal', 'HorarioNominaController3');

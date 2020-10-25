@@ -11,6 +11,6 @@ class Usuario extends Model
     protected $primaryKey='id_empleado';
     public $timestamps =false;
     
-  protected $fillable=['user_id_user','nombre', 'correo', 'contrasena','tipo_cargo_id_cargo', 'sede_id_sede', 'codigo','direccion','telefono','documento','fecha'];
+  protected $fillable=['user_id_user','nombre', 'correo','tipo_cargo_id_cargo', 'sede_id_sede', 'codigo','direccion','telefono','documento','fecha'];
     protected $guarded=[];
 }

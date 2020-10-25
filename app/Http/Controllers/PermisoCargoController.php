@@ -15,6 +15,9 @@ class PermisoCargoController extends Controller
 			$this->middleware('auth');	
 
 			 	} 
+
+			 	//Función para redireccionar a la vista de cargos, donde se registran y muestran
+
 	 	public function index(Request $request){
 	 		if ($request) {
 	 			$query=trim($request->get('searchText'));
@@ -48,6 +51,7 @@ class PermisoCargoController extends Controller
 	 		return view("almacen.usuario.permiso.cargo.index",["modulos"=>$modulos]);
 	 	}
 
+	 	//Método para guardar los cargos en la base de datos
 	 	public function store(CargoFormRequest $request){
 	 		$cargo = new Cargo;
 	 		$cargo->nombre=$request->get('nombre');
@@ -65,6 +69,7 @@ class PermisoCargoController extends Controller
 	 		return view("almacen.usuario.permiso.cargo.show",["cargo"=>Cargo::findOrFail($id)]);
 	 	}
 
+	 	//Método para redirigir a la pantalla donde se editan los datos de los cargos
 	 	public function edit($id){
 	 		$cargoUsuario=auth()->user()->tipo_cargo_id_cargo;
 	 			$modulos=DB::table('cargo_modulo')
@@ -74,6 +79,7 @@ class PermisoCargoController extends Controller
 	 		return view("almacen.usuario.permiso.cargo.edit",["cargo"=>Cargo::findOrFail($id), "modulos"=>$modulos]);
 	 	}
 
+	 	//Método para actualizar los cargos en la base de datos
 	 	public function update(CargoFormRequest $request, $id){
 	 		$cargo = Cargo::findOrFail($id);
 	 		
@@ -85,6 +91,7 @@ class PermisoCargoController extends Controller
 	 		return back()->with('msj','Cargo editado');
 	 	}
 
+	 	//Método para eliminar los cargos en la base de datos, primero se valida si se relacionan con otras tablas para ser eliminados tambien de allí
 	 	public function destroy($id){
 	 		$id=$id;
 

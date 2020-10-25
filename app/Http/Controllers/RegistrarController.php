@@ -17,6 +17,8 @@ class RegistrarController extends Controller
 			$this->middleware('auth');	
 
 			 	}
+
+			//Redirige a la pantalla para registrar las cuentas
 	 	public function index(Request $request){
 	 		if ($request) {
 	 			$query=trim($request->get('searchText'));
@@ -25,7 +27,7 @@ class RegistrarController extends Controller
 	 			$usuarios=DB::table('empleado as u')
 	 			->join('tipo_cargo as c','u.tipo_cargo_id_cargo','=','c.id_cargo')
 	 			->join('sede as s','u.sede_id_sede','=','s.id_sede')
-	 			->select('u.id_empleado','u.nombre','u.correo','u.contrasena','c.nombre as tipo_cargo','s.nombre_sede as sede','u.codigo')
+	 			->select('u.id_empleado','u.nombre','u.correo','c.nombre as tipo_cargo','s.nombre_sede as sede','u.codigo')
 	 			->where('u.nombre','LIKE', '%'.$query.'%')
 	 			->orderBy('u.id_empleado', 'desc')
 	 			->paginate(10);
@@ -49,7 +51,7 @@ class RegistrarController extends Controller
 	 				
 	 		return view("almacen.usuario.iniciar.sesionIniciada", ["modulos"=>$modulos]);	
 	 	}
-
+	 	//Metodo para guardar los datos de la cuenta en la bd
 	 	public function store(Request $request){
 
 	 		$nombreR=$request->get('name');
@@ -82,7 +84,6 @@ class RegistrarController extends Controller
 			 		$empleadoU->nombre=$nombreR;
 			 		$empleadoU->user_id_user=$usuario->id;
 			 		$empleadoU->correo=$correoR;
-			 		$empleadoU->contrasena=$contrasenaR;	
 			 		$empleadoU->tipo_cargo_id_cargo=$cargoR;
 			 		$empleadoU->sede_id_sede=$sedeR;
 			 		$empleadoU->codigo=$codigoR;
