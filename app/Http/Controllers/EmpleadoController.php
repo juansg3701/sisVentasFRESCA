@@ -155,6 +155,10 @@ class EmpleadoController extends Controller
 				 		$usuario->tipo_cargo_id_cargo=$cargoR;
 				 		$usuario->sede_id_sede=$sedeR;
 				 		$usuario->codigo=$codigoR;
+				 		$usuario->direccion=$request->get('direccion');
+			 			$usuario->telefono=$request->get('telefono');
+			 			$usuario->documento=$request->get('documento');
+			 			$usuario->fecha=$request->get('fecha');
 				 		$usuario->update();
 
 				 		return back()->with('msj','Empleado actualizado');
@@ -185,6 +189,10 @@ class EmpleadoController extends Controller
 					 		$usuario->sede_id_sede=$sedeR;
 					 		$usuario->codigo=$codigoR;
 					 		$usuario->user_id_user=$us->id;
+					 		$usuario->direccion=$request->get('direccion');
+					 		$usuario->telefono=$request->get('telefono');
+					 		$usuario->documento=$request->get('documento');
+					 		$usuario->fecha=$request->get('fecha');
 					 		$usuario->update();
 				 			}else{
 				 			
@@ -195,6 +203,10 @@ class EmpleadoController extends Controller
 					 		$usuario->tipo_cargo_id_cargo=$cargoR;
 					 		$usuario->sede_id_sede=$sedeR;
 					 		$usuario->codigo=$codigoR;
+					 		$usuario->direccion=$request->get('direccion');
+					 		$usuario->telefono=$request->get('telefono');
+					 		$usuario->documento=$request->get('documento');
+					 		$usuario->fecha=$request->get('fecha');
 					 		
 
 					 		$us = User::findOrFail($usuario->user_id_user);
