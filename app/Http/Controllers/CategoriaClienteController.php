@@ -21,10 +21,14 @@ class CategoriaClienteController extends Controller
 	 			$usuarios=DB::table('empleado')->get();
 	 			$sedes=DB::table('sede')->get();
 	 		
-	 			$categorias=DB::table('categoria_cliente')
-	 			->where('nombre','LIKE', '%'.$query.'%')
-	 			->orderBy('id_categoria', 'desc')
+	 			$categorias=DB::table('categoria_cliente as cc')
+	 			->join('empleado as u','cc.empleado_id_empleado','=','u.id_empleado')
+	 			->join('sede as s','cc.sede_id_sede','=','s.id_sede')
+	 			->select('cc.id_categoria','cc.nombre','cc.descripcion','s.nombre_sede as sede_id_sede','u.nombre as empleado_id_empleado', 'cc.fecha')
+	 			->where('cc.nombre','LIKE', '%'.$query.'%')
+	 			->orderBy('cc.id_categoria', 'desc')
 	 			->paginate(10);
+
 
 	 			$cargoUsuario=auth()->user()->tipo_cargo_id_cargo;
 	 			$modulos=DB::table('cargo_modulo')
