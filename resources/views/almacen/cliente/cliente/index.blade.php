@@ -96,7 +96,6 @@
 
 @section('tabla')
 <!--Tabla de registros realizados-->
-<div class="container">
 	<div class="content">
 		<div class="animated fadeIn">
 			<div class="row">
@@ -114,49 +113,50 @@
 								<!--Incluir la ventana modal de búsqueda-->	
 								@include('almacen.cliente.cliente.search')
 							</div>
-							
 						</div>
 
 						<div class="card-body">
-							<div class="table-responsive">
+				
 							<table id="bootstrap-data-table" class="table table-striped table-bordered">
 								<thead>
 									<th>CONTACTO</th>
 									<th>EMPRESA</th>
+									<th>CATEGORÍA</th>
 									<th>DIRECCIÓN</th>
 									<th>TELÉFONO</th>
 									<th>CORREO</th>
 									<th>NO. DOCUMENTO</th>
-									<th>NIT</th>
-									<th>DÍGITO</th>
-									<th>EMPLEADO</th>
-									<th>SEDE</th>
-									<th>FECHA REG.</th>
-									<th colspan="2">OPCIONES</th>
+									<th colspan="2">NIT</th>
+
+									<th colspan="3">OPCIONES</th>
 								</thead>
 								@foreach($clientes as $cli)
 								<tr>
 									<td>{{ $cli->nombre}}</td>
 									<td>{{ $cli->nombre_empresa}}</td>
+									<td>{{ $cli->categoria_cliente_id_categoria}}</td>
 									<td>{{ $cli->direccion}}</td>
 									<td>{{ $cli->telefono}}</td>
 									<td>{{ $cli->correo}}</td>
 									<td>{{ $cli->documento}}</td>
 									<td>{{ $cli->nit}}</td>
 									<td>{{ $cli->verificacion_nit}}</td>
-									<td>{{ $cli->empleado_id_empleado}}</td>
-									<td>{{ $cli->sede_id_sede}}</td>
-									<td>{{ $cli->fecha}}</td>
+
 									<td>
-										<!--Botones editar y eliminar de la tabla-->
-										<a href="{{URL::action('ClienteController@edit',$cli->id_cliente)}}"><button class="btn btn-outline-primary btn-sm">Editar</button></a></td>
-										<td><a href="" data-target="#modal-delete-{{$cli->id_cliente}}" data-toggle="modal"><button class="btn btn-outline-danger btn-sm">Eliminar</button></a>
+										<a href="{{URL::action('ClienteController@edit',$cli->id_cliente)}}"><button class="btn btn-outline-primary btn-sm">Editar</button></a>
+									</td>
+									<td>
+										<a href="" data-target="#modal-delete-{{$cli->id_cliente}}" data-toggle="modal"><button class="btn btn-outline-danger btn-sm">Eliminar</button></a>
+									</td>
+									<td>
+										<a href="" title="Registro de cambios" data-target="#modal-infoCliente-{{$cli->id_cliente}}" data-toggle="modal"><button class="btn btn-outline-secondary btn-sm">+</button></a>
 									</td>
 								</tr>
 								@include('almacen.cliente.cliente.modal')
+								@include('almacen.cliente.cliente.modalInfoCliente')
 								@endforeach
 							</table>
-							</div>
+						
 						</div>
 					{{$clientes->render()}}
 					</div>
@@ -164,5 +164,7 @@
 			</div>
 		</div>
 	</div>
-</div>
+
+
 @endsection
+

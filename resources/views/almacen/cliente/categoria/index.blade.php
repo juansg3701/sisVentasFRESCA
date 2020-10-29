@@ -164,24 +164,24 @@
 							<thead>
 								<th>NOMBRE</th>
 								<th>DESCRIPCIÓN</th>	
-								<th>EMPLEADO</th>
-								<th>SEDE</th>
-								<th>FECHA REG.</th>
-								<th>OPCIONES</th>
+								<th colspan="3">OPCIONES</th>
 							</thead>
 							@foreach($categorias as $cat)
 							<tr>
 								<td>{{ $cat->nombre}}</td>
 								<td>{{ $cat->descripcion}}</td>
-								<td>{{ $cat->empleado_id_empleado}}</td>
-								<td>{{ $cat->sede_id_sede}}</td>
-								<td>{{ $cat->fecha}}</td>
 								<td>
-									<a href="{{URL::action('CategoriaClienteController@edit',$cat->id_categoria)}}"><button class="btn btn-info">Editar</button></a>
-									<a href="" data-target="#modal-delete-{{$cat->id_categoria}}" data-toggle="modal"><button class="btn btn-danger">Eliminar</button></a>
+									<a href="{{URL::action('CategoriaClienteController@edit',$cat->id_categoria)}}"><button class="btn btn-outline-primary btn-sm">Editar</button></a>
+								</td>
+								<td>
+									<a href="" data-target="#modal-delete-{{$cat->id_categoria}}" data-toggle="modal"><button class="btn btn-outline-danger btn-sm">Eliminar</button></a>
+								</td>
+								<td>
+									<a href="" title="Registro de cambios" data-target="#modal-infoCategoria-{{$cat->id_categoria}}" data-toggle="modal"><button class="btn btn-outline-secondary btn-sm">+</button></a>
 								</td>
 							</tr>
 							@include('almacen.cliente.categoria.modal')
+							@include('almacen.cliente.categoria.modalInfoCategoria')
 							@endforeach
 						</table>
 					</div>

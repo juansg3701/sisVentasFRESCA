@@ -19,28 +19,46 @@ class ClienteController extends Controller
 	 			$query0=trim($request->get('searchText0'));
 	 			$query1=trim($request->get('searchText1'));
 	 			$query2=trim($request->get('searchText2'));
+	 			$query3=trim($request->get('searchText3'));
+	 			$query4=trim($request->get('searchText4'));
+	 			$query5=trim($request->get('searchText5'));
 
 	 			$usuarios=DB::table('empleado')->get();
 	 			$sedes=DB::table('sede')->get();
 	 			$categoria_cliente=DB::table('categoria_cliente')->get();
 
-	 			$clientes=DB::table('cliente as c')
-	 			->join('empleado as u','c.empleado_id_empleado','=','u.id_empleado')
-	 			->join('sede as s','c.sede_id_sede','=','s.id_sede')
-	 			->join('categoria_cliente as cc','c.categoria_cliente_id_categoria','=','cc.id_categoria')
-	 			->select('c.id_cliente','c.nombre','c.nombre_empresa','c.direccion', 'c.telefono', 'c.correo', 'c.documento','c.nit', 'c.verificacion_nit','cc.nombre as categoria_cliente_id_categoria','s.nombre_sede as sede_id_sede', 'u.nombre as empleado_id_empleado', 'c.fecha')
-	 			->where('c.nombre','LIKE', '%'.$query0.'%')
-	 			->where('c.documento','LIKE', '%'.$query1.'%')
-	 			->where('c.telefono','LIKE', '%'.$query2.'%')
-	 			->orderBy('c.id_cliente', 'desc')
-	 			->paginate(10);
 
-	 			/*$clientes=DB::table('cliente')
-	 			->where('nombre','LIKE', '%'.$query0.'%')
-	 			->where('documento','LIKE', '%'.$query1.'%')
-	 			->where('telefono','LIKE', '%'.$query2.'%')
-	 			->orderBy('nombre', 'desc')
-	 			->paginate(10);*/
+	 			if($query3=="Todas las categorías"){
+
+		 			$clientes=DB::table('cliente as c')
+		 			->join('empleado as u','c.empleado_id_empleado','=','u.id_empleado')
+		 			->join('sede as s','c.sede_id_sede','=','s.id_sede')
+		 			->join('categoria_cliente as cc','c.categoria_cliente_id_categoria','=','cc.id_categoria')
+		 			->select('c.id_cliente','c.nombre','c.nombre_empresa','c.direccion', 'c.telefono', 'c.correo', 'c.documento','c.nit', 'c.verificacion_nit','cc.nombre as categoria_cliente_id_categoria','s.nombre_sede as sede_id_sede', 'u.nombre as empleado_id_empleado', 'c.fecha')
+		 			->where('c.nombre','LIKE', '%'.$query0.'%')
+		 			->where('c.documento','LIKE', '%'.$query1.'%')
+		 			->where('c.telefono','LIKE', '%'.$query2.'%')
+		 			->where('c.nit','LIKE', '%'.$query4.'%')
+		 			->where('c.verificacion_nit','LIKE', '%'.$query5.'%')
+		 			->orderBy('c.id_cliente', 'desc')
+		 			->paginate(10);
+
+				}else{
+
+		 			$clientes=DB::table('cliente as c')
+		 			->join('empleado as u','c.empleado_id_empleado','=','u.id_empleado')
+		 			->join('sede as s','c.sede_id_sede','=','s.id_sede')
+		 			->join('categoria_cliente as cc','c.categoria_cliente_id_categoria','=','cc.id_categoria')
+		 			->select('c.id_cliente','c.nombre','c.nombre_empresa','c.direccion', 'c.telefono', 'c.correo', 'c.documento','c.nit', 'c.verificacion_nit','cc.nombre as categoria_cliente_id_categoria','s.nombre_sede as sede_id_sede', 'u.nombre as empleado_id_empleado', 'c.fecha')
+		 			->where('c.nombre','LIKE', '%'.$query0.'%')
+		 			->where('c.documento','LIKE', '%'.$query1.'%')
+		 			->where('c.telefono','LIKE', '%'.$query2.'%')
+		 			->where('cc.nombre','LIKE', '%'.$query3.'%')
+		 			->where('c.nit','LIKE', '%'.$query4.'%')
+		 			->where('c.verificacion_nit','LIKE', '%'.$query5.'%')
+		 			->orderBy('c.id_cliente', 'desc')
+		 			->paginate(10);
+				}
 
 	 			$cargoUsuario=auth()->user()->tipo_cargo_id_cargo;
 	 			$modulos=DB::table('cargo_modulo')
@@ -50,7 +68,7 @@ class ClienteController extends Controller
 	 			$clientesP=DB::table('cliente')
 	 			->orderBy('id_cliente', 'desc')->get();
 
-	 			return view('almacen.cliente.cliente.index',["clientes"=>$clientes,"searchText0"=>$query0,"searchText1"=>$query1,"searchText2"=>$query2, "modulos"=>$modulos,"clientesP"=>$clientesP, "usuarios"=>$usuarios, "sedes"=>$sedes, "categoria_cliente"=>$categoria_cliente]);
+	 			return view('almacen.cliente.cliente.index',["clientes"=>$clientes,"searchText0"=>$query0,"searchText1"=>$query1,"searchText2"=>$query2, "searchText3"=>$query3,"searchText4"=>$query4, "searchText5"=>$query5, "modulos"=>$modulos,"clientesP"=>$clientesP, "usuarios"=>$usuarios, "sedes"=>$sedes, "categoria_cliente"=>$categoria_cliente]);
 	 		}
 	 	}
 	 	public function create(){
