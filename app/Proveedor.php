@@ -10,6 +10,6 @@ class Proveedor extends Model
     protected $primaryKey='id_proveedor';
     public $timestamps =false;
     
-    protected $fillable=['nombre_empresa', 'nombre_proveedor', 'direccion','telefono','correo','documento','verificacion_nit'];
+    protected $fillable=['nombre_empresa', 'nombre_proveedor', 'direccion','telefono','correo','documento','nit','verificacion_nit','fecha','empleado_id_empleado','sede_id_sede'];
     protected $guarded=[];
 }

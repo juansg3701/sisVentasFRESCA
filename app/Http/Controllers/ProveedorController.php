@@ -20,10 +20,22 @@ class ProveedorController extends Controller
 	 		if ($request) {
 	 			$query0=trim($request->get('searchText0'));
 	 			$query1=trim($request->get('searchText1'));
-	 			$proveedores=DB::table('proveedor')
-	 			->where('nombre_empresa','LIKE', '%'.$query0.'%')
-	 			->where('documento','LIKE', '%'.$query1.'%')
-	 			->orderBy('id_proveedor', 'desc')
+	 			$query2=trim($request->get('searchText2'));
+	 			$query3=trim($request->get('searchText3'));
+	 			$query4=trim($request->get('searchText4'));
+
+	 			$usuarios=DB::table('empleado')->get();
+
+	 			$proveedores=DB::table('proveedor as p')
+	 			->join('empleado as u','p.empleado_id_empleado','=','u.id_empleado')
+		 		->join('sede as s','p.sede_id_sede','=','s.id_sede')
+		 		->select('p.id_proveedor','p.nombre_empresa','p.nombre_proveedor','p.direccion', 'p.telefono', 'p.correo', 'p.documento','p.nit', 'p.verificacion_nit','s.nombre_sede as sede_id_sede', 'u.nombre as empleado_id_empleado', 'p.fecha')
+	 			->where('p.nombre_empresa','LIKE', '%'.$query0.'%')
+	 			->where('p.documento','LIKE', '%'.$query1.'%')
+	 			->where('p.nit','LIKE', '%'.$query2.'%')
+		 		->where('p.verificacion_nit','LIKE', '%'.$query3.'%')
+		 		->where('p.nombre_proveedor','LIKE', '%'.$query4.'%')
+	 			->orderBy('p.id_proveedor', 'desc')
 	 			->paginate(10);
 
 	 			$cargoUsuario=auth()->user()->tipo_cargo_id_cargo;
@@ -34,18 +46,21 @@ class ProveedorController extends Controller
 	 			$proveedoresP=DB::table('proveedor')
 	 			->orderBy('id_proveedor', 'desc')->get();
 
-	 			return view('almacen.proveedor.index',["proveedores"=>$proveedores,"searchText0"=>$query0,"searchText1"=>$query1, "modulos"=>$modulos,"proveedoresP"=>$proveedoresP]);
+	 			return view('almacen.proveedor.index',["proveedores"=>$proveedores,"searchText0"=>$query0,"searchText1"=>$query1,"searchText2"=>$query2, "searchText3"=>$query3, "searchText4"=>$query4, "modulos"=>$modulos,"proveedoresP"=>$proveedoresP, "usuarios"=>$usuarios]);
 	 		}
 	 	}
 
 	 	public function create(Request $request){
 
+	 		$usuarios=DB::table('empleado')->get();
+	 		$sedes=DB::table('sede')->get();
+
 	 		$cargoUsuario=auth()->user()->tipo_cargo_id_cargo;
-	 			$modulos=DB::table('cargo_modulo')
-	 			->where('id_cargo','=',$cargoUsuario)
-	 			->orderBy('id_cargo', 'desc')->get();
+	 		$modulos=DB::table('cargo_modulo')
+	 		->where('id_cargo','=',$cargoUsuario)
+	 		->orderBy('id_cargo', 'desc')->get();
 	 		
-	 		return view('almacen.proveedor.registrar', ["modulos"=>$modulos]);
+	 		return view('almacen.proveedor.registrar', ["modulos"=>$modulos, "usuarios"=>$usuarios, "sedes"=>$sedes]);
 	 	}
 
 	 	public function store(ProveedorFormRequest $request){
@@ -70,7 +85,11 @@ class ProveedorController extends Controller
 				 		$proveedor->telefono=$request->get('telefono');
 				 		$proveedor->correo=$correoR;
 				 		$proveedor->documento=$documentoR;
+				 		$proveedor->nit=$request->get('nit');
 				 		$proveedor->verificacion_nit=$request->get('verificacion_nit');
+				 		$proveedor->fecha=$request->get('fecha');
+			 			$proveedor->empleado_id_empleado=$request->get('empleado_id_empleado');
+			 			$proveedor->sede_id_sede=$request->get('sede_id_sede');
 				 		$proveedor->save();
 				 		return back()->with('msj','Proveedor guardado');
 	 			}else{
@@ -88,12 +107,15 @@ class ProveedorController extends Controller
 	 	}
 
 	 	public function edit($id){
+	 		$usuarios=DB::table('empleado')->get();
+	 		$sedes=DB::table('sede')->get();
+
 	 		$cargoUsuario=auth()->user()->tipo_cargo_id_cargo;
-	 			$modulos=DB::table('cargo_modulo')
-	 			->where('id_cargo','=',$cargoUsuario)
-	 			->orderBy('id_cargo', 'desc')->get();
+	 		$modulos=DB::table('cargo_modulo')
+	 		->where('id_cargo','=',$cargoUsuario)
+	 		->orderBy('id_cargo', 'desc')->get();
 	 			
-	 		return view("almacen.proveedor.edit",["proveedor"=>Proveedor::findOrFail($id), "modulos"=>$modulos]);
+	 		return view("almacen.proveedor.edit",["proveedor"=>Proveedor::findOrFail($id), "modulos"=>$modulos, "usuarios"=>$usuarios, "sedes"=>$sedes]);
 	 	}
 
 	 	public function update(ProveedorFormRequest $request, $id){
@@ -121,7 +143,11 @@ class ProveedorController extends Controller
 				 		$proveedor->telefono=$request->get('telefono');
 				 		$proveedor->correo=$correoR;
 				 		$proveedor->documento=$documentoR;
+				 		$proveedor->nit=$request->get('nit');
 				 		$proveedor->verificacion_nit=$request->get('verificacion_nit');
+				 		$proveedor->fecha=$request->get('fecha');
+			 			$proveedor->empleado_id_empleado=$request->get('empleado_id_empleado');
+			 			$proveedor->sede_id_sede=$request->get('sede_id_sede');
 				 		$proveedor->update();
 				 		return back()->with('msj','Proveedor actualizado');
 	 			}else{

@@ -124,10 +124,10 @@
 
 								<div class="form-row">
 									<div class="form-group col-sm-4">
-										<div>Documento:</div>
+										<div>No. Documento:</div>
 									</div>
 									<div class="form-group col-sm-8">
-										<input type="text" class="form-control" name="documento">
+										<input type="number" class="form-control" name="documento" min="0">
 									</div>
 								</div>
 

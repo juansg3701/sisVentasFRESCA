@@ -157,7 +157,7 @@
 										<div>Documento:</div>
 									</div>
 									<div class="form-group col-sm-8">
-										<input type="text" class="form-control" name="documento" value="{{$cliente->documento}}">
+										<input type="number" class="form-control" name="documento" min="0" value="{{$cliente->documento}}">
 									</div>
 								</div>
 
