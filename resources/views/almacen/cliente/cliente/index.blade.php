@@ -6,9 +6,7 @@
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 </head>
 
-
 <body>
-
 	<!--Código de JQuery para mostrar/esconder los campos del atributo documento-->
 	<script type="text/javascript">
 		$(function() {
@@ -24,7 +22,6 @@
     		});
 		});
 	</script>
-
 
 	<!--Panel superior-->
 	<div class="breadcrumbs">
@@ -89,82 +86,79 @@
 			</div>
 		</div>
 	</div>
+	
 </body>
 @endsection
 
-
-
 @section('tabla')
 <!--Tabla de registros realizados-->
-	<div class="content">
-		<div class="animated fadeIn">
-			<div class="row">
-				<div class="col-md-12">
-					<div class="card">
-						<div class="card-header" align="center">
-							<h3 class="pb-2 display-5">CLIENTES REGISTRADOS</h3>
-							
-							<div class="form-group col-sm-8" align="center">
-								<button id="btn_search" class="btn btn-outline-secondary btn-lg btn-block" style="display:hidden">Establecer filtros de búsqueda</button>
-								<button id="btn_search2" class="btn btn-outline-secondary btn-lg btn-block" style="display:none">Ocultar filtros de búsqueda</button>
-							</div>
-			
-							<div id="divBuscar" class="form-group col-sm-8" align="center" style="display:none">
-								<!--Incluir la ventana modal de búsqueda-->	
-								@include('almacen.cliente.cliente.search')
-							</div>
-						</div>
-
-						<div class="card-body">
-				
-							<table id="bootstrap-data-table" class="table table-striped table-bordered">
-								<thead>
-									<th>CONTACTO</th>
-									<th>EMPRESA</th>
-									<th>CATEGORÍA</th>
-									<th>DIRECCIÓN</th>
-									<th>TELÉFONO</th>
-									<th>CORREO</th>
-									<th>NO. DOCUMENTO</th>
-									<th colspan="2">NIT</th>
-
-									<th colspan="3">OPCIONES</th>
-								</thead>
-								@foreach($clientes as $cli)
-								<tr>
-									<td>{{ $cli->nombre}}</td>
-									<td>{{ $cli->nombre_empresa}}</td>
-									<td>{{ $cli->categoria_cliente_id_categoria}}</td>
-									<td>{{ $cli->direccion}}</td>
-									<td>{{ $cli->telefono}}</td>
-									<td>{{ $cli->correo}}</td>
-									<td>{{ $cli->documento}}</td>
-									<td>{{ $cli->nit}}</td>
-									<td>{{ $cli->verificacion_nit}}</td>
-
-									<td>
-										<a href="{{URL::action('ClienteController@edit',$cli->id_cliente)}}"><button class="btn btn-outline-primary btn-sm">Editar</button></a>
-									</td>
-									<td>
-										<a href="" data-target="#modal-delete-{{$cli->id_cliente}}" data-toggle="modal"><button class="btn btn-outline-danger btn-sm">Eliminar</button></a>
-									</td>
-									<td>
-										<a href="" title="Registro de cambios" data-target="#modal-infoCliente-{{$cli->id_cliente}}" data-toggle="modal"><button class="btn btn-outline-secondary btn-sm">+</button></a>
-									</td>
-								</tr>
-								@include('almacen.cliente.cliente.modal')
-								@include('almacen.cliente.cliente.modalInfoCliente')
-								@endforeach
-							</table>
+<div class="content">
+	<div class="animated fadeIn">
+		<div class="row">
+			<div class="col-md-12">
+				<div class="card">
+					<div class="card-header" align="center">
+						<h3 class="pb-2 display-5">CLIENTES REGISTRADOS</h3>
 						
+						<div class="form-group col-sm-8" align="center">
+							<button id="btn_search" class="btn btn-outline-secondary btn-lg btn-block" style="display:hidden">Establecer filtros de búsqueda</button>
+							<button id="btn_search2" class="btn btn-outline-secondary btn-lg btn-block" style="display:none">Ocultar filtros de búsqueda</button>
 						</div>
-					{{$clientes->render()}}
+		
+						<div id="divBuscar" class="form-group col-sm-8" align="center" style="display:none">
+							<!--Incluir la ventana modal de búsqueda-->	
+							@include('almacen.cliente.cliente.search')
+						</div>
 					</div>
+
+					<div class="card-body">
+			
+						<table id="bootstrap-data-table" class="table table-striped table-bordered">
+							<thead>
+								<th>CONTACTO</th>
+								<th>EMPRESA</th>
+								<th>CATEGORÍA</th>
+								<th>DIRECCIÓN</th>
+								<th>TELÉFONO</th>
+								<th>CORREO</th>
+								<th>NO. DOCUMENTO</th>
+								<th colspan="2">NIT</th>
+								<th colspan="3">OPCIONES</th>
+							</thead>
+							@foreach($clientes as $cli)
+							<tr>
+								<td>{{ $cli->nombre}}</td>
+								<td>{{ $cli->nombre_empresa}}</td>
+								<td>{{ $cli->categoria_cliente_id_categoria}}</td>
+								<td>{{ $cli->direccion}}</td>
+								<td>{{ $cli->telefono}}</td>
+								<td>{{ $cli->correo}}</td>
+								<td>{{ $cli->documento}}</td>
+								<td>{{ $cli->nit}}</td>
+								<td>{{ $cli->verificacion_nit}}</td>
+
+								<td>
+									<a href="{{URL::action('ClienteController@edit',$cli->id_cliente)}}"><button class="btn btn-outline-primary btn-sm">Editar</button></a>
+								</td>
+								<td>
+									<a href="" data-target="#modal-delete-{{$cli->id_cliente}}" data-toggle="modal"><button class="btn btn-outline-danger btn-sm">Eliminar</button></a>
+								</td>
+								<td>
+									<a href="" title="Registro de cambios" data-target="#modal-infoCliente-{{$cli->id_cliente}}" data-toggle="modal"><button class="btn btn-outline-secondary btn-sm">+</button></a>
+								</td>
+							</tr>
+							@include('almacen.cliente.cliente.modal')
+							@include('almacen.cliente.cliente.modalInfoCliente')
+							@endforeach
+						</table>
+					
+					</div>
+				{{$clientes->render()}}
 				</div>
 			</div>
 		</div>
 	</div>
-
+</div>
 
 @endsection
 

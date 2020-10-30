@@ -24,15 +24,43 @@
 		</div>
 	</div>
 
-	{!!Form::model($categoria,['method'=>'PATCH','route'=>['almacen.cliente.categoria.update',$categoria->id_categoria]])!!}
-    {{Form::token()}}
+	<!--Panel superior-->
+	<div class="breadcrumbs">
+		<div class="breadcrumbs-inner">
+			<div class="row m-0">
+				<div class="col-sm-4">
+					<div class="page-header float-left">
+						<div class="page-title">
+							<h1>Cliente</h1>
+						</div>
+					</div>
+				</div>
+				<div class="col-sm-8">
+					<div class="page-header float-right">
+						<div class="page-title">
+							<ol class="breadcrumb text-right">
+								<li class="active">Cliente</li>
+								<li class="active">Categoría Cliente</li>
+								<li class="active">Editar Categoría</li>
+							</ol>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
 
+	<br><br>{!!Form::model($categoria,['method'=>'PATCH','route'=>['almacen.cliente.categoria.update',$categoria->id_categoria]])!!}
+    {{Form::token()}}<br><br><br>
 
     <!--Formulario de edición-->	
 	<div class="col-md-12">
 		<div class="card">
 			<div class="card-header" align="center">
 				<h3 class="pb-2 display-5">EDITAR CATEGORÍA</h3>
+			</div><br>
+			<div class="col-sm-12" align="center">
+				Editar datos de: {{$categoria->nombre}}
 			</div><br>
 			<div class="row" align="center">	
 				<div class="col-sm-3" align="center"></div>
@@ -59,7 +87,6 @@
 									</div>
 								</div>
 
-
 								<div class="form-row">
 									<div class="form-group col-sm-4">
 										<div>Fecha:</div>
@@ -69,7 +96,6 @@
 										<input type="hidden" name="fecha" value="<?php echo date("Y/m/d"); ?>" class="form-control">
 									</div>
 								</div>
-
 								<div class="form-row">
 									<div class="form-group col-sm-4">
 										<div>Empleado:</div>
@@ -85,7 +111,6 @@
 										</select>
 									</div>
 								</div>
-
 								<div class="form-row">
 									<div class="form-group col-sm-4">
 										<div>Sede:</div>
@@ -101,7 +126,6 @@
 										</select><br>
 									</div>
 								</div>
-
 								<div class="form-row">
 									<div class="form-group col-sm-12">
 										<button href="" class="btn btn-info" type="submit">Registrar</button>
@@ -115,10 +139,6 @@
 			</div>
 		</div>
 	</div>
-
-	
-	
 {!!Form::close()!!}		
 </body>
-
 @stop

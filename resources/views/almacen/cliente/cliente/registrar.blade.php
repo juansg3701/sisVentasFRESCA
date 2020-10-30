@@ -25,9 +25,34 @@
 		</div>
 	</div>
 
+	<!--Panel superior-->
+	<div class="breadcrumbs">
+		<div class="breadcrumbs-inner">
+			<div class="row m-0">
+				<div class="col-sm-4">
+					<div class="page-header float-left">
+						<div class="page-title">
+							<h1>Cliente</h1>
+						</div>
+					</div>
+				</div>
+				<div class="col-sm-8">
+					<div class="page-header float-right">
+						<div class="page-title">
+							<ol class="breadcrumb text-right">
+								<li class="active">Cliente</li>
+								<li class="active">Registrar Cliente</li>
+							</ol>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+
 	<!--Llamado al método POST para registrar los datos en la ruta indicada por medio del controlador-->
-	{!!Form::open(array('url'=>'almacen/cliente/cliente','method'=>'POST','autocomplete'=>'off'))!!}
-    {{Form::token()}}
+	<br><br>{!!Form::open(array('url'=>'almacen/cliente/cliente','method'=>'POST','autocomplete'=>'off'))!!}
+    {{Form::token()}}<br><br><br>
 
     <!--Formulario de registro-->	
 	<div class="col-md-12">

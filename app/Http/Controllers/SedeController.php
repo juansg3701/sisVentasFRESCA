@@ -19,26 +19,31 @@ class SedeController extends Controller
  	public function index(Request $request){
  		if ($request) {
  			$query=trim($request->get('searchText'));
- 			$sedes=DB::table('sede')
- 			->where('nombre_sede','LIKE', '%'.$query.'%')
- 			->orderBy('id_sede', 'desc')
- 			->paginate(7);
+ 			$usuarios=DB::table('empleado')->get();
+ 			$sedes=DB::table('sede as s')
+ 			->join('empleado as u','s.empleado_id_empleado','=','u.id_empleado')
+ 			->select('s.id_sede','s.nombre_sede','s.ciudad','s.descripcion','s.direccion','s.telefono','u.nombre as empleado_id_empleado','s.fecha')
+ 			->where('s.nombre_sede','LIKE', '%'.$query.'%')
+ 			->orderBy('s.id_sede', 'desc')
+ 			->paginate(10);
+
  			$cargoUsuario=auth()->user()->tipo_cargo_id_cargo;
  			$modulos=DB::table('cargo_modulo')
  			->where('id_cargo','=',$cargoUsuario)
  			->orderBy('id_cargo', 'desc')->get();
  			$sedesP=DB::table('sede')->get();
- 			return view('almacen.sede.index',["sedes"=>$sedes,"searchText"=>$query, "modulos"=>$modulos,"sedesP"=>$sedesP]);
+ 			return view('almacen.sede.index',["sedes"=>$sedes,"searchText"=>$query, "modulos"=>$modulos,"sedesP"=>$sedesP, "usuarios"=>$usuarios]);
  		}
  	}
 
  	// Función que retorna una vista al registro de sedes
  	public function create(){
  		$cargoUsuario=auth()->user()->tipo_cargo_id_cargo;
+ 		$usuarios=DB::table('empleado')->get();
  		$modulos=DB::table('cargo_modulo')
  		->where('id_cargo','=',$cargoUsuario)
  		->orderBy('id_cargo', 'desc')->get();
- 		return view("almacen.sede.registrar", ["modulos"=>$modulos]);
+ 		return view("almacen.sede.registrar", ["modulos"=>$modulos, "usuarios"=>$usuarios]);
  	}
 
  	// Función para registrar datos del formulario de registro de sedes a la BD
@@ -49,6 +54,8 @@ class SedeController extends Controller
  		$sede->descripcion=$request->get('descripcion');
  		$sede->direccion=$request->get('direccion');
  		$sede->telefono=$request->get('telefono');
+ 		$sede->fecha=$request->get('fecha');
+ 		$sede->empleado_id_empleado=$request->get('empleado_id_empleado');
  		$sede->save();
  		return back()->with('msj','Sede guardada');
  	}
@@ -60,11 +67,12 @@ class SedeController extends Controller
  	// Función que retorna una vista al formulario de edición de sedes
  	public function edit($id){
  		$cargoUsuario=auth()->user()->tipo_cargo_id_cargo;
+ 		$usuarios=DB::table('empleado')->get();
  		$modulos=DB::table('cargo_modulo')
  		->where('id_cargo','=',$cargoUsuario)
  		->orderBy('id_cargo', 'desc')->get();
  			
- 		return view("almacen.sede.edit",["sede"=>Sede::findOrFail($id), "modulos"=>$modulos]);
+ 		return view("almacen.sede.edit",["sede"=>Sede::findOrFail($id), "modulos"=>$modulos, "usuarios"=>$usuarios]);
  	}
 
  	//Función para actualizar los datos en la BD que han sido editados en el formulario de edición de sedes
@@ -75,6 +83,8 @@ class SedeController extends Controller
  		$sede->descripcion=$request->get('descripcion');
  		$sede->direccion=$request->get('direccion');
  		$sede->telefono=$request->get('telefono');
+ 		$sede->fecha=$request->get('fecha');
+ 		$sede->empleado_id_empleado=$request->get('empleado_id_empleado');
  		$sede->update();
  		return back()->with('msj','Sede actualizada');
  	}
@@ -82,6 +92,11 @@ class SedeController extends Controller
  	//Función para eliminar el registro especificado en el módulo de sedes
  	public function destroy($id){
  		$id=$id;
+ 		$sede=Sede::findOrFail($id);
+	 	$sede->delete();
+ 		return back()->with('msj','Sede eliminada');
+
+ 		/*$id=$id;
  		$existeC=DB::table('caja')
  		->where('sede_id_sede','=',$id)
  		->orderBy('id_caja', 'desc')->get();
@@ -112,6 +127,6 @@ class SedeController extends Controller
  			return back()->with('msj','Sede eliminada');
  		}else{
  			return back()->with('errormsj','¡Sede relacionada!');	 			
- 		}	
+ 		}*/	
  	}
 }

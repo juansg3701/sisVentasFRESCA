@@ -23,8 +23,7 @@
 					<div class="page-header float-right">
 						<div class="page-title">
 							<ol class="breadcrumb text-right">
-								<li><a href="#">Inicio</a></li>
-								<li class="active">Sedes</li>
+								<li class="active">Inicio</li>
 							</ol>
 						</div>
 					</div>
@@ -51,8 +50,6 @@
 										<div class="card-body card-block" align="center">
 											<div id=formulario>
 												<div class="form-group">
-													<!--Incluir la ventana modal de búsqueda-->	
-													@include('almacen.sede.search')
 													<div align="center">
 														<a href="{{URL::action('SedeController@create',0)}}"><button class="btn btn-info">Registrar Sede</button></a>	
 														<a href="{{url('/')}}" class="btn btn-danger">Regresar</a>
@@ -83,6 +80,7 @@
 						<h3 class="pb-2 display-5">SEDES REGISTRADAS</h3>
 					</div>
 					<div class="card-body">
+						@include('almacen.sede.search')
 						<table id="bootstrap-data-table" class="table table-striped table-bordered">
 							<thead>
 								<th>NOMBRE</th>
@@ -90,7 +88,7 @@
 								<th>DESCRIPCIÓN</th>
 								<th>DIRECCIÓN</th>
 								<th>TELÉFONO</th>
-								<th>OPCIONES</th>
+								<th colspan="3">OPCIONES</th>
 							</thead>
 							@foreach($sedes as $sed)
 							<tr>
@@ -99,17 +97,21 @@
 								<td>{{ $sed->descripcion}}</td>
 								<td>{{ $sed->direccion}}</td>
 								<td>{{ $sed->telefono}}</td>
+								<!--Botones para editar, eliminar y visualizar el registro de cambios-->
 								<td>
-									<!--Botones editar y eliminar de la tabla-->
-									<div class="table-data-feature">
-										<a href="{{URL::action('SedeController@edit',$sed->id_sede)}}"><button type="button" class="btn btn-outline-primary btn-sm">Editar</button></a>
-										@if(isset($sed->id_sede))
-										<a href="" data-target="#modal-delete-{{$sed->id_sede}}" data-toggle="modal"><button type="button" class="btn btn-outline-danger btn-sm">Eliminar</button></a>
-										@endif
-									</div>
+									<a href="{{URL::action('SedeController@edit',$sed->id_sede)}}"><button type="button" class="btn btn-outline-primary btn-sm">Editar</button></a>
+								</td>
+								<td>
+									@if(isset($sed->id_sede))
+									<a href="" data-target="#modal-delete-{{$sed->id_sede}}" data-toggle="modal"><button type="button" class="btn btn-outline-danger btn-sm">Eliminar</button></a>
+									@endif
+								</td>
+								<td>
+									<a href="" title="Registro de cambios" data-target="#modal-infoSede-{{$sed->id_sede}}" data-toggle="modal"><button class="btn btn-outline-secondary btn-sm">+</button></a>
 								</td>
 							</tr>
 							@include('almacen.sede.modal')
+							@include('almacen.sede.modalInfoSede')
 							@endforeach
 						</table>
 					</div>

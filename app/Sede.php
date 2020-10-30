@@ -10,7 +10,7 @@ class Sede extends Model
     protected $table = 'sede';
     protected $primaryKey='id_sede';
     public $timestamps =false;  
-    protected $fillable=['nombre_sede', 'ciudad', 'descripcion', 'direccion', 'telefono'];
+    protected $fillable=['nombre_sede', 'ciudad', 'descripcion', 'direccion', 'telefono', 'fecha', 'empleado_id_empleado'];
     protected $guarded=[];
 }
 
