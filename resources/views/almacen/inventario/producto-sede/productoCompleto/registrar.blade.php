@@ -7,41 +7,316 @@
 
 </head>
 <body>
-	<div class="row">
-		<div class="col-lg-8 col-md-8 col-sm-8 col-xs-12">
-			<h3>Registro de Productos de Sede</h3>
+	<!--Control de errores en los campos del formulario-->	
+	<div class="container col-sm-12" align="center">
+		<div class="row" align="center">
+			<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12" align="center">
+				@if (count($errors)>0)
+				<div class="alert alert-danger" align="center">
+					<ul>
+						@foreach ($errors->all() as $error)
+							<li>{{$error}}</li>
+						@endforeach
+					</ul>
+				</div>
+				@endif
+			</div>
+		</div>
+	</div>
+
+
+	<!--Panel superior-->
+	<div class="breadcrumbs">
+		<div class="breadcrumbs-inner">
+			<div class="row m-0">
+				<div class="col-sm-4">
+					<div class="page-header float-left">
+						<div class="page-title">
+							<h1>Inventario</h1>
+						</div>
+					</div>
+				</div>
+				<div class="col-sm-8">
+					<div class="page-header float-right">
+						<div class="page-title">
+							<ol class="breadcrumb text-right">
+								<li class="active">Productos</li>
+								<li class="active">Registrar producto</li>
+							</ol>
+						</div>
+					</div>
+				</div>
+			</div>
 		</div>
 	</div>
 {!!Form::open(array('url'=>'almacen/inventario/producto-sede/productoCompleto','method'=>'POST','autocomplete'=>'off'))!!}
     {{Form::token()}}
-	<div id=formulario>
-		<div class="form-group">
-			Nombre<input type="text" class="form-control" name="nombre">
-			PLU<input type="text" class="form-control" name="plu">
-			EAN<input type="text" class="form-control" name="ean">
-			Categoría<br>
-			<select name="categoria_id_categoria" class="form-control">
-				@foreach($categorias as $ct)
-				<option value="{{$ct->id_categoria}}">{{$ct->nombre}}</option>
-				@endforeach
-			</select>	
-			Unidad de Medida<br>
-			<input type="text" class="form-control" name="unidad_de_medida">
-			Precio<input type="text" class="form-control" name="precio">
-			Impuesto<br>
-			<select name="impuestos_id_impuestos" class="form-control">
-				@foreach($impuestos as $im)
-				<option value="{{$im->id_impuestos}}">{{$im->nombre}}</option>
-				@endforeach
-			</select>	
-			Stock Mínimo<input type="text" class="form-control" name="stock_minimo">
-			<br>
-			<div align="center">
-			<button type="submit" class="btn btn-info">Registrar Producto</button>
-				<a href="{{url('almacen/inventario/producto-sede/productoCompleto')}}" class="btn btn-danger">Volver</a>
+
+     <!--Formulario de registro-->	
+	<div class="col-md-12">
+		<div class="card">
+			<div class="card-header" align="center">
+				<h3 class="pb-2 display-5">REGISTRAR SEDE</h3>
+			</div><br>
+			<div class="row" align="center">	
+				<div class="" align="center"></div>
+				 	<div class="col-sm-12" align="center">
+						<div class="card" align="center">
+			                <div class="card-header" align="center">
+			                     <strong>Formulario de registro</strong>
+			                </div><br>
+			                <div class="card-body card-block" align="center">
+
+			                	<div class="form-row">
+			                	<div class="form group col-sm-12" align="center">
+									<div class="form-row">
+									<div class="form-group col-sm-2">
+										<div>Nombre:</div>
+									</div>
+									<div class="form-group col-sm-3">
+										<input type="text" class="form-control" name="nombre">
+									</div>
+
+									<div class="form-group col-sm-1"></div>
+							
+									<div class="form-group col-sm-2">
+										<div>Unidad de medida:</div>
+									</div>
+									<div class="form-group col-sm-3">
+										<input type="text" class="form-control" name="unidad_de_medida">
+									</div>
+								</div>
+
+								</div>	
+			                	</div>
+								
+			                	<div class="form-row">
+			                	<div class="form group col-sm-12" align="center">
+			                	<div class="form-row">
+									<div class="form-group col-sm-2">
+										<div>Precio No.1:</div>
+									</div>
+									<div class="form-group col-sm-3">
+										<input type="text" class="form-control" name="precio_1">
+									</div>
+								
+									<div class="form-group col-sm-1"></div>
+
+									<div class="form-group col-sm-2">
+										<div>Stock m&iacutenimo:</div>
+									</div>
+									<div class="form-group col-sm-3">
+										<input type="text" class="form-control" name="stock_minimo">
+									</div>
+								</div>
+
+			                	</div>
+			                </div>
+								
+
+								
+								<div class="form-row">
+			                	<div class="form group col-sm-12" align="center">
+
+								<div class="form-row">
+									<div class="form-group col-sm-2">
+										<div>Precio No.2:</div>
+									</div>
+									<div class="form-group col-sm-3">
+										<input type="text" class="form-control" name="precio_2">
+									</div>
+								
+									<div class="form-group col-sm-1"></div>
+									<div class="form-group col-sm-2">
+										<div>Impuesto:</div>
+									</div>
+									<div class="form-group col-sm-3">
+										<select name="impuestos_id_impuestos" class="form-control">
+											@foreach($impuestos as $im)
+											<option value="{{$im->id_impuestos}}">{{$im->nombre}}</option>
+											@endforeach
+										</select>
+									</div>
+								</div>
+							</div>
+						</div>
+
+						<div class="form-row">
+			                	<div class="form group col-sm-12" align="center">
+
+								<div class="form-row">
+									<div class="form-group col-sm-2">
+										<div>Precio No.3:</div>
+									</div>
+									<div class="form-group col-sm-3">
+										<input type="text" class="form-control" name="precio_3">
+									</div>
+									<div class="form-group col-sm-1"></div>
+									<div class="form-group col-sm-2">
+										<div>Categor&iacutea:</div>
+									</div>
+									<div class="form-group col-sm-3">
+										<select name="categoria_id_categoria" class="form-control">
+											@foreach($categorias as $ct)
+											<option value="{{$ct->id_categoria}}">{{$ct->nombre}}</option>
+											@endforeach
+										</select>	
+									</div>
+								
+									
+									
+								</div>
+							</div>
+						</div>
+
+						<div class="form-row">
+			                	<div class="form group col-sm-12" align="center">
+
+								<div class="form-row">
+									<div class="form-group col-sm-2">
+										<div>Precio No.4:</div>
+									</div>
+									<div class="form-group col-sm-3">
+										<input type="text" class="form-control" name="precio_4">
+									</div>
+									
+									<div class="form-group col-sm-1"></div>
+
+									<div class="form-group col-sm-2">
+										<div>Descuento:</div>
+									</div>
+									<div class="form-group col-sm-3">
+										<select name="descuento_id_descuento" class="form-control">
+											@foreach($descuentos as $d)
+											<option value="{{$d->id_descuento}}">{{$d->nombre}}</option>
+											@endforeach
+										</select>
+									</div>
+								
+									
+									
+								</div>
+							</div>
+						</div>
+
+						<div class="form-row">
+			                	<div class="form group col-sm-12" align="center">
+
+								<div class="form-row">
+									<div class="form-group col-sm-2">
+										<div>Costo de compra:</div>
+									</div>
+									<div class="form-group col-sm-3">
+										<input type="text" class="form-control" name="costo_compra">
+									</div>
+									
+									<div class="form-group col-sm-1"></div>
+
+									<div class="form-group col-sm-2">
+										<div>¿Es necesario pesar?:</div>
+									</div>
+									<div class="form-group col-sm-3">
+										<select name="necesita_peso" class="form-control">
+											<option value="1">Si</option>
+											<option value="2">No</option>
+										</select>
+									</div>
+								
+								</div>
+							</div>
+						</div>
+
+						<div class="form-row">
+			                	<div class="form group col-sm-12" align="center">
+
+								<div class="form-row">
+									<div class="form-group col-sm-2">
+											<div>Imag&eacuten:</div>
+										</div>
+										<div class="form-group col-sm-3">
+											<input type="file" name="imagen" class="form-control" placeholder="">
+										</div>
+									
+									
+									<div class="form-group col-sm-1"></div>
+
+									<div class="form-group col-sm-2">
+										<div>Fecha:</div>
+									</div>
+									<div class="form-group col-sm-3">
+										<input type="datetime" name="" value="<?php echo date("Y/m/d"); ?>" class="form-control" disabled="true">
+										<input type="hidden" name="fecha_registro" value="<?php echo date("Y/m/d"); ?>" class="form-control">
+									</div>
+								
+								</div>
+							</div>
+						</div>
+
+						<div class="form-row">
+			                	<div class="form group col-sm-12" align="center">
+
+								<div class="form-row">
+									<div class="form-group col-sm-2">
+										<div>PLU:</div>
+									</div>
+									<div class="form-group col-sm-3">
+										<input type="text" class="form-control" name="plu">
+									</div>
+									
+									
+									<div class="form-group col-sm-1"></div>
+
+									<div class="form-group col-sm-2">
+										<div>Empleado:</div>
+									</div>
+									<div class="form-group col-sm-3">
+										<select name="" class="form-control" disabled="true">
+											@foreach($usuarios as $usu)
+											@if(Auth::user()->id==$usu->user_id_user)
+											<option value="{{$usu->id_empleado}}">{{$usu->nombre}}</option>
+											<input type="hidden" name="empleado_id_empleado" value="{{$usu->id_empleado}}">
+											@endif
+											@endforeach
+										</select>
+									</div>
+								
+								</div>
+							</div>
+						</div>
+
+						<div class="form-row">
+			                	<div class="form group col-sm-12" align="center">
+			                		<div class="form-row">
+										<div class="form-group col-sm-2">
+										<div>EAN:</div>
+									</div>
+									<div class="form-group col-sm-3">
+										<input type="text" class="form-control" name="ean">
+									</div>
+									</div>
+								
+							</div>
+						</div>
+
+						
+								<input type="hidden" name="punto_venta_id_punto_venta" value="1">
+
+								<div class="form-row">
+									<div class="form-group col-sm-12">
+										<button class="btn btn-info" type="submit">Registrar</button>
+										<a href="{{url('almacen/sede')}}" class="btn btn-danger">Regresar</a>
+									</div>
+								</div>
+								
+			               </div>
+			        	</div>
+					</div>
+				<div class="" align="center"></div>
+				
 			</div>
+
 		</div>
-	</div>
+	</div>		
 {!!Form::close()!!}	
 </body>
 
