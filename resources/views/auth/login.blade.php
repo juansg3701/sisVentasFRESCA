@@ -27,7 +27,7 @@
                             <div class="col-md-12">
                                 @if ($errors->has('email'))
                                     <span class="help-block">
-                                        <strong>El campo correo es obligatorio</strong>
+                                        <strong>Verifica datos</strong>
                                     </span>
                                 @endif
                                 <input id="email" type="email" class="form-control" name="email" value="{{ old('email') }}" placeholder="Usuario" style="width: 230px; height: 30px;">
