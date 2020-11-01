@@ -49,7 +49,7 @@
 			</div>
 		</div>
 	</div>
-{!!Form::open(array('url'=>'almacen/inventario/producto-sede/productoCompleto','method'=>'POST','autocomplete'=>'off'))!!}
+{!!Form::open(array('url'=>'almacen/inventario/producto-sede/productoCompleto','method'=>'POST','autocomplete'=>'off','files'=>'true'))!!}
     {{Form::token()}}
 
      <!--Formulario de registro-->	
@@ -231,7 +231,7 @@
 
 								<div class="form-row">
 									<div class="form-group col-sm-2">
-											<div>Imag&eacuten:</div>
+											<div>Imagen:</div>
 										</div>
 										<div class="form-group col-sm-3">
 											<input type="file" name="imagen" class="form-control" placeholder="">
@@ -304,7 +304,7 @@
 								<div class="form-row">
 									<div class="form-group col-sm-12">
 										<button class="btn btn-info" type="submit">Registrar</button>
-										<a href="{{url('almacen/sede')}}" class="btn btn-danger">Regresar</a>
+										<a href="{{url('almacen/inventario/producto-sede/productoCompleto')}}" class="btn btn-danger">Regresar</a>
 									</div>
 								</div>
 								

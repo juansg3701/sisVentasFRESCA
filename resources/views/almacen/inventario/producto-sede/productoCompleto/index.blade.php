@@ -127,7 +127,7 @@
 							<th>DESCUENTO</th>
 							<th>STOCK M&IacuteNIMO</th>
 							<th>¿NECESITA PESO?</th>
-							<th>IMAG&EacuteN</th>
+							<th>IMAGEN</th>
 							<th>PRECIOS</th>
 							<th colspan="3">OPCIONES</th>
 						</thead>
@@ -138,8 +138,8 @@
 							<td>{{ $ps->ean}}</td>
 							<td>{{ $ps->categoria_id_categoria}}</td>
 							<td>{{ $ps->unidad_de_medida}}</td>
-							<td>{{ $ps->impuestos_id_impuestos}}</td>
-							<td>{{ $ps->nombreD}}</td>
+							<td>{{ $ps->impuestos_id_impuestos}} {{ $ps->valorI}}%</td>
+							<td>{{ $ps->nombreD}} {{ $ps->valorD}}%</td>
 							<td>{{ $ps->stock_minimo}}</td>
 							
 							@if($ps->necesita_peso=="1")
