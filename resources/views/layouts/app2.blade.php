@@ -27,26 +27,6 @@
         .fa-btn {
             margin-right: 6px;
         }
-        .izquierda{
-  background-color: white;
-  height: 350px;
-  width: 300px;
-  
-
-    }
-    .centro{
-     background-image: url(images/barra.png);
-      height: 350px;
-  width: 4px;
-       
-           
-    }
-    .derecha{
-        background-image: url(images/derecha.png);
-         height: 350px;
-  width: 300px;
-
-    }
  .grid-1 {
   display: grid;
   width: 100%;
@@ -64,14 +44,14 @@
   max-width: 650px;
   margin: 0 auto;
   grid-template-columns: repeat(2, 2fr);
-  grid-template-rows: repeat(2, 180px);
+  grid-template-rows: repeat(5, 64px);
   grid-gap: 20px;
 }
 
 /* items */
 
 .grid-1 div {
-  color: white;
+  color: black;
 
   }
 
@@ -84,20 +64,21 @@
 }
 
 
+
 .item-botones {
   background: white;
   grid-column: 1 / span 1;
-  grid-row: 2 / span 1;
+  grid-row: 3 / span 3;
 }
 .item-imagenD {
   background: white;
   grid-column: 2 / span 1;
-  grid-row: 1 / span 2;
+  grid-row: 1 / span 5;
 }
 .item-imagenI {
   background: white;
   grid-column: 1 / span 1;
-  grid-row: 1 / span 1;
+  grid-row: 1 / span 2;
 }
 .botonimagen{
   background-image:url(images/entrar.png);
@@ -116,10 +97,15 @@
   <div class="item-1" align="right">
 
     <section class="grid-2">
-        <div class="item-imagenI"><img src="images/controler.png" width="290" height="160" style="margin-top: 30px"></div>
+        <div class="item-imagenI"><img src="images/controler.png" width="290" height="160" style="">
+          <label style="color: black"></label>
+        </div>
 
-        <div class="item-botones">
+        <div class="item-botones" align="center">
+          <div align="center">
+            
             @yield('content')
+          </div>
 
           </div>
 
