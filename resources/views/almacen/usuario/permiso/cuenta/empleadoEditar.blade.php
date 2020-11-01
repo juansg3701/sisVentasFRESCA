@@ -93,10 +93,16 @@
 									<div class="form-group col-sm-8">
 										<select name="tipo_cargo_id_cargo" class="form-control">
 											@foreach($cargos as $car)
-												@if($car->id_cargo==$usuario->id_cargo)
+												@if($car->id_cargo==$usuario->tipo_cargo_id_cargo)
 												<option value="{{$car->id_cargo}}" selected>{{$car->nombre}}</option>
-												@else
-												<option value="{{$car->id_cargo}}">{{$car->nombre}}</option>
+												
+												@endif
+											@endforeach
+
+											@foreach($cargos as $car)
+												@if($car->id_cargo=!$usuario->tipo_cargo_id_cargo)
+												<option value="{{$car->id_cargo}}" selected>{{$car->nombre}}</option>
+												
 												@endif
 											@endforeach
 										</select>
@@ -109,10 +115,16 @@
 									<div class="form-group col-sm-8">
 										<select name="sede_id_sede" class="form-control">
 											@foreach($sedes as $sed)
-											@if($sed->id_sede==$usuario->id_sede)
+											@if($sed->id_sede==$usuario->sede_id_sede)
 											<option value="{{$sed->id_sede}}" selected>{{$sed->nombre_sede}}</option>
-											@else
-											<option value="{{$sed->id_sede}}">{{$sed->nombre_sede}}</option>
+											
+											@endif
+											@endforeach
+
+											@foreach($sedes as $sed)
+											@if($sed->id_sede=!$usuario->sede_id_sede)
+											<option value="{{$sed->id_sede}}" selected>{{$sed->nombre_sede}}</option>
+											
 											@endif
 											@endforeach
 										</select>
