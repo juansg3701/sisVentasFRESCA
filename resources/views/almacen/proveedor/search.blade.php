@@ -44,7 +44,6 @@
 				</div>
 			</div>
 
-
 			<div class="form-group col-sm-12">
 				<span class="input-group-btn">
 					<button id="btnBuscar" type="submit"  class="btn btn-primary">Buscar</button>
