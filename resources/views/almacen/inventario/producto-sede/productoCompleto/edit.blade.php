@@ -22,7 +22,7 @@
 		</div>
 	</div>
 
-	{!!Form::model($productos,['method'=>'PATCH','route'=>['almacen.inventario.producto-sede.productoCompleto.update',$productos->id_producto]])!!}
+	{!!Form::model($productos,['method'=>'PATCH','route'=>['almacen.inventario.producto-sede.productoCompleto.update',$productos->id_producto]],'files'=>'true')!!}
     {{Form::token()}}
 
 	<div id=formulario>

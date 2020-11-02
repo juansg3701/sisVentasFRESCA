@@ -1,17 +1,15 @@
 @extends('layouts.app')
 
 @section('content')
-<div class="container">
-    <div class="row">
-        <div class="col-md-10 col-md-offset-1">
-            <div class="panel panel-default">
-                <div class="panel-heading">Dashboard</div>
+
+               
 
                 <div class="panel-body">
-                    Ya ingresaste!
+                    <label style="color:  #2980b9 ">¡¡Ya ingresaste!!</label>
+                    <br></br>
+                    <a href="{{url('/')}}"><button type="button" class="btn btn-primary">
+                                     Ir al inicio del sistema
+                                </button></a>
                 </div>
-            </div>
-        </div>
-    </div>
-</div>
+
 @endsection

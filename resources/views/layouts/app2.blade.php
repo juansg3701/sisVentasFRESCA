@@ -5,7 +5,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
-      <link  rel="icon"   href="{{asset('img/Logo1.jpeg')}}" type="image/jpeg" />
+      <link  rel="icon"   href="img/Logo1.jpeg" type="image/jpeg" />
 
     <title>Cosecha Fresca</title>
 
@@ -16,6 +16,7 @@
 
     <!-- Styles -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.6/css/bootstrap.min.css" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">
+    <link rel="stylesheet" href="{{asset('assets/css/estilos.css')}}">
     {{-- <link href="{{ elixir('css/app.css') }}" rel="stylesheet"> --}}
 
     <style>
@@ -96,7 +97,7 @@
   <div class="item-1" align="right">
 
     <section class="grid-2">
-        <div class="item-imagenI"><img src="{{asset('images/controler.png')}}" width="290" height="160" style="">
+        <div class="item-imagenI"><img src="images/controler.png" width="290" height="160" style="">
           <label style="color: black"></label>
         </div>
 
@@ -108,7 +109,7 @@
 
           </div>
 
-          <div class="item-imagenD" align="right" ><img src="{{asset('images/derecha.png')}}" width="350" height="400" style="margin-left: 20px"></div>
+          <div class="item-imagenD" align="right" ><img src="images/derecha.png" width="350" height="400" style="margin-left: 20px"></div>
     </section>
    
        
