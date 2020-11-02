@@ -69,13 +69,12 @@
 												<div class="form-group">
 													<div align="center">
 												
-				
-												<a href="{{URL::action('ProductoSedeController@create',0)}}"><button class="btn btn-info">Registrar producto</button></a>
-												<a href="{{URL::action('ImpuestoProducto@index',0)}}"><button class="btn btn-info">Registrar impuesto</button></a>
-												<a href="{{URL::action('CategoriaProducto@index',0)}}"><button class="btn btn-info">Registrar categoria</button></a>
-												<button class="btn btn-success">Cargar xls</button>
-												<button class="btn btn-success">Descargar xls</button>
-												<a href="{{url('/')}}" class="btn btn-danger">Volver</a>
+														<a href="{{URL::action('ProductoSedeController@create',0)}}"><button class="btn btn-info">Registrar producto</button></a>
+														<a href="{{URL::action('ImpuestoProducto@index',0)}}"><button class="btn btn-info">Registrar impuesto</button></a>
+														<a href="{{URL::action('CategoriaProducto@index',0)}}"><button class="btn btn-info">Registrar categoria</button></a>
+														<button class="btn btn-success">Cargar xls</button>
+														<a href="{{URL::action('ProductoSedeController@downloadExcel',0)}}"><button class="btn btn-success">Descargar xls</button></a>
+														<a href="{{url('/')}}" class="btn btn-danger">Volver</a>
 				
 													</div>
 												</div>

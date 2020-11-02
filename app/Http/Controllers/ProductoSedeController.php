@@ -217,4 +217,9 @@ class ProductoSedeController extends Controller
 
 	 	}
 
+	 	public function downloadExcel(Request $request){
+	 		//Proveedor
+	 		return view('almacen.inventario.producto-sede.productoCompleto.descargarExcel.descargarProveedor');
+	 	}
+	 	
 }
