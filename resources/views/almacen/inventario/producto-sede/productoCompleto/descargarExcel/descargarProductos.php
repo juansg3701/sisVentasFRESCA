@@ -1,7 +1,7 @@
 <!--Configuración general del archivo a descargar y consulta a la base de datos para especificación de la tabla a incluir en el archivo-->
 <?php
 	header('Content-type:application/xls');
-	header('Content-Disposition: attachment; filename=Descarga_Proveedor.xls');
+	header('Content-Disposition: attachment; filename=Descarga_Productos.xls');
 	require_once('conexion.php');
 	$conn=new Conexion();
 	$link = $conn->conectarse();
@@ -12,14 +12,23 @@
 <table border="1">
 	<tr style="">
 		<thead>
-			
-			<th>NOMBRE EMPRESA</th>
-			<th>NOMBRE CONTACTO</th>
-			<th>DIRECCION</th>
-			<th>TELEFONO</th>
-			<th>CORREO</th>
-			<th>NO. DOCUMENTO</th>
-			<th>DIGITO NIT</th>
+			<th>ID</th>
+			<th>NOMBRE</th>
+			<th>PLU</th>
+			<th>EAN</th>
+			<th>CATEGORIA</th>
+			<th>UNIDAD MEDIDA</th>
+			<th>IMPUESTO</th>
+			<th>DESCUENTO</th>
+			<th>STOCK MÍNIMO</th>
+			<th>PESO</th>
+			<th>IMAGEN</th>
+			<th>PRECIO 1</th>
+			<th>PRECIO 2</th>
+			<th>PRECIO 3</th>
+			<th>PRECIO 4</th>
+			<th>COSTO COMPRA</th>
+			<th>PUNTO_VENTA</th>
 		</thead>
 	</tr>
 	<?php

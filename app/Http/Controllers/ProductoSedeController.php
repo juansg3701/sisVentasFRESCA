@@ -115,10 +115,6 @@ class ProductoSedeController extends Controller
 	 		}else{
 	 				return back()->with('errormsj','¡PLU ya registrado!');
 	 		}
-
-
-
-	 		
 	 	}
 
 	 	public function show($id){
@@ -190,9 +186,8 @@ class ProductoSedeController extends Controller
 	 		}else{
 	 				return back()->with('errormsj','¡PLU ya registrado!');
 	 		}
-
-	 		
 	 	}
+
 
 	 	public function destroy($id){
 	 		$id=$id;
@@ -201,11 +196,9 @@ class ProductoSedeController extends Controller
 	 		->where('producto_id_producto','=',$id)
 	 		->orderBy('id_stock', 'desc')->get();
 
-
 	 		$existeDC=DB::table('d_corte')
 	 		->where('producto_id_producto','=',$id)
 	 		->orderBy('id_dcorte', 'desc')->get();
-
 
 	 		if(count($existeS)==0 && count($existeDC)==0){
 	 			$ps=ProductoSede::findOrFail($id);
@@ -219,7 +212,7 @@ class ProductoSedeController extends Controller
 
 	 	public function downloadExcel(Request $request){
 	 		//Proveedor
-	 		return view('almacen.inventario.producto-sede.productoCompleto.descargarExcel.descargarProveedor');
+	 		return view('almacen.inventario.producto-sede.productoCompleto.descargarExcel.descargarProductos');
 	 	}
-	 	
+
 }
