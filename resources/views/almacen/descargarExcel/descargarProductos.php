@@ -5,7 +5,7 @@
 	require_once('conexion.php');
 	$conn=new Conexion();
 	$link = $conn->conectarse();
-	$query="SELECT * FROM producto";
+	$query="SELECT * FROM producto ORDER BY id_producto DESC";
 	$result=mysqli_query($link, $query);
 ?>
 <!--Definir los campos de la tabla proveedor a mostrar en el archivo excel-->
