@@ -5,7 +5,7 @@
 	require_once('conexion.php');
 	$conn=new Conexion();
 	$link = $conn->conectarse();
-	$query="SELECT * FROM proveedor";
+	$query="SELECT * FROM producto";
 	$result=mysqli_query($link, $query);
 ?>
 <!--Definir los campos de la tabla proveedor a mostrar en el archivo excel-->
@@ -35,13 +35,8 @@
 		while ($row=mysqli_fetch_assoc($result)) {
 			?>
 			<tr>
-				<td><?php echo $row['nombre_empresa']; ?></td>
-				<td><?php echo $row['nombre_proveedor']; ?></td>
-				<td><?php echo $row['direccion']; ?></td>
-				<td><?php echo $row['telefono']; ?></td>
-				<td><?php echo $row['correo']; ?></td>
-				<td><?php echo $row['documento']; ?></td>
-				<td><?php echo $row['verificacion_nit']; ?></td>
+				<td><?php echo $row['id_producto']; ?></td>
+
 			</tr>	
 			<?php
 		}
