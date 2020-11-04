@@ -68,7 +68,7 @@
 												<div class="form-group">
 													<div align="center">
 														<a href="{{URL::action('ProveedorController@create',0)}}"><button class="btn btn-info">Registrar Proveedor</button></a>	
-														<!--<a href="{{URL::action('AcercaDeController@create',0)}}"><button class="btn btn-success">Descargar xls</button></a>-->
+														<a href="{{URL::action('AcercaDeController@create',0)}}"><button class="btn btn-success">Descargar xls</button></a>
 														<a href="{{url('/')}}" class="btn btn-danger">Regresar</a>
 													</div>
 												</div>
