@@ -5,7 +5,7 @@
 	require_once('conexion.php');
 	$conn=new Conexion();
 	$link = $conn->conectarse();
-	$query="SELECT * FROM producto ORDER BY id_producto DESC";
+	$query="SELECT id_producto, plu, ean, nombre, categoria_id_categoria, unidad_de_medida, impuestos_id_impuestos, descuento_id_descuento, stock_minimo, necesita_peso, imagen, precio_1, precio_2, precio_3, precio_4, costo_compra, punto_venta_id_punto_venta FROM producto ORDER BY id_producto DESC";
 	$result=mysqli_query($link, $query);
 ?>
 <!--Definir los campos de la tabla proveedor a mostrar en el archivo excel-->
@@ -13,15 +13,15 @@
 	<tr style="background-color:LIGHTSTEELBLUE; height:100px">
 		<thead>
 			<th>ID</th>
-			<th>NOMBRE</th>
 			<th>PLU</th>
 			<th>EAN</th>
+			<th>NOMBRE</th>
 			<th>CATEGORIA</th>
 			<th>UNIDAD MEDIDA</th>
 			<th>IMPUESTO</th>
 			<th>DESCUENTO</th>
 			<th>STOCK MINIMO</th>
-			<th>PESO</th>
+			<th>¿NECESITA PESO?</th>
 			<th>IMAGEN</th>
 			<th>PRECIO 1</th>
 			<th>PRECIO 2</th>
@@ -38,9 +38,9 @@
 			?>
 			<tr>
 				<td><?php echo $row['id_producto']; ?></td>
-				<td><?php echo $row['nombre']; ?></td>
 				<td><?php echo $row['plu']; ?></td>
 				<td><?php echo $row['ean']; ?></td>
+				<td><?php echo $row['nombre']; ?></td>
 				<td><?php echo $row['categoria_id_categoria']; ?></td>
 				<td><?php echo $row['unidad_de_medida']; ?></td>
 				<td><?php echo $row['impuestos_id_impuestos']; ?></td>
