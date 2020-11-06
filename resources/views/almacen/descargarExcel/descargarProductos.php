@@ -5,7 +5,7 @@
 	require_once('conexion.php');
 	$conn=new Conexion();
 	$link = $conn->conectarse();
-	$query="SELECT id_producto, plu, ean, nombre, categoria_id_categoria, unidad_de_medida, impuestos_id_impuestos, descuento_id_descuento, stock_minimo, necesita_peso, imagen, precio_1, precio_2, precio_3, precio_4, costo_compra, punto_venta_id_punto_venta FROM producto ORDER BY id_producto DESC";
+	$query="SELECT p.id_producto, p.plu, p.ean, p.nombre, c.nombre as categoria_id_categoria, p.unidad_de_medida, i.nombre as impuestos_id_impuestos, d.nombre as descuento_id_descuento, p.stock_minimo, p.necesita_peso, p.imagen, p.precio_1, p.precio_2, p.precio_3, p.precio_4, p.costo_compra, pv.nombre as punto_venta_id_punto_venta FROM producto as p, categoria_productos as c, impuestos as i, descuento as d, punto_venta as pv WHERE p.categoria_id_categoria=c.id_categoria and p.impuestos_id_impuestos=i.id_impuestos and p.descuento_id_descuento=d.id_descuento and p.punto_venta_id_punto_venta=pv.id_punto_venta ORDER BY id_producto DESC";
 	$result=mysqli_query($link, $query);
 ?>
 <!--Definir los campos de la tabla proveedor a mostrar en el archivo excel-->

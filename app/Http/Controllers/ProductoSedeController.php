@@ -132,7 +132,7 @@ class ProductoSedeController extends Controller
 	 			->where('id_cargo','=',$cargoUsuario)
 	 			->orderBy('id_cargo', 'desc')->get();
 	 			
-	 		return view("almacen.inventario.producto-sede.productoCompleto.edit",["productos"=>ProductoSede::findOrFail($id),"categorias"=>$categorias,"impuestos"=>$impuestos, "modulos"=>$modulos]);
+	 		return view("almacen.inventario.producto-sede.productoCompleto.edit",["productos"=>ProductoSede::findOrFail($id),"categorias"=>$categorias,"impuestos"=>$impuestos, "modulos"=>$modulos,"descuentos"=>$descuentos,"usuarios"=>$usuarios]);
 
 	 	}
 
