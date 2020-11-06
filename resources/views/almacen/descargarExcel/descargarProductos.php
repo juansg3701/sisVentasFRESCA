@@ -30,7 +30,6 @@
 			<th>COSTO COMPRA</th>
 			<th>PUNTO_VENTA</th>
 
-
 		</thead>
 	</tr>
 	<?php
@@ -54,7 +53,6 @@
 				<td><?php echo $row['precio_4']; ?></td>
 				<td><?php echo $row['costo_compra']; ?></td>
 				<td><?php echo $row['punto_venta_id_punto_venta']; ?></td>
-
 
 			</tr>	
 			<?php
