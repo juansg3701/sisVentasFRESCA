@@ -11,6 +11,6 @@ class Categoria extends Model
     protected $primaryKey='id_categoria';
     public $timestamps =false;
     
-    protected $fillable=['nombre','descripcion'];
+    protected $fillable=['nombre','descripcion', 'empleado_id_empleado', 'sede_id_sede', 'fecha'];
     protected $guarded=[];
 }

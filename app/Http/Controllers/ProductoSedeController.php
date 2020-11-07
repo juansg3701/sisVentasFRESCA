@@ -26,8 +26,6 @@ class ProductoSedeController extends Controller
 	 			$query1=trim($request->get('searchText1'));
 	 			$query2=trim($request->get('searchText2'));
 	 			
-
-
 	 			$productos=ProductoSede::where('producto.nombre','LIKE', '%'.$query0.'%')
 	 			->where('plu','LIKE', '%'.$query1.'%')
 	 			->where('ean','LIKE', '%'.$query2.'%')

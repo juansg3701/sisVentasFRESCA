@@ -24,11 +24,13 @@ class CategoriaFormRequest extends Request
      */
     public function rules()
     {
-            protected $connection = 'general';
+        protected $connection = 'general';
         return [
-            //'id_sede'=>'required|max:45',
             'nombre'=>'required|max:45',
             'descripcion'=>'required|max:45',
+            'empleado_id_empleado'=>'required|max:45',
+            'sede_id_sede'=>'required|max:45',
+            'fecha'=>'required|max:45',
         ];
     }
 }
