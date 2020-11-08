@@ -17,7 +17,7 @@ class ProductoSedeController extends Controller
 	  public function __construct(){
 			$this->middleware('auth');	
 
-			 	} 
+		} 
 
 		//Redirecciona para mostrar los productos completos
 	 	public function index(Request $request){
@@ -33,7 +33,7 @@ class ProductoSedeController extends Controller
 	 			->join('impuestos as i','impuestos_id_impuestos','=','i.id_impuestos')
 	 			->join('descuento as d','producto.descuento_id_descuento','=','d.id_descuento')
 	 			->join('punto_venta as pv','punto_venta_id_punto_venta','=','pv.id_punto_venta')
-	 			->select('id_producto','producto.nombre as nombre','plu','ean','c.nombre as categoria_id_categoria','unidad_de_medida','precio_1','precio_2','precio_3','precio_4','costo_compra','i.nombre as impuestos_id_impuestos','stock_minimo','producto.fecha_registro as fecha_registro','producto.empleado_id_empleado','necesita_peso','pv.nombre as nombrePV','d.nombre as nombreD','imagen','i.valor as valorI','d.valor as valorD')
+	 			->select('id_producto','producto.nombre as nombre','plu','ean','c.nombre as categoria_id_categoria','unidad_de_medida','precio_1','precio_2','precio_3','precio_4','costo_compra','i.nombre as impuestos_id_impuestos','stock_minimo','producto.fecha_registro as fecha_registro','producto.empleado_id_empleado','necesita_peso','pv.nombre as nombrePV','d.nombre as nombreD','imagen','i.valor_impuesto as valorI','d.valor_descuento as valorD')
 	 			->orderBy('id_producto', 'desc')
     			->paginate(10);
 

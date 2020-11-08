@@ -20,7 +20,13 @@ role="dialog" tabindex="-1" id="modal-infoCategoria-{{$cat->id_categoria}}">
 					<div>Empleado:</div>
 				</div>
 				<div class="form-group col-sm-6">
-                    {{ $cat->empleado_id_empleado}}
+             
+
+                    @foreach($usuarios as $e)
+						@if($cat->empleado_id_empleado==$e->id_empleado)
+							{{$e->nombre}}
+						@endif
+					@endforeach
 				</div>
             </div>
 
@@ -29,7 +35,11 @@ role="dialog" tabindex="-1" id="modal-infoCategoria-{{$cat->id_categoria}}">
 					<div>Sede:</div>
 				</div>
 				<div class="form-group col-sm-6">
-                    {{ $cat->sede_id_sede}}
+                     @foreach($sedes as $e)
+						@if($cat->sede_id_sede==$e->id_sede)
+							{{$e->nombre_sede}}
+						@endif
+					@endforeach
 				</div>
             </div>
 

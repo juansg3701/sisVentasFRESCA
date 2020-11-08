@@ -14,7 +14,7 @@ class CategoriaFormRequest extends Request
     public function authorize()
     {
         return true;
-        protected $connection = 'general';
+        
     }
 
     /**
@@ -24,7 +24,7 @@ class CategoriaFormRequest extends Request
      */
     public function rules()
     {
-        protected $connection = 'general';
+        
         return [
             'nombre'=>'required|max:45',
             'descripcion'=>'required|max:45',

@@ -5,6 +5,7 @@ namespace sisVentas\Http\Controllers;
 use Illuminate\Http\Request;
 use sisVentas\Http\Requests;
 use sisVentas\Categoria;
+use sisVentas\ProductoSede;
 use Illuminate\Support\Facades\Redirect;
 use sisVentas\Http\Requests\CategoriaFormRequest;
 use DB;
@@ -26,7 +27,7 @@ class CategoriaProducto extends Controller
 	 			$usuarios=DB::table('empleado')->get();
 	 			$sedes=DB::table('sede')->get();
 
-	 			/*	 			$categorias=Categoria::where('nombre','LIKE', '%'.$query.'%')
+	 			/*$categorias=Categoria::where('nombre','LIKE', '%'.$query.'%')
 	 			->join('empleado as u','empleado_id_empleado','=','u.id_empleado')
 	 			->join('sede as s','sede_id_sede','=','s.id_sede')
 	 			->select('id_categoria','nombre','descripcion','s.nombre_sede as sede_id_sede','u.nombre as empleado_id_empleado', 'fecha')
@@ -106,9 +107,9 @@ class CategoriaProducto extends Controller
 	 	public function destroy($id){
 	 		$id=$id;
 
-	 		$existe=DB::table('producto')
-	 		->where('categoria_id_categoria','=',$id)
-	 		->orderBy('id_producto', 'desc')->get();
+	 		$existe=ProductoSede::where('categoria_id_categoria','=',$id)
+	 			->orderBy('id_producto', 'desc')
+	 			->get();
 
 	 		if(count($existe)==0){
 	 		$categoria=Categoria::findOrFail($id);
