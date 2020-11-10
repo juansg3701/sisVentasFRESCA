@@ -52,6 +52,7 @@ Route::resource('almacen/inventario/producto-sede/impuestoProducto', 'ImpuestoPr
 Route::resource('almacen/inventario/movimiento-sede', 'MovimientoSedeController');
 Route::resource('almacen/inventario/corte-sede/cortes', 'CorteSedeController');
 Route::resource('almacen/inventario/corte-sede/productosCorte', 'ProductosCorteController');
+Route::resource('almacen/inventario/categoriaTransformado', 'CategoriaTransformadoController');
 
 Route::resource('almacen/reportes/inventario', 'reportesInventario');
 Route::resource('almacen/reportes/inventario2', 'reportesInventario2');

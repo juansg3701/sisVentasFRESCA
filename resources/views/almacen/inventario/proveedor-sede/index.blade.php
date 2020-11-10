@@ -21,6 +21,7 @@
 			<div align="center">
 				
 			<a href="{{url('almacen/inventario/ean')}}"><button class="btn btn-info">Registrar Productos</button></a>
+			<a href="{{url('almacen/inventario/categoriaTransformado')}}"><button class="btn btn-info">Categoría Transformado</button></a>
 			<button class="btn btn-success">Cargar xls</button>
 			<button class="btn btn-success">Descargar xls</button>
 			<a href="{{url('/')}}" class="btn btn-danger">Volver</a>
@@ -48,12 +49,14 @@
 							<th>OPCIONES</th>
 						</thead>
 					@foreach($productos as $ps)
+					@foreach($productosBuscar as $pb)
+					@if($pb->id_producto==$ps->producto_id_producto)
 					@if($ps->sede_id_sede==auth()->user()->sede_id_sede && auth()->user()->superusuario==0)
 						<tr>
 							<td>{{ $ps->id_stock}}</td>
-							<td>{{ $ps->nombre}}</td>
-							<td>{{ $ps->plu}}</td>
-							<td>{{ $ps->ean}}</td>
+							<td>{{ $pb->nombre}}</td>
+							<td>{{ $pb->plu}}</td>
+							<td>{{ $pb->ean}}</td>
 							<td>{{ $ps->nombre_sede}}</td>
 							<td>{{ $ps->nombre_proveedor}}</td>
 							<td>{{ $ps->cantidad}}</td>
@@ -74,9 +77,9 @@
 						@if(auth()->user()->superusuario==1)
 						<tr>
 							<td>{{ $ps->id_stock}}</td>
-							<td>{{ $ps->nombre}}</td>
-							<td>{{ $ps->plu}}</td>
-							<td>{{ $ps->ean}}</td>
+							<td>{{ $pb->nombre}}</td>
+							<td>{{ $pb->plu}}</td>
+							<td>{{ $pb->ean}}</td>
 							<td>{{ $ps->nombre_sede}}</td>
 							<td>{{ $ps->nombre_proveedor}}</td>
 							<td>{{ $ps->cantidad}}</td>
@@ -93,6 +96,8 @@
 							</td>
 						</tr>
 						@endif
+						@endif
+						@endforeach
 						@endforeach
 
 
