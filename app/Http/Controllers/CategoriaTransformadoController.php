@@ -22,7 +22,7 @@ class CategoriaTransformadoController extends Controller
 	 			$usuarios=DB::table('empleado')->get();
 	 			$sedes=DB::table('sede')->get();
 	 		
-	 			$categorias=DB::table('categoria_cliente as cc')
+	 			$categorias=DB::table('categoria_producto_trans as cc')
 	 			->join('empleado as u','cc.empleado_id_empleado','=','u.id_empleado')
 	 			->join('sede as s','cc.sede_id_sede','=','s.id_sede')
 	 			->select('cc.id_categoria','cc.nombre','cc.descripcion','s.nombre_sede as sede_id_sede','u.nombre as empleado_id_empleado', 'cc.fecha')
@@ -46,7 +46,7 @@ class CategoriaTransformadoController extends Controller
 	 			->where('id_cargo','=',$cargoUsuario)
 	 			->orderBy('id_cargo', 'desc')->get();
 	 			
-	 		return view("almacen.cliente.categoria.index",["modulos"=>$modulos]);
+	 		return view("almacen.inventario.categoriaTransformado.index",["modulos"=>$modulos]);
 	 	}
 
 	 	public function store(CategoriaTransformadoFormRequest $request){
@@ -62,7 +62,7 @@ class CategoriaTransformadoController extends Controller
 	 	}
 
 	 	public function show($id){
-	 		return view("almacen.cliente.categoria.show",["categoria"=>CategoriaCliente::findOrFail($id)]);
+	 		return view("almacen.inventario.categoriaTransformado.show",["categoria"=>CategoriaTransformado::findOrFail($id)]);
 	 	}
 
 	 	public function edit($id){
@@ -75,11 +75,11 @@ class CategoriaTransformadoController extends Controller
 	 			->where('id_cargo','=',$cargoUsuario)
 	 			->orderBy('id_cargo', 'desc')->get();
 	 			
-	 		return view("almacen.cliente.categoria.edit",["categoria"=>CategoriaCliente::findOrFail($id), "modulos"=>$modulos, "usuarios"=>$usuarios, "sedes"=>$sedes]);
+	 		return view("almacen.inventario.categoriaTransformado.edit",["categoria"=>CategoriaTransformado::findOrFail($id), "modulos"=>$modulos, "usuarios"=>$usuarios, "sedes"=>$sedes]);
 	 	}
 
-	 	public function update(CategoriaClienteFormRequest $request, $id){
-	 		$categoria = CategoriaCliente::findOrFail($id);
+	 	public function update(CategoriaTransformadoFormRequest $request, $id){
+	 		$categoria = CategoriaTransformado::findOrFail($id);
 	 		
 	 		$categoria->nombre=$request->get('nombre');
 	 		$categoria->descripcion=$request->get('descripcion');
@@ -94,7 +94,7 @@ class CategoriaTransformadoController extends Controller
 	 	public function destroy($id){
 	 		$id=$id;
 
-	 		$categoria=CategoriaCliente::findOrFail($id);
+	 		$categoria=CategoriaTransformado::findOrFail($id);
 	 		$categoria->delete();
 
 	 		return back()->with('msj','Categoria eliminada');
@@ -112,9 +112,6 @@ class CategoriaTransformadoController extends Controller
 	 		}else{	
 	 			return back()->with('errormsj','¡Categoria relacionada!');
 	 		}*/
-
-	 		
 	 	}
-
-	 
+	 	 
 }

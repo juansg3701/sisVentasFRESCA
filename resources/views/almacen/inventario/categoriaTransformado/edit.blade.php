@@ -1,26 +1,28 @@
 @extends ('layouts.admin')
 @section ('contenido')
-<!--Este archivo maneja la vista principal de la categoría del producto transformado-->	
+	
 <head>
-	<title>Categoria producto transformado</title>
+	<title>Editar categoría cliente</title>
 </head>
 
 <body>
+
 	<!--Control de errores en los campos del formulario-->	
-	<div class="row">
-		<div class="col-lg-8 col-md-8 col-sm-8 col-xs-12">
-			@if (count($errors)>0)
-			<div class="alert alert-danger">
-				<ul>
-				@foreach ($errors->all() as $error)
-					<li>{{$error}}</li>
-				@endforeach
-				</ul>
+	<div class="container col-sm-12" align="center">
+		<div class="row" align="center">
+			<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12" align="center">
+				@if (count($errors)>0)
+				<div class="alert alert-danger" align="center">
+					<ul>
+						@foreach ($errors->all() as $error)
+							<li>{{$error}}</li>
+						@endforeach
+					</ul>
+				</div>
+				@endif
 			</div>
-			@endif
 		</div>
 	</div>
-
 
 	<!--Panel superior-->
 	<div class="breadcrumbs">
@@ -40,6 +42,7 @@
 								<li class="active">Inventario</li>
 								<li class="active">Stock</li>
 								<li class="active">Categoría Producto Transformación</li>
+								<li class="active">Editar</li>
 							</ol>
 						</div>
 					</div>
@@ -47,41 +50,41 @@
 			</div>
 		</div>
 	</div>
-	
 
-	<br><br>{!!Form::open(array('url'=>'almacen/inventario/categoriaTransformado','method'=>'POST','autocomplete'=>'off'))!!}
+	<br><br>{!!Form::model($categoria,['method'=>'PATCH','route'=>['almacen.inventario.categoriaTransformado.update',$categoria->id_categoria]])!!}
     {{Form::token()}}<br><br><br>
-    
-	<!--Formulario de registro-->
+
+    <!--Formulario de edición-->	
 	<div class="col-md-12">
 		<div class="card">
 			<div class="card-header" align="center">
-				<h3 class="pb-2 display-5">CATEGORÍA PRODUCTO TRANSFORMACIÓN</h3>
+				<h3 class="pb-2 display-5">EDITAR CATEGORÍA</h3>
+			</div><br>
+			<div class="col-sm-12" align="center">
+				Editar datos de: {{$categoria->nombre}}
 			</div><br>
 			<div class="row" align="center">	
 				<div class="col-sm-3" align="center"></div>
 				 	<div class="col-sm-6" align="center">
 						<div class="card" align="center">
 			                <div class="card-header" align="center">
-			                     <strong>Formulario de registro</strong>
+			                     <strong>Formulario de edición</strong>
 			                </div><br>
 			                <div class="card-body card-block" align="center">
-
 								<div class="form-row">
 									<div class="form-group col-sm-4">
 										<div>Nombre:</div>
 									</div>
 									<div class="form-group col-sm-8">
-										<input type="text" class="form-control" name="nombre">
+										<input type="text" class="form-control" value="{{$categoria->nombre}}" name="nombre">
 									</div>
 								</div>
-
 								<div class="form-row">
 									<div class="form-group col-sm-4">
 										<div>Descripción:</div>
 									</div>
 									<div class="form-group col-sm-8">
-										<input type="text" class="form-control" name="descripcion">
+										<input type="text" class="form-control" value="{{$categoria->descripcion}}" name="descripcion">
 									</div>
 								</div>
 
@@ -94,7 +97,6 @@
 										<input type="hidden" name="fecha" value="<?php echo date("Y/m/d"); ?>" class="form-control">
 									</div>
 								</div>
-
 								<div class="form-row">
 									<div class="form-group col-sm-4">
 										<div>Empleado:</div>
@@ -110,7 +112,6 @@
 										</select>
 									</div>
 								</div>
-
 								<div class="form-row">
 									<div class="form-group col-sm-4">
 										<div>Sede:</div>
@@ -126,73 +127,19 @@
 										</select><br>
 									</div>
 								</div>
-
 								<div class="form-row">
 									<div class="form-group col-sm-12">
-										<a href="{{URL::action('CategoriaClienteController@create',0)}}">
-										<button href="" class="btn btn-info" type="submit">Registrar</button></a>
-										<a href="{{url('almacen/inventario/proveedor-sede')}}" class="btn btn-danger">Regresar</a>
+										<button href="" class="btn btn-info" type="submit">Registrar</button>
+										<a href="{{url('almacen/inventario/categoriaTransformado')}}" class="btn btn-danger">Regresar</a>
 									</div>
-								</div>
-
+								</div>	
 			               </div>
 			        	</div>
 					</div>
 				<div class="col-sm-3" align="center"></div>
 			</div>
 		</div>
-	</div>	
-	{!!Form::close()!!}	
+	</div>
+{!!Form::close()!!}		
 </body>
 @stop
-
-
-
-
-@section('tabla')
-<!--Tabla de registros realizados-->
-<div class="content">
-	<div class="animated fadeIn">
-
-		<div class="row">
-			<div class="col-md-12">
-
-				<div class="card">
-					<div class="card-header" align="center">
-						<h3 class="pb-2 display-5">CATEGORIAS REGISTRADAS</h3>
-					</div>
-					<div class="card-body">
-						@include('almacen.inventario.categoriaTransformado.search')	
-						<table id="bootstrap-data-table" class="table table-striped table-bordered">
-							<thead>
-								<th>NOMBRE</th>
-								<th>DESCRIPCIÓN</th>	
-								<th colspan="3">OPCIONES</th>
-							</thead>
-							@foreach($categorias as $cat)
-							<tr>
-								<td>{{ $cat->nombre}}</td>
-								<td>{{ $cat->descripcion}}</td>
-								<td>
-									<a href="{{URL::action('CategoriaTransformadoController@edit',$cat->id_categoria)}}"><button class="btn btn-outline-primary btn-sm">Editar</button></a>
-								</td>
-								<td>
-									<a href="" data-target="#modal-delete-{{$cat->id_categoria}}" data-toggle="modal"><button class="btn btn-outline-danger btn-sm">Eliminar</button></a>
-								</td>
-								<td>
-									<a href="" title="Registro de cambios" data-target="#modal-infoCategoria-{{$cat->id_categoria}}" data-toggle="modal"><button class="btn btn-outline-secondary btn-sm">+</button></a>
-								</td>
-							</tr>
-							@include('almacen.inventario.categoriaTransformado.modal')
-							@include('almacen.inventario.categoriaTransformado.modalInfoCategoria')
-							@endforeach
-						</table>
-					</div>
-				{{$categorias->render()}}
-				</div>
-			</div>
-		</div>
-	</div>
-</div>
-@endsection
-
