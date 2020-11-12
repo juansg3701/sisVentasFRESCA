@@ -68,11 +68,11 @@
 											<div id=formulario>
 												<div class="form-group">
 													<div align="center">
-												
+														@include('almacen.inventario.producto-sede.productoCompleto.cargar')
 														<a href="{{URL::action('ProductoSedeController@create',0)}}"><button class="btn btn-info">Registrar producto</button></a>
 														<a href="{{URL::action('ImpuestoProducto@index',0)}}"><button class="btn btn-info">Registrar impuesto</button></a>
 														<a href="{{URL::action('CategoriaProducto@index',0)}}"><button class="btn btn-info">Registrar categoria</button></a>
-														<button class="btn btn-success">Cargar xls</button>
+														<a href="" data-target="#modal-cargar" data-toggle="modal"><button class="btn btn-warning">Cargar xlsx/xls</button></a>
 														<a href="{{URL::action('ProductoSedeController@downloadExcel',0)}}"><button class="btn btn-success">Descargar xls</button></a>
 														<a href="{{url('/')}}" class="btn btn-danger">Volver</a>
 				
