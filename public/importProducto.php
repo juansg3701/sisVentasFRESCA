@@ -18,8 +18,6 @@ if(isset($_FILES["name"])){
             $highestColumn = $sheet->getHighestColumn();
 
 
-
-
             for ($row = 2; $row <= $highestRow; $row++){
                 $x_id_producto = $sheet->getCell("A".$row)->getValue();
                 $x_plu = $sheet->getCell("B".$row)->getValue();
