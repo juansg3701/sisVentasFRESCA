@@ -125,7 +125,6 @@
 							<th>IMPUESTO</th>
 							<th>DESCUENTO</th>
 							<th>STOCK M&IacuteNIMO</th>
-							<th>¿NECESITA PESO?</th>
 							<th>IMAGEN</th>
 							<th>PRECIOS</th>
 							<th colspan="3">OPCIONES</th>
@@ -140,13 +139,6 @@
 							<td>{{ $ps->impuestos_id_impuestos}} {{ $ps->valorI}}%</td>
 							<td>{{ $ps->nombreD}} {{ $ps->valorD}}%</td>
 							<td>{{ $ps->stock_minimo}}</td>
-							
-							@if($ps->necesita_peso=="1")
-								<td>Si</td>
-							
-							@else
-								<td>No</td>
-							@endif
 							<td>
 								<label>
 									<a href="" title="Ver imagen" class="btn btn-light" data-target="#modal-infoImagen-{{$ps->id_producto}}" data-toggle="modal">

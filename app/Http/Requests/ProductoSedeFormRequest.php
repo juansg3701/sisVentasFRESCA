@@ -39,7 +39,6 @@ class ProductoSedeFormRequest extends Request
             'categoria_id_categoria'=>'required|max:45',
             'fecha_registro'=>'required|max:45',
             'empleado_id_empleado'=>'required|max:45',
-            'necesita_peso'=>'required|max:45',
             'punto_venta_id_punto_venta'=>'required|max:45',
             'descuento_id_descuento'=>'required|max:45',
             'imagen'=>'|max:2000',

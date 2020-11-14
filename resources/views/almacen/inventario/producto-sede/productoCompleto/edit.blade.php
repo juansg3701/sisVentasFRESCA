@@ -61,7 +61,15 @@
 										<div>Unidad de medida:</div>
 									</div>
 									<div class="form-group col-sm-3">
-										<input type="text" class="form-control" name="unidad_de_medida" value="{{$productos->unidad_de_medida}}">
+										<select name="unidad_de_medida" class="form-control">
+											@if($productos->unidad_de_medida=="Unidad")
+											<option value="Unidad">Unidad</option>
+											<option value="Kilo">Kilo</option>
+											@else
+											<option value="Kilo">Kilo</option>
+											<option value="Unidad">Unidad</option>
+											@endif
+										</select>
 									</div>
 								</div>
 
@@ -189,15 +197,11 @@
 									</div>
 									
 									<div class="form-group col-sm-1"></div>
-
 									<div class="form-group col-sm-2">
-										<div>¿Es necesario pesar?:</div>
+										<div>Imagen:</div>
 									</div>
 									<div class="form-group col-sm-3">
-										<select name="necesita_peso" class="form-control" value="{{$productos->necesita_peso}}">
-											<option value="1">Si</option>
-											<option value="2">No</option>
-										</select>
+										<input type="file" name="imagen" class="form-control" placeholder="">
 									</div>
 								
 								</div>
@@ -209,12 +213,11 @@
 
 								<div class="form-row">
 									<div class="form-group col-sm-2">
-										<div>Imagen:</div>
+										<div>PLU:</div>
 									</div>
 									<div class="form-group col-sm-3">
-										<input type="file" name="imagen" class="form-control" placeholder="">
+										<input type="text" class="form-control" name="plu" value="{{$productos->plu}}">
 									</div>
-									
 									
 									<div class="form-group col-sm-1"></div>
 
@@ -235,10 +238,10 @@
 
 								<div class="form-row">
 									<div class="form-group col-sm-2">
-										<div>PLU:</div>
+										<div>EAN:</div>
 									</div>
 									<div class="form-group col-sm-3">
-										<input type="text" class="form-control" name="plu" value="{{$productos->plu}}">
+										<input type="text" class="form-control" name="ean" value="{{$productos->ean}}">
 									</div>
 									
 									
@@ -262,19 +265,6 @@
 							</div>
 						</div>
 
-						<div class="form-row">
-			                	<div class="form group col-sm-12" align="center">
-			                		<div class="form-row">
-										<div class="form-group col-sm-2">
-										<div>EAN:</div>
-									</div>
-									<div class="form-group col-sm-3">
-										<input type="text" class="form-control" name="ean" value="{{$productos->ean}}">
-									</div>
-									</div>
-								
-							</div>
-						</div>
 
 						<div class="form-row">
 							<div class="form-group col-sm-12">
