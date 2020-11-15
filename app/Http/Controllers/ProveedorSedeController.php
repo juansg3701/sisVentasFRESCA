@@ -61,26 +61,7 @@ class ProveedorSedeController extends Controller
 
 
 	 	public function create(Request $request){
-	 			 		if ($request) {
-	 				$query=trim($request->get('searchText'));
 
-	 		$sede=DB::table('sede')->get();
-	 		$proveedor=DB::table('proveedor')->get();
-	 		$producto=DB::table('producto')->get();
-	 			$query=trim($request->get('searchText'));
-			$pEAN=DB::table('producto')
-			->where('ean','=',$query)
-			->get();
-	 			
-	 		$cargoUsuario=auth()->user()->tipo_cargo_id_cargo;
-	 			$modulos=DB::table('cargo_modulo')
-	 			->where('id_cargo','=',$cargoUsuario)
-	 			->orderBy('id_cargo', 'desc')->get();
-	 			
-	 			
-
-	 		return view("almacen.inventario.proveedor-sede.registrar",["sede"=>$sede,"proveedor"=>$proveedor,"producto"=>$producto, "modulos"=>$modulos,  "pEAN"=>$pEAN,"searchText"=>$query]);
-	 	}
 	 	}
 
 	 	public function store(ProveedorSedeFormRequest $request){

@@ -5,6 +5,7 @@ namespace sisVentas\Http\Controllers;
 use Illuminate\Http\Request;
 use sisVentas\Http\Requests;
 use sisVentas\ProveedorSede;
+use sisVentas\ProductoSede;
 use Illuminate\Support\Facades\Redirect;
 use sisVentas\Http\Requests\ProveedorSedeFormRequest;
 use DB;
@@ -22,10 +23,9 @@ class registroProductoProveedor extends Controller
 
 	 		$sede=DB::table('sede')->get();
 	 		$proveedor=DB::table('proveedor')->get();
-	 		$producto=DB::table('producto')->get();
+	 		$producto=ProductoSede::get();
 	 			$query=trim($request->get('searchText'));
-			$pEAN=DB::table('producto')
-			->where('ean','=',$query)
+			$pEAN=ProductoSede::where('ean','=',$query)
 			->get();
 	 			
 	 		$cargoUsuario=auth()->user()->tipo_cargo_id_cargo;
