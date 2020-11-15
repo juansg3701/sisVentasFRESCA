@@ -16,6 +16,7 @@ class ProveedorSedeController extends Controller
 			$this->middleware('auth');	
 
 			 	} 
+		//redirige a la vista principal del inventario (stock)
 	 	public function index(Request $request){
 	 	if ($request) {
 
@@ -25,22 +26,11 @@ class ProveedorSedeController extends Controller
 	 			$query3=trim($request->get('searchText3'));
 
 
-	 			/*$productos=DB::table('stock as s')
-	 			->join('producto as p','s.producto_id_producto','=','p.id_producto')
-	 			->join('sede as sed','s.sede_id_sede','=','sed.id_sede')
-	 			->join('proveedor as pd','s.proveedor_id_proveedor','=','pd.id_proveedor')
-	 			->select('s.id_stock','p.nombre','p.plu','p.ean','sed.nombre_sede','pd.nombre_proveedor','s.cantidad','s.disponibilidad','s.sede_id_sede as sede_id_sede')
-	 			->where('p.nombre','LIKE', '%'.$query0.'%')
-	 			->where('p.plu','LIKE', '%'.$query1.'%')
-	 			->where('sed.nombre_sede','LIKE', '%'.$query2.'%')
-	 			->where('pd.nombre_proveedor','LIKE', '%'.$query3.'%')
-	 			->orderBy('s.id_stock', 'desc')
-	 			->paginate(10);*/
-
 	 			$productos=DB::table('stock as s')
 	 			->join('sede as sed','s.sede_id_sede','=','sed.id_sede')
 	 			->join('proveedor as pd','s.proveedor_id_proveedor','=','pd.id_proveedor')
-	 			->select('s.id_stock','sed.nombre_sede','pd.nombre_proveedor','s.cantidad','s.disponibilidad','s.sede_id_sede as sede_id_sede', 's.producto_id_producto')
+	 			->join('categoria_producto_trans as cpt','s.transformacion_stock_id','=','cpt.id_categoria')
+	 			->select('s.id_stock','sed.nombre_sede','pd.nombre_proveedor','s.cantidad','s.disponibilidad','s.sede_id_sede as sede_id_sede', 's.producto_id_producto','s.fecha_registro','s.empleado_id_empleado','cpt.nombre as nombreCategoria')
 	 			->where('sed.nombre_sede','LIKE', '%'.$query2.'%')
 	 			->where('pd.nombre_proveedor','LIKE', '%'.$query3.'%')
 	 			->orderBy('s.id_stock', 'desc')
@@ -53,7 +43,6 @@ class ProveedorSedeController extends Controller
 
 
 
-
 				$cargoUsuario=auth()->user()->tipo_cargo_id_cargo;
 	 			$modulos=DB::table('cargo_modulo')
 	 			->where('id_cargo','=',$cargoUsuario)
@@ -62,6 +51,7 @@ class ProveedorSedeController extends Controller
 	 			$eanP=ProductoSede::orderBy('id_producto', 'desc')->get();
 	 			$sedesP=DB::table('sede')->get();
 	 			$proveedoresP=DB::table('proveedor')->get();
+	 			$empleados=DB::table('empleado')->get();
 
 
 	 			return view('almacen.inventario.proveedor-sede.index',["productos"=>$productos,"searchText0"=>$query0,"searchText1"=>$query1,"searchText2"=>$query2,"searchText3"=>$query3, "modulos"=>$modulos,"eanP"=>$eanP,"sedesP"=>$sedesP,"proveedoresP"=>$proveedoresP,"productosBuscar"=>$productosBuscar]);

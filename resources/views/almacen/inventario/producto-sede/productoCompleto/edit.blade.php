@@ -62,12 +62,12 @@
 									</div>
 									<div class="form-group col-sm-3">
 										<select name="unidad_de_medida" class="form-control">
-											@if($productos->unidad_de_medida=="Unidad")
-											<option value="Unidad">Unidad</option>
-											<option value="Kilo">Kilo</option>
+											@if($productos->unidad_de_medida=="UNIDAD")
+											<option value="UNIDAD">UNIDAD</option>
+											<option value="KILO">KILO</option>
 											@else
-											<option value="Kilo">Kilo</option>
-											<option value="Unidad">Unidad</option>
+											<option value="KILO">KILO</option>
+											<option value="UNIDAD">UNIDAD</option>
 											@endif
 										</select>
 									</div>

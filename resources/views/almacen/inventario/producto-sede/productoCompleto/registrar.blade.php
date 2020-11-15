@@ -86,8 +86,8 @@
 									<div class="form-group col-sm-3">
 										<select name="unidad_de_medida" class="form-control">
 											
-										<option value="Unidad">Unidad</option>
-										<option value="Kilo">Kilo</option>
+										<option value="UNIDAD">UNIDAD</option>
+										<option value="KILO">KILO</option>
 										</select>
 									</div>
 								</div>
@@ -261,7 +261,7 @@
 										<div>EAN:</div>
 									</div>
 									<div class="form-group col-sm-3">
-										<input type="text" class="form-control" name="ean">
+										<input type="text" class="form-control" name="ean" id="ean">
 									</div>
 									
 									
@@ -285,7 +285,7 @@
 							</div>
 						</div>
 
-			
+					
 
 						
 								<input type="hidden" name="punto_venta_id_punto_venta" value="1">
@@ -308,5 +308,38 @@
 	</div>		
 {!!Form::close()!!}	
 </body>
+<script type="text/javascript">
 
+	function a(){
+		 var cantidad = $('#ean').val();
+     	alert("a");
+ 
+        
+        if(cantidad===''){
+            Swal.fire({
+                icon: 'error',
+                text: 'Por favor ingrese la cantidad',
+                showClass: {
+                    popup: 'animate__animated animate__fadeInDown'
+                },
+                hideClass: {
+                    popup: 'animate__animated animate__fadeOutUp'
+                }
+            });     
+        }else if(cantidad==='ADAS'){
+            Swal.fire({
+                icon: 'error',
+                text: 'Por favor ingrese el peso',
+                showClass: {
+                    popup: 'animate__animated animate__fadeInDown'
+                },
+                hideClass: {
+                    popup: 'animate__animated animate__fadeOutUp'
+                }
+            });     
+        }
+    }//IF DEL ENTER
+	
+
+</script>
 @stop

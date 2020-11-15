@@ -29,7 +29,9 @@ class ProveedorSedeFormRequest extends Request
             'proveedor_id_proveedor'=>'required|max:45',
             'disponibilidad'=>'required|max:45',
             'cantidad'=>'required|max:45',
-
+            'fecha_registro'=>'required|max:45',
+            'empleado_id_empleado'=>'required|max:45',
+            'transformacion_stock_id'=>'required|max:45',
         ];
     }
 }

@@ -65,6 +65,7 @@ class ProductoSedeController extends Controller
 	 		return view("almacen.inventario.producto-sede.productoCompleto.registrar",["categorias"=>$categorias,"impuestos"=>$impuestos, "modulos"=>$modulos,"descuentos"=>$descuentos,"usuarios"=>$usuarios]);
 	 	}
 
+	 	//función para guardar los productos completos en la base de datos
 	 	public function store(ProductoSedeFormRequest $request){
 	 		$pluR=$request->get('plu');
 	 		$eanR=$request->get('ean');
@@ -118,6 +119,7 @@ class ProductoSedeController extends Controller
 	 		return view("almacen.inventario.producto-sede.productoCompleto.show",["productos"=>ProductoSede::findOrFail($id)]);
 	 	}
 
+	 	//Redirecciona a la vista para la edición de los datos
 	 	public function edit($id){
 	 		$categorias=Categoria::get();
 	 		$impuestos=Impuesto::get();
@@ -133,6 +135,7 @@ class ProductoSedeController extends Controller
 
 	 	}
 
+	 	//función para actualizar los productos completos en la base de datos
 	 	public function update(ProductoSedeFormRequest $request, $id){
 	 		$id=$id;
 	 		$pluR=$request->get('plu');
@@ -184,7 +187,7 @@ class ProductoSedeController extends Controller
 	 		}
 	 	}
 
-
+	 	//función para eliminar los productos, verificando que no se relacionen con otros
 	 	public function destroy($id){
 	 		$id=$id;
 
@@ -192,11 +195,13 @@ class ProductoSedeController extends Controller
 	 		->where('producto_id_producto','=',$id)
 	 		->orderBy('id_stock', 'desc')->get();
 
+	 		/*
 	 		$existeDC=DB::table('d_corte')
 	 		->where('producto_id_producto','=',$id)
 	 		->orderBy('id_dcorte', 'desc')->get();
+	 		*/
 
-	 		if(count($existeS)==0 && count($existeDC)==0){
+	 		if(count($existeS)==0){
 	 			$ps=ProductoSede::findOrFail($id);
 		 		$ps->delete();
 		 		return back()->with('msj','Producto eliminado');
