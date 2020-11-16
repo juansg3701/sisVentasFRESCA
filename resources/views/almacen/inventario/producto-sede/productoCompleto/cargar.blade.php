@@ -38,8 +38,6 @@ role="dialog" tabindex="-1" id="modal-cargar">
 		  					<a><button id="btnCargar" type="submit" class="btn btn-success" disabled="">Cargar archivo</button></a>
 		  				</div>
 		    			
-		     			
-		     			
 		  			</div>
 				</form>
 			</div>
