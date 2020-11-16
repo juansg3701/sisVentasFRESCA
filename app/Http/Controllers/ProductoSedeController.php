@@ -33,7 +33,7 @@ class ProductoSedeController extends Controller
 	 			->join('impuestos as i','impuestos_id_impuestos','=','i.id_impuestos')
 	 			->join('descuento as d','producto.descuento_id_descuento','=','d.id_descuento')
 	 			->join('punto_venta as pv','punto_venta_id_punto_venta','=','pv.id_punto_venta')
-	 			->select('id_producto','producto.nombre as nombre','plu','ean','c.nombre as categoria_id_categoria','unidad_de_medida','precio_1','precio_2','precio_3','precio_4','costo_compra','i.nombre as impuestos_id_impuestos','stock_minimo','producto.fecha_registro as fecha_registro','producto.empleado_id_empleado','necesita_peso','pv.nombre as nombrePV','d.nombre as nombreD','imagen','i.valor_impuesto as valorI','d.valor_descuento as valorD')
+	 			->select('id_producto','producto.nombre as nombre','plu','ean','c.nombre as categoria_id_categoria','unidad_de_medida','precio_1','precio_2','precio_3','precio_4','costo_compra','i.nombre as impuestos_id_impuestos','stock_minimo','producto.fecha_registro as fecha_registro','producto.empleado_id_empleado','pv.nombre as nombrePV','d.nombre as nombreD','imagen','i.valor_impuesto as valorI','d.valor_descuento as valorD')
 	 			->orderBy('id_producto', 'desc')
     			->paginate(10);
 
@@ -65,6 +65,7 @@ class ProductoSedeController extends Controller
 	 		return view("almacen.inventario.producto-sede.productoCompleto.registrar",["categorias"=>$categorias,"impuestos"=>$impuestos, "modulos"=>$modulos,"descuentos"=>$descuentos,"usuarios"=>$usuarios]);
 	 	}
 
+	 	//función para guardar los productos completos en la base de datos
 	 	public function store(ProductoSedeFormRequest $request){
 	 		$pluR=$request->get('plu');
 	 		$eanR=$request->get('ean');
@@ -92,7 +93,6 @@ class ProductoSedeController extends Controller
 		 		$ps->categoria_id_categoria=$request->get('categoria_id_categoria');
 		 		$ps->fecha_registro=$request->get('fecha_registro');
 		 		$ps->empleado_id_empleado=$request->get('empleado_id_empleado');
-		 		$ps->necesita_peso=$request->get('necesita_peso');
 		 		$ps->punto_venta_id_punto_venta=$request->get('punto_venta_id_punto_venta');
 		 		$ps->descuento_id_descuento=$request->get('descuento_id_descuento');
 
@@ -119,6 +119,7 @@ class ProductoSedeController extends Controller
 	 		return view("almacen.inventario.producto-sede.productoCompleto.show",["productos"=>ProductoSede::findOrFail($id)]);
 	 	}
 
+	 	//Redirecciona a la vista para la edición de los datos
 	 	public function edit($id){
 	 		$categorias=Categoria::get();
 	 		$impuestos=Impuesto::get();
@@ -134,6 +135,7 @@ class ProductoSedeController extends Controller
 
 	 	}
 
+	 	//función para actualizar los productos completos en la base de datos
 	 	public function update(ProductoSedeFormRequest $request, $id){
 	 		$id=$id;
 	 		$pluR=$request->get('plu');
@@ -164,7 +166,6 @@ class ProductoSedeController extends Controller
 		 		$ps->categoria_id_categoria=$request->get('categoria_id_categoria');
 		 		$ps->fecha_registro=$request->get('fecha_registro');
 		 		$ps->empleado_id_empleado=$request->get('empleado_id_empleado');
-		 		$ps->necesita_peso=$request->get('necesita_peso');
 		 		$ps->punto_venta_id_punto_venta=$request->get('punto_venta_id_punto_venta');
 		 		$ps->descuento_id_descuento=$request->get('descuento_id_descuento');
 
@@ -186,7 +187,7 @@ class ProductoSedeController extends Controller
 	 		}
 	 	}
 
-
+	 	//función para eliminar los productos, verificando que no se relacionen con otros
 	 	public function destroy($id){
 	 		$id=$id;
 
@@ -194,11 +195,13 @@ class ProductoSedeController extends Controller
 	 		->where('producto_id_producto','=',$id)
 	 		->orderBy('id_stock', 'desc')->get();
 
+	 		/*
 	 		$existeDC=DB::table('d_corte')
 	 		->where('producto_id_producto','=',$id)
 	 		->orderBy('id_dcorte', 'desc')->get();
+	 		*/
 
-	 		if(count($existeS)==0 && count($existeDC)==0){
+	 		if(count($existeS)==0){
 	 			$ps=ProductoSede::findOrFail($id);
 		 		$ps->delete();
 		 		return back()->with('msj','Producto eliminado');

@@ -17,6 +17,15 @@ role="dialog" tabindex="-1" id="modal-precios">
 
             <div class="form-row">
 				<div class="form-group col-sm-6">
+					<div>Costo de compra:</div>
+				</div>
+				<div class="form-group col-sm-6">
+                   {{ $ps->costo_compra}}
+				</div>
+            </div>
+            
+            <div class="form-row">
+				<div class="form-group col-sm-6">
 					<div>Precio No.1:</div>
 				</div>
 				<div class="form-group col-sm-6">
@@ -51,14 +60,7 @@ role="dialog" tabindex="-1" id="modal-precios">
 				</div>
             </div>
 
-            <div class="form-row">
-				<div class="form-group col-sm-6">
-					<div>Costo de compra:</div>
-				</div>
-				<div class="form-group col-sm-6">
-                   {{ $ps->costo_compra}}
-				</div>
-            </div>
+            
                 
 			<div class="modal-footer">
 				<button type="button" class="btn btn-default" data-dismiss="modal">Cancelar</button>
