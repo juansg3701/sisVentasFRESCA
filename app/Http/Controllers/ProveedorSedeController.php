@@ -54,7 +54,7 @@ class ProveedorSedeController extends Controller
 	 			$empleados=DB::table('empleado')->get();
 
 
-	 			return view('almacen.inventario.proveedor-sede.index',["productos"=>$productos,"searchText0"=>$query0,"searchText1"=>$query1,"searchText2"=>$query2,"searchText3"=>$query3, "modulos"=>$modulos,"eanP"=>$eanP,"sedesP"=>$sedesP,"proveedoresP"=>$proveedoresP,"productosBuscar"=>$productosBuscar]);
+	 			return view('almacen.inventario.proveedor-sede.index',["productos"=>$productos,"searchText0"=>$query0,"searchText1"=>$query1,"searchText2"=>$query2,"searchText3"=>$query3, "modulos"=>$modulos,"eanP"=>$eanP,"sedesP"=>$sedesP,"proveedoresP"=>$proveedoresP,"productosBuscar"=>$productosBuscar,"empleados"=>$empleados]);
 	 		}
 	 	}
 	 	
@@ -65,15 +65,6 @@ class ProveedorSedeController extends Controller
 	 	}
 
 	 	public function store(ProveedorSedeFormRequest $request){
-	 		$ps = new ProveedorSede;
-	 		$ps->producto_id_producto=$request->get('producto_id_producto');
-	 		$ps->sede_id_sede=$request->get('sede_id_sede');
-	 		$ps->proveedor_id_proveedor=$request->get('proveedor_id_proveedor');
-	 		$ps->disponibilidad=$request->get('disponibilidad');
-	 		$ps->cantidad=$request->get('cantidad');
-	 		$ps->save();
-
-	 		return back()->with('msj','Producto guardado');
 	 	}
 
 	 	public function show($id){
@@ -99,15 +90,16 @@ class ProveedorSedeController extends Controller
 	 	public function edit($id){
 	 		$sede=DB::table('sede')->get();
 	 		$proveedor=DB::table('proveedor')->get();
-	 		$producto=DB::table('producto')->get();
-
+	 		$producto=ProductoSede::get();
+	 		$usuarios=DB::table('empleado')->get();
+	 		$transformacion=DB::table('categoria_producto_trans')->get();
 	 		$cargoUsuario=auth()->user()->tipo_cargo_id_cargo;
 	 			$modulos=DB::table('cargo_modulo')
 	 			->where('id_cargo','=',$cargoUsuario)
 	 			->orderBy('id_cargo', 'desc')->get();
 	 			
 
-	 		return view("almacen.inventario.proveedor-sede.edit",["sede"=>$sede,"proveedor"=>$proveedor,"producto"=>$producto,"stock"=>ProveedorSede::findOrFail($id), "modulos"=>$modulos]);
+	 		return view("almacen.inventario.proveedor-sede.edit",["sede"=>$sede,"proveedor"=>$proveedor,"producto"=>$producto,"stock"=>ProveedorSede::findOrFail($id), "modulos"=>$modulos,"transformacion"=>$transformacion,"usuarios"=>$usuarios]);
 	 	}
 
 	 	public function update(ProveedorSedeFormRequest $request, $id){
@@ -117,6 +109,9 @@ class ProveedorSedeController extends Controller
 	 		$ps->proveedor_id_proveedor=$request->get('proveedor_id_proveedor');
 	 		$ps->disponibilidad=$request->get('disponibilidad');
 	 		$ps->cantidad=$request->get('cantidad');
+	 		$ps->fecha_registro=$request->get('fecha_registro');
+	 		$ps->empleado_id_empleado=$request->get('empleado_id_empleado');
+	 		$ps->transformacion_stock_id=$request->get('transformacion_stock_id');
 	 		$ps->update();
 
 	 		return back()->with('msj','Producto actualizado');
@@ -126,9 +121,9 @@ class ProveedorSedeController extends Controller
 	 		$id=$id;
 
 	 		$existeDF=DB::table('detalle_factura')
-	 		->where('producto_id_producto','=',$id)
+	 		->where('stock_id_stock','=',$id)
 	 		->orderBy('id_detallef', 'desc')->get();
-
+	 		/*
 	 		$existe=DB::table('m_stock')
 	 		->where('stock_id_stock','=',$id)
 	 		->orderBy('id_mstock', 'desc')->get();
@@ -140,8 +135,8 @@ class ProveedorSedeController extends Controller
 	 		$existeDPP=DB::table('d_p_proveedor')
 	 		->where('producto_id_producto','=',$id)
 	 		->orderBy('id_dpproveedor', 'desc')->get();
-
-	 		if(count($existeDF)==0 && count($existe)==0 && count($existeDPC)==0 && count($existeDPP)==0){
+			*/
+	 		if(count($existeDF)==0){
 	 			$ps=ProveedorSede::findOrFail($id);
 	 			$ps->delete();
 

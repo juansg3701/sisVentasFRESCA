@@ -91,87 +91,169 @@
 			<div id=formulario>
 				<div class="form-group">
 
-						<div class="form-row">
-			                <div class="form group col-sm-12" align="center">
-			                <div class="form-row">
+						
 							@foreach($pEAN as $pE)
-							Producto automático:
-							<input type="hidden" class="form-control" name="producto_id_producto" value="{{$pE->id_producto}}">
-							<input type="text" class="form-control" name="producto" value="{{$pE->nombre}}" disabled="true">
+							<div class="form-row">
+								<div class="form-group col-sm-4">
+									<div>Producto automático:</div>
+								</div>
+								<div class="form-group col-sm-8">
+									<input type="hidden" class="form-control" name="producto_id_producto" value="{{$pE->id_producto}}">
+									<input type="text" class="form-control" name="producto" value="{{$pE->nombre}}" disabled="true">
+								</div>
+							</div>
 							@endforeach
 
 					<?php
 					$valor=count($pEAN);
 					?>
 							@if($valor==0)
-							Producto<br>
-							<select name="producto_id_producto" class="form-control">
-								@foreach($producto as $p)
-								<option value="{{$p->id_producto}}">{{$p->nombre}}</option>
-								@endforeach
-							</select>
+							<div class="form-row">
+								<div class="form-group col-sm-4">
+									<div>Producto manual:</div>
+								</div>
+								<div class="form-group col-sm-8">
+									<select name="producto_id_producto" class="form-control">
+										@foreach($producto as $p)
+										<option value="{{$p->id_producto}}">{{$p->nombre}}</option>
+										@endforeach
+									</select>
+								</div>
+							</div>
+							
 							@endif
 					
 					@if(auth()->user()->superusuario==0)
-						Sede: <br>
-						<input type="hidden" name="sede_id_sede" value="{{Auth::user()->sede_id_sede}}">
-				<select name="sede_id_sede" class="form-control" disabled="">
+					<div class="form-row">
+								<div class="form-group col-sm-4">
+									<div>Sede:</div>
+								</div>
+						<div class="form-group col-sm-8">
+							<input type="hidden" name="sede_id_sede" value="{{Auth::user()->sede_id_sede}}">
+							<select name="sede_id_sede" class="form-control" disabled="">
 
-						@foreach($sede as $s)
-						@if( Auth::user()->sede_id_sede ==$s->id_sede)
-						<option value="{{$s->id_sede}}" >{{$s->nombre_sede}}</option>
-						aa
-						@endif
-						@endforeach
-
-
-						@foreach($sede as $s)
-						@if( Auth::user()->sede_id_sede !=$s->id_sede)
-						<option value="{{$s->id_sede}}">{{$s->nombre_sede}}</option>
-						aa
-						@endif
-						@endforeach
-				</select>
-					@else
-						Sede: <br>
-				<select name="sede_id_sede" class="form-control">
-
-						@foreach($sede as $s)
-						@if( Auth::user()->sede_id_sede ==$s->id_sede)
-						<option value="{{$s->id_sede}}" >{{$s->nombre_sede}}</option>
-						aa
-						@endif
-						@endforeach
+									@foreach($sede as $s)
+									@if( Auth::user()->sede_id_sede ==$s->id_sede)
+									<option value="{{$s->id_sede}}" >{{$s->nombre_sede}}</option>
+									aa
+									@endif
+									@endforeach
 
 
-						@foreach($sede as $s)
-						@if( Auth::user()->sede_id_sede !=$s->id_sede)
-						<option value="{{$s->id_sede}}">{{$s->nombre_sede}}</option>
-						aa
-						@endif
-						@endforeach
-				</select>
-					@endif
-							</div>
+									@foreach($sede as $s)
+									@if( Auth::user()->sede_id_sede !=$s->id_sede)
+									<option value="{{$s->id_sede}}">{{$s->nombre_sede}}</option>
+									aa
+									@endif
+									@endforeach
+							</select>
 						</div>
 					</div>
+						 
+						
+					@else
+					<div class="form-row">
+								<div class="form-group col-sm-4">
+									<div>Sede:</div>
+								</div>
+						<div class="form-group col-sm-8">
+							<select name="sede_id_sede" class="form-control">
+
+								@foreach($sede as $s)
+								@if( Auth::user()->sede_id_sede ==$s->id_sede)
+								<option value="{{$s->id_sede}}" >{{$s->nombre_sede}}</option>
+								aa
+								@endif
+								@endforeach
+
+
+								@foreach($sede as $s)
+								@if( Auth::user()->sede_id_sede !=$s->id_sede)
+								<option value="{{$s->id_sede}}">{{$s->nombre_sede}}</option>
+								aa
+								@endif
+								@endforeach
+						</select>
+						</div>
+					</div>
+				
+					@endif
 					
-					Proveedor<br>
-					<select name="proveedor_id_proveedor" class="form-control">
-							@foreach($proveedor as $pr)
-						<option value="{{$pr->id_proveedor}}">{{$pr->nombre_proveedor}}</option>
-						@endforeach
-					</select>
-					Disponible<br>
-					<select name="disponibilidad" class="form-control">
+					<div class="form-row">
+								<div class="form-group col-sm-4">
+									<div>Proveedor:</div>
+								</div>
+						<div class="form-group col-sm-8">
+							<select name="proveedor_id_proveedor" class="form-control">
+									@foreach($proveedor as $pr)
+								<option value="{{$pr->id_proveedor}}">{{$pr->nombre_proveedor}}</option>
+								@endforeach
+							</select>
+						</div>
+					</div>
+
+					<div class="form-row">
+								<div class="form-group col-sm-4">
+									<div>Disponibilidad:</div>
+								</div>
+						<div class="form-group col-sm-8">
+							<select name="disponibilidad" class="form-control">
 							
-						<option value="1">Disponible</option>
-						<option value="0">No disponible</option>
-			
-					</select>
-					Cantidad<br>
-					<input type="text" class="form-control" name="cantidad">
-					<br>
+								<option value="1">Disponible</option>
+								<option value="0">No disponible</option>
+					
+							</select>
+						</div>
+					</div>
+
+					<div class="form-row">
+								<div class="form-group col-sm-4">
+									<div>Cantidad:</div>
+								</div>
+						<div class="form-group col-sm-8">
+							
+								<input type="text" class="form-control" name="cantidad">
+						</div>
+					</div>
+
+					<div class="form-row">
+									<div class="form-group col-sm-4">
+										<div>Transformación:</div>
+									</div>
+									<div class="form-group col-sm-8">
+										<select name="transformacion_stock_id" class="form-control">
+											@foreach($transformacion as $t)
+											<option value="{{$t->id_categoria}}">{{$t->nombre}}</option>
+											@endforeach
+										</select>
+									</div>
+								</div>
+					<div class="form-row">
+									<div class="form-group col-sm-4">
+										<div>Fecha:</div>
+									</div>
+									<div class="form-group col-sm-8">
+										<input type="datetime" name="" value="<?php echo date("Y/m/d H:i:s"); ?>" class="form-control" disabled="true">
+										<input type="hidden" name="fecha_registro" value="<?php echo date("Y/m/d H:i:s"); ?>">
+									</div>
+								</div>
+
+								<div class="form-row">
+									<div class="form-group col-sm-4">
+										<div>Empleado:</div>
+									</div>
+									<div class="form-group col-sm-8">
+										<select name="" class="form-control" disabled="true">
+											@foreach($usuarios as $usu)
+											@if(Auth::user()->id==$usu->user_id_user)
+											<option value="{{$usu->id_empleado}}">{{$usu->nombre}}</option>
+											<input type="hidden" name="empleado_id_empleado" value="{{$usu->id_empleado}}">
+											@endif
+											@endforeach
+										</select>
+									</div>
+								</div>
+					
 					<div align="center">
 					<button type="submit" class="btn btn-info">Registrar Producto</button><a href="{{url('almacen/inventario/proveedor-sede')}}" class="btn btn-danger">Volver</a>
 				</div>

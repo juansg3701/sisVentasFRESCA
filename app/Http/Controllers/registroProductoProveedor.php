@@ -23,6 +23,8 @@ class registroProductoProveedor extends Controller
 
 	 		$sede=DB::table('sede')->get();
 	 		$proveedor=DB::table('proveedor')->get();
+	 		$usuarios=DB::table('empleado')->get();
+	 		$transformacion=DB::table('categoria_producto_trans')->get();
 	 		$producto=ProductoSede::get();
 	 			$query=trim($request->get('searchText'));
 			$pEAN=ProductoSede::where('ean','=',$query)
@@ -33,7 +35,7 @@ class registroProductoProveedor extends Controller
 	 			->where('id_cargo','=',$cargoUsuario)
 	 			->orderBy('id_cargo', 'desc')->get();
 
-	 		return view("almacen.inventario.ean.index",["sede"=>$sede,"proveedor"=>$proveedor,"producto"=>$producto, "modulos"=>$modulos,  "pEAN"=>$pEAN,"searchText"=>$query]);
+	 		return view("almacen.inventario.ean.index",["sede"=>$sede,"proveedor"=>$proveedor,"producto"=>$producto, "modulos"=>$modulos,  "pEAN"=>$pEAN,"searchText"=>$query,"usuarios"=>$usuarios,"transformacion"=>$transformacion]);
 	 	}
 	 	}
 
@@ -67,6 +69,9 @@ class registroProductoProveedor extends Controller
 	 		$ps->proveedor_id_proveedor=$request->get('proveedor_id_proveedor');
 	 		$ps->disponibilidad=$request->get('disponibilidad');
 	 		$ps->cantidad=$request->get('cantidad');
+	 		$ps->fecha_registro=$request->get('fecha_registro');
+	 		$ps->empleado_id_empleado=$request->get('empleado_id_empleado');
+	 		$ps->transformacion_stock_id=$request->get('transformacion_stock_id');
 	 		$ps->save();
 
 	 		return back()->with('msj','Producto guardado');
