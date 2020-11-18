@@ -255,7 +255,9 @@
 								</div>
 					
 					<div align="center">
-					<button type="submit" class="btn btn-info">Registrar Producto</button><a href="{{url('almacen/inventario/proveedor-sede')}}" class="btn btn-danger">Volver</a>
+					<button type="submit" class="btn btn-info">Registrar Producto</button>
+					<a href="{{url('almacen/inventario/proveedor-sede')}}">
+					<button type="button" class="btn btn-danger">Volver</button></a>
 				</div>
 				</div>
 			</div>

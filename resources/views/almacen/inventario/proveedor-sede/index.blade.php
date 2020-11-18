@@ -56,7 +56,7 @@
 				<div class="col-md-12">
 					<div class="card">
 						<div class="card-header" align="center">
-							<h2 class="pb-2 display-5">MÓDULO DE INVENTARIO</h2>
+							<h2 class="pb-2 display-5">M&OacuteDULO DE INVENTARIO</h2>
 						</div><br>
 						<div class="row" align="center">	
 							<div class="col-sm-3" align="center"></div>
@@ -70,8 +70,11 @@
 												<div class="form-group">
 													<div align="center">
 														
-													<a href="{{url('almacen/inventario/ean')}}"><button class="btn btn-info">Registrar Productos</button></a>
-													<a href="{{url('almacen/inventario/categoriaTransformado')}}"><button class="btn btn-info">Categoría Transformado</button></a>
+													<a href="{{url('almacen/inventario/ean')}}"><button class="btn btn-info">Registrar productos</button></a>
+													<a href="{{url('almacen/inventario/categoriaTransformado')}}"><button class="btn btn-info">Categor&iacutea transformaci&oacuten</button></a>
+													</div>
+													<br>
+													<div align="center">
 													<button class="btn btn-success">Cargar xls</button>
 													<button class="btn btn-success">Descargar xls</button>
 													<a href="{{url('/')}}" class="btn btn-danger">Volver</a>
@@ -117,7 +120,6 @@
 					<div class="card-body">
 						<table id="bootstrap-data-table" class="table table-striped table-bordered">
 						<thead>
-							<th>ID</th>
 							<th>IMAGEN</th>
 							<th>NOMBRE</th>
 							<th>PLU</th>
@@ -125,6 +127,8 @@
 							<th>SEDE</th>
 							<th>PROVEEDOR</th>
 							<th>CANTIDAD</th>
+							<th>UNIDAD DE MEDIDA</th>
+							<th>TRANSFORMACI&OacuteN</th>
 							<th>DISPONIBILIDAD</th>
 							<th colspan="4">OPCIONES</th>
 						</thead>
@@ -133,7 +137,6 @@
 					@if($pb->id_producto==$ps->producto_id_producto)
 					@if($ps->sede_id_sede==auth()->user()->sede_id_sede && auth()->user()->superusuario==0)
 						<tr>
-							<td>{{ $ps->id_stock}}</td>
 							<td>
 							<label>
 									<a href="" title="Ver imagen" class="btn btn-light" data-target="#modal-infoImagen-{{$pb->id_producto}}" data-toggle="modal">
@@ -146,6 +149,8 @@
 							<td>{{ $ps->nombre_sede}}</td>
 							<td>{{ $ps->nombre_proveedor}}</td>
 							<td>{{ $ps->cantidad}}</td>
+							<td>{{ $pb->unidad_de_medida}}</td>
+							<td>{{ $ps->nombreCategoria}}</td>
 							@if($ps->disponibilidad=='1')
 							<td>Disponible</td>
 							@endif
@@ -173,7 +178,6 @@
 						@endif
 						@if(auth()->user()->superusuario==1)
 						<tr>
-							<td>{{ $ps->id_stock}}</td>
 							<td>
 							<label>
 									<a href="" title="Ver imagen" class="btn btn-light" data-target="#modal-infoImagen-{{$pb->id_producto}}" data-toggle="modal">
@@ -186,6 +190,8 @@
 							<td>{{ $ps->nombre_sede}}</td>
 							<td>{{ $ps->nombre_proveedor}}</td>
 							<td>{{ $ps->cantidad}}</td>
+							<td>{{ $pb->unidad_de_medida}}</td>
+							<td>{{ $ps->nombreCategoria}}</td>
 							@if($ps->disponibilidad=='1')
 							<td>Disponible</td>
 							@endif
