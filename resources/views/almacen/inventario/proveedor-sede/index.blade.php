@@ -162,7 +162,7 @@
 								<a href="{{URL::action('ProveedorSedeController@edit',$ps->id_stock)}}"><button class="btn btn-outline-primary btn-sm">Editar</button></a>
 							</td>
 							<td>
-								<a href="{{URL::action('ProveedorSedeController@edit',$ps->id_stock)}}"><button class="btn btn-outline-info btn-sm">Transformar</button></a>
+								<a href="" data-target="#modal-transformar-{{$ps->id_stock}}" data-toggle="modal"><button class="btn btn-outline-info btn-sm">Transformar</button></a>
 							</td>
 							<td>
 								<a href="" data-target="#modal-delete-{{$ps->id_stock}}" data-toggle="modal"><button class="btn btn-outline-danger btn-sm">Eliminar</button></a>
@@ -174,6 +174,7 @@
 						@include('almacen.inventario.proveedor-sede.modalInfoProductos')
 						@include('almacen.inventario.proveedor-sede.modal')
 						@include('almacen.inventario.proveedor-sede.modalImagen')
+						@include('almacen.inventario.proveedor-sede.modalTransformar')
 						
 						@endif
 						@if(auth()->user()->superusuario==1)
@@ -203,7 +204,7 @@
 								<a href="{{URL::action('ProveedorSedeController@edit',$ps->id_stock)}}"><button class="btn btn-outline-primary btn-sm">Editar</button></a>
 							</td>
 							<td>
-								<a href="{{URL::action('ProveedorSedeController@edit',$ps->id_stock)}}"><button class="btn btn-outline-info btn-sm">Transformar</button></a>
+								<a href="" data-target="#modal-transformar-{{$ps->id_stock}}" data-toggle="modal"><button class="btn btn-outline-info btn-sm">Transformar</button></a>
 							</td>
 							<td>
 								<a href="" data-target="#modal-delete-{{$ps->id_stock}}" data-toggle="modal"><button class="btn btn-outline-danger btn-sm">Eliminar</button></a>
@@ -215,6 +216,7 @@
 						@include('almacen.inventario.proveedor-sede.modalInfoProductos')
 						@include('almacen.inventario.proveedor-sede.modal')
 						@include('almacen.inventario.proveedor-sede.modalImagen')
+						@include('almacen.inventario.proveedor-sede.modalTransformar')
 						@endif
 						@endif
 						@endforeach

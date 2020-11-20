@@ -212,7 +212,7 @@
 								</div>
 						<div class="form-group col-sm-8">
 							
-								<input type="text" class="form-control" name="cantidad">
+								<input type="number" class="form-control" name="cantidad">
 						</div>
 					</div>
 

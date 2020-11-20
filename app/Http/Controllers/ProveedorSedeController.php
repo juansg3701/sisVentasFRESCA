@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use sisVentas\Http\Requests;
 use sisVentas\ProveedorSede;
 use sisVentas\ProductoSede;
+use sisVentas\Categoria;
 use Illuminate\Support\Facades\Redirect;
 use sisVentas\Http\Requests\ProveedorSedeFormRequest;
 use DB;
@@ -52,9 +53,11 @@ class ProveedorSedeController extends Controller
 	 			$sedesP=DB::table('sede')->get();
 	 			$proveedoresP=DB::table('proveedor')->get();
 	 			$empleados=DB::table('empleado')->get();
+	 			$categoriaTrans=DB::table('categoria_producto_trans')->get();
+	 			$categoria=Categoria::get();
 
 
-	 			return view('almacen.inventario.proveedor-sede.index',["productos"=>$productos,"searchText0"=>$query0,"searchText1"=>$query1,"searchText2"=>$query2,"searchText3"=>$query3, "modulos"=>$modulos,"eanP"=>$eanP,"sedesP"=>$sedesP,"proveedoresP"=>$proveedoresP,"productosBuscar"=>$productosBuscar,"empleados"=>$empleados]);
+	 			return view('almacen.inventario.proveedor-sede.index',["productos"=>$productos,"searchText0"=>$query0,"searchText1"=>$query1,"searchText2"=>$query2,"searchText3"=>$query3, "modulos"=>$modulos,"eanP"=>$eanP,"sedesP"=>$sedesP,"proveedoresP"=>$proveedoresP,"productosBuscar"=>$productosBuscar,"empleados"=>$empleados,"categoriaTrans"=>$categoriaTrans]);
 	 		}
 	 	}
 	 	
@@ -64,7 +67,24 @@ class ProveedorSedeController extends Controller
 
 	 	}
 
-	 	public function store(ProveedorSedeFormRequest $request){
+	 	public function store(Request $request){
+	 		$id=$request->get('id');
+
+	 		$registro=ProveedorSede::findOrFail($id);
+
+
+	 		$ps = new ProveedorSede;
+	 		$ps->producto_id_producto=$registro->producto_id_producto;
+	 		$ps->sede_id_sede=$registro->sede_id_sede;
+	 		$ps->proveedor_id_proveedor=$registro->proveedor_id_proveedor;
+	 		$ps->disponibilidad=$registro->disponibilidad;
+	 		$ps->cantidad=$request->get('cantidad');
+	 		$ps->fecha_registro=$request->get('fecha_registro');
+	 		$ps->empleado_id_empleado=$request->get('empleado_id_empleado');
+	 		$ps->transformacion_stock_id=$request->get('transformacion_stock_id');
+	 		$ps->save();
+
+	 		return back()->with('msj','Producto guardado');
 	 	}
 
 	 	public function show($id){
