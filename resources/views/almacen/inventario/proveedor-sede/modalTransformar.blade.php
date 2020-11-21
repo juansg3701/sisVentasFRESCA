@@ -1,6 +1,7 @@
 <!--Este es el archivo de la ventana modal para mostrar información del LOG-->
 <div class="modal fade modal-slide-in-right" aria-hidden="true"
 role="dialog" tabindex="-1" id="modal-transformar-{{$ps->id_stock}}">
+
 	<!--Información de la ventana emergente-->
 	<div class="modal-dialog">
 		<div class="modal-content">
@@ -44,11 +45,7 @@ role="dialog" tabindex="-1" id="modal-transformar-{{$ps->id_stock}}">
 					<div>Producto nuevo:</div>
 				</div>
 				<div class="form-group col-sm-4">
-                   	<select name="producto_id_producto" class="form-control">
-						@foreach($eanP as $p)
-						<option value="{{$p->id_producto}}">{{$p->nombre}}</option>
-						@endforeach
-					</select>
+					<input id="buscar2" class="form-control" name="nombre_producto" placeholder="Buscar..." >
 				</div>
             </div>
 
@@ -81,9 +78,11 @@ role="dialog" tabindex="-1" id="modal-transformar-{{$ps->id_stock}}">
 
 			{!!Form::close()!!}	
 		</div>
+
 	</div>
 </div>
 
+    
 
 
 

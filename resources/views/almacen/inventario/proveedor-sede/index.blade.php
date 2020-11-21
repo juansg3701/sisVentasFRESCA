@@ -78,6 +78,7 @@
 													<button class="btn btn-success">Cargar xls</button>
 													<button class="btn btn-success">Descargar xls</button>
 													<a href="{{url('/')}}" class="btn btn-danger">Volver</a>
+													<input id="buscar2" class="form-control" name="nombre_producto" placeholder="Buscar..." >
 													
 				
 													</div>
@@ -146,6 +147,7 @@
 							<td>{{ $pb->nombre}}</td>
 							<td>{{ $pb->plu}}</td>
 							<td>{{ $pb->ean}}</td>
+
 							<td>{{ $ps->nombre_sede}}</td>
 							<td>{{ $ps->nombre_proveedor}}</td>
 							<td>{{ $ps->cantidad}}</td>
@@ -231,5 +233,30 @@
 		</div>
 	</div>
 </div>
+   <!--opc-->
+    <link rel="stylesheet" href="{{asset('//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css')}}">
+  <script src="{{asset('https://code.jquery.com/ui/1.12.1/jquery-ui.js')}}"></script>
 
+<script type="text/javascript">
+$( function() {
+  
+
+  @if(isset($eanP))
+
+     var nombrePA = [
+            @foreach ($eanP as $e)
+              '{{$e->nombre}}',
+            @endforeach
+      ];
+
+     $( "#buscar2" ).autocomplete({
+        
+      source: nombrePA
+    });
+  
+  @endif
+
+    
+  } );
+</script>
 @stop
