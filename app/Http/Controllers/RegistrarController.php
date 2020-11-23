@@ -104,19 +104,6 @@ class RegistrarController extends Controller
 	 		
 	 	}
 
-	 	public function edit($id){
-	 		$sede=DB::table('sede')->get();
-	 		$proveedor=DB::table('proveedor')->get();
-	 		$producto=ProductoSede::get();
-	 		$usuarios=DB::table('empleado')->get();
-	 		$transformacion=DB::table('categoria_producto_trans')->get();
-	 		$cargoUsuario=auth()->user()->tipo_cargo_id_cargo;
-	 			$modulos=DB::table('cargo_modulo')
-	 			->where('id_cargo','=',$cargoUsuario)
-	 			->orderBy('id_cargo', 'desc')->get();
-
-	 		return view("almacen.inventario.proveedor-sede.edit",["sede"=>$sede,"proveedor"=>$proveedor,"producto"=>$producto,"stock"=>ProveedorSede::findOrFail($id), "modulos"=>$modulos,"transformacion"=>$transformacion,"usuarios"=>$usuarios]);
-	 	}
 	
 	 	public function update(UsersFormRequest $request, $id){
 	 		$usuario = User::findOrFail($id);
