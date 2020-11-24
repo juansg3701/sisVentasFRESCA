@@ -262,7 +262,7 @@
                     <div>                       
                     @yield('tabla')
                     </div>
-                     <input autocomplete="off"  type="text" class="form-control active selec" id="producto" name="producto" placeholder="Número o nombre" style="width:400px; height:30px" data-minChars="1">
+                  
         </div>
         <!-- /.content -->
         <div class="clearfix"></div>
@@ -308,6 +308,7 @@
     <script src="{{asset('https://cdn.jsdelivr.net/npm/fullcalendar@3.9.0/dist/fullcalendar.min.js')}}"></script>
     <script src="{{asset('assets/js/init/fullcalendar-init.js')}}"></script>
     <script src="{{asset('assets/js/sweetalert2.min.js')}}"></script>
+
     
     <!--Local Stuff-->
     <script>

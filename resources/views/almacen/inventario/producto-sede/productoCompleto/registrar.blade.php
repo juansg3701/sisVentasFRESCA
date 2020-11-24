@@ -292,7 +292,7 @@
 
 								<div class="form-row">
 									<div class="form-group col-sm-12">
-										<button class="btn btn-info" type="submit">Registrar</button>
+										<button class="btn btn-info" type="button" onclick="a()">Registrar</button>
 										<a href="{{url('almacen/inventario/producto-sede/productoCompleto')}}" class="btn btn-danger">Regresar</a>
 									</div>
 								</div>
@@ -308,12 +308,14 @@
 	</div>		
 {!!Form::close()!!}	
 </body>
+<!-- jquery para mensajes-->
+ <script src="{{asset('assets/js/jQuery.js')}}"></script>
 <script type="text/javascript">
 
 	function a(){
-		 var cantidad = $('#ean').val();
+		
      	alert("a");
- 
+  var cantidad = $('#ean').val();
         
         if(cantidad===''){
             Swal.fire({
