@@ -43,7 +43,7 @@ if(isset($_FILES["name"])){
 
                 /*$x_costo_compra = $sheet->getCell("J".$row)->getValue();
                 $x_stock_minimo = $sheet->getCell("K".$row)->getValue();
-                $x_fecha_registro = $sheet->getCell("L".$row)->getValue();  
+                $x_fecha_registro = $sheet->getCell("L".$row)->getValue();	
                 $x_categoria_id_categoria = $sheet->getCell("M".$row)->getValue();
                 $x_impuestos_id_impuestos = $sheet->getCell("N".$row)->getValue();
                 $x_empleado_id_empleado = $sheet->getCell("O".$row)->getValue();
