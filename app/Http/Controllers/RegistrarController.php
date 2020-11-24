@@ -104,7 +104,6 @@ class RegistrarController extends Controller
 	 		
 	 	}
 
-
 	
 	 	public function update(UsersFormRequest $request, $id){
 	 		$usuario = User::findOrFail($id);

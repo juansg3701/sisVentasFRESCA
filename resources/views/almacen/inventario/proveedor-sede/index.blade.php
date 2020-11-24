@@ -78,8 +78,15 @@
 													<button class="btn btn-success">Cargar xls</button>
 													<button class="btn btn-success">Descargar xls</button>
 													<a href="{{url('/')}}" class="btn btn-danger">Volver</a>
-													<input id="buscar2" class="form-control" name="nombre_producto" placeholder="Buscar..." >
 													
+													<input id="buscar2" class="form-control" name="nombre_producto" placeholder="Buscar..." >
+													 <input autocomplete="off"  type="text" class="form-control active selec" id="producto" name="producto" placeholder="Número o nombre" style="width:400px; height:30px" data-minChars="1">
+
+													 <div id="the-basics">
+													  <input class="typeahead" type="text" placeholder="States of USA">
+													</div>
+
+													<input id="typeahead-input" type="text" data-provide="typeahead" />
 				
 													</div>
 												</div>
@@ -164,7 +171,7 @@
 								<a href="{{URL::action('ProveedorSedeController@edit',$ps->id_stock)}}"><button class="btn btn-outline-primary btn-sm">Editar</button></a>
 							</td>
 							<td>
-								<a href="" data-target="#modal-transformar-{{$ps->id_stock}}" data-toggle="modal"><button class="btn btn-outline-info btn-sm">Transformar</button></a>
+								<a href="{{URL::action('registroProductoProveedor@edit',$ps->id_stock)}}"><button class="btn btn-outline-info btn-sm">Transformar</button></a>
 							</td>
 							<td>
 								<a href="" data-target="#modal-delete-{{$ps->id_stock}}" data-toggle="modal"><button class="btn btn-outline-danger btn-sm">Eliminar</button></a>
@@ -206,7 +213,7 @@
 								<a href="{{URL::action('ProveedorSedeController@edit',$ps->id_stock)}}"><button class="btn btn-outline-primary btn-sm">Editar</button></a>
 							</td>
 							<td>
-								<a href="" data-target="#modal-transformar-{{$ps->id_stock}}" data-toggle="modal"><button class="btn btn-outline-info btn-sm">Transformar</button></a>
+								<a href="{{URL::action('registroProductoProveedor@edit',$ps->id_stock)}}"><button class="btn btn-outline-info btn-sm">Transformar</button></a>
 							</td>
 							<td>
 								<a href="" data-target="#modal-delete-{{$ps->id_stock}}" data-toggle="modal"><button class="btn btn-outline-danger btn-sm">Eliminar</button></a>
@@ -240,7 +247,6 @@
 <script type="text/javascript">
 $( function() {
   
-
   @if(isset($eanP))
 
      var nombrePA = [
@@ -258,5 +264,45 @@ $( function() {
 
     
   } );
+</script>
+
+    <script src="{{asset('assets/jquery-ui/typeahead.js')}}"></script>
+
+    <script type="text/javascript">
+
+var states = ['Alabama', 'Alaska', 'Arizona', 'Arkansas', 'California',
+  'Colorado', 'Connecticut', 'Delaware', 'Florida', 'Georgia', 'Hawaii',
+  'Idaho', 'Illinois', 'Indiana', 'Iowa', 'Kansas', 'Kentucky', 'Louisiana',
+  'Maine', 'Maryland', 'Massachusetts', 'Michigan', 'Minnesota',
+  'Mississippi', 'Missouri', 'Montana', 'Nebraska', 'Nevada', 'New Hampshire',
+  'New Jersey', 'New Mexico', 'New York', 'North Carolina', 'North Dakota',
+  'Ohio', 'Oklahoma', 'Oregon', 'Pennsylvania', 'Rhode Island',
+  'South Carolina', 'South Dakota', 'Tennessee', 'Texas', 'Utah', 'Vermont',
+  'Virginia', 'Washington', 'West Virginia', 'Wisconsin', 'Wyoming'
+];
+
+$('#the-basics .typeahead').typeahead({
+  hint: true,
+  highlight: true,
+  minLength: 1
+},
+{
+  name: 'states',
+  source: substringMatcher(states)
+});
+    </script>
+
+
+
+    <script type="text/javascript">
+jQuery(document).ready(function() {
+       $('#typeahead-input').typeahead({
+           source: function (query, process) {
+               return $.get('search?q=' + query, function (data) {
+                   return process(data.search_results);
+               });
+           }
+       });
+})
 </script>
 @stop

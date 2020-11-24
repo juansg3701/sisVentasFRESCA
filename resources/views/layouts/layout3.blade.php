@@ -262,6 +262,7 @@
                     <div>                       
                     @yield('tabla')
                     </div>
+                     <input autocomplete="off"  type="text" class="form-control active selec" id="producto" name="producto" placeholder="Número o nombre" style="width:400px; height:30px" data-minChars="1">
         </div>
         <!-- /.content -->
         <div class="clearfix"></div>
@@ -500,6 +501,7 @@
             // Bar Chart #flotBarChart End
         });
     </script>
- 
+
+
 </body>
 </html>
