@@ -51,6 +51,9 @@
 	</div>
 {!!Form::open(array('url'=>'almacen/inventario/producto-sede/productoCompleto','method'=>'POST','autocomplete'=>'off','files'=>'true'))!!}
     {{Form::token()}}
+    <form name="form1">
+    	
+   
 
      <!--Formulario de registro-->	
 	<div class="col-md-12">
@@ -292,7 +295,7 @@
 
 								<div class="form-row">
 									<div class="form-group col-sm-12">
-										<button class="btn btn-info" type="button" onclick="a()">Registrar</button>
+										<button class="btn btn-info" name="boton1" type="button" onclick="a()">Registrar</button>
 										<a href="{{url('almacen/inventario/producto-sede/productoCompleto')}}" class="btn btn-danger">Regresar</a>
 									</div>
 								</div>
@@ -306,6 +309,7 @@
 
 		</div>
 	</div>		
+	 </form>
 {!!Form::close()!!}	
 </body>
 <!-- jquery para mensajes-->
@@ -314,7 +318,6 @@
 
 	function a(){
 		
-     	alert("a");
   var cantidad = $('#ean').val();
         
         if(cantidad===''){
@@ -328,17 +331,8 @@
                     popup: 'animate__animated animate__fadeOutUp'
                 }
             });     
-        }else if(cantidad==='ADAS'){
-            Swal.fire({
-                icon: 'error',
-                text: 'Por favor ingrese el peso',
-                showClass: {
-                    popup: 'animate__animated animate__fadeInDown'
-                },
-                hideClass: {
-                    popup: 'animate__animated animate__fadeOutUp'
-                }
-            });     
+        }else {
+        	 alert("132");
         }
     }//IF DEL ENTER
 	
