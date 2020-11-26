@@ -71,7 +71,16 @@
             <div class="form-row">
             <input type="hidden" name="id" value="{{$ps->id_stock}}">
 		    <input type="hidden" name="fecha_registro" value="<?php echo date("Y/m/d H:i:s"); ?>">
-		
+		  <label for="nombre">Escribe el nombre de una comida:</label>
+        <br>
+	<input
+  class="awesomplete"
+  type="text"
+  id="nombre"
+  autocomplete="off"
+  placeholder="Nombre de comida"
+  data-list="Tacos,Pizza,Hamburguesa,Pozole,Papas fritas"
+  data-minChars="1">
 
 				<div class="form-group col-sm-6">
 					<div>Kilos actuales:</div>

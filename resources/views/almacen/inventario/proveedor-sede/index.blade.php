@@ -87,6 +87,17 @@
 													</div>
 
 													<input id="typeahead-input" type="text" data-provide="typeahead" />
+
+													  <label for="nombre">Escribe el nombre de una comida:</label>
+        <br>
+	<input
+  class="awesomplete"
+  type="text"
+  id="nombre"
+  autocomplete="off"
+  placeholder="Nombre de comida"
+  data-list="Tacos,Pizza,Hamburguesa,Pozole,Papas fritas"
+  data-minChars="1">
 				
 													</div>
 												</div>
@@ -171,7 +182,7 @@
 								<a href="{{URL::action('ProveedorSedeController@edit',$ps->id_stock)}}"><button class="btn btn-outline-primary btn-sm">Editar</button></a>
 							</td>
 							<td>
-								<a href="{{URL::action('registroProductoProveedor@edit',$ps->id_stock)}}"><button class="btn btn-outline-info btn-sm">Transformar</button></a>
+								<a href="" data-target="#modal-transformar-{{$ps->id_stock}}" data-toggle="modal"><button class="btn btn-outline-info btn-sm">Transformar</button></a>
 							</td>
 							<td>
 								<a href="" data-target="#modal-delete-{{$ps->id_stock}}" data-toggle="modal"><button class="btn btn-outline-danger btn-sm">Eliminar</button></a>
@@ -213,7 +224,7 @@
 								<a href="{{URL::action('ProveedorSedeController@edit',$ps->id_stock)}}"><button class="btn btn-outline-primary btn-sm">Editar</button></a>
 							</td>
 							<td>
-								<a href="{{URL::action('registroProductoProveedor@edit',$ps->id_stock)}}"><button class="btn btn-outline-info btn-sm">Transformar</button></a>
+								<a href="" data-target="#modal-transformar-{{$ps->id_stock}}" data-toggle="modal"><button class="btn btn-outline-info btn-sm">Transformar</button></a>
 							</td>
 							<td>
 								<a href="" data-target="#modal-delete-{{$ps->id_stock}}" data-toggle="modal"><button class="btn btn-outline-danger btn-sm">Eliminar</button></a>
