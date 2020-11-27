@@ -27,14 +27,13 @@ role="dialog" tabindex="-1" id="modal-transformar-{{$ps->id_stock}}">
 					<div>Kilos actuales:</div>
 					<label for="nombre">Escribe el nombre de una comida:</label>
         <br>
+        <?php 
+        $a=["a","adsads","bfvdssdx"];
+        ?>
 	<input
   class="awesomplete"
   type="text"
-  id="nombre"
-  autocomplete="off"
-  placeholder="Nombre de comida"
-  data-list="Tacos,Pizza,Hamburguesa,Pozole,Papas fritas"
-  data-minChars="1">
+  id="myinput">
 				</div>
 				<div class="form-group col-sm-4">
                    {{ $ps->cantidad}}
@@ -91,6 +90,14 @@ role="dialog" tabindex="-1" id="modal-transformar-{{$ps->id_stock}}">
 
 	</div>
 </div>
+
+<script type="text/javascript">
+	
+	var input = document.getElementById("myinput");
+new Awesomplete(input, {
+	list: ["Ada", "Java", "JavaScript", "Brainfuck", "LOLCODE", "Node.js", "Ruby on Rails"]
+});
+</script>
 
     
 
