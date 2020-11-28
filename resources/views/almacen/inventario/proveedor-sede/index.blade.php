@@ -5,11 +5,25 @@
 	<title>Proveedor</title>
 
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+
     <!--<link rel="stylesheet" href="{{ asset('css/Almacen/usuario/styles-iniciar.css') }}" />-->
 </head>
 
 
 <body>
+	<script type="text/javascript">
+
+			$("#myinput").keypress(function(e) {
+
+              	var input = document.getElementById("myinput");
+				new Awesomplete(input, {
+					list: ["Ada", "Java", "JavaScript", "Brainfuck", "LOLCODE", "Node.js", "Ruby on Rails"]
+				});	   
+            });
+
+	
+
+</script>
 	<!--Código de JQuery para mostrar/esconder los campos del atributo documento-->
 	<script type="text/javascript">
 		$(function() {
@@ -79,25 +93,12 @@
 													<button class="btn btn-success">Descargar xls</button>
 													<a href="{{url('/')}}" class="btn btn-danger">Volver</a>
 													
-													<input id="buscar2" class="form-control" name="nombre_producto" placeholder="Buscar..." >
-													 <input autocomplete="off"  type="text" class="form-control active selec" id="producto" name="producto" placeholder="Número o nombre" style="width:400px; height:30px" data-minChars="1">
-
-													 <div id="the-basics">
-													  <input class="typeahead" type="text" placeholder="States of USA">
-													</div>
-
-													<input id="typeahead-input" type="text" data-provide="typeahead" />
-
 													  <label for="nombre">Escribe el nombre de una comida:</label>
         <br>
-	<input
-  class="awesomplete"
-  type="text"
-  id="nombre"
-  autocomplete="off"
-  placeholder="Nombre de comida"
-  data-list="Tacos,Pizza,Hamburguesa,Pozole,Papas fritas"
-  data-minChars="1">
+	<input id="myinput" />
+
+	<input class="awesomplete"
+       data-list="Ada, Java, JavaScript, Brainfuck, LOLCODE, Node.js, Ruby on Rails" />
 				
 													</div>
 												</div>
@@ -251,69 +252,7 @@
 		</div>
 	</div>
 </div>
-   <!--opc-->
-    <link rel="stylesheet" href="{{asset('//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css')}}">
-  <script src="{{asset('https://code.jquery.com/ui/1.12.1/jquery-ui.js')}}"></script>
-
-<script type="text/javascript">
-$( function() {
-  
-  @if(isset($eanP))
-
-     var nombrePA = [
-            @foreach ($eanP as $e)
-              '{{$e->nombre}}',
-            @endforeach
-      ];
-
-     $( "#buscar2" ).autocomplete({
-        
-      source: nombrePA
-    });
-  
-  @endif
-
-    
-  } );
-</script>
-
-    <script src="{{asset('assets/jquery-ui/typeahead.js')}}"></script>
-
-    <script type="text/javascript">
-
-var states = ['Alabama', 'Alaska', 'Arizona', 'Arkansas', 'California',
-  'Colorado', 'Connecticut', 'Delaware', 'Florida', 'Georgia', 'Hawaii',
-  'Idaho', 'Illinois', 'Indiana', 'Iowa', 'Kansas', 'Kentucky', 'Louisiana',
-  'Maine', 'Maryland', 'Massachusetts', 'Michigan', 'Minnesota',
-  'Mississippi', 'Missouri', 'Montana', 'Nebraska', 'Nevada', 'New Hampshire',
-  'New Jersey', 'New Mexico', 'New York', 'North Carolina', 'North Dakota',
-  'Ohio', 'Oklahoma', 'Oregon', 'Pennsylvania', 'Rhode Island',
-  'South Carolina', 'South Dakota', 'Tennessee', 'Texas', 'Utah', 'Vermont',
-  'Virginia', 'Washington', 'West Virginia', 'Wisconsin', 'Wyoming'
-];
-
-$('#the-basics .typeahead').typeahead({
-  hint: true,
-  highlight: true,
-  minLength: 1
-},
-{
-  name: 'states',
-  source: substringMatcher(states)
-});
-    </script>
 
 
 
-    <script type="text/javascript">
-jQuery(document).ready(function() {
-       $('#typeahead-input').typeahead({
-           source: function (query, process) {
-               return $.get('search?q=' + query, function (data) {
-                   return process(data.search_results);
-               });
-           }
-       });
-})
-</script>
 @stop

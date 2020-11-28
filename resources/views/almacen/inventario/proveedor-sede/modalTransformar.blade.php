@@ -91,13 +91,7 @@ role="dialog" tabindex="-1" id="modal-transformar-{{$ps->id_stock}}">
 	</div>
 </div>
 
-<script type="text/javascript">
-	
-	var input = document.getElementById("myinput");
-new Awesomplete(input, {
-	list: ["Ada", "Java", "JavaScript", "Brainfuck", "LOLCODE", "Node.js", "Ruby on Rails"]
-});
-</script>
+
 
     
 
