@@ -6,32 +6,94 @@
 </head>
 
 <body>
-	<div class="row">
-		<div class="col-lg-8 col-md-8 col-sm-8 col-xs-12">
-			<h3>Registros de Caja</h3>
+	<!--Panel superior-->
+	<div class="breadcrumbs">
+		<div class="breadcrumbs-inner">
+			<div class="row m-0">
+				<div class="col-sm-4">
+					<div class="page-header float-left">
+						<div class="page-title">
+							<h1>Caja</h1>
+						</div>
+					</div>
+				</div>
+				<div class="col-sm-8">
+					<div class="page-header float-right">
+						<div class="page-title">
+							<ol class="breadcrumb text-right">
+								<li class="active">Inicio</li>
+							</ol>
+						</div>
+					</div>
+				</div>
+			</div>
 		</div>
 	</div>
 
-	<div id=formulario>
-		@include('almacen.caja.search')
-		<div class="form-group">
-			<div align="center">
-			<a href="{{URL::action('CajaController@create',0)}}"><button class="btn btn-info">Nuevo Registro de Caja</button></a>
-			<a href="{{url('/')}}" class="btn btn-danger">Volver</a>
+	<!--Formulario de búsqueda y opciones-->
+	<div class="content">
+		<div class="animated fadeIn">
+			<div class="row">
+				<div class="col-md-12">
+					<div class="card">
+						<div class="card-header" align="center">
+							<h2 class="pb-2 display-5">M&OacuteDULO DE CAJA</h2>
+						</div><br>
+						<div class="row" align="center">	
+							<div class="col-sm-3" align="center"></div>
+								<div class="col-sm-6" align="center">
+									<div class="card" align="center">
+										<div class="card-header" align="center">
+											<strong></strong>
+										</div>
+										<div class="card-body card-block" align="center">
+											<div id=formulario>
+												<div class="form-group">
+
+													<div align="center">
+														@include('almacen.caja.search')
+														<div class="form-group">
+															<div align="center">
+															<a href="{{URL::action('CajaController@create',0)}}"><button class="btn btn-info">Nuevo registro de caja</button></a>
+															<a href="{{url('/')}}" class="btn btn-danger">Volver</a>
+															</div>
+														
+														</div>
+													</div>
+
+												</div>
+											</div>
+										</div>
+									</div>
+								</div>
+							<div class="col-sm-3" align="center"></div>
+						</div>
+					</div>
+				</div>
 			</div>
-		
 		</div>
 	</div>
+
+
 </body>
 @stop
 
 @section('tabla')
-<div class="container">
-<h3>Registros de Caja</h3><br>
-	<div class="row">
-				<div class="table-responsive">
-					<table class="table table-striped table-bordered table-condensed table-hover">
-						<thead>
+
+<!--Tabla de registros realizados-->
+<div class="content">
+	<div class="animated fadeIn">
+		<div class="row">
+			<div class="col-md-12">
+				<div class="card">
+					<div class="card-header" align="center">
+						<h3 class="pb-2 display-5">REGISTROS DE CAJA</h3>
+					</div>
+
+					<div class="card-body">
+			
+						<table id="bootstrap-data-table" class="table table-striped table-bordered">
+							<thead>
 							<th>Id</th>
 							<th>Base</th>
 							<th>Ingreso Efectivo</th>
@@ -42,7 +104,6 @@
 							<th>Fecha</th>
 							<th>Empleado</th>
 							<th>Sede</th>
-							<th>Periodo</th>
 							<th>Opciones</th>
 						</thead>
 						@foreach($cajas as $caj)
@@ -58,7 +119,6 @@
 							<td>{{ $caj->fecha}}</td>
 							<td>{{ $caj->empleado}}</td>
 							<td>{{ $caj->sede}}</td>
-							<td>{{ $caj->p_tiempo}}</td>
 							<td>
 								<a href="{{URL::action('CajaController@edit',$caj->id_caja)}}"><button class="btn btn-info">Editar</button></a>
 								<a href="" data-target="#modal-delete-{{$caj->id_caja}}" data-toggle="modal"><button class="btn btn-danger">Eliminar</button></a>
@@ -78,7 +138,6 @@
 							<td>{{ $caj->fecha}}</td>
 							<td>{{ $caj->empleado}}</td>
 							<td>{{ $caj->sede}}</td>
-							<td>{{ $caj->p_tiempo}}</td>
 							<td>
 								<a href="{{URL::action('CajaController@edit',$caj->id_caja)}}"><button class="btn btn-info">Editar</button></a>
 								<a href="" data-target="#modal-delete-{{$caj->id_caja}}" data-toggle="modal"><button class="btn btn-danger">Eliminar</button></a>
@@ -88,9 +147,15 @@
 						@endif
 
 						@endforeach
-					</table>
-				</div>
+						</table>
+					
+					</div>
 				{{$cajas->render()}}
-	</div><br>
+				</div>
+			</div>
+		</div>
 	</div>
+</div>
+
+
 @stop

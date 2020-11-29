@@ -5,6 +5,7 @@
 	<title>Proveedor</title>
 
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+	<script src="{{asset('assets/js/jQuery.js')}}"></script>
 
     <!--<link rel="stylesheet" href="{{ asset('css/Almacen/usuario/styles-iniciar.css') }}" />-->
 </head>
@@ -12,13 +13,17 @@
 
 <body>
 	<script type="text/javascript">
+	
 
-			$("#myinput").keypress(function(e) {
 
-              	var input = document.getElementById("myinput");
-				new Awesomplete(input, {
-					list: ["Ada", "Java", "JavaScript", "Brainfuck", "LOLCODE", "Node.js", "Ruby on Rails"]
-				});	   
+			$("#myinput").keyup(function(){
+				_this= this;
+				$.each($("#bootstrap-data-table tbody tr"),function(){
+					if($(this).text().toLowerCase().indexOf($(_this).val().toLowerCase())===-1)
+						$(this).hide();
+					else
+						$(this).show();
+				});  
             });
 
 	
@@ -92,9 +97,7 @@
 													<button class="btn btn-success">Cargar xls</button>
 													<button class="btn btn-success">Descargar xls</button>
 													<a href="{{url('/')}}" class="btn btn-danger">Volver</a>
-													
-													  <label for="nombre">Escribe el nombre de una comida:</label>
-        <br>
+	<br>
 	<input id="myinput" />
 
 	<input class="awesomplete"

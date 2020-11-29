@@ -52,8 +52,6 @@
 {!!Form::open(array('url'=>'almacen/inventario/producto-sede/productoCompleto','method'=>'POST','autocomplete'=>'off','files'=>'true'))!!}
     {{Form::token()}}
     <form name="form1">
-    	
-   
 
      <!--Formulario de registro-->	
 	<div class="col-md-12">

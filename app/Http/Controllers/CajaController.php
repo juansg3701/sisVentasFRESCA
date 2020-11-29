@@ -26,8 +26,7 @@ class CajaController extends Controller
 	 			$cajas=DB::table('caja as k')
 	 			->join('empleado as u','k.empleado_id_empleado','=','u.id_empleado')
 	 			->join('sede as s','k.sede_id_sede','=','s.id_sede')
-	 			->join('p_tiempo as p','k.p_tiempo_id_tiempo','=','p.id_tiempo')
-	 			->select('k.id_caja','k.base_monetaria','k.ingresos_efectivo','k.ingresos_electronicos', 'k.egresos_efectivo', 'k.egresos_electronicos', 'k.ventas', 'k.fecha','u.nombre as empleado','s.nombre_sede as sede', 'p.periodo_tiempo as p_tiempo','k.sede_id_sede as sede_id_sede')
+	 			->select('k.id_caja','k.base_monetaria','k.ingresos_efectivo','k.ingresos_electronicos', 'k.egresos_efectivo', 'k.egresos_electronicos', 'k.ventas', 'k.fecha','u.nombre as empleado','s.nombre_sede as sede','k.sede_id_sede as sede_id_sede')
 	 			
 	 			->where('k.fecha','LIKE', '%'.$query.'%')
 	 			->orderBy('k.id_caja', 'desc')
@@ -46,7 +45,6 @@ class CajaController extends Controller
 	 	public function create(Request $request){ 
 	 		if ($request) {
 	 			
-	 			$periodos=DB::table('p_tiempo')->get();
 	 			$usuarios=DB::table('empleado')->get();
 	 			$cargos=DB::table('tipo_cargo')->get();
 	 			$sedes=DB::table('sede')->get();
@@ -75,7 +73,7 @@ class CajaController extends Controller
 	 			->orderBy('id_factura', 'desc')->get();
 	 			
 
-	 			return view('almacen.caja.index',["periodos"=>$periodos, "usuarios"=>$usuarios,"sedes"=>$sedes,"cargos"=>$cargos,"cajas"=>$cajas, "modulos"=>$modulos,"cuentas"=>$cuentas, "ventasFac"=>$ventasFac]);
+	 			return view('almacen.caja.index',["usuarios"=>$usuarios,"sedes"=>$sedes,"cargos"=>$cargos,"cajas"=>$cajas, "modulos"=>$modulos,"cuentas"=>$cuentas, "ventasFac"=>$ventasFac]);
 	 		}
 	 				
 	 	}
@@ -91,7 +89,6 @@ class CajaController extends Controller
 	 		$caja->fecha=$request->get('fecha');
 	 		$caja->empleado_id_empleado=$request->get('empleado_id_empleado');
 	 		$caja->sede_id_sede=$request->get('sede_id_sede');
-	 		$caja->p_tiempo_id_tiempo=$request->get('p_tiempo_id_tiempo');
 	 		$caja->save();
 
 			return back()->with('msj','Caja guardada');
@@ -129,7 +126,6 @@ class CajaController extends Controller
 	 		$caja->fecha=$request->get('fecha');
 	 		$caja->empleado_id_empleado=$request->get('empleado_id_empleado');
 	 		$caja->sede_id_sede=$request->get('sede_id_sede');
-	 		$caja->p_tiempo_id_tiempo=$request->get('p_tiempo_id_tiempo');
 	 		$caja->update();
 
 

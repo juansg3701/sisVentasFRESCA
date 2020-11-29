@@ -185,10 +185,13 @@
                         <a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> <i class="menu-icon fa fa-barcode"></i>Facturación</a>
                         <ul class="sub-menu children dropdown-menu">                        
 
+                            <li><i class="fa fa-list-alt"></i><a href="{{url('almacen/caja')}}">Caja</a>
+                            </li> 
                             <li><i class="fa fa-shopping-cart"></i><a href="{{url('almacen/facturacion/listaVentas')}}">Nueva venta</a>
                             </li>
                             <li><i class="fa fa-list-alt"></i><a href="{{URL::action('facturacionListaVentas@show',0)}}">Lista de ventas</a>
-                            </li>                
+                            </li> 
+
                         </ul>
                     </li>
                   @endif
