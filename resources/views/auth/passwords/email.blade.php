@@ -3,51 +3,64 @@
 <!-- Main Content -->
 @section('content')
 
-               
-                <div class="panel-body">
                      <div class="col-md-12">
                         @if(session('status'))
                         <div class="alert alert-success">
                             {{ session('status') }}
                         </div>
                         @else
-                        <label style="color:  #2980b9 ">Ingresa tus datos para resetear contraseña por favor</label>
-                        <br></br>
+                                @if ($errors->has('email'))
+                                    <span class="help-block">
+                                        <label style="color:  #5e2129 ">Verifica tus datos</label>
+                                    </span>
+                                @else
+                                <label style="color:  #5e2129 ">Ingresa tus datos para resetear la contraseña por favor</label>
+                                @endif
+                        <br>
                         @endif
 
                         
                      </div>
                     
 
-                    <form class="form-horizontal" role="form" method="POST" action="{{ url('/password/email') }}">
+                    <form role="form" method="POST" action="{{ url('/password/email') }}" class="user">
                         {{ csrf_field() }}
 
                         <div class="form-group{{ $errors->has('email') ? ' has-error' : '' }}">
-                           
+              
 
-                            <div class="col-md-12">
-                                @if ($errors->has('email'))
-                                    <span class="help-block">
-                                        <strong>{{ $errors->first('email') }}</strong>
-                                    </span>
-                                @endif
-                                <input id="email" type="email" class="form-control" name="email" value="{{ old('email') }}" placeholder="Ingrese correo">
-
+                            <div class="form-group">
                                 
+                            <input type="email" class="form-control form-control-user" id="email"
+                                   placeholder="Ingrese correo"
+                                   onkeypress="return neverSpaceOther(event)" 
+                                   name="email" 
+                                   value="{{ old('email') }}">
                             </div>
                         </div>
+                        <hr>
 
-                        <div class="form-group">
-                            <div class="col-md-12">
-                                <a href="{{url('')}}"><button type="button" class="btn btn-danger">
-                                     Volver
-                                </button></a>
-                                <button type="submit" class="btn btn-primary">
-                                     Enviar link
-                                </button>
+                         <div class="container">
+                            <div class="row">
+                                <div class="col-md-6 ">
+                              
+                                     <button type="submit" class="btn btn-outline-primary btn-user btn-block"
+                                         onclick="dataReading()"> Enviar link</button>
+                                </div>
+                                <div class="col-md-6 ">
+                                    <a href="{{url('')}}">
+                                        <button type="button" class="btn btn-outline-danger btn-user btn-block">
+                                            Volver
+                                        </button>
+                                    </a>
+                                </div> 
                             </div>
                         </div>
+                    
                     </form>
-                </div>
+
+
+
+          
 
 @endsection
