@@ -100,8 +100,8 @@
 	<br>
 	<input id="myinput" />
 
-	<input class="awesomplete"
-       data-list="Ada, Java, JavaScript, Brainfuck, LOLCODE, Node.js, Ruby on Rails" />
+       
+		
 				
 													</div>
 												</div>
