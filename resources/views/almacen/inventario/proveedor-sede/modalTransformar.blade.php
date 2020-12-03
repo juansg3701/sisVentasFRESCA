@@ -27,13 +27,14 @@ role="dialog" tabindex="-1" id="modal-transformar-{{$ps->id_stock}}">
 					<div>Kilos actuales:</div>
 					<label for="nombre">Escribe el nombre de una comida:</label>
         <br>
-        <?php 
-        $a=["a","adsads","bfvdssdx"];
-        ?>
-	<input
-  class="awesomplete"
-  type="text"
-  id="myinput">
+   <input class="awesomplete" list="mylist" />
+       <datalist id="mylist">
+       @foreach($productosBuscar as $pb)
+       		
+			<option>{{ $pb->nombre}}</option>
+		
+       @endforeach
+      </datalist>
 				</div>
 				<div class="form-group col-sm-4">
                    {{ $ps->cantidad}}
@@ -54,7 +55,7 @@ role="dialog" tabindex="-1" id="modal-transformar-{{$ps->id_stock}}">
 					<div>Producto nuevo:</div>
 				</div>
 				<div class="form-group col-sm-4">
-					<input id="buscar2" class="form-control" name="nombre_producto" placeholder="Buscar..." >
+					<input id="buscar2" class="form-control" name="nombre_producto" placeholder="Buscar..." list="mylist">
 				</div>
             </div>
 
