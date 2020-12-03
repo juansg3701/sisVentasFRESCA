@@ -15,9 +15,29 @@ role="dialog" tabindex="-1" id="modal-transformar-{{$ps->id_stock}}">
 			<div class="modal-body">
 				<p>Información:</p>
             </div>
+                   <datalist id="mylist">
+       @foreach($productosBuscar as $pb)
+       		
+			<option>{{ $pb->nombre}}</option>
+		
+       @endforeach
+      </datalist>
             {!!Form::open(array('url'=>'almacen/inventario/proveedor-sede','method'=>'POST','autocomplete'=>'off'))!!}
 		    {{Form::token()}}
-		      
+	
+		    @foreach($productosBuscar as $pb)
+			    @if($pb->id_producto==$ps->producto_id_producto)
+				      <div class="form-row">
+						<div class="form-group col-sm-6">
+							<div>Producto:</div>
+						</div>
+						<div class="form-group col-sm-4">
+		                   	{{$pb->nombre}}
+						</div>
+		            </div>
+	            @endif
+	        @endforeach
+
             <div class="form-row">
             <input type="hidden" name="id" value="{{$ps->id_stock}}">
 		    <input type="hidden" name="fecha_registro" value="<?php echo date("Y/m/d H:i:s"); ?>">
@@ -25,16 +45,7 @@ role="dialog" tabindex="-1" id="modal-transformar-{{$ps->id_stock}}">
 
 				<div class="form-group col-sm-6">
 					<div>Kilos actuales:</div>
-					<label for="nombre">Escribe el nombre de una comida:</label>
-        <br>
-   <input class="awesomplete" list="mylist" />
-       <datalist id="mylist">
-       @foreach($productosBuscar as $pb)
-       		
-			<option>{{ $pb->nombre}}</option>
-		
-       @endforeach
-      </datalist>
+
 				</div>
 				<div class="form-group col-sm-4">
                    {{ $ps->cantidad}}

@@ -12,23 +12,6 @@
 
 
 <body>
-	<script type="text/javascript">
-	
-
-
-			$("#myinput").keyup(function(){
-				_this= this;
-				$.each($("#bootstrap-data-table tbody tr"),function(){
-					if($(this).text().toLowerCase().indexOf($(_this).val().toLowerCase())===-1)
-						$(this).hide();
-					else
-						$(this).show();
-				});  
-            });
-
-	
-
-</script>
 	<!--Código de JQuery para mostrar/esconder los campos del atributo documento-->
 	<script type="text/javascript">
 		$(function() {
@@ -97,11 +80,6 @@
 													<button class="btn btn-success">Cargar xls</button>
 													<button class="btn btn-success">Descargar xls</button>
 													<a href="{{url('/')}}" class="btn btn-danger">Volver</a>
-	<br>
-	<input id="myinput" />
-
-       
-		
 				
 													</div>
 												</div>
