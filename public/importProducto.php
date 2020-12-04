@@ -2,6 +2,13 @@
 include "database.php";
 include "class.upload.php";
 
+    require_once('conexion.php');
+    $conn=new Conexion();
+    $link = $conn->conectarse();
+
+
+
+
 if(isset($_FILES["name"])){
     $up = new Upload($_FILES["name"]);
     if($up->uploaded){
@@ -40,19 +47,31 @@ if(isset($_FILES["name"])){
                 $x_punto_venta_id_punto_venta = $sheet->getCell("P".$row)->getValue();
                 $x_empleado_id_empleado = $sheet->getCell("Q".$row)->getValue();
                 $x_fecha_registro = $sheet->getCell("R".$row)->getValue();
-                
+
+                $query="SELECT * FROM producto WHERE id_producto = \"$x_id_producto\"";
+                $result=mysqli_query($link, $query);
+              
+
+                $count=0; 
+                while($rows=mysqli_fetch_assoc($result)){
+                    $count++;
+                    echo "nombre: ".$rows['nombre'];
+              
+                } 
+                if ($count==0) {
+                    # code...
 
 
-                /*$sql = "insert into producto (id_producto, plu, ean, nombre, categoria_id_categoria, unidad_de_medida, impuestos_id_impuestos, descuento_id_descuento, stock_minimo, imagen, precio_1, precio_2, precio_3, precio_4, costo_compra, punto_venta_id_punto_venta, empleado_id_empleado, fecha_registro) value";*/
+                    $sql = "insert into producto (id_producto, plu, ean, nombre, categoria_id_categoria, unidad_de_medida, impuestos_id_impuestos, descuento_id_descuento, stock_minimo, imagen, precio_1, precio_2, precio_3, precio_4, costo_compra, punto_venta_id_punto_venta, empleado_id_empleado, fecha_registro) value";
 
-                $sql = "UPDATE producto SET (id_producto, plu, ean, nombre, categoria_id_categoria, unidad_de_medida, impuestos_id_impuestos, descuento_id_descuento, stock_minimo, imagen, precio_1, precio_2, precio_3, precio_4, costo_compra, punto_venta_id_punto_venta, empleado_id_empleado, fecha_registro) value";
+                    $sql .= " (\"$x_id_producto\",\"$x_plu\",\"$x_ean\",\"$x_nombre\",\"$x_categoria_id_categoria\",\"$x_unidad_de_medida\",\"$x_impuestos_id_impuestos\",\"$x_descuento_id_descuento\",\"$x_stock_minimo\",\"$x_imagen\",\"$x_precio_1\",\"$x_precio_2\",\"$x_precio_3\",\"$x_precio_4\",\"$x_costo_compra\",\"$x_punto_venta_id_punto_venta\",\"$x_empleado_id_empleado\",\"$x_fecha_registro\")";
+
+                }else{
+                     $sql = "UPDATE producto SET plu=\"$x_plu\", ean=\"$x_ean\", nombre=\"$x_nombre\", categoria_id_categoria=\"$x_categoria_id_categoria\", unidad_de_medida=\"$x_unidad_de_medida\", impuestos_id_impuestos=\"$x_impuestos_id_impuestos\", descuento_id_descuento=\"$x_descuento_id_descuento\", stock_minimo=\"$x_stock_minimo\", imagen=\"$x_imagen\", precio_1=\"$x_precio_1\", precio_2=\"$x_precio_2\", precio_3=\"$x_precio_3\", precio_4=\"$x_precio_4\", costo_compra=\"$x_costo_compra\", punto_venta_id_punto_venta=\"$x_punto_venta_id_punto_venta\", empleado_id_empleado=\"$x_empleado_id_empleado\", fecha_registro=\"$x_fecha_registro\" WHERE id_producto = \"$x_id_producto\"";
+                }
 
 
-
-
-                $sql .= " (\"$x_id_producto\",\"$x_plu\",\"$x_ean\",\"$x_nombre\",\"$x_categoria_id_categoria\",\"$x_unidad_de_medida\",\"$x_impuestos_id_impuestos\",\"$x_descuento_id_descuento\",\"$x_stock_minimo\",\"$x_imagen\",\"$x_precio_1\",\"$x_precio_2\",\"$x_precio_3\",\"$x_precio_4\",\"$x_costo_compra\",\"$x_punto_venta_id_punto_venta\",\"$x_empleado_id_empleado\",\"$x_fecha_registro\")";
-
-
+            
                 $con->query($sql);
 
 
