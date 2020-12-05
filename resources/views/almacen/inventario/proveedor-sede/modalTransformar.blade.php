@@ -41,7 +41,11 @@ role="dialog" tabindex="-1" id="modal-transformar-{{$ps->id_stock}}">
             <div class="form-row">
             <input type="hidden" name="id" value="{{$ps->id_stock}}">
 		    <input type="hidden" name="fecha_registro" value="<?php echo date("Y/m/d H:i:s"); ?>">
-		
+			@foreach($usuarios as $usu)
+				@if(Auth::user()->id==$usu->user_id_user)
+				<input type="hidden" name="empleado_id_empleado" value="{{$usu->id_empleado}}">
+				@endif
+			@endforeach
 
 				<div class="form-group col-sm-6">
 					<div>Kilos actuales:</div>
@@ -91,6 +95,8 @@ role="dialog" tabindex="-1" id="modal-transformar-{{$ps->id_stock}}">
                    	<input type="number" class="form-control" name="cantidad">
 				</div>
             </div>
+
+
                                     
 			<div class="modal-footer">
 				<button type="button" class="btn btn-default" data-dismiss="modal">Cancelar</button>

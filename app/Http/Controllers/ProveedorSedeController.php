@@ -55,9 +55,10 @@ class ProveedorSedeController extends Controller
 	 			$empleados=DB::table('empleado')->get();
 	 			$categoriaTrans=DB::table('categoria_producto_trans')->get();
 	 			$categoria=Categoria::get();
+	 			$usuarios=DB::table('empleado')->get();
 
 
-	 			return view('almacen.inventario.proveedor-sede.index',["productos"=>$productos,"searchText0"=>$query0,"searchText1"=>$query1,"searchText2"=>$query2,"searchText3"=>$query3, "modulos"=>$modulos,"eanP"=>$eanP,"sedesP"=>$sedesP,"proveedoresP"=>$proveedoresP,"productosBuscar"=>$productosBuscar,"empleados"=>$empleados,"categoriaTrans"=>$categoriaTrans]);
+	 			return view('almacen.inventario.proveedor-sede.index',["productos"=>$productos,"searchText0"=>$query0,"searchText1"=>$query1,"searchText2"=>$query2,"searchText3"=>$query3, "modulos"=>$modulos,"eanP"=>$eanP,"sedesP"=>$sedesP,"proveedoresP"=>$proveedoresP,"productosBuscar"=>$productosBuscar,"empleados"=>$empleados,"categoriaTrans"=>$categoriaTrans, "usuarios"=>$usuarios]);
 	 		}
 	 	}
 	 	
@@ -66,25 +67,44 @@ class ProveedorSedeController extends Controller
 	 	public function create(Request $request){
 
 	 	}
-
+	 	//Metodo para guardar los datos en el modal transformación
 	 	public function store(Request $request){
+	 		$nombre_producto=$request->get('nombre_producto');
 	 		$id=$request->get('id');
-
+	 		$cantidadR=$request->get('cantidadRestar');
 	 		$registro=ProveedorSede::findOrFail($id);
 
+	 		$productoBuscar=ProductoSede::where('producto.nombre','=', $nombre_producto)
+	 			->orderBy('id_producto', 'desc')
+	 			->paginate(10);
+	 			$cantidad_inicial=$registro->cantidad;
 
-	 		$ps = new ProveedorSede;
-	 		$ps->producto_id_producto=$registro->producto_id_producto;
-	 		$ps->sede_id_sede=$registro->sede_id_sede;
-	 		$ps->proveedor_id_proveedor=$registro->proveedor_id_proveedor;
-	 		$ps->disponibilidad=$registro->disponibilidad;
-	 		$ps->cantidad=$request->get('cantidad');
-	 		$ps->fecha_registro=$request->get('fecha_registro');
-	 		$ps->empleado_id_empleado=$request->get('empleado_id_empleado');
-	 		$ps->transformacion_stock_id=$request->get('transformacion_stock_id');
-	 		$ps->save();
+	 		if(count($productoBuscar)>0){
+	 				if($cantidadR<$registro->cantidad){
+	 					$ps = new ProveedorSede;
+				 		$ps->producto_id_producto=$productoBuscar[0]->id_producto;
+				 		$ps->sede_id_sede=$registro->sede_id_sede;
+				 		$ps->proveedor_id_proveedor=$registro->proveedor_id_proveedor;
+				 		$ps->disponibilidad=1;
+				 		$ps->cantidad=$request->get('cantidad');;
+				 		$ps->fecha_registro=$request->get('fecha_registro');
+				 		$ps->empleado_id_empleado=$request->get('empleado_id_empleado');
+				 		$ps->transformacion_stock_id=$request->get('transformacion_stock_id');
+				 		$ps->save();
+				 		$registro->cantidad=$cantidad_inicial-$cantidadR;
+				 		$registro->save();
 
-	 		return back()->with('msj','Producto guardado');
+			 		return back()->with('msj','Producto guardado');
+
+	 				}else{
+	 					return back()->with('errormsj','¡La cantidad no puede ser mayor!');
+	 				}
+	 			
+	 		}else{
+	 			return back()->with('errormsj','¡Producto no encontrado!');
+	 		}
+
+	 		
 	 	}
 
 	 	public function show($id){

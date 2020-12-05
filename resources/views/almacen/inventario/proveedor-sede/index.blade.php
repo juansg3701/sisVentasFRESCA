@@ -118,7 +118,7 @@
 							@include('almacen.inventario.proveedor-sede.search')
 						</div>
 					</div>
-					<div class="card-body">
+					<div class="card-body" align="center">
 						<table id="bootstrap-data-table" class="table table-striped table-bordered">
 						<thead>
 							<th>IMAGEN</th>
@@ -128,7 +128,7 @@
 							<th>SEDE</th>
 							<th>PROVEEDOR</th>
 							<th>CANTIDAD</th>
-							<th>UNIDAD DE MEDIDA</th>
+							<th>UNIDAD</th>
 							<th>TRANSFORMACI&OacuteN</th>
 							<th>DISPONIBILIDAD</th>
 							<th colspan="4">OPCIONES</th>
@@ -147,7 +147,6 @@
 							<td>{{ $pb->nombre}}</td>
 							<td>{{ $pb->plu}}</td>
 							<td>{{ $pb->ean}}</td>
-
 							<td>{{ $ps->nombre_sede}}</td>
 							<td>{{ $ps->nombre_proveedor}}</td>
 							<td>{{ $ps->cantidad}}</td>
@@ -163,9 +162,17 @@
 							<td>
 								<a href="{{URL::action('ProveedorSedeController@edit',$ps->id_stock)}}"><button class="btn btn-outline-primary btn-sm">Editar</button></a>
 							</td>
+
+							@if($pb->unidad_de_medida=="KILO")
 							<td>
 								<a href="" data-target="#modal-transformar-{{$ps->id_stock}}" data-toggle="modal"><button class="btn btn-outline-info btn-sm">Transformar</button></a>
 							</td>
+							@else
+							<td>
+							No permitido	
+							</td>
+							@endif
+							
 							<td>
 								<a href="" data-target="#modal-delete-{{$ps->id_stock}}" data-toggle="modal"><button class="btn btn-outline-danger btn-sm">Eliminar</button></a>
 							</td>
@@ -205,9 +212,17 @@
 							<td>
 								<a href="{{URL::action('ProveedorSedeController@edit',$ps->id_stock)}}"><button class="btn btn-outline-primary btn-sm">Editar</button></a>
 							</td>
+
+							@if($pb->unidad_de_medida=="KILO")
 							<td>
 								<a href="" data-target="#modal-transformar-{{$ps->id_stock}}" data-toggle="modal"><button class="btn btn-outline-info btn-sm">Transformar</button></a>
 							</td>
+							@else
+							<td>
+							No permitido	
+							</td>
+							@endif
+
 							<td>
 								<a href="" data-target="#modal-delete-{{$ps->id_stock}}" data-toggle="modal"><button class="btn btn-outline-danger btn-sm">Eliminar</button></a>
 							</td>
