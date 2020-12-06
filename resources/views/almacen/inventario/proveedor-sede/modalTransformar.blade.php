@@ -15,13 +15,14 @@ role="dialog" tabindex="-1" id="modal-transformar-{{$ps->id_stock}}">
 			<div class="modal-body">
 				<p>Información:</p>
             </div>
-                   <datalist id="mylist">
-       @foreach($productosBuscar as $pb)
-       		
-			<option>{{ $pb->nombre}}</option>
-		
-       @endforeach
-      </datalist>
+        <!-- datlist para el autocompletado -->
+	       <datalist id="mylist">
+	       @foreach($productosBuscar as $pb)
+	       		
+				<option>{{ $pb->nombre}}</option>
+			
+	       @endforeach
+	      </datalist>
             {!!Form::open(array('url'=>'almacen/inventario/proveedor-sede','method'=>'POST','autocomplete'=>'off'))!!}
 		    {{Form::token()}}
 	

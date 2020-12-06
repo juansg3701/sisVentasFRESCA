@@ -250,5 +250,15 @@
 </div>
 
 
+<script type="text/javascript">
+	//Esconder el menu para tener toda la pantalla
+	$(document).ready(function(){
+    
+    document.getElementById("menuToggle").click();
+   
+
+});
+</script>
+
 
 @stop

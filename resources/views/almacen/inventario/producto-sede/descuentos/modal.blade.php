@@ -1,13 +1,13 @@
 <div class="modal fade modal-slide-in-right" aria-hidden="true"
-role="dialog" tabindex="-1" id="modal-delete-{{$im->id_impuestos}}">
+role="dialog" tabindex="-1" id="modal-delete-{{$des->id_descuento}}">
 	
-	{{Form::Open(array('action'=>array('ImpuestoProducto@destroy',$im->id_impuestos), 'method'=>'delete'))}}
+	{{Form::Open(array('action'=>array('DescuentoProducto@destroy',$des->id_descuento), 'method'=>'delete'))}}
 
 	<div class="modal-dialog">
 		<div class="modal-content">
 			<div class="modal-header">
 				
-                <h4 class="modal-title">Eliminar impuesto</h4>
+                <h4 class="modal-title">Eliminar descuento</h4>
 				<button type="button" class="close" data-dismiss="modal" 
 				aria-label="Close">
                      <span aria-hidden="true">×</span>

@@ -11,6 +11,6 @@ class Descuentos extends Model
     protected $primaryKey='id_descuento';
     public $timestamps =false;
     
-    protected $fillable=['nombre','descripcion','valor','sede_id_sede'];
+    protected $fillable=['nombre','descripcion','valor_descuento','sede_id_sede','empleado_id_empleado','fecha'];
     protected $guarded=[];
 }

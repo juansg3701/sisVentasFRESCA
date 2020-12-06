@@ -223,7 +223,13 @@
             </li>  
 
 
-            <li><a href="{{url('/logout')}}"><i class="fa fa-sign-out"></i> Cerrar Sesión</a></li>
+            <li>
+                <a class="dropdown-item" href="#" data-toggle="modal" data-target="#logoutModal">
+                  <i class="fa fa-sign-out"></i>
+                  Cerrar sesi&oacuten
+                </a>
+
+            </li>
                 </ul>
             </div><!-- /.navbar-collapse -->
         </nav>
@@ -291,6 +297,25 @@
         <!-- /.site-footer -->
     </div>
     <!-- /#right-panel -->
+
+    <!-- Logout Modal-->
+  <div class="modal fade" id="logoutModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLabel">¿Desea salir?</h5>
+          <button class="close" type="button" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true"></span>
+          </button>
+        </div>
+        <div class="modal-body">Seleccione "Salir" si est&aacute seguro de cerrar la sesi&oacuten.</div>
+        <div class="modal-footer">
+          <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancelar</button>
+          <a class="btn btn-primary" href="{{url('/logout')}}">Salir</a>
+        </div>
+      </div>
+    </div>
+  </div>
 
     <!-- Scripts -->
     <script src="{{asset('https://cdn.jsdelivr.net/npm/jquery@2.2.4/dist/jquery.min.js')}}"></script>

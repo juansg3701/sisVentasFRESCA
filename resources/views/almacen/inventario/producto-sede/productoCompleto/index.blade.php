@@ -70,8 +70,17 @@
 													<div align="center">
 														@include('almacen.inventario.producto-sede.productoCompleto.cargar')
 														<a href="{{URL::action('ProductoSedeController@create',0)}}"><button class="btn btn-info">Registrar producto</button></a>
+														
 														<a href="{{URL::action('ImpuestoProducto@index',0)}}"><button class="btn btn-info">Registrar impuesto</button></a>
+													</div>
+													<br>
+														<div align="center">
+
+														<a href="{{url('almacen/inventario/producto-sede/descuentos')}}">
+														<button class="btn btn-info">Registrar descuento</button></a>
+
 														<a href="{{URL::action('CategoriaProducto@index',0)}}"><button class="btn btn-info">Registrar categoria</button></a>
+														
 														</div>
 														<br>
 														<div align="center">
@@ -174,5 +183,12 @@
 		</div>
 	</div>
 </div>
+<script type="text/javascript">
+	$(document).ready(function(){
+    
+    document.getElementById("menuToggle").click();
+   
 
+});
+</script>
 @stop

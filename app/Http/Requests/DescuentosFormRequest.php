@@ -26,9 +26,12 @@ class DescuentosFormRequest extends Request
         return [
        
             'nombre'=>'required|max:45',
-            'caracteristica'=>'required|max:45',
-            'porcentaje'=>'required|max:45',
+            'descripcion'=>'required|max:45',
+            'valor_descuento'=>'required|max:45',
             'sede_id_sede'=>'required|max:45',
+            'sede_id_sede'=>'required|max:45',
+            'empleado_id_empleado'=>'required|max:45',
+            'fecha'=>'required|max:45',
         ];
     }
 }

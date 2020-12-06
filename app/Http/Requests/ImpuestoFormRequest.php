@@ -26,7 +26,12 @@ class ImpuestoFormRequest extends Request
         return [
             //'id_sede'=>'required|max:45',
             'nombre'=>'required|max:45',
-            'valor'=>'required|max:45',
+            'descripcion'=>'required|max:45',
+            'valor_impuesto'=>'required|max:45',
+            'sede_id_sede'=>'required|max:45',
+            'sede_id_sede'=>'required|max:45',
+            'empleado_id_empleado'=>'required|max:45',
+            'fecha'=>'required|max:45',
         ];
     }
 }

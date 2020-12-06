@@ -27,7 +27,7 @@
 				<div class="col-sm-4">
 					<div class="page-header float-left">
 						<div class="page-title">
-							<h1>Impuestos</h1>
+							<h1>Descuentos</h1>
 						</div>
 					</div>
 				</div>
@@ -44,20 +44,22 @@
 		</div>
 	</div>
 
-	{!!Form::open(array('url'=>'almacen/inventario/producto-sede/impuestoProducto','method'=>'POST','autocomplete'=>'off'))!!}
+	{!!Form::open(array('url'=>'almacen/inventario/producto-sede/descuentos','method'=>'POST','autocomplete'=>'off'))!!}
     {{Form::token()}}
-    <!--Formulario de registro-->	
+
+		
+<!--Formulario de registro-->	
 	<div class="col-md-12">
 		<div class="card">
 			<div class="card-header" align="center">
-				<h3 class="pb-2 display-5">M&OacuteDULO IMPUESTOS</h3>
+				<h3 class="pb-2 display-5">M&OacuteDULO DESCUENTOS</h3>
 			</div><br>
 			<div class="row" align="center">	
 				<div class="col-sm-3" align="center"></div>
 				 	<div class="col-sm-6" align="center">
 						<div class="card" align="center">
 			                <div class="card-header" align="center">
-			                     <strong>Registrar impuesto</strong>
+			                     <strong>Registrar descuento</strong>
 			                </div><br>
 			                <div class="card-body card-block" align="center">
 								<div class="form-row">
@@ -81,7 +83,7 @@
 										<div>Valor:</div>
 									</div>
 									<div class="form-group col-sm-8">
-										<input type="number" class="form-control" name="valor_impuesto">
+										<input type="number" class="form-control" name="valor_descuento">
 									</div>
 								</div>
 
@@ -162,10 +164,13 @@
 	</div>		    
 
 	{!!Form::close()!!}	
+
+	
 </body>
 @stop
 
 @section('tabla')
+
 <!--Tabla de registros realizados-->
 <div class="content">
 	<div class="animated fadeIn">
@@ -173,12 +178,12 @@
 			<div class="col-md-12">
 				<div class="card">
 					<div class="card-header" align="center">
-						<h3 class="pb-2 display-5">IMPUESTOS REGISTRADOS</h3>
+						<h3 class="pb-2 display-5">DESCUENTOS REGISTRADOS</h3>
 					</div>
 					<div class="card-body">
-						@include('almacen.inventario.producto-sede.impuestoProducto.search')
+						@include('almacen.inventario.producto-sede.descuentos.search')
 						<table id="bootstrap-data-table" class="table table-striped table-bordered">
-						<thead>
+							<thead>
 							<th>Id</th>
 							<th>NOMBRE</th>
 							<th>DESCRIPCI&OacuteN</th>
@@ -188,34 +193,40 @@
 							<th>FECHA</th>
 							<th colspan="2">OPCIONES</th>
 						</thead>
-						@foreach($impuestos as $im)
+						@foreach($descuentos as $des)
+					
 						<tr>
-							<td>{{ $im->id_impuestos}}</td>
-							<td>{{ $im->nombre}}</td>
-							<td>{{ $im->descripcion}}</td>
-							<td>{{ $im->valor_impuesto}}</td>
+							<td>{{ $des->id_descuento}}</td>
+							<td>{{ $des->nombre}}</td>
+							<td>{{ $des->descripcion}}</td>
+							<td>{{ $des->valor_descuento}}</td>
 							@foreach($sedes as $s)
-								@if($s->id_sede==$im->sede_id_sede)
+								@if($s->id_sede==$des->sede_id_sede)
 								<td>{{ $s->nombre_sede}}</td>
 								@endif
 							@endforeach
 
 							@foreach($usuarios as $u)
-								@if($u->id_empleado==$im->empleado_id_empleado)
+								@if($u->id_empleado==$des->empleado_id_empleado)
 								<td>{{ $u->nombre}}</td>
 								@endif
 							@endforeach
-							<td>{{ $im->fecha}}</td>
+							<td>{{ $des->fecha}}</td>
+							
 							<td>
-								<a href="{{URL::action('ImpuestoProducto@edit',$im->id_impuestos)}}"><button class="btn btn-info">Editar</button></a>
-								<a href="" data-target="#modal-delete-{{$im->id_impuestos}}" data-toggle="modal"><button class="btn btn-danger">Eliminar</button></a>
+								<a href="{{URL::action('DescuentoProducto@edit',$des->id_descuento)}}"><button class="btn btn-info">Editar</button></a>
+							</td>
+							<td>
+								<a href="" data-target="#modal-delete-{{$des->id_descuento}}" data-toggle="modal"><button class="btn btn-danger">Eliminar</button></a>
 							</td>	
 						</tr>
-						@include('almacen.inventario.producto-sede.impuestoProducto.modal')
+						
+						
+						@include('almacen.facturacion.descuentos.modal')
 						@endforeach
 					</table>
 				</div>
-				{{$impuestos->render()}}
+				{{$descuentos->render()}}
 				</div>
 			</div>
 		</div>

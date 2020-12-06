@@ -75,7 +75,7 @@
 										<div>Nombre:</div>
 									</div>
 									<div class="form-group col-sm-3">
-										<input type="text" class="form-control" name="nombre">
+										<input type="text" class="form-control" name="nombre" id="nombre">
 									</div>
 
 									<div class="form-group col-sm-1"></div>
@@ -85,7 +85,7 @@
 									</div>
 
 									<div class="form-group col-sm-3">
-										<select name="unidad_de_medida" class="form-control">
+										<select name="unidad_de_medida" id="unidad_de_medida" class="form-control">
 											
 										<option value="UNIDAD">UNIDAD</option>
 										<option value="KILO">KILO</option>
@@ -103,7 +103,7 @@
 										<div>Precio No.1:</div>
 									</div>
 									<div class="form-group col-sm-3">
-										<input type="text" class="form-control" name="precio_1">
+										<input type="text" class="form-control" name="precio_1" id="precio_1">
 									</div>
 								
 									<div class="form-group col-sm-1"></div>
@@ -112,7 +112,7 @@
 										<div>Stock m&iacutenimo:</div>
 									</div>
 									<div class="form-group col-sm-3">
-										<input type="text" class="form-control" name="stock_minimo">
+										<input type="text" class="form-control" name="stock_minimo" id="stock_minimo">
 									</div>
 								</div>
 
@@ -129,7 +129,7 @@
 										<div>Precio No.2:</div>
 									</div>
 									<div class="form-group col-sm-3">
-										<input type="text" class="form-control" name="precio_2">
+										<input type="text" class="form-control" name="precio_2" id="precio_2">
 									</div>
 								
 									<div class="form-group col-sm-1"></div>
@@ -155,7 +155,7 @@
 										<div>Precio No.3:</div>
 									</div>
 									<div class="form-group col-sm-3">
-										<input type="text" class="form-control" name="precio_3">
+										<input type="text" class="form-control" name="precio_3" id="precio_3">
 									</div>
 									<div class="form-group col-sm-1"></div>
 									<div class="form-group col-sm-2">
@@ -183,7 +183,7 @@
 										<div>Precio No.4:</div>
 									</div>
 									<div class="form-group col-sm-3">
-										<input type="text" class="form-control" name="precio_4">
+										<input type="text" class="form-control" name="precio_4" id="precio_4">
 									</div>
 									
 									<div class="form-group col-sm-1"></div>
@@ -213,7 +213,7 @@
 										<div>Costo de compra:</div>
 									</div>
 									<div class="form-group col-sm-3">
-										<input type="text" class="form-control" name="costo_compra">
+										<input type="text" class="form-control" name="costo_compra" id="costo_compra">
 									</div>
 									
 									<div class="form-group col-sm-1"></div>
@@ -236,7 +236,7 @@
 										<div>PLU:</div>
 									</div>
 									<div class="form-group col-sm-3">
-										<input type="text" class="form-control" name="plu">
+										<input type="text" class="form-control" name="plu" id="plu">
 									</div>
 									
 									
@@ -294,6 +294,8 @@
 								<div class="form-row">
 									<div class="form-group col-sm-12">
 										<button class="btn btn-info" name="boton1" type="button" onclick="a()">Registrar</button>
+
+										<button type="submit" id="envio" name="envio" style="display: none"></button>
 										<a href="{{url('almacen/inventario/producto-sede/productoCompleto')}}" class="btn btn-danger">Regresar</a>
 									</div>
 								</div>
@@ -316,21 +318,49 @@
 
 	function a(){
 		
-  var cantidad = $('#ean').val();
+  var ean = $('#ean').val();
+  var nombre = $('#nombre').val();
+  var unidad = $('#unidad_de_medida').val();
+  var precio1 = $('#precio_1').val();
+  var stock = $('#stock_minimo').val();
+  var precio2 = $('#precio_2').val();
+  var precio3 = $('#precio_3').val();
+  var precio4 = $('#precio_4').val();
+  var costo_compra = $('#costo_compra').val();
+
+  var excedente=costo_compra*0.35;
+  var costo=parseFloat(costo_compra)+parseFloat(excedente);
+
         
-        if(cantidad===''){
+        if(ean==='' || nombre==='' || unidad==='' || precio1==='' || precio2==='' || precio3===''
+        	|| precio4==='' || stock==='' || costo_compra===''){
             Swal.fire({
                 icon: 'error',
-                text: 'Por favor ingrese la cantidad',
+                text: 'Por favor ingrese todos los datos',
                 showClass: {
                     popup: 'animate__animated animate__fadeInDown'
                 },
                 hideClass: {
                     popup: 'animate__animated animate__fadeOutUp'
                 }
-            });     
-        }else {
-        	 alert("132");
+            });    
+
+
+        }else {	
+        	if(costo<=precio1 && costo<=precio2 && costo<=precio3 && costo<=precio4){
+        	 document.getElementById("envio").click(); 
+        	}else{
+        		Swal.fire({
+                icon: 'error',
+                text: 'Los precios deben ser mayores al precio de compra',
+                showClass: {
+                    popup: 'animate__animated animate__fadeInDown'
+                },
+                hideClass: {
+                    popup: 'animate__animated animate__fadeOutUp'
+                }
+            });  
+        	}
         }
     }//IF DEL ENTER
 	
