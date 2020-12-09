@@ -130,6 +130,7 @@
 						<table id="bootstrap-data-table" class="table table-striped table-bordered">
 							<thead>
 							<th>NOMBRE</th>
+							<th>Fecha</th>
 							<th>PLU</th>
 							<th>EAN</th>
 							<th>CATEGOR&IacuteA</th>
@@ -144,6 +145,7 @@
 						@foreach($productos as $ps)
 						<tr>
 							<td>{{ $ps->nombre}}</td>
+							<td>{{ $ps->fecha_registro}}</td>
 							<td>{{ $ps->plu}}</td>
 							<td>{{ $ps->ean}}</td>
 							<td>{{ $ps->categoria_id_categoria}}</td>
