@@ -71,13 +71,8 @@ if(isset($_FILES["name"])){
 
                 }else{
 
-                    if ($x_fecha_registro=='') {
-                        # code...
-                        $date=date("Y/m/d H:i:s");
-                        $x_fecha_registro=$date;
-                    }
 
-                    $sql = "UPDATE producto SET plu=\"$x_plu\", ean=\"$x_ean\", nombre=\"$x_nombre\", categoria_id_categoria=\"$x_categoria_id_categoria\", unidad_de_medida=\"$x_unidad_de_medida\", impuestos_id_impuestos=\"$x_impuestos_id_impuestos\", descuento_id_descuento=\"$x_descuento_id_descuento\", stock_minimo=\"$x_stock_minimo\", imagen=\"$x_imagen\", precio_1=\"$x_precio_1\", precio_2=\"$x_precio_2\", precio_3=\"$x_precio_3\", precio_4=\"$x_precio_4\", costo_compra=\"$x_costo_compra\", punto_venta_id_punto_venta=\"$x_punto_venta_id_punto_venta\", empleado_id_empleado=\"$x_empleado_id_empleado\", fecha_registro=\"$x_fecha_registro\" WHERE id_producto = \"$x_id_producto\"";
+                    $sql = "UPDATE producto SET plu=\"$x_plu\", ean=\"$x_ean\", nombre=\"$x_nombre\", categoria_id_categoria=\"$x_categoria_id_categoria\", unidad_de_medida=\"$x_unidad_de_medida\", impuestos_id_impuestos=\"$x_impuestos_id_impuestos\", descuento_id_descuento=\"$x_descuento_id_descuento\", stock_minimo=\"$x_stock_minimo\", imagen=\"$x_imagen\", precio_1=\"$x_precio_1\", precio_2=\"$x_precio_2\", precio_3=\"$x_precio_3\", precio_4=\"$x_precio_4\", costo_compra=\"$x_costo_compra\", punto_venta_id_punto_venta=\"$x_punto_venta_id_punto_venta\", empleado_id_empleado=\"$x_empleado_id_empleado\" WHERE id_producto = \"$x_id_producto\"";
                 }
 
 
