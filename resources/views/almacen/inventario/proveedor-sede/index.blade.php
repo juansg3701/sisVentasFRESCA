@@ -121,6 +121,7 @@
 					<div class="card-body" align="center">
 						<table id="bootstrap-data-table" class="table table-striped table-bordered">
 						<thead>
+							<th>NO. FACTURA</th>
 							<th>IMAGEN</th>
 							<th>NOMBRE</th>
 							<th>PLU</th>
@@ -131,6 +132,7 @@
 							<th>UNIDAD</th>
 							<th>TRANSFORMACI&OacuteN</th>
 							<th>DISPONIBILIDAD</th>
+							<th>TOTAL</th>
 							<th colspan="4">OPCIONES</th>
 						</thead>
 					@foreach($productos as $ps)
@@ -138,6 +140,7 @@
 					@if($pb->id_producto==$ps->producto_id_producto)
 					@if($ps->sede_id_sede==auth()->user()->sede_id_sede && auth()->user()->superusuario==0)
 						<tr>
+							<td>{{ $ps->noFactura}}</td>
 							<td>
 							<label>
 									<a href="" title="Ver imagen" class="btn btn-light" data-target="#modal-infoImagen-{{$pb->id_producto}}" data-toggle="modal">
@@ -158,12 +161,12 @@
 							@if($ps->disponibilidad=='0')
 							<td>No disponible</td>
 							@endif
-
+							<td>{{ $ps->total}}</td>
 							<td>
 								<a href="{{URL::action('ProveedorSedeController@edit',$ps->id_stock)}}"><button class="btn btn-outline-primary btn-sm">Editar</button></a>
 							</td>
 
-							@if($pb->unidad_de_medida=="KILO")
+							@if($pb->unidad_de_medida=="KILO" && $ps->cantidad>0)
 							<td>
 								<a href="" data-target="#modal-transformar-{{$ps->id_stock}}" data-toggle="modal"><button class="btn btn-outline-info btn-sm">Transformar</button></a>
 							</td>
@@ -172,7 +175,6 @@
 							No permitido	
 							</td>
 							@endif
-							
 							<td>
 								<a href="" data-target="#modal-delete-{{$ps->id_stock}}" data-toggle="modal"><button class="btn btn-outline-danger btn-sm">Eliminar</button></a>
 							</td>
@@ -188,6 +190,7 @@
 						@endif
 						@if(auth()->user()->superusuario==1)
 						<tr>
+							<td>{{ $ps->noFactura}}</td>
 							<td>
 							<label>
 									<a href="" title="Ver imagen" class="btn btn-light" data-target="#modal-infoImagen-{{$pb->id_producto}}" data-toggle="modal">
@@ -208,12 +211,13 @@
 							@if($ps->disponibilidad=='0')
 							<td>No disponible</td>
 							@endif
+							<td>{{ $ps->total}}</td>
 
 							<td>
 								<a href="{{URL::action('ProveedorSedeController@edit',$ps->id_stock)}}"><button class="btn btn-outline-primary btn-sm">Editar</button></a>
 							</td>
 
-							@if($pb->unidad_de_medida=="KILO")
+							@if($pb->unidad_de_medida=="KILO" && $ps->cantidad>0)
 							<td>
 								<a href="" data-target="#modal-transformar-{{$ps->id_stock}}" data-toggle="modal"><button class="btn btn-outline-info btn-sm">Transformar</button></a>
 							</td>

@@ -73,6 +73,8 @@ class registroProductoProveedor extends Controller
 	 		$ps->fecha_registro=$request->get('fecha_registro');
 	 		$ps->empleado_id_empleado=$request->get('empleado_id_empleado');
 	 		$ps->transformacion_stock_id=$request->get('transformacion_stock_id');
+	 		$ps->noFactura=$request->get('noFactura');
+	 		$ps->total=$request->get('total');
 	 		$ps->save();
 
 	 		return back()->with('msj','Producto guardado');
@@ -112,6 +114,8 @@ class registroProductoProveedor extends Controller
 	 		$ps->fecha_registro=$request->get('fecha_registro');
 	 		$ps->empleado_id_empleado=$request->get('empleado_id_empleado');
 	 		$ps->transformacion_stock_id=$request->get('transformacion_stock_id');
+	 		$ps->noFactura=$request->get('noFactura');
+	 		$ps->total=$request->get('total');
 	 		$ps->update();
 
 	 		return back()->with('msj','Producto actualizado');

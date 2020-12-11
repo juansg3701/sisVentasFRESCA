@@ -32,6 +32,8 @@ class ProveedorSedeFormRequest extends Request
             'fecha_registro'=>'required|max:45',
             'empleado_id_empleado'=>'required|max:45',
             'transformacion_stock_id'=>'required|max:45',
+            'noFactura'=>'required|max:45',
+            'total'=>'required|max:45',
         ];
     }
 }

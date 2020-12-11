@@ -31,16 +31,16 @@ class ProveedorSedeController extends Controller
 	 			->join('sede as sed','s.sede_id_sede','=','sed.id_sede')
 	 			->join('proveedor as pd','s.proveedor_id_proveedor','=','pd.id_proveedor')
 	 			->join('categoria_producto_trans as cpt','s.transformacion_stock_id','=','cpt.id_categoria')
-	 			->select('s.id_stock','sed.nombre_sede','pd.nombre_proveedor','s.cantidad','s.disponibilidad','s.sede_id_sede as sede_id_sede', 's.producto_id_producto','s.fecha_registro','s.empleado_id_empleado','cpt.nombre as nombreCategoria')
+	 			->select('s.id_stock','sed.nombre_sede','pd.nombre_proveedor','s.cantidad','s.disponibilidad','s.sede_id_sede as sede_id_sede', 's.producto_id_producto','s.fecha_registro','s.empleado_id_empleado','cpt.nombre as nombreCategoria','s.noFactura as noFactura','s.total as total')
 	 			->where('sed.nombre_sede','LIKE', '%'.$query2.'%')
 	 			->where('pd.nombre_proveedor','LIKE', '%'.$query3.'%')
 	 			->orderBy('s.id_stock', 'desc')
-	 			->paginate(10);
+	 			->paginate(100);
 
 	 			$productosBuscar=ProductoSede::where('producto.nombre','LIKE', '%'.$query0.'%')
 	 			->where('plu','LIKE', '%'.$query1.'%')
 	 			->orderBy('id_producto', 'desc')
-	 			->paginate(10);
+	 			->paginate(100);
 
 
 
@@ -79,8 +79,9 @@ class ProveedorSedeController extends Controller
 	 			->paginate(10);
 	 			$cantidad_inicial=$registro->cantidad;
 
+
 	 		if(count($productoBuscar)>0){
-	 				if($cantidadR<$registro->cantidad){
+	 				if($cantidadR<=$registro->cantidad && $cantidadR>0){
 	 					$ps = new ProveedorSede;
 				 		$ps->producto_id_producto=$productoBuscar[0]->id_producto;
 				 		$ps->sede_id_sede=$registro->sede_id_sede;
@@ -90,6 +91,8 @@ class ProveedorSedeController extends Controller
 				 		$ps->fecha_registro=$request->get('fecha_registro');
 				 		$ps->empleado_id_empleado=$request->get('empleado_id_empleado');
 				 		$ps->transformacion_stock_id=$request->get('transformacion_stock_id');
+				 		$ps->noFactura=$registro->noFactura;;
+	 					$ps->total=$request->get('total');
 				 		$ps->save();
 				 		$registro->cantidad=$cantidad_inicial-$cantidadR;
 				 		$registro->save();
@@ -151,6 +154,8 @@ class ProveedorSedeController extends Controller
 	 		$ps->fecha_registro=$request->get('fecha_registro');
 	 		$ps->empleado_id_empleado=$request->get('empleado_id_empleado');
 	 		$ps->transformacion_stock_id=$request->get('transformacion_stock_id');
+	 		$ps->noFactura=$request->get('noFactura');
+	 		$ps->total=$request->get('total');
 	 		$ps->update();
 
 	 		return back()->with('msj','Producto actualizado');
