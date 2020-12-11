@@ -83,7 +83,7 @@
 										<div>Precio No.1:</div>
 									</div>
 									<div class="form-group col-sm-3">
-										<input type="text" class="form-control" name="precio_1" value="{{$productos->precio_1}}">
+										<input type="number" class="form-control" name="precio_1" value="{{$productos->precio_1}}" min="1" pattern="^[0-9]+">
 									</div>
 								
 									<div class="form-group col-sm-1"></div>
@@ -109,7 +109,7 @@
 										<div>Precio No.2:</div>
 									</div>
 									<div class="form-group col-sm-3">
-										<input type="text" class="form-control" name="precio_2" value="{{$productos->precio_2}}">
+										<input type="number" class="form-control" name="precio_2" value="{{$productos->precio_2}}" min="1" pattern="^[0-9]+">
 									</div>
 								
 									<div class="form-group col-sm-1"></div>
@@ -135,7 +135,7 @@
 										<div>Precio No.3:</div>
 									</div>
 									<div class="form-group col-sm-3">
-										<input type="text" class="form-control" name="precio_3" value="{{$productos->precio_3}}">
+										<input type="number" class="form-control" name="precio_3" value="{{$productos->precio_3}}" min="1" pattern="^[0-9]+">
 									</div>
 									<div class="form-group col-sm-1"></div>
 									<div class="form-group col-sm-2">
@@ -163,7 +163,7 @@
 										<div>Precio No.4:</div>
 									</div>
 									<div class="form-group col-sm-3">
-										<input type="text" class="form-control" name="precio_4" value="{{$productos->precio_4}}">
+										<input type="number" class="form-control" name="precio_4" value="{{$productos->precio_4}}" min="1" pattern="^[0-9]+">
 									</div>
 									
 									<div class="form-group col-sm-1"></div>
@@ -193,7 +193,7 @@
 										<div>Costo de compra:</div>
 									</div>
 									<div class="form-group col-sm-3">
-										<input type="text" class="form-control" name="costo_compra" value="{{$productos->costo_compra}}">
+										<input type="number" class="form-control" name="costo_compra" value="{{$productos->costo_compra}}" min="1" pattern="^[0-9]+">
 									</div>
 									
 									<div class="form-group col-sm-1"></div>

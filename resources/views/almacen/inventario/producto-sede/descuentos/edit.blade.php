@@ -83,10 +83,10 @@
 								</div>
 								<div class="form-row">
 									<div class="form-group col-sm-4">
-										<div>Valor:</div>
+										<div>Tarifa descuento %:</div>
 									</div>
 									<div class="form-group col-sm-8">
-										<input type="number" class="form-control" name="valor_descuento" value="{{$descuentos->valor_descuento}}">
+										<input type="number" class="form-control" name="valor_descuento" value="{{$descuentos->valor_descuento}}" min="1" pattern="^[0-9]+">
 									</div>
 								</div>
 

@@ -62,7 +62,7 @@ role="dialog" tabindex="-1" id="modal-transformar-{{$ps->id_stock}}">
 					<div>Kilos utilizados:</div>
 				</div>
 				<div class="form-group col-sm-4">
-                   	<input type="number" class="form-control" name="cantidadRestar">
+                   	<input type="number" class="form-control" name="cantidadRestar" min="1" pattern="^[0-9]+">
 				</div>
             </div>
 
@@ -82,7 +82,15 @@ role="dialog" tabindex="-1" id="modal-transformar-{{$ps->id_stock}}">
 				<div class="form-group col-sm-4">
                    	<select name="transformacion_stock_id" class="form-control">
 						@foreach($categoriaTrans as $c)
-						<option value="{{$c->id_categoria}}">{{$c->nombre}}</option>
+							@if($c->nombre=="Sin transformar")
+							<option value="{{$c->id_categoria}}">{{$c->nombre}}</option>
+							@endif
+						@endforeach
+
+						@foreach($categoriaTrans as $c)
+							@if($c->nombre!="Sin transformar")
+							<option value="{{$c->id_categoria}}">{{$c->nombre}}</option>
+							@endif
 						@endforeach
 					</select>
 				</div>
@@ -93,9 +101,18 @@ role="dialog" tabindex="-1" id="modal-transformar-{{$ps->id_stock}}">
 					<div>Cantidad en unidades:</div>
 				</div>
 				<div class="form-group col-sm-4">
-                   	<input type="number" class="form-control" name="cantidad">
+                   	<input type="number" class="form-control" name="cantidad" min="1" pattern="^[0-9]+">
 				</div>
             </div>
+
+            <div class="form-row">
+						<div class="form-group col-sm-6">
+							<div>Total:</div>
+						</div>
+						<div class="form-group col-sm-4">
+							<input type="number" class="form-control" name="total">
+						</div>
+			</div>
 
 
                                     

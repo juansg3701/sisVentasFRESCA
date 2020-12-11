@@ -83,10 +83,10 @@
 								</div>
 								<div class="form-row">
 									<div class="form-group col-sm-4">
-										<div>Valor:</div>
+										<div>Tarifa IVA %:</div>
 									</div>
 									<div class="form-group col-sm-8">
-										<input type="number" class="form-control" name="valor_impuesto" value="{{$impuestos->valor_impuesto}}">
+										<input type="number" class="form-control" name="valor_impuesto" value="{{$impuestos->valor_impuesto}}" min="1" pattern="^[0-9]+">
 									</div>
 								</div>
 

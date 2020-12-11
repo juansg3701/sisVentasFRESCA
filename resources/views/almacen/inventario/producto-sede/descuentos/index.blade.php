@@ -80,10 +80,10 @@
 								</div>
 								<div class="form-row">
 									<div class="form-group col-sm-4">
-										<div>Valor:</div>
+										<div>Tarifa descuento %:</div>
 									</div>
 									<div class="form-group col-sm-8">
-										<input type="number" class="form-control" name="valor_descuento">
+										<input type="number" class="form-control" name="valor_descuento" min="1" pattern="^[0-9]+">
 									</div>
 								</div>
 
@@ -187,7 +187,7 @@
 							<th>Id</th>
 							<th>NOMBRE</th>
 							<th>DESCRIPCI&OacuteN</th>
-							<th>PORCENTAJE</th>
+							<th>TARIFA DESCUENTO %</th>
 							<th>SEDE</th>
 							<th>EMPLEADO</th>
 							<th>FECHA</th>

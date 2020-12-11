@@ -212,7 +212,7 @@
 								</div>
 						<div class="form-group col-sm-8">
 							
-								<input type="number" class="form-control" name="cantidad">
+								<input type="number" class="form-control" name="cantidad" min="1" pattern="^[0-9]+">
 						</div>
 					</div>
 
@@ -223,11 +223,38 @@
 									<div class="form-group col-sm-8">
 										<select name="transformacion_stock_id" class="form-control">
 											@foreach($transformacion as $t)
+											@if($t->nombre=="Sin transformar")
 											<option value="{{$t->id_categoria}}">{{$t->nombre}}</option>
+											@endif
+											@endforeach
+
+											@foreach($transformacion as $t)
+											@if($t->nombre!="Sin transformar")
+											<option value="{{$t->id_categoria}}">{{$t->nombre}}</option>
+											@endif
 											@endforeach
 										</select>
 									</div>
 								</div>
+
+					<div class="form-row">
+						<div class="form-group col-sm-4">
+							<div>No. de factura:</div>
+						</div>
+						<div class="form-group col-sm-8">
+							<input type="text" class="form-control" name="noFactura">
+						</div>
+					</div>
+
+					<div class="form-row">
+						<div class="form-group col-sm-4">
+							<div>Total:</div>
+						</div>
+						<div class="form-group col-sm-8">
+							<input type="number" class="form-control" name="total">
+						</div>
+					</div>
+
 					<div class="form-row">
 									<div class="form-group col-sm-4">
 										<div>Fecha:</div>
