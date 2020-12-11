@@ -31,7 +31,7 @@
 			<th>COSTO COMPRA</th>
 			<th>PUNTO_VENTA</th>
 			<th>EMPLEADO</th>
-			<th>FECHA</th>
+			
 
 		</thead>
 	</tr>
@@ -57,7 +57,7 @@
 				<td><?php echo $row['costo_compra']; ?></td>
 				<td><?php echo $row['punto_venta_id_punto_venta']; ?></td>
 				<td><?php echo $row['empleado_id_empleado']; ?></td>
-				<td><?php echo $row['fecha_registro']; ?></td>
+				
 
 			</tr>	
 			<?php
