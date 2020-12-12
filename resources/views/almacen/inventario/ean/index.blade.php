@@ -108,16 +108,20 @@
 					$valor=count($pEAN);
 					?>
 							@if($valor==0)
+
+							<!-- datlist para el autocompletado -->
+					       <datalist id="mylist">
+					       @foreach($producto as $p)
+								<option >{{ $p->nombre}}</option>
+					       @endforeach
+					      </datalist>
+
 							<div class="form-row">
 								<div class="form-group col-sm-4">
 									<div>Producto manual:</div>
 								</div>
 								<div class="form-group col-sm-8">
-									<select name="producto_id_producto" class="form-control">
-										@foreach($producto as $p)
-										<option value="{{$p->id_producto}}">{{$p->nombre}}</option>
-										@endforeach
-									</select>
+									<input  class="form-control" name="producto_id_producto" placeholder="Buscar..." list="mylist">
 								</div>
 							</div>
 							
