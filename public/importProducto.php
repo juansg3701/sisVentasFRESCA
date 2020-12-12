@@ -6,7 +6,13 @@ include "class.upload.php";
     $conn=new Conexion();
     $link = $conn->conectarse();
 
+    require('conexion2.php');
+    $conn2=new Conexion2();
+    $link2 = $conn2->conectarse();
 
+    $probar_juliana= $_POST['probar_juliana'];
+    $fecha_actual= $_POST['fecha_actual'];
+  
 
 
 if(isset($_FILES["name"])){
@@ -48,8 +54,8 @@ if(isset($_FILES["name"])){
 
                 $query="SELECT * FROM producto WHERE id_producto = \"$x_id_producto\"";
                 $result=mysqli_query($link, $query);
-              
-
+                
+                
                 $count=0; 
                 while($rows=mysqli_fetch_assoc($result)){
                     $count++;
@@ -59,6 +65,23 @@ if(isset($_FILES["name"])){
                 if ($count==0) {
                     # code...
 
+
+                    $empleado = "SELECT * FROM empleado WHERE user_id_user=\"$probar_juliana\"";
+                    $result2=mysqli_query($link2, $empleado);
+
+                    if($result2) {
+                        while($rows=mysqli_fetch_assoc($result2)){
+                 
+                             $id=$rows['id_empleado'];
+                        }
+                    }
+
+
+         
+
+
+                
+
                     $sql = "insert into producto (id_producto, plu, ean, nombre, categoria_id_categoria, unidad_de_medida, impuestos_id_impuestos, descuento_id_descuento, stock_minimo, imagen, precio_1, precio_2, precio_3, precio_4, costo_compra, punto_venta_id_punto_venta, empleado_id_empleado, fecha_registro) value";
                     if ($x_fecha_registro=='') {
                         # code...
@@ -67,7 +90,7 @@ if(isset($_FILES["name"])){
                     }
 
                    
-                    $sql .= " (\"$x_id_producto\",\"$x_plu\",\"$x_ean\",\"$x_nombre\",\"$x_categoria_id_categoria\",\"$x_unidad_de_medida\",\"$x_impuestos_id_impuestos\",\"$x_descuento_id_descuento\",\"$x_stock_minimo\",\"$x_imagen\",\"$x_precio_1\",\"$x_precio_2\",\"$x_precio_3\",\"$x_precio_4\",\"$x_costo_compra\",\"$x_punto_venta_id_punto_venta\",\"$x_empleado_id_empleado\",\"$x_fecha_registro\")";
+                    $sql .= " (\"$x_id_producto\",\"$x_plu\",\"$x_ean\",\"$x_nombre\",\"$x_categoria_id_categoria\",\"$x_unidad_de_medida\",\"$x_impuestos_id_impuestos\",\"$x_descuento_id_descuento\",\"$x_stock_minimo\",\"$x_imagen\",\"$x_precio_1\",\"$x_precio_2\",\"$x_precio_3\",\"$x_precio_4\",\"$x_costo_compra\",\"$x_punto_venta_id_punto_venta\",\"$id\",\"$fecha_actual\")";
 
                 }else{
 

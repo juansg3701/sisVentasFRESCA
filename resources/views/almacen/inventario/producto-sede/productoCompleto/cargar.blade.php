@@ -15,6 +15,8 @@ role="dialog" tabindex="-1" id="modal-cargar">
 			<div id="formulario">
 				<form method="post" id="addproduct" action="/importProducto.php" enctype="multipart/form-data" role="form">
 					<!--Activar o desactivar botón de carga dependiendo de la selección de archivo mediante ajax-->
+					<input type="" name="probar_juliana" value="{{Auth::user()->id}}">
+					<input type="" name="fecha_actual" value="<?php echo date("Y/m/d H:i:s"); ?>">
 					<script type="text/javascript">
 						$(function(){
 				   			$("#inpCargar").change( function(){
