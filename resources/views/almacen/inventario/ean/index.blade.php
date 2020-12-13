@@ -4,7 +4,8 @@
 <head>
 	<title>Inventario</title>
     <!--<link rel="stylesheet" href="{{ asset('css/Almacen/usuario/styles-iniciar.css') }}" />-->
-
+<script src="{{asset('assets/js/jQuery_3.4.1.min.js')}}"></script>
+    <script src="{{asset('assets/js/jquery-ui.min.js')}}"></script>
 
 </head>
 <body>
@@ -112,7 +113,7 @@
 							<!-- datlist para el autocompletado -->
 					       <datalist id="mylist">
 					       @foreach($producto as $p)
-								<option >{{ $p->nombre}}</option>
+								<option>{{ $p->nombre}}</option>
 					       @endforeach
 					      </datalist>
 
@@ -122,6 +123,7 @@
 								</div>
 								<div class="form-group col-sm-8">
 									<input  class="form-control" name="producto_id_producto" placeholder="Buscar..." list="mylist">
+
 								</div>
 							</div>
 							
@@ -216,7 +218,7 @@
 								</div>
 						<div class="form-group col-sm-8">
 							
-								<input type="number" class="form-control" name="cantidad" min="1" pattern="^[0-9]+">
+								<input type="number" class="form-control" name="cantidad" min="1" pattern="^[0-9]+" id="cantidadJ">
 						</div>
 					</div>
 
@@ -255,7 +257,7 @@
 							<div>Total:</div>
 						</div>
 						<div class="form-group col-sm-8">
-							<input type="number" class="form-control" name="total">
+							<input type="number" class="form-control" name="total" id="total" disabled="true">
 						</div>
 					</div>
 
@@ -303,7 +305,35 @@
 
 		</div>
 	</div>		                       
-		
+		<script type="text/javascript">
+			
+			$( () => {
+				
+					$("#cantidadJ").keypress(function(e) {
+					var cantidadS=document.getElementById('cantidadJ').value;
+				
+						if("<?php echo $valor;?>"!=0){
+						var valorP="<?php 
+						foreach($pEAN as $p){
+							echo $p->costo_compra;
+						}
+						?>";
+						}else{
+
+						var valorP=0;
+						}
+
+					alert(cantidadS);
+					document.getElementById("total").value=cantidadS*valorP;
+						
+					
+            		});
+				
+
+				
+			});
+			
+		</script>
 </body>
 
 @stop

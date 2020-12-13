@@ -64,8 +64,15 @@ class registroProductoProveedor extends Controller
 	 	}
 
 	 	public function store(ProveedorSedeFormRequest $request){
+	 		$nombre_producto=$request->get('producto_id_producto');
+
+	 		$productoBuscar=ProductoSede::where('producto.nombre','=', $nombre_producto)
+	 		->orderBy('id_producto', 'desc')
+	 		->paginate(10);
+
+	 		if(count($productoBuscar)>0){
 	 		$ps = new ProveedorSede;
-	 		$ps->producto_id_producto=$request->get('producto_id_producto');
+	 		$ps->producto_id_producto=$productoBuscar[0]->id_producto;
 	 		$ps->sede_id_sede=$request->get('sede_id_sede');
 	 		$ps->proveedor_id_proveedor=$request->get('proveedor_id_proveedor');
 	 		$ps->disponibilidad=$request->get('disponibilidad');
@@ -78,6 +85,12 @@ class registroProductoProveedor extends Controller
 	 		$ps->save();
 
 	 		return back()->with('msj','Producto guardado');
+
+	 		}else{
+	 			return back()->with('errormsj','¡Producto no encontrado!');
+	 		}
+
+	 		
 	 	}
 
 	 	public function show($id){
