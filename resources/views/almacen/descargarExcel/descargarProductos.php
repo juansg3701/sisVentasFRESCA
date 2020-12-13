@@ -22,17 +22,12 @@
 			<th>IMPUESTO</th>
 			<th>DESCUENTO</th>
 			<th>STOCK MINIMO</th>
-			
-			<th>IMAGEN</th>
 			<th>PRECIO 1</th>
 			<th>PRECIO 2</th>
 			<th>PRECIO 3</th>
 			<th>PRECIO 4</th>
 			<th>COSTO COMPRA</th>
 			<th>PUNTO_VENTA</th>
-			<th>EMPLEADO</th>
-			
-
 		</thead>
 	</tr>
 	<?php
@@ -48,17 +43,12 @@
 				<td><?php echo $row['impuestos_id_impuestos']; ?></td>
 				<td><?php echo $row['descuento_id_descuento']; ?></td>
 				<td><?php echo $row['stock_minimo']; ?></td>
-
-				<td><?php echo $row['imagen']; ?></td>
 				<td><?php echo $row['precio_1']; ?></td>
 				<td><?php echo $row['precio_2']; ?></td>
 				<td><?php echo $row['precio_3']; ?></td>
 				<td><?php echo $row['precio_4']; ?></td>
 				<td><?php echo $row['costo_compra']; ?></td>
 				<td><?php echo $row['punto_venta_id_punto_venta']; ?></td>
-				<td><?php echo $row['empleado_id_empleado']; ?></td>
-				
-
 			</tr>	
 			<?php
 		}
