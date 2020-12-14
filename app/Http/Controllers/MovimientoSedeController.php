@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use sisVentas\Http\Requests;
 use sisVentas\MovimientoSede;
 use sisVentas\ProveedorSede;
+use sisVentas\ProductoSede;
 use Illuminate\Support\Facades\Redirect;
 use sisVentas\Http\Requests\MovimientoSedeFormRequest;
 use DB;
@@ -27,10 +28,9 @@ class MovimientoSedeController extends Controller
 	 			->join('sede as s2','m.sede_id_sede2','=','s2.id_sede')
 	 			->join('stock as st','m.stock_id_stock','=','st.id_stock')
 	 			->join('t_movimiento as mv','m.t_movimiento_id_tmovimiento','=','mv.id_tmovimiento')
-	 			->join('producto as p','st.producto_id_producto','=','p.id_producto')
 	 			->join('empleado as e','m.id_empleado','=','e.id_empleado')
 	 			->join('proveedor as pr','st.proveedor_id_proveedor','=','pr.id_proveedor')
-	 			->select('m.id_mstock','m.fecha','s.nombre_sede as sede_id_sede','s2.nombre_sede as sede_id_sede2','p.nombre as stock_id_stock','mv.descripcion as t_movimiento_id_tmovimiento','e.nombre as id_empleado','pr.nombre_proveedor as nombre_proveedor','m.t_movimiento_id_tmovimiento as mov')
+	 			->select('m.id_mstock','m.fecha','s.nombre_sede as sede_id_sede','s2.nombre_sede as sede_id_sede2','st.id_stock as stock_id_stock','mv.descripcion as t_movimiento_id_tmovimiento','e.nombre as id_empleado','pr.nombre_proveedor as nombre_proveedor','m.t_movimiento_id_tmovimiento as mov')
 	 			->where('m.fecha','like','%'.$query0.'%')
  	 			->orderBy('m.fecha', 'desc')
 	 			->paginate(10);
@@ -39,9 +39,11 @@ class MovimientoSedeController extends Controller
 	 			$modulos=DB::table('cargo_modulo')
 	 			->where('id_cargo','=',$cargoUsuario)
 	 			->orderBy('id_cargo', 'desc')->get();
+
+	 			$producto=ProductoSede::get();
 	 			
 
-	 			return view('almacen.inventario.movimiento-sede.index',["movimientos"=>$movimientos,"searchText0"=>$query0, "searchText1"=>$query1,"modulos"=>$modulos]);
+	 			return view('almacen.inventario.movimiento-sede.index',["movimientos"=>$movimientos,"searchText0"=>$query0, "searchText1"=>$query1,"modulos"=>$modulos,"producto"=>$producto]);
 	 		}
 	 	}
 
@@ -49,18 +51,16 @@ class MovimientoSedeController extends Controller
 	 		$sedes=DB::table('sede')->get();
 	 		$movs=DB::table('t_movimiento')->get();
 	 		$productos=DB::table('stock as st')
-	 		->join('producto as p','p.id_producto','=','st.producto_id_producto')
 	 		->join('sede as sed','st.sede_id_sede','=','sed.id_sede')
 	 		->join('proveedor as pr','st.proveedor_id_proveedor','=','pr.id_proveedor')
-	 		->select('st.id_stock as id_stock','p.nombre as nombre', 'sed.nombre_sede as nombre_sede','pr.nombre_proveedor as nombre_proveedor')
+	 		->select('st.id_stock as id_stock', 'sed.nombre_sede as nombre_sede','pr.nombre_proveedor as nombre_proveedor','st.producto_id_producto as producto_id_producto')
 	 		->paginate(10);
 
 	 		if(auth()->user()->superusuario==0){
 	 		$productos=DB::table('stock as st')
-	 		->join('producto as p','p.id_producto','=','st.producto_id_producto')
 	 		->join('sede as sed','st.sede_id_sede','=','sed.id_sede')
 	 		->join('proveedor as pr','st.proveedor_id_proveedor','=','pr.id_proveedor')
-	 		->select('st.id_stock as id_stock','p.nombre as nombre', 'sed.nombre_sede as nombre_sede','pr.nombre_proveedor as nombre_proveedor')
+	 		->select('st.id_stock as id_stock', 'sed.nombre_sede as nombre_sede','pr.nombre_proveedor as nombre_proveedor','st.producto_id_producto as producto_id_producto')
 	 		->where('sed.id_sede','=',auth()->user()->sede_id_sede)
 	 		->paginate(10);
 	 	}
@@ -70,9 +70,11 @@ class MovimientoSedeController extends Controller
 	 			$modulos=DB::table('cargo_modulo')
 	 			->where('id_cargo','=',$cargoUsuario)
 	 			->orderBy('id_cargo', 'desc')->get();
+	 		$productoDB=ProductoSede::get();
+	 		$usuarios=DB::table('empleado')->get();
 	 			
 
-	 		return view("almacen.inventario.movimiento-sede.edit",["movimientos"=>MovimientoSede::findOrFail($id),"sedes"=>$sedes,"movs"=>$movs,"productos"=>$productos,"empl"=>$empl, "modulos"=>$modulos]);
+	 		return view("almacen.inventario.movimiento-sede.edit",["movimientos"=>MovimientoSede::findOrFail($id),"sedes"=>$sedes,"movs"=>$movs,"productos"=>$productos,"empl"=>$empl, "modulos"=>$modulos,"productoDB"=>$productoDB,"usuarios"=>$usuarios]);
 	 	}
 
 	 	
@@ -101,20 +103,28 @@ class MovimientoSedeController extends Controller
 	 		->where('producto_id_producto','=',$productoR[0]->id_producto)
 	 		->where('proveedor_id_proveedor','=',$proveedorR[0]->id_proveedor)
 	 		->orderBy('id_stock', 'desc')->get();
-
+	 		$fecha_actual=date("Y-m-d H:i:s"); 
 	 		if(count($existe)==0){
+	 			
 	 			$ps = new ProveedorSede;
 		 		$ps->producto_id_producto=$productoR[0]->id_producto;
 		 		$ps->sede_id_sede=$sede;
 		 		$ps->proveedor_id_proveedor=$proveedorR[0]->id_proveedor;
 		 		$ps->disponibilidad=1;
 		 		$ps->cantidad=1;
+
+	 		$ps->fecha_registro=$fecha_actual;
+	 		$ps->empleado_id_empleado=$mv->id_empleado;
+	 		$ps->transformacion_stock_id=6;
+	 		$ps->noFactura=0000;
+	 		$ps->total=000;
 		 		$ps->save();
 
 		 	$stock1 = ProveedorSede::findOrFail($idStock);
 		 	$actualC=$stock1->cantidad;
 	 		$stock1->cantidad=$actualC-1;
 	 		$stock1->update();
+
 
 		 		return back()->with('msj','Producto guardado');
 	 		}else{
@@ -139,19 +149,17 @@ class MovimientoSedeController extends Controller
 	 		$movs=DB::table('t_movimiento')->get();
 
 	 		$productos=DB::table('stock as st')
-	 		->join('producto as p','p.id_producto','=','st.producto_id_producto')
 	 		->join('sede as sed','st.sede_id_sede','=','sed.id_sede')
 	 		->join('proveedor as pr','st.proveedor_id_proveedor','=','pr.id_proveedor')
-	 		->select('st.id_stock as id_stock','p.nombre as nombre', 'sed.nombre_sede as nombre_sede','pr.nombre_proveedor as nombre_proveedor')
+	 		->select('st.id_stock as id_stock', 'sed.nombre_sede as nombre_sede','pr.nombre_proveedor as nombre_proveedor','st.producto_id_producto as producto_id_producto')
 	 		->where('st.cantidad','>','0')
 	 		->paginate(10);
 
 	 		if(auth()->user()->superusuario==0){
 	 		$productos=DB::table('stock as st')
-	 		->join('producto as p','p.id_producto','=','st.producto_id_producto')
 	 		->join('sede as sed','st.sede_id_sede','=','sed.id_sede')
 	 		->join('proveedor as pr','st.proveedor_id_proveedor','=','pr.id_proveedor')
-	 		->select('st.id_stock as id_stock','p.nombre as nombre', 'sed.nombre_sede as nombre_sede','pr.nombre_proveedor as nombre_proveedor')
+	 		->select('st.id_stock as id_stock', 'sed.nombre_sede as nombre_sede','pr.nombre_proveedor as nombre_proveedor','st.producto_id_producto as producto_id_producto')
 	 		->where('st.cantidad','>','0')
 	 		->where('sed.id_sede','=',auth()->user()->sede_id_sede)
 	 		->paginate(10);
@@ -162,9 +170,11 @@ class MovimientoSedeController extends Controller
 	 			$modulos=DB::table('cargo_modulo')
 	 			->where('id_cargo','=',$cargoUsuario)
 	 			->orderBy('id_cargo', 'desc')->get();
+	 		$productoDB=ProductoSede::get();
+	 		$usuarios=DB::table('empleado')->get();
 	 			
 
-	 			return view("almacen.inventario.movimiento-sede.registrar",["sedes"=>$sedes,"movs"=>$movs,"productos"=>$productos,"empl"=>$empl, "modulos"=>$modulos]);
+	 			return view("almacen.inventario.movimiento-sede.registrar",["sedes"=>$sedes,"movs"=>$movs,"productos"=>$productos,"empl"=>$empl, "modulos"=>$modulos,"productoDB"=>$productoDB,"usuarios"=>$usuarios]);
 	 		
 	 	}
 

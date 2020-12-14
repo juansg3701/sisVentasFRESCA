@@ -7,115 +7,217 @@
 
 </head>
 <body>
-	<div class="row">
-		<div class="col-lg-8 col-md-8 col-sm-8 col-xs-12">
-			<h3>Editar movimiento</h3>
-			@if (count($errors)>0)
-			<div class="alert alert-danger">
-				<ul>
-				@foreach ($errors->all() as $error)
-					<li>{{$error}}</li>
-				@endforeach
-				</ul>
+	<!--Control de errores en los campos del formulario-->	
+	<div class="container col-sm-12" align="center">
+		<div class="row" align="center">
+			<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12" align="center">
+				@if (count($errors)>0)
+				<div class="alert alert-danger" align="center">
+					<ul>
+						@foreach ($errors->all() as $error)
+							<li>{{$error}}</li>
+						@endforeach
+					</ul>
+				</div>
+				@endif
 			</div>
-			@endif
+		</div>
+	</div>
+
+	<!--Panel superior-->
+	<div class="breadcrumbs">
+		<div class="breadcrumbs-inner">
+			<div class="row m-0">
+				<div class="col-sm-4">
+					<div class="page-header float-left">
+						<div class="page-title">
+							<h1>Movimiento entre sedes</h1>
+						</div>
+					</div>
+				</div>
+				<div class="col-sm-8">
+					<div class="page-header float-right">
+						<div class="page-title">
+							<ol class="breadcrumb text-right">
+								<li class="active">Inicio</li>
+								<li class="active">Editar movimiento</li>
+							</ol>
+						</div>
+					</div>
+				</div>
+			</div>
 		</div>
 	</div>
 
 	{!!Form::model($productos,['method'=>'PATCH','route'=>['almacen.inventario.movimiento-sede.update',$movimientos->id_mstock]])!!}
     {{Form::token()}}
 
-	<div id=formulario>
+    <!--Formulario de edición-->	
+	<div class="col-md-12">
+		<div class="card">
+			<div class="card-header" align="center">
+				<h3 class="pb-2 display-5">EDITAR MOVIMIENTO</h3>
+			</div><br>
 
-		Fecha<input type="datetime" class="form-control" name="fecha" value="{{$movimientos->fecha}}" >
-			Producto<br>
-			<select name="stock_id_stock" class="form-control">
 
-				@foreach($productos as $p)
-				@if($movimientos->stock_id_stock==$p->id_stock)
-				<option value="{{$p->id_stock}}">{{$p->nombre}} ({{$p->nombre_sede}}, {{$p->nombre_proveedor}})</option>
-				@endif
-				@endforeach
+			<div class="row" align="center">	
+				<div class="col-sm-3" align="center"></div>
+				 	<div class="col-sm-6" align="center">
+						<div class="card" align="center">
+			                <div class="card-header" align="center">
+			                     <strong>Formulario de edición</strong>
+			                </div>
+			                <div class="card-body card-block" align="center">
+								<div class="form-row">
+									<div class="form-group col-sm-4">
+										<div>Fecha:</div>
+									</div>
+									<div class="form-group col-sm-8">
+										<input type="datetime" class="form-control" name="fecha" value="{{$movimientos->fecha}}" >
+									</div>
+								</div>
+								<div class="form-row">
+									<div class="form-group col-sm-4">
+										<div>Producto:</div>
+									</div>
+									<div class="form-group col-sm-8">
+										<select name="stock_id_stock" class="form-control">
 
-				@foreach($productos as $p)
-				@if($movimientos->stock_id_stock!=$p->id_stock)
-				<option value="{{$p->id_stock}}">{{$p->nombre}} ({{$p->nombre_sede}}, {{$p->nombre_proveedor}})</option>
-				@endif
-				@endforeach
+											@foreach($productos as $p)
+											@foreach($productoDB as $pb)
+											@if($pb->id_producto==$p->producto_id_producto)
+											@if($movimientos->stock_id_stock==$pb->id_producto)
+											<option value="{{$pb->id_producto}}">{{$pb->nombre}} ({{$p->nombre_sede}}, {{$p->nombre_proveedor}})</option>
+											@endif
+											@endif
+											@endforeach
+											@endforeach
 
-			
-			</select>
-			@if(auth()->user()->superusuario==0)
-			Sede salida:<br>
-			<select name="sede_id_sede" class="form-control" disabled="">
-				@foreach($sedes as $s)
-				@if($movimientos->sede_id_sede==$s->id_sede)
-				<option value="{{$s->id_sede}}">{{$s->nombre_sede}}</option>
-				@endif
-				@endforeach
-				@foreach($sedes as $s)
-				@if($movimientos->sede_id_sede!=$s->id_sede)
-				<option value="{{$s->id_sede}}">{{$s->nombre_sede}}</option>
-				@endif
-				@endforeach				
-			</select>
-			@else
-			Sede salida:<br>
-			<select name="sede_id_sede" class="form-control">
-				@foreach($sedes as $s)
-				@if($movimientos->sede_id_sede==$s->id_sede)
-				<option value="{{$s->id_sede}}">{{$s->nombre_sede}}</option>
-				@endif
-				@endforeach
-				@foreach($sedes as $s)
-				@if($movimientos->sede_id_sede!=$s->id_sede)
-				<option value="{{$s->id_sede}}">{{$s->nombre_sede}}</option>
-				@endif
-				@endforeach				
-			</select>
-			@endif
-				
-			Sede entrada:<br>
-			<select name="sede_id_sede2" class="form-control">
-				@foreach($sedes as $s)
-				@if($movimientos->sede_id_sede2==$s->id_sede)
-				<option value="{{$s->id_sede}}">{{$s->nombre_sede}}</option>
-				@endif
-				@endforeach
+											@foreach($productos as $p)
+											@foreach($productoDB as $pb)
+											@if($pb->id_producto==$p->producto_id_producto)
+											@if($movimientos->stock_id_stock!=$pb->id_producto)
+											<option value="{{$pb->id_producto}}">{{$pb->nombre}} ({{$p->nombre_sede}}, {{$p->nombre_proveedor}})</option>
+											@endif
+											@endif
+											@endforeach
+											@endforeach
 
-				@foreach($sedes as $s)
-				@if($movimientos->sede_id_sede2!=$s->id_sede)
-				<option value="{{$s->id_sede}}">{{$s->nombre_sede}}</option>
-				@endif
-				@endforeach
-			</select>
+										
+										</select>
+									</div>
+								</div>
+								@if(auth()->user()->superusuario==0)
+								<div class="form-row">
+									<div class="form-group col-sm-4">
+										<div>Sede salida:</div>
+									</div>
+									<div class="form-group col-sm-8">
+										<select name="sede_id_sede" class="form-control" disabled="">
+											@foreach($sedes as $s)
+											@if($movimientos->sede_id_sede==$s->id_sede)
+											<option value="{{$s->id_sede}}">{{$s->nombre_sede}}</option>
+											@endif
+											@endforeach
+											@foreach($sedes as $s)
+											@if($movimientos->sede_id_sede!=$s->id_sede)
+											<option value="{{$s->id_sede}}">{{$s->nombre_sede}}</option>
+											@endif
+											@endforeach				
+										</select>
+									</div>
+								</div>
+								@else
+								<div class="form-row">
+									<div class="form-group col-sm-4">
+										<div>Sede salida:</div>
+									</div>
+									<div class="form-group col-sm-8">
+										<select name="sede_id_sede" class="form-control">
+											@foreach($sedes as $s)
+											@if($movimientos->sede_id_sede==$s->id_sede)
+											<option value="{{$s->id_sede}}">{{$s->nombre_sede}}</option>
+											@endif
+											@endforeach
+											@foreach($sedes as $s)
+											@if($movimientos->sede_id_sede!=$s->id_sede)
+											<option value="{{$s->id_sede}}">{{$s->nombre_sede}}</option>
+											@endif
+											@endforeach				
+										</select>
+									</div>
+								</div>
+								@endif
 
-			<input type="hidden" name="t_movimiento_id_tmovimiento" value="{{$movimientos->t_movimiento_id_tmovimiento}}">
-			Empleado:<br>
-			<select name="id_empleado" class="form-control">
-				@foreach($empl as $e)
-				@if($movimientos->id_empleado==$e->id_empleado)
-				<option value="{{$e->id_empleado}}">{{$e->nombre}}</option>
-				@endif
-				@endforeach
+								<div class="form-row">
+									<div class="form-group col-sm-4">
+										<div>Sede entrada:</div>
+									</div>
+									<div class="form-group col-sm-8">
+										<select name="sede_id_sede2" class="form-control">
+											@foreach($sedes as $s)
+											@if($movimientos->sede_id_sede2==$s->id_sede)
+											<option value="{{$s->id_sede}}">{{$s->nombre_sede}}</option>
+											@endif
+											@endforeach
 
-				@foreach($empl as $e)
-				@if($movimientos->id_empleado!=$e->id_empleado)
-				<option value="{{$e->id_empleado}}">{{$e->nombre}}</option>
-				@endif
-				@endforeach			
-			</select>
-			<br>
-			<div align="center">
-			@if($movimientos->t_movimiento_id_tmovimiento==2)
-			<button type="submit" class="btn btn-info">Registrar Producto</button>
-			@else
-			<button type="submit" class="btn btn-info" disabled="true">Registrar Producto</button>
-			@endif
-			
-			<a href="{{url('almacen/inventario/movimiento-sede')}}" class="btn btn-danger">Volver</a>
+											@foreach($sedes as $s)
+											@if($movimientos->sede_id_sede2!=$s->id_sede)
+											<option value="{{$s->id_sede}}">{{$s->nombre_sede}}</option>
+											@endif
+											@endforeach
+										</select>
+									</div>
+								</div>
+								<input type="hidden" name="t_movimiento_id_tmovimiento" value="{{$movimientos->t_movimiento_id_tmovimiento}}">
+								
+
+								<div class="form-row">
+									<div class="form-group col-sm-4">
+										<div>Fecha:</div>
+									</div>
+									<div class="form-group col-sm-8">
+										<input type="datetime" name="" value="<?php echo date("Y/m/d H:i:s"); ?>" class="form-control" disabled="true">
+										<input type="hidden" name="fecha" value="<?php echo date("Y/m/d H:i:s"); ?>" class="form-control">
+									</div>
+								</div>
+
+								<div class="form-row">
+									<div class="form-group col-sm-4">
+										<div>Empleado:</div>
+									</div>
+									<div class="form-group col-sm-8">
+										<select name="" class="form-control" disabled="true">
+											@foreach($usuarios as $usu)
+											@if(Auth::user()->id==$usu->user_id_user)
+											<option value="{{$usu->id_empleado}}">{{$usu->nombre}}</option>
+											<input type="hidden" name="id_empleado" value="{{$usu->id_empleado}}">
+											@endif
+											@endforeach
+										</select>
+									</div>
+								</div>
+
+								<div class="form-row">
+									<div class="form-group col-sm-12">
+										
+										@if($movimientos->t_movimiento_id_tmovimiento==2)
+										<button type="submit" class="btn btn-info">Registrar Producto</button>
+										@else
+										<button type="submit" class="btn btn-info" disabled="true">Registrar Producto</button>
+										@endif
+											<a href="{{url('almacen/inventario/movimiento-sede')}}" class="btn btn-danger">Volver</a>
+									</div>
+								</div>
+			               </div>
+			        	</div>
+					</div>
+				<div class="col-sm-3" align="center"></div>
+			</div>
 		</div>
 	</div>
+
+
 	
 {!!Form::close()!!}		
 </body>

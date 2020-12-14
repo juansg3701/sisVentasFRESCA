@@ -34,7 +34,7 @@ class ProveedorSedeController extends Controller
 	 			->select('s.id_stock','sed.nombre_sede','pd.nombre_proveedor','s.cantidad','s.disponibilidad','s.sede_id_sede as sede_id_sede', 's.producto_id_producto','s.fecha_registro','s.empleado_id_empleado','cpt.nombre as nombreCategoria','s.noFactura as noFactura','s.total as total')
 	 			->where('sed.nombre_sede','LIKE', '%'.$query2.'%')
 	 			->where('pd.nombre_proveedor','LIKE', '%'.$query3.'%')
-	 			->orderBy('s.id_stock', 'desc')
+	 			->orderBy('s.id_stock', 'asc')
 	 			->paginate(100);
 
 	 			$productosBuscar=ProductoSede::where('producto.nombre','LIKE', '%'.$query0.'%')

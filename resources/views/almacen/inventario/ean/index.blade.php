@@ -122,7 +122,7 @@
 									<div>Producto manual:</div>
 								</div>
 								<div class="form-group col-sm-8">
-									<input  class="form-control" name="producto_id_producto" placeholder="Buscar..." list="mylist">
+									<input  class="form-control" name="producto_id_producto" placeholder="Buscar..." list="mylist" id="producto_manual">
 
 								</div>
 							</div>
@@ -257,7 +257,7 @@
 							<div>Total:</div>
 						</div>
 						<div class="form-group col-sm-8">
-							<input type="number" class="form-control" name="total" id="total" disabled="true">
+							<input type="number" class="form-control" name="total" id="total">
 						</div>
 					</div>
 
@@ -309,7 +309,7 @@
 			
 			$( () => {
 				
-					$("#cantidadJ").keypress(function(e) {
+					$("#cantidadJ").keyup(function(e) {
 					var cantidadS=document.getElementById('cantidadJ').value;
 				
 						if("<?php echo $valor;?>"!=0){
@@ -319,11 +319,19 @@
 						}
 						?>";
 						}else{
-
 						var valorP=0;
+						var producto_ma=document.getElementById('producto_manual').value;
+						 @foreach ($producto as $p)
+						 	var s=$p->nombre;
+						 	if (s===producto_manual) {
+						 		alert("si");
+						 	}
+			            @endforeach
+						
 						}
 
 					alert(cantidadS);
+					alert(valorP);
 					document.getElementById("total").value=cantidadS*valorP;
 						
 					
