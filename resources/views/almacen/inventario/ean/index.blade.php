@@ -321,10 +321,22 @@
 						}else{
 						var valorP=0;
 						var producto_ma=document.getElementById('producto_manual').value;
+
+						producto_ma=producto_ma.replace(/á/gi,"&aacute;");
+						producto_ma=producto_ma.replace(/é/gi,"&eacute;");
+						producto_ma=producto_ma.replace(/í/gi,"&iacute;");
+						producto_ma=producto_ma.replace(/ó/gi,"&oacute;");
+						producto_ma=producto_ma.replace(/ú/gi,"&uacute;");
+
+						producto_ma=producto_ma.replace(/Á/gi,"&Aacute;");
+						producto_ma=producto_ma.replace(/É/gi,"&Eacute;");
+						producto_ma=producto_ma.replace(/Í/gi,"&Iacute;");
+						producto_ma=producto_ma.replace(/Ó/gi,"&Oacute;");
+						producto_ma=producto_ma.replace(/Ú/gi,"&Uacute;");
 						 @foreach ($producto as $p)
-						 	var s=$p->nombre;
-						 	if (s===producto_manual) {
-						 		alert("si");
+								
+						 	if ('{{$p->nombre}}'==producto_ma) {
+						 		valorP={{$p->costo_compra}}
 						 	}
 			            @endforeach
 						
