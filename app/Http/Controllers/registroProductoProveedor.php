@@ -65,7 +65,7 @@ class registroProductoProveedor extends Controller
 
 	 	public function store(ProveedorSedeFormRequest $request){
 	 		$nombre_producto=$request->get('producto_id_producto');
-
+	 		
 	 		$productoBuscar=ProductoSede::where('producto.nombre','=', $nombre_producto)
 	 		->orderBy('id_producto', 'desc')
 	 		->paginate(10);

@@ -66,9 +66,12 @@
 			                <div class="card-body card-block" align="center">
 							
 							<div class="form-row">
-							<div class="form-group col-sm-3" align="right">
+							<div class="form-group col-sm-2" align="right">
 								<div>EAN:</div>
 							</div>
+							<?php
+					$valor=count($pEAN);
+					?>
 							<div class="form-group col-sm-6">
 							{!! Form::open(array('url'=>'almacen/inventario/ean','method'=>'GET','autocomplete'=>'off','role'=>'search')) !!}
 
@@ -82,7 +85,17 @@
 									</div>
 							{{Form::close()}}
 							</div>
+
 							<div class="form-group col-sm-3">
+								@if($valor==0)
+								<a href="" data-target="#modal-delete-" data-toggle="modal">
+								<button class="btn btn-info">Cambiar valor</button></a>
+								@else
+								<button class="btn btn-info" disabled="true">Cambiar valor</button>
+								@endif
+							</div>
+							<div class="form-group col-sm-1">
+								
 							</div>
 						</div>
 
@@ -99,15 +112,13 @@
 									<div>Producto automático:</div>
 								</div>
 								<div class="form-group col-sm-8">
-									<input type="hidden" class="form-control" name="producto_id_producto" value="{{$pE->id_producto}}">
+									<input type="hidden" class="form-control" name="producto_id_producto" value="{{$pE->nombre}}">
 									<input type="text" class="form-control" name="producto" value="{{$pE->nombre}}" disabled="true">
 								</div>
 							</div>
 							@endforeach
 
-					<?php
-					$valor=count($pEAN);
-					?>
+					
 							@if($valor==0)
 
 							<!-- datlist para el autocompletado -->
@@ -342,14 +353,10 @@
 						
 						}
 
-					alert(cantidadS);
-					alert(valorP);
+				
 					document.getElementById("total").value=cantidadS*valorP;
 						
-					
             		});
-				
-
 				
 			});
 			
