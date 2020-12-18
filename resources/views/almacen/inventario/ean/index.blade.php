@@ -73,6 +73,7 @@
 					$valor=count($pEAN);
 					?>
 							<div class="form-group col-sm-6">
+
 							{!! Form::open(array('url'=>'almacen/inventario/ean','method'=>'GET','autocomplete'=>'off','role'=>'search')) !!}
 
 								
@@ -85,27 +86,37 @@
 									</div>
 							{{Form::close()}}
 							</div>
-
+							<?php $valor_producto=0;?>
 							<div class="form-group col-sm-3">
-								@if($valor==0)
-								<a href="" data-target="#modal-delete-" data-toggle="modal">
-								<button class="btn btn-info">Cambiar valor</button></a>
-								@else
-								<button class="btn btn-info" disabled="true">Cambiar valor</button>
-								@endif
+									@if($valor==0)
+
+										<a href="" data-target="#modal-actualizar-{{$valor_producto}}" data-toggle="modal">
+										<button class="btn btn-info" id="cambiar1" disabled="true">Cambiar valor</button></a>
+										
+									@else
+
+										@foreach($pEAN as $pE)
+										<?php $valor_producto=$pE->nombre;?>
+										@endforeach
+									<a href="" data-target="#modal-actualizar-{{$valor_producto}}" data-toggle="modal">
+									<button class="btn btn-info" id="cambiar2">Cambiar valor</button></a>
+
+									@endif
+								
+								
 							</div>
 							<div class="form-group col-sm-1">
 								
 							</div>
 						</div>
 
-
+						
+							@include('almacen.inventario.ean.modalActualizar')
 			{!!Form::open(array('url'=>'almacen/inventario/ean','method'=>'POST','autocomplete'=>'off'))!!}
 		    {{Form::token()}}
 			<div id=formulario>
 				<div class="form-group">
 
-						
 							@foreach($pEAN as $pE)
 							<div class="form-row">
 								<div class="form-group col-sm-4">
@@ -120,13 +131,12 @@
 
 					
 							@if($valor==0)
-
-							<!-- datlist para el autocompletado -->
-					       <datalist id="mylist">
-					       @foreach($producto as $p)
-								<option>{{ $p->nombre}}</option>
-					       @endforeach
-					      </datalist>
+								<!-- datlist para el autocompletado -->
+						       <datalist id="mylist">
+						       @foreach($producto as $p)
+									<option>{{ $p->nombre}}</option>
+						       @endforeach
+						      </datalist>
 
 							<div class="form-row">
 								<div class="form-group col-sm-4">
@@ -134,7 +144,6 @@
 								</div>
 								<div class="form-group col-sm-8">
 									<input  class="form-control" name="producto_id_producto" placeholder="Buscar..." list="mylist" id="producto_manual">
-
 								</div>
 							</div>
 							
@@ -306,7 +315,7 @@
 				</div>
 			</div>
 		{!!Form::close()!!}	
-
+		
 							
 			               </div>
 			        	</div>
@@ -319,7 +328,23 @@
 		<script type="text/javascript">
 			
 			$( () => {
-				
+					$("#producto_manual").keyup(function(e) {
+						var producto_m=document.getElementById('producto_manual').value;
+
+						@foreach ($producto as $p)
+								
+						 	if ('{{$p->nombre}}'==producto_m) {
+						 		valorP={{$p->costo_compra}}
+						 		
+						 		"<?php $valor_producto=$p->nombre?>"
+						 		document.getElementById('cambiar1').disabled=false;
+						 		alert("si"+', '+'{{$valor_producto}}');
+						 		
+						 	}
+			            @endforeach
+
+					});
+
 					$("#cantidadJ").keyup(function(e) {
 					var cantidadS=document.getElementById('cantidadJ').value;
 				
