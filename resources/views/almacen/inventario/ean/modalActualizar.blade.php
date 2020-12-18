@@ -1,6 +1,6 @@
 <!--Este es el archivo de la ventana modal para mostrar información del LOG-->
 <div class="modal fade modal-slide-in-right" aria-hidden="true"
-role="dialog" tabindex="-1" id="modal-actualizar-{{$ps->id_stock}}">
+role="dialog" tabindex="-1" id="modal-actualizar-{{$valor_producto}}">
 
 	<!--Información de la ventana emergente-->
 	<div class="modal-dialog">
@@ -17,7 +17,7 @@ role="dialog" tabindex="-1" id="modal-actualizar-{{$ps->id_stock}}">
             </div>
         <!-- datlist para el autocompletado -->
 	       <datalist id="mylist">
-	       @foreach($productosBuscar as $pb)
+	       @foreach($producto as $pb)
 	       		
 				<option>{{ $pb->nombre}}</option>
 			
@@ -26,8 +26,8 @@ role="dialog" tabindex="-1" id="modal-actualizar-{{$ps->id_stock}}">
             {!!Form::open(array('url'=>'almacen/inventario/proveedor-sede','method'=>'POST','autocomplete'=>'off'))!!}
 		    {{Form::token()}}
 	
-		    @foreach($productosBuscar as $pb)
-			    @if($pb->id_producto==$ps->producto_id_producto)
+		    @foreach($producto as $pb)
+			    @if($pb->id_producto==$pb->id_producto)
 				      <div class="form-row">
 						<div class="form-group col-sm-6">
 							<div>Producto:</div>
@@ -40,20 +40,16 @@ role="dialog" tabindex="-1" id="modal-actualizar-{{$ps->id_stock}}">
 	        @endforeach
 
             <div class="form-row">
-            <input type="hidden" name="id" value="{{$ps->id_stock}}">
+            <input type="hidden" name="id" value="">
 		    <input type="hidden" name="fecha_registro" value="<?php echo date("Y/m/d H:i:s"); ?>">
-			@foreach($usuarios as $usu)
-				@if(Auth::user()->id==$usu->user_id_user)
-				<input type="hidden" name="empleado_id_empleado" value="{{$usu->id_empleado}}">
-				@endif
-			@endforeach
+		
 
 				<div class="form-group col-sm-6">
 					<div>Kilos actuales:</div>
 
 				</div>
 				<div class="form-group col-sm-4">
-                   {{ $ps->cantidad}}
+                   
 				</div>
             </div>
 
@@ -75,26 +71,6 @@ role="dialog" tabindex="-1" id="modal-actualizar-{{$ps->id_stock}}">
 				</div>
             </div>
 
-            <div class="form-row">
-				<div class="form-group col-sm-6">
-					<div>Transformar a:</div>
-				</div>
-				<div class="form-group col-sm-4">
-                   	<select name="transformacion_stock_id" class="form-control">
-						@foreach($categoriaTrans as $c)
-							@if($c->nombre=="Sin transformar")
-							<option value="{{$c->id_categoria}}">{{$c->nombre}}</option>
-							@endif
-						@endforeach
-
-						@foreach($categoriaTrans as $c)
-							@if($c->nombre!="Sin transformar")
-							<option value="{{$c->id_categoria}}">{{$c->nombre}}</option>
-							@endif
-						@endforeach
-					</select>
-				</div>
-            </div>
 
             <div class="form-row">
 				<div class="form-group col-sm-6">
