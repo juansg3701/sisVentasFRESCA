@@ -90,8 +90,8 @@
 							<div class="form-group col-sm-3">
 									@if($valor==0)
 
-										<a href="" data-target="#modal-actualizar-{{$valor_producto}}" data-toggle="modal">
-										<button class="btn btn-info" id="cambiar1" disabled="true">Cambiar valor</button></a>
+									<a href="" data-target="#modal-actualizar-{{$valor_producto}}" data-toggle="modal">
+									<button class="btn btn-info" id="cambiar1" disabled="true">Cambiar valor</button></a>
 										
 									@else
 
@@ -110,7 +110,7 @@
 							</div>
 						</div>
 
-						
+
 							@include('almacen.inventario.ean.modalActualizar')
 			{!!Form::open(array('url'=>'almacen/inventario/ean','method'=>'POST','autocomplete'=>'off'))!!}
 		    {{Form::token()}}
