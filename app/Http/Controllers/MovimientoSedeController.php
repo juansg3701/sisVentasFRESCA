@@ -30,7 +30,7 @@ class MovimientoSedeController extends Controller
 	 			->join('t_movimiento as mv','m.t_movimiento_id_tmovimiento','=','mv.id_tmovimiento')
 	 			->join('empleado as e','m.id_empleado','=','e.id_empleado')
 	 			->join('proveedor as pr','st.proveedor_id_proveedor','=','pr.id_proveedor')
-	 			->select('m.id_mstock','m.fecha','s.nombre_sede as sede_id_sede','s2.nombre_sede as sede_id_sede2','st.id_stock as stock_id_stock','mv.descripcion as t_movimiento_id_tmovimiento','e.nombre as id_empleado','pr.nombre_proveedor as nombre_proveedor','m.t_movimiento_id_tmovimiento as mov')
+	 			->select('m.id_mstock','m.fecha','s.nombre_sede as sede_id_sede','s2.nombre_sede as sede_id_sede2','st.producto_id_producto as stock_id_stock','mv.descripcion as t_movimiento_id_tmovimiento','e.nombre as id_empleado','pr.nombre_proveedor as nombre_proveedor','m.t_movimiento_id_tmovimiento as mov','m.cantidad as cantidad')
 	 			->where('m.fecha','like','%'.$query0.'%')
  	 			->orderBy('m.fecha', 'desc')
 	 			->paginate(10);
@@ -96,50 +96,58 @@ class MovimientoSedeController extends Controller
 	 		->where('id_stock','=',$idStock)
 	 		->orderBy('id_stock', 'desc')->get();
 
-
 	 		$existe=DB::table('stock')
 	 		->select('id_stock as id')
 	 		->where('sede_id_sede','=',$sede)
 	 		->where('producto_id_producto','=',$productoR[0]->id_producto)
 	 		->where('proveedor_id_proveedor','=',$proveedorR[0]->id_proveedor)
+	 		->where('cantidad','>=',$mv->cantidad)
 	 		->orderBy('id_stock', 'desc')->get();
 	 		$fecha_actual=date("Y-m-d H:i:s"); 
-	 		if(count($existe)==0){
-	 			
-	 			$ps = new ProveedorSede;
-		 		$ps->producto_id_producto=$productoR[0]->id_producto;
-		 		$ps->sede_id_sede=$sede;
-		 		$ps->proveedor_id_proveedor=$proveedorR[0]->id_proveedor;
-		 		$ps->disponibilidad=1;
-		 		$ps->cantidad=1;
-
-	 		$ps->fecha_registro=$fecha_actual;
-	 		$ps->empleado_id_empleado=$mv->id_empleado;
-	 		$ps->transformacion_stock_id=6;
-	 		$ps->noFactura=0000;
-	 		$ps->total=000;
-		 		$ps->save();
-
-		 	$stock1 = ProveedorSede::findOrFail($idStock);
-		 	$actualC=$stock1->cantidad;
-	 		$stock1->cantidad=$actualC-1;
-	 		$stock1->update();
-
-
-		 		return back()->with('msj','Producto guardado');
-	 		}else{
-	 		$stock = ProveedorSede::findOrFail($existe[0]->id);
-	 		$actCantidad=$stock->cantidad;
-	 		$stock->cantidad=$actCantidad+1;
-	 		$stock->update();	
 
 	 		$stock1 = ProveedorSede::findOrFail($idStock);
 		 	$actualC=$stock1->cantidad;
-	 		$stock1->cantidad=$actualC-1;
-	 		$stock1->update(); 		
+		 	
 
-	 		return back()->with('msj','Estado actualizado');
+	 		if($actualC>=$mv->cantidad){
+	 			if(count($existe)==0){
+	 		$stock1->cantidad=$actualC-$mv->cantidad;
+	 		$stock1->update();
+
+		 			$ps = new ProveedorSede;
+			 		$ps->producto_id_producto=$productoR[0]->id_producto;
+			 		$ps->sede_id_sede=$sede;
+			 		$ps->proveedor_id_proveedor=$proveedorR[0]->id_proveedor;
+			 		$ps->disponibilidad=1;
+			 		$ps->cantidad=$mv->cantidad;
+
+		 		$ps->fecha_registro=$fecha_actual;
+		 		$ps->empleado_id_empleado=$mv->id_empleado;
+		 		$ps->transformacion_stock_id=6;
+		 		$ps->noFactura=0;
+		 		$ps->total=0;
+			 		$ps->save();
+
+			 		return back()->with('msj','Producto guardado');
+		 		}else{
+		 		$stock = ProveedorSede::findOrFail($existe[0]->id);
+		 		$actCantidad=$stock->cantidad;
+		 		$stock->cantidad=$actCantidad+1;
+		 		$stock->update();	
+
+		 		$stock1 = ProveedorSede::findOrFail($idStock);
+			 	$actualC=$stock1->cantidad;
+		 		$stock1->cantidad=$actualC-1;
+		 		$stock1->update(); 		
+
+		 		return back()->with('msj','Estado actualizado');
+		 		}
+
+	 		}else{
+	 			return back()->with('errormsj','No hay suficiente en stock');
 	 		}
+
+	 		
 
 			
 	 	}
@@ -179,19 +187,40 @@ class MovimientoSedeController extends Controller
 	 	}
 
 	 	public function store(MovimientoSedeFormRequest $request){
-	 		$mv = new MovimientoSede;
-	 		$mv->fecha=$request->get('fecha');
-	 		$mv->stock_id_stock=$request->get('stock_id_stock');
-	 		$mv->sede_id_sede=$request->get('sede_id_sede');
-	 		$mv->sede_id_sede2=$request->get('sede_id_sede2');
-	 		$mv->t_movimiento_id_tmovimiento=$request->get('t_movimiento_id_tmovimiento');
-	 		$mv->id_empleado=$request->get('id_empleado');
-	 		$mv->save();
+	 		$productoR=$request->get('stock_id_stock');
+	 		$cantidadR=$request->get('cantidad');
+
+	 		$productoBuscar=ProductoSede::where('producto.nombre','=', $productoR)
+	 		->orderBy('id_producto', 'desc')
+	 		->paginate(10);
+
+	 		if(count($productoBuscar)>0){
+	 			$stockBuscar=ProveedorSede::where('producto_id_producto','=', $productoBuscar[0]->id_producto)
+	 				->where('cantidad','>=', $cantidadR)
+			 		->orderBy('id_stock', 'desc')
+			 		->paginate(10);
+
+			 	if(count($stockBuscar)>0){
+			 		$mv = new MovimientoSede;
+			 		$mv->fecha=$request->get('fecha');
+			 		$mv->stock_id_stock=$stockBuscar[0]->id_stock;
+			 		$mv->sede_id_sede=$request->get('sede_id_sede');
+			 		$mv->sede_id_sede2=$request->get('sede_id_sede2');
+			 		$mv->t_movimiento_id_tmovimiento=$request->get('t_movimiento_id_tmovimiento');
+			 		$mv->id_empleado=$request->get('id_empleado');
+			 		$mv->cantidad=$cantidadR;
+			 		$mv->save();
 
 	 		return back()->with('msj','Movimiento guardado');
+			 	}else{
+			 		return back()->with('errormsj','No hay stock');
+			 	}
+
+	 		}else{
+	 			return back()->with('errormsj','El producto no existe');
+	 		}
+		
 	 	}
-
-
 
 	 	public function update(MovimientoSedeFormRequest $request, $id){
 	 		$mv = MovimientoSede::findOrFail($id);
@@ -201,6 +230,7 @@ class MovimientoSedeController extends Controller
 	 		$mv->sede_id_sede2=$request->get('sede_id_sede2');
 	 		$mv->t_movimiento_id_tmovimiento=$request->get('t_movimiento_id_tmovimiento');
 	 		$mv->id_empleado=$request->get('id_empleado');
+	 		$mv->cantidad=$request->get('cantidad');
 	 		$mv->update();
 
 	 		return back()->with('msj','Movimiento actualizado');

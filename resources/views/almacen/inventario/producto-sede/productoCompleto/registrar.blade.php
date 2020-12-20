@@ -99,12 +99,13 @@
 			                	<div class="form-row">
 			                	<div class="form group col-sm-12" align="center">
 			                	<div class="form-row">
-									<div class="form-group col-sm-2">
-										<div>Precio No.1:</div>
+			                		<div class="form-group col-sm-2">
+										<div>Costo de compra:</div>
 									</div>
 									<div class="form-group col-sm-3">
-										<input type="number" class="form-control" name="precio_1" id="precio_1" min="1" pattern="^[0-9]+">
+										<input type="number" class="form-control" name="costo_compra" id="costo_compra" min="1" pattern="^[0-9]+">
 									</div>
+									
 								
 									<div class="form-group col-sm-1"></div>
 
@@ -126,11 +127,12 @@
 
 								<div class="form-row">
 									<div class="form-group col-sm-2">
-										<div>Precio No.2:</div>
+										<div>Precio No.1:</div>
 									</div>
 									<div class="form-group col-sm-3">
-										<input type="number" class="form-control" name="precio_2" id="precio_2" min="1" pattern="^[0-9]+">
+										<input type="number" class="form-control" name="precio_1" id="precio_1" min="1" pattern="^[0-9]+">
 									</div>
+									
 								
 									<div class="form-group col-sm-1"></div>
 									<div class="form-group col-sm-2">
@@ -152,11 +154,12 @@
 
 								<div class="form-row">
 									<div class="form-group col-sm-2">
-										<div>Precio No.3:</div>
+										<div>Precio No.2:</div>
 									</div>
 									<div class="form-group col-sm-3">
-										<input type="number" class="form-control" name="precio_3" id="precio_3" min="1" pattern="^[0-9]+">
+										<input type="number" class="form-control" name="precio_2" id="precio_2" min="1" pattern="^[0-9]+">
 									</div>
+									
 									<div class="form-group col-sm-1"></div>
 									<div class="form-group col-sm-2">
 										<div>Categor&iacutea:</div>
@@ -180,11 +183,12 @@
 
 								<div class="form-row">
 									<div class="form-group col-sm-2">
-										<div>Precio No.4:</div>
+										<div>Precio No.3:</div>
 									</div>
 									<div class="form-group col-sm-3">
-										<input type="number" class="form-control" name="precio_4" id="precio_4" min="1" pattern="^[0-9]+">
+										<input type="number" class="form-control" name="precio_3" id="precio_3" min="1" pattern="^[0-9]+">
 									</div>
+									
 									
 									<div class="form-group col-sm-1"></div>
 
@@ -210,12 +214,11 @@
 
 								<div class="form-row">
 									<div class="form-group col-sm-2">
-										<div>Costo de compra:</div>
+										<div>Precio No.4:</div>
 									</div>
 									<div class="form-group col-sm-3">
-										<input type="number" class="form-control" name="costo_compra" id="costo_compra" min="1" pattern="^[0-9]+">
-									</div>
-									
+										<input type="number" class="form-control" name="precio_4" id="precio_4" min="1" pattern="^[0-9]+">
+									</div>									
 									<div class="form-group col-sm-1"></div>
 									<div class="form-group col-sm-2">
 											<div>Imagen:</div>

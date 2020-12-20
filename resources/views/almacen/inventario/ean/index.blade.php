@@ -79,7 +79,7 @@
 								
 								<div class="input-group">
 								<input type="text" class="form-control" name="searchText" placeholder="Buscar..." value="{{$searchText}}">
-								
+							
 								<span class="input-group-btn">
 									<button type="submit" class="btn btn-primary">Buscar</button>
 								</span>
@@ -88,18 +88,25 @@
 							</div>
 							<?php $valor_producto=0;?>
 							<div class="form-group col-sm-3">
+								@include('almacen.inventario.ean.modalActualizar')
 									@if($valor==0)
-
+									{{$valor_producto}}
 									<a href="" data-target="#modal-actualizar-{{$valor_producto}}" data-toggle="modal">
-									<button class="btn btn-info" id="cambiar1" disabled="true">Cambiar valor</button></a>
+									<button class="btn btn-info" id="cambiar1" disabled="true">Cambiar valor 1</button></a>
 										
-									@else
+									@endif
+									@if($valor!=0)
+										<?php
+										 
+										foreach($pEAN as $pE){
+										 $ps->id_producto=$pE->id_producto;
+										}
 
-										@foreach($pEAN as $pE)
-										<?php $valor_producto=$pE->nombre;?>
-										@endforeach
+										?>
+										{{$valor_producto}}
+
 									<a href="" data-target="#modal-actualizar-{{$valor_producto}}" data-toggle="modal">
-									<button class="btn btn-info" id="cambiar2">Cambiar valor</button></a>
+									<button class="btn btn-info" id="cambiar1" >Cambiar valor 2</button></a>
 
 									@endif
 								
@@ -111,7 +118,7 @@
 						</div>
 
 
-							@include('almacen.inventario.ean.modalActualizar')
+							
 			{!!Form::open(array('url'=>'almacen/inventario/ean','method'=>'POST','autocomplete'=>'off'))!!}
 		    {{Form::token()}}
 			<div id=formulario>
@@ -238,7 +245,7 @@
 								</div>
 						<div class="form-group col-sm-8">
 							
-								<input type="number" class="form-control" name="cantidad" min="1" pattern="^[0-9]+" id="cantidadJ">
+								<input type="text" class="form-control" name="cantidad" min="1" id="cantidadJ">
 						</div>
 					</div>
 
@@ -338,7 +345,7 @@
 						 		
 						 		"<?php $valor_producto=$p->nombre?>"
 						 		document.getElementById('cambiar1').disabled=false;
-						 		alert("si"+', '+'{{$valor_producto}}');
+						 		
 						 		
 						 	}
 			            @endforeach

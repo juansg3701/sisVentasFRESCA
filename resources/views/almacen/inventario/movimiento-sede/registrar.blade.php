@@ -7,11 +7,7 @@
 
 </head>
 <body>
-	<div class="row">
-		<div class="col-lg-8 col-md-8 col-sm-8 col-xs-12">
-			<h3>Registro de movimientos</h3>
-		</div>
-	</div>
+
 {!!Form::open(array('url'=>'almacen/inventario/movimiento-sede','method'=>'POST','autocomplete'=>'off'))!!}
     {{Form::token()}}
     <!--Formulario de edición-->	
@@ -40,21 +36,24 @@
 										<input type="datetime-local" class="form-control" name="fecha" value="<?php echo date("Y/m/d H:i:s"); ?>">
 									</div>
 								</div>
+
+								<datalist id="mylist">
+						      		@foreach($productos as $p)
+										@foreach($productoDB as $pb)
+											@if($pb->id_producto==$p->producto_id_producto)
+											<option value="{{$pb->nombre}}">{{$pb->nombre}} ({{$p->nombre_sede}}, {{$p->nombre_proveedor}})</option>
+											@endif
+										@endforeach
+									@endforeach
+						      </datalist>
+
 								<div class="form-row">
 									<div class="form-group col-sm-4">
 										<div>Producto:</div>
 									</div>
 									<div class="form-group col-sm-8">
-										<select name="stock_id_stock" class="form-control">
+										<input  class="form-control" name="stock_id_stock" placeholder="Buscar..." list="mylist">
 
-											@foreach($productos as $p)
-											@foreach($productoDB as $pb)
-											@if($pb->id_producto==$p->producto_id_producto)
-											<option value="{{$pb->id_producto}}">{{$pb->nombre}} ({{$p->nombre_sede}}, {{$p->nombre_proveedor}})</option>
-											@endif
-											@endforeach
-											@endforeach
-										</select>
 									</div>
 								</div>
 								@if(auth()->user()->superusuario==0)
@@ -98,6 +97,15 @@
 											<option value="{{$s->id_sede}}">{{$s->nombre_sede}}</option>
 											@endforeach
 										</select>
+									</div>
+								</div>
+
+								<div class="form-row">
+									<div class="form-group col-sm-4">
+										<div>Cantidad:</div>
+									</div>
+									<div class="form-group col-sm-8">
+										<input type="text" class="form-control" name="cantidad" min="1"  id="cantidadJ">
 									</div>
 								</div>
 								
