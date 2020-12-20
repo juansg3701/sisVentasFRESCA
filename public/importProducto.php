@@ -53,76 +53,90 @@ if(isset($_FILES["name"])){
                 $excedente= ($x_costo_compra*0.35)+$x_costo_compra;
                 
                 if($excedente<=$x_precio_1 && $excedente<=$x_precio_2 && $excedente<=$x_precio_3 && $excedente<=$x_precio_4){
-                    echo "sirve".$excedente;
-                }else{
-                    echo "No sirve".$excedente;
-                }
-                $query="SELECT * FROM producto WHERE id_producto = \"$x_id_producto\"";
-                $result=mysqli_query($link, $query);
-                
-                $count=0; 
-                while($rows=mysqli_fetch_assoc($result)){
-                    $count++;
-                    echo "nombre: ".$rows['nombre'];
-                } 
+                    //echo "sirve".$excedente;
 
-                $empleado = "SELECT * FROM empleado WHERE user_id_user=\"$empleado\"";
-                $result2=mysqli_query($link2, $empleado);
 
-                if($result2){
-                    while($rows=mysqli_fetch_assoc($result2)){
-                         $id=$rows['id_empleado'];
+                    $query="SELECT * FROM producto WHERE id_producto = \"$x_id_producto\"";
+                    $result=mysqli_query($link, $query);
+                    
+                    $count=0; 
+                    while($rows=mysqli_fetch_assoc($result)){
+                        $count++;
+                        echo "nombre: ".$rows['nombre'];
+                    } 
+
+                    $empleado = "SELECT * FROM empleado WHERE user_id_user=\"$empleado\"";
+                    $result2=mysqli_query($link2, $empleado);
+
+                    if($result2){
+                        while($rows=mysqli_fetch_assoc($result2)){
+                             $id=$rows['id_empleado'];
+                        }
                     }
-                }
 
 
+                    $consulta_imp = "SELECT id_impuestos FROM impuestos WHERE valor_impuesto=\"$x_impuestos_id_impuestos\"";
+                    $consulta_cat = "SELECT id_categoria FROM categoria_productos WHERE nombre=\"$x_categoria_id_categoria\"";
+                    $consulta_des = "SELECT id_descuento FROM descuento WHERE valor_descuento=\"$x_descuento_id_descuento\"";
 
+                    $result_imp=mysqli_query($link, $consulta_imp);
+                    $result_cat=mysqli_query($link, $consulta_cat);
+                    $result_des=mysqli_query($link, $consulta_des);
 
-                if ($count==0) {
-
-                    $consulta1 = "SELECT id_impuestos FROM impuestos WHERE valor_impuesto=\"$x_impuestos_id_impuestos\"";
-                    $consulta2 = "SELECT id_categoria FROM categoria_productos WHERE nombre=\"$x_categoria_id_categoria\"";
-
-                    $resultN=mysqli_query($link, $consulta1);
-                    $resultN2=mysqli_query($link, $consulta2);
-
-                    $count2=0; 
-                    while($rows=mysqli_fetch_assoc($resultN)){
-                        $count2++;  
+                    $count_imp=0; 
+                    while($rows=mysqli_fetch_assoc($result_imp)){
+                        $count_imp++;  
                         $impuesto_i=$rows['id_impuestos'];
                     } 
 
-                    $count3=0; 
-                    while($rows=mysqli_fetch_assoc($resultN2)){
-                        $count3++;  
+                    $count_cat=0; 
+                    while($rows=mysqli_fetch_assoc($result_cat)){
+                        $count_cat++;  
                         $categoria_i=$rows['id_categoria'];
-                    } 
-
-
-                    if($count2!=0 && $count3!=0){
-
-
-                        $sql = "insert into producto (id_producto, plu, ean, nombre, categoria_id_categoria, unidad_de_medida, impuestos_id_impuestos, descuento_id_descuento, stock_minimo, imagen, precio_1, precio_2, precio_3, precio_4, costo_compra, punto_venta_id_punto_venta, empleado_id_empleado, fecha_registro) value";
-
-                        $sql .= " (\"$x_id_producto\",\"$x_plu\",\"$x_ean\",\"$x_nombre\",\"$categoria_i\",\"$x_unidad_de_medida\",\"$impuesto_i\",\"$x_descuento_id_descuento\",\"$x_stock_minimo\",\"$x_imagen\",\"$x_precio_1\",\"$x_precio_2\",\"$x_precio_3\",\"$x_precio_4\",\"$x_costo_compra\",\"$x_punto_venta_id_punto_venta\",\"$id\",\"$fecha_actual\")";
-
-                    }else{
-                       
                     }
 
-                    /*$consulta1 = "SELECT id_impuestos FROM impuestos WHERE valor_impuesto=\"$x_impuestos_id_impuestos\"";
+                    $count_des=0; 
+                    while($rows=mysqli_fetch_assoc($result_des)){
+                        $count_des++;  
+                        $descuento_i=$rows['id_descuento'];
+                    }
 
-                    $sql = "insert into producto (id_producto, plu, ean, nombre, categoria_id_categoria, unidad_de_medida, impuestos_id_impuestos, descuento_id_descuento, stock_minimo, imagen, precio_1, precio_2, precio_3, precio_4, costo_compra, punto_venta_id_punto_venta, empleado_id_empleado, fecha_registro) value";
 
-                    $sql .= " (\"$x_id_producto\",\"$x_plu\",\"$x_ean\",\"$x_nombre\",\"$x_categoria_id_categoria\",\"$x_unidad_de_medida\",\"$x_impuestos_id_impuestos\",\"$x_descuento_id_descuento\",\"$x_stock_minimo\",\"$x_imagen\",\"$x_precio_1\",\"$x_precio_2\",\"$x_precio_3\",\"$x_precio_4\",\"$x_costo_compra\",\"$x_punto_venta_id_punto_venta\",\"$id\",\"$fecha_actual\")";*/
-                    
+                    if ($count==0) {
+
+                        if($count_imp!=0 && $count_cat!=0 && $count_des!=0){
+
+
+                            $sql = "insert into producto (id_producto, plu, ean, nombre, categoria_id_categoria, unidad_de_medida, impuestos_id_impuestos, descuento_id_descuento, stock_minimo, imagen, precio_1, precio_2, precio_3, precio_4, costo_compra, punto_venta_id_punto_venta, empleado_id_empleado, fecha_registro) value";
+
+                            $sql .= " (\"$x_id_producto\",\"$x_plu\",\"$x_ean\",\"$x_nombre\",\"$categoria_i\",\"$x_unidad_de_medida\",\"$impuesto_i\",\"$descuento_i\",\"$x_stock_minimo\",\"$x_imagen\",\"$x_precio_1\",\"$x_precio_2\",\"$x_precio_3\",\"$x_precio_4\",\"$x_costo_compra\",\"$x_punto_venta_id_punto_venta\",\"$id\",\"$fecha_actual\")";
+
+                        }else{
+
+                            echo '<script language="javascript">alert("Los datos ingresados en categoría, impuesto o descuento son incorrectos.");</script>';
+
+                        }
+                        
+
+                    }else{
+
+                        if($count_imp!=0 && $count_cat!=0 && $count_des!=0){
+
+                            $sql = "UPDATE producto SET plu=\"$x_plu\", ean=\"$x_ean\", nombre=\"$x_nombre\", categoria_id_categoria=\"$categoria_i\", unidad_de_medida=\"$x_unidad_de_medida\", impuestos_id_impuestos=\"$impuesto_i\", descuento_id_descuento=\"$descuento_i\", stock_minimo=\"$x_stock_minimo\", precio_1=\"$x_precio_1\", precio_2=\"$x_precio_2\", precio_3=\"$x_precio_3\", precio_4=\"$x_precio_4\", costo_compra=\"$x_costo_compra\", punto_venta_id_punto_venta=\"$x_punto_venta_id_punto_venta\", empleado_id_empleado=\"$id\", fecha_registro=\"$fecha_actual\" WHERE id_producto = \"$x_id_producto\"";
+
+                        }else{
+                            echo '<script language="javascript">alert("Los datos ingresados en categoría, impuesto o descuento son incorrectos.");</script>';
+                        }
+                        
+                    }
+
+                    $con->query($sql);
 
                 }else{
 
-                    $sql = "UPDATE producto SET plu=\"$x_plu\", ean=\"$x_ean\", nombre=\"$x_nombre\", categoria_id_categoria=\"$x_categoria_id_categoria\", unidad_de_medida=\"$x_unidad_de_medida\", impuestos_id_impuestos=\"$x_impuestos_id_impuestos\", descuento_id_descuento=\"$x_descuento_id_descuento\", stock_minimo=\"$x_stock_minimo\", precio_1=\"$x_precio_1\", precio_2=\"$x_precio_2\", precio_3=\"$x_precio_3\", precio_4=\"$x_precio_4\", costo_compra=\"$x_costo_compra\", punto_venta_id_punto_venta=\"$x_punto_venta_id_punto_venta\", empleado_id_empleado=\"$id\", fecha_registro=\"$fecha_actual\" WHERE id_producto = \"$x_id_producto\"";
+                    echo '<script language="javascript">alert("Los valores de algunos registros sobrepasan el 35% del costo de compra, por lo tanto no se actualizarán");</script>';
                 }
 
-                $con->query($sql);
             }
         unlink($archivo);
         }   
