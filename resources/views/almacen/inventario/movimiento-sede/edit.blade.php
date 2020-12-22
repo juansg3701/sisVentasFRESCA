@@ -169,6 +169,16 @@
 										</select>
 									</div>
 								</div>
+
+								<div class="form-row">
+									<div class="form-group col-sm-4">
+										<div>Cantidad:</div>
+									</div>
+									<div class="form-group col-sm-8">
+										<input type="text" class="form-control" name="cantidad" min="1"  id="cantidadJ" value="{{$movimientos->cantidad}}">
+									</div>
+								</div>
+
 								<input type="hidden" name="t_movimiento_id_tmovimiento" value="{{$movimientos->t_movimiento_id_tmovimiento}}">
 								
 

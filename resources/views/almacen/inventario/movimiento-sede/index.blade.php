@@ -66,6 +66,7 @@
 							<th>PRODUCTO</th>
 							<th>SEDE LOCAL</th>
 							<th>SEDE SALIDA</th>
+							<th>CANTIDAD</th>
 							<th>ESTADO MOVIMIENTO</th>
 							<th>FECHA</th>
 							<th colspan="3">OPCIONES</th>
@@ -81,6 +82,7 @@
 							<td name="stock_id_stock">{{$pb->nombre}} ({{$mv->nombre_proveedor}})</td>
 							<td name="sede_id_sede">{{ $mv->sede_id_sede}}</td>
 							<td name="sede_id_sede2">{{ $mv->sede_id_sede2}}</td>
+							<td >{{ $mv->cantidad}}</td>
 							<td name="t_movimiento_id_tmovimiento">{{ $mv->t_movimiento_id_tmovimiento}}</td>
 							<td name="fecha">{{ $mv->fecha}}</td>
 							

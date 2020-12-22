@@ -187,7 +187,7 @@
 									<div>Cantidad:</div>
 								</div>
 						<div class="form-group col-sm-8">
-							<input type="number" class="form-control" name="cantidad" value="{{$stock->cantidad}}" min="1" pattern="^[0-9]+">
+							<input type="text" class="form-control" name="cantidad" value="{{$stock->cantidad}}" min="1" >
 			
 						</div>
 					</div>

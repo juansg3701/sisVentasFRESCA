@@ -52,7 +52,7 @@
 										<div>Nombre:</div>
 									</div>
 									<div class="form-group col-sm-3">
-										<input type="text" class="form-control" name="nombre" value="{{$productos->nombre}}">
+										<input type="text" class="form-control" name="nombre" value="{{$productos->nombre}}" id="nombre">
 									</div>
 
 									<div class="form-group col-sm-1"></div>
@@ -61,7 +61,7 @@
 										<div>Unidad de medida:</div>
 									</div>
 									<div class="form-group col-sm-3">
-										<select name="unidad_de_medida" class="form-control">
+										<select name="unidad_de_medida" class="form-control" id="unidad_de_medida">
 											@if($productos->unidad_de_medida=="UNIDAD")
 											<option value="UNIDAD">UNIDAD</option>
 											<option value="KILO">KILO</option>
@@ -79,12 +79,14 @@
 			                	<div class="form-row">
 			                	<div class="form group col-sm-12" align="center">
 			                	<div class="form-row">
-									<div class="form-group col-sm-2">
-										<div>Precio No.1:</div>
+			                		<div class="form-group col-sm-2">
+										<div>Costo de compra:</div>
 									</div>
 									<div class="form-group col-sm-3">
-										<input type="number" class="form-control" name="precio_1" value="{{$productos->precio_1}}" min="1" pattern="^[0-9]+">
+										<input type="number" class="form-control" name="costo_compra" value="{{$productos->costo_compra}}" min="1" pattern="^[0-9]+" id="costo_compra">
 									</div>
+
+									
 								
 									<div class="form-group col-sm-1"></div>
 
@@ -92,7 +94,7 @@
 										<div>Stock m&iacutenimo:</div>
 									</div>
 									<div class="form-group col-sm-3">
-										<input type="text" class="form-control" name="stock_minimo" value="{{$productos->stock_minimo}}">
+										<input type="text" class="form-control" name="stock_minimo" value="{{$productos->stock_minimo}}" id="stock_minimo">
 									</div>
 								</div>
 
@@ -106,11 +108,12 @@
 
 								<div class="form-row">
 									<div class="form-group col-sm-2">
-										<div>Precio No.2:</div>
+										<div>Precio No.1:</div>
 									</div>
 									<div class="form-group col-sm-3">
-										<input type="number" class="form-control" name="precio_2" value="{{$productos->precio_2}}" min="1" pattern="^[0-9]+">
+										<input type="number" class="form-control" name="precio_1" value="{{$productos->precio_1}}" min="1" pattern="^[0-9]+" id="precio_1">
 									</div>
+									
 								
 									<div class="form-group col-sm-1"></div>
 									<div class="form-group col-sm-2">
@@ -132,11 +135,12 @@
 
 								<div class="form-row">
 									<div class="form-group col-sm-2">
-										<div>Precio No.3:</div>
+										<div>Precio No.2:</div>
 									</div>
 									<div class="form-group col-sm-3">
-										<input type="number" class="form-control" name="precio_3" value="{{$productos->precio_3}}" min="1" pattern="^[0-9]+">
+										<input type="number" class="form-control" name="precio_2" value="{{$productos->precio_2}}" min="1" pattern="^[0-9]+" id="precio_2">
 									</div>
+									
 									<div class="form-group col-sm-1"></div>
 									<div class="form-group col-sm-2">
 										<div>Categor&iacutea:</div>
@@ -160,11 +164,12 @@
 
 								<div class="form-row">
 									<div class="form-group col-sm-2">
-										<div>Precio No.4:</div>
+										<div>Precio No.3:</div>
 									</div>
 									<div class="form-group col-sm-3">
-										<input type="number" class="form-control" name="precio_4" value="{{$productos->precio_4}}" min="1" pattern="^[0-9]+">
+										<input type="number" class="form-control" name="precio_3" value="{{$productos->precio_3}}" min="1" pattern="^[0-9]+" id="precio_3">
 									</div>
+									
 									
 									<div class="form-group col-sm-1"></div>
 
@@ -190,10 +195,10 @@
 
 								<div class="form-row">
 									<div class="form-group col-sm-2">
-										<div>Costo de compra:</div>
+										<div>Precio No.4:</div>
 									</div>
 									<div class="form-group col-sm-3">
-										<input type="number" class="form-control" name="costo_compra" value="{{$productos->costo_compra}}" min="1" pattern="^[0-9]+">
+										<input type="number" class="form-control" name="precio_4" value="{{$productos->precio_4}}" min="1" pattern="^[0-9]+" id="precio_4">
 									</div>
 									
 									<div class="form-group col-sm-1"></div>
@@ -216,7 +221,7 @@
 										<div>PLU:</div>
 									</div>
 									<div class="form-group col-sm-3">
-										<input type="text" class="form-control" name="plu" value="{{$productos->plu}}">
+										<input type="text" class="form-control" name="plu" value="{{$productos->plu}}" id="plu">
 									</div>
 									
 									<div class="form-group col-sm-1"></div>
@@ -241,7 +246,7 @@
 										<div>EAN:</div>
 									</div>
 									<div class="form-group col-sm-3">
-										<input type="text" class="form-control" name="ean" value="{{$productos->ean}}">
+										<input type="text" class="form-control" name="ean" value="{{$productos->ean}}" id="ean">
 									</div>
 									
 									
@@ -279,7 +284,9 @@
 
 								<div class="form-row">
 									<div class="form-group col-sm-12">
-										<button class="btn btn-info" type="submit">Registrar</button>
+										<button class="btn btn-info" name="boton1" type="button" onclick="a()">Registrar</button>
+
+										<button type="submit" id="envio" name="envio" style="display: none"></button>
 										<a href="{{url('almacen/inventario/producto-sede/productoCompleto')}}" class="btn btn-danger">Regresar</a>
 									</div>
 								</div>
@@ -296,5 +303,58 @@
 
 {!!Form::close()!!}		
 </body>
+<!-- jquery para mensajes-->
+ <script src="{{asset('assets/js/jQuery.js')}}"></script>
+<script type="text/javascript">
 
+	function a(){
+		
+  var ean = $('#ean').val();
+  var nombre = $('#nombre').val();
+  var unidad = $('#unidad_de_medida').val();
+  var precio1 = $('#precio_1').val();
+  var stock = $('#stock_minimo').val();
+  var precio2 = $('#precio_2').val();
+  var precio3 = $('#precio_3').val();
+  var precio4 = $('#precio_4').val();
+  var costo_compra = $('#costo_compra').val();
+
+  var excedente=costo_compra*0.35;
+  var costo=parseFloat(costo_compra)+parseFloat(excedente);
+
+        
+        if(ean==='' || nombre==='' || unidad==='' || precio1==='' || precio2==='' || precio3===''
+        	|| precio4==='' || stock==='' || costo_compra===''){
+            Swal.fire({
+                icon: 'error',
+                text: 'Por favor ingrese todos los datos',
+                showClass: {
+                    popup: 'animate__animated animate__fadeInDown'
+                },
+                hideClass: {
+                    popup: 'animate__animated animate__fadeOutUp'
+                }
+            });    
+
+
+        }else {	
+        	if(costo<=precio1 && costo<=precio2 && costo<=precio3 && costo<=precio4){
+        	 document.getElementById("envio").click(); 
+        	}else{
+        		Swal.fire({
+                icon: 'error',
+                text: 'Los precios deben ser mayores al precio de compra',
+                showClass: {
+                    popup: 'animate__animated animate__fadeInDown'
+                },
+                hideClass: {
+                    popup: 'animate__animated animate__fadeOutUp'
+                }
+            });  
+        	}
+        }
+    }//IF DEL ENTER
+	
+
+</script>
 @stop
