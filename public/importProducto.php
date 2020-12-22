@@ -12,6 +12,8 @@ include "class.upload.php";
 
     $empleado= $_POST['empleado'];
     $fecha_actual= $_POST['fecha_actual'];
+
+    $sql = "SELECT * FROM producto";
   
 
 
@@ -79,6 +81,17 @@ if(isset($_FILES["name"])){
                     $consulta_cat = "SELECT id_categoria FROM categoria_productos WHERE nombre=\"$x_categoria_id_categoria\"";
                     $consulta_des = "SELECT id_descuento FROM descuento WHERE valor_descuento=\"$x_descuento_id_descuento\"";
 
+                    $consulta_ean = "SELECT * FROM producto WHERE ean = \"$x_ean\"";
+                    $result_ean=mysqli_query($link, $consulta_ean);
+                    $count_ean=0; 
+                    while($rows=mysqli_fetch_assoc($result_ean)){
+                        $count_ean++;
+                        $ean=$rows['ean'];
+                    }
+
+
+
+
                     $result_imp=mysqli_query($link, $consulta_imp);
                     $result_cat=mysqli_query($link, $consulta_cat);
                     $result_des=mysqli_query($link, $consulta_des);
@@ -106,10 +119,14 @@ if(isset($_FILES["name"])){
 
                         if($count_imp!=0 && $count_cat!=0 && $count_des!=0){
 
+                            if ($count_ean==0) {
+                                $sql = "insert into producto (id_producto, plu, ean, nombre, categoria_id_categoria, unidad_de_medida, impuestos_id_impuestos, descuento_id_descuento, stock_minimo, imagen, precio_1, precio_2, precio_3, precio_4, costo_compra, punto_venta_id_punto_venta, empleado_id_empleado, fecha_registro) value";
 
-                            $sql = "insert into producto (id_producto, plu, ean, nombre, categoria_id_categoria, unidad_de_medida, impuestos_id_impuestos, descuento_id_descuento, stock_minimo, imagen, precio_1, precio_2, precio_3, precio_4, costo_compra, punto_venta_id_punto_venta, empleado_id_empleado, fecha_registro) value";
-
-                            $sql .= " (\"$x_id_producto\",\"$x_plu\",\"$x_ean\",\"$x_nombre\",\"$categoria_i\",\"$x_unidad_de_medida\",\"$impuesto_i\",\"$descuento_i\",\"$x_stock_minimo\",\"$x_imagen\",\"$x_precio_1\",\"$x_precio_2\",\"$x_precio_3\",\"$x_precio_4\",\"$x_costo_compra\",\"$x_punto_venta_id_punto_venta\",\"$id\",\"$fecha_actual\")";
+                                $sql .= " (\"$x_id_producto\",\"$x_plu\",\"$x_ean\",\"$x_nombre\",\"$categoria_i\",\"$x_unidad_de_medida\",\"$impuesto_i\",\"$descuento_i\",\"$x_stock_minimo\",\"$x_imagen\",\"$x_precio_1\",\"$x_precio_2\",\"$x_precio_3\",\"$x_precio_4\",\"$x_costo_compra\",\"$x_punto_venta_id_punto_venta\",\"$id\",\"$fecha_actual\")";
+                                
+                            }else{
+                                echo '<script language="javascript">alert("EAN y PLU deben ser valores únicos, los registros con estos campos repetidos no se guardarán.'.$count_ean.'");</script>';
+                            }
 
                         }else{
 
@@ -122,7 +139,11 @@ if(isset($_FILES["name"])){
 
                         if($count_imp!=0 && $count_cat!=0 && $count_des!=0){
 
-                            $sql = "UPDATE producto SET plu=\"$x_plu\", ean=\"$x_ean\", nombre=\"$x_nombre\", categoria_id_categoria=\"$categoria_i\", unidad_de_medida=\"$x_unidad_de_medida\", impuestos_id_impuestos=\"$impuesto_i\", descuento_id_descuento=\"$descuento_i\", stock_minimo=\"$x_stock_minimo\", precio_1=\"$x_precio_1\", precio_2=\"$x_precio_2\", precio_3=\"$x_precio_3\", precio_4=\"$x_precio_4\", costo_compra=\"$x_costo_compra\", punto_venta_id_punto_venta=\"$x_punto_venta_id_punto_venta\", empleado_id_empleado=\"$id\", fecha_registro=\"$fecha_actual\" WHERE id_producto = \"$x_id_producto\"";
+                            if ($count_ean==0) {
+
+                                $sql = "UPDATE producto SET plu=\"$x_plu\", ean=\"$x_ean\", nombre=\"$x_nombre\", categoria_id_categoria=\"$categoria_i\", unidad_de_medida=\"$x_unidad_de_medida\", impuestos_id_impuestos=\"$impuesto_i\", descuento_id_descuento=\"$descuento_i\", stock_minimo=\"$x_stock_minimo\", precio_1=\"$x_precio_1\", precio_2=\"$x_precio_2\", precio_3=\"$x_precio_3\", precio_4=\"$x_precio_4\", costo_compra=\"$x_costo_compra\", punto_venta_id_punto_venta=\"$x_punto_venta_id_punto_venta\", empleado_id_empleado=\"$id\", fecha_registro=\"$fecha_actual\" WHERE id_producto = \"$x_id_producto\"";
+                                
+                            }
 
                         }else{
                             echo '<script language="javascript">alert("Los datos ingresados en categoría, impuesto o descuento son incorrectos.");</script>';
