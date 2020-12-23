@@ -67,27 +67,22 @@
 			                <div class="card-header" align="center">
 			                     <strong>Formulario de edición</strong>
 			                </div>
+
 			                <div class="card-body card-block" align="center">
-								<div class="form-row">
-									<div class="form-group col-sm-4">
-										<div>Fecha:</div>
-									</div>
-									<div class="form-group col-sm-8">
-										<input type="datetime" class="form-control" name="fecha" value="{{$movimientos->fecha}}" >
-									</div>
-								</div>
+			               
 								<div class="form-row">
 									<div class="form-group col-sm-4">
 										<div>Producto:</div>
 									</div>
 									<div class="form-group col-sm-8">
+
 										<select name="stock_id_stock" class="form-control">
 
 											@foreach($productos as $p)
 											@foreach($productoDB as $pb)
 											@if($pb->id_producto==$p->producto_id_producto)
 											@if($movimientos->stock_id_stock==$pb->id_producto)
-											<option value="{{$pb->id_producto}}">{{$pb->nombre}} ({{$p->nombre_sede}}, {{$p->nombre_proveedor}})</option>
+											<option value="{{$pb->nombre}}">{{$pb->nombre}} ({{$p->nombre_sede}}, {{$p->nombre_proveedor}})</option>
 											@endif
 											@endif
 											@endforeach
@@ -97,7 +92,7 @@
 											@foreach($productoDB as $pb)
 											@if($pb->id_producto==$p->producto_id_producto)
 											@if($movimientos->stock_id_stock!=$pb->id_producto)
-											<option value="{{$pb->id_producto}}">{{$pb->nombre}} ({{$p->nombre_sede}}, {{$p->nombre_proveedor}})</option>
+											<option value="{{$pb->nombre}}">{{$pb->nombre}} ({{$p->nombre_sede}}, {{$p->nombre_proveedor}})</option>
 											@endif
 											@endif
 											@endforeach
@@ -107,12 +102,14 @@
 										</select>
 									</div>
 								</div>
+
 								@if(auth()->user()->superusuario==0)
 								<div class="form-row">
 									<div class="form-group col-sm-4">
 										<div>Sede salida:</div>
 									</div>
 									<div class="form-group col-sm-8">
+										
 										<select name="sede_id_sede" class="form-control" disabled="">
 											@foreach($sedes as $s)
 											@if($movimientos->sede_id_sede==$s->id_sede)

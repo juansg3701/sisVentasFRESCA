@@ -72,7 +72,6 @@
 							<th colspan="3">OPCIONES</th>
 						</thead>
 						@foreach($movimientos as $mv)
-					
 						@foreach($producto as $pb)
 				
 						@if($pb->id_producto==$mv->stock_id_stock)

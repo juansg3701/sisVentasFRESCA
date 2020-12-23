@@ -28,14 +28,6 @@
 			                     <strong>Formulario de edición</strong>
 			                </div>
 			                <div class="card-body card-block" align="center">
-								<div class="form-row">
-									<div class="form-group col-sm-4">
-										<div>Fecha:</div>
-									</div>
-									<div class="form-group col-sm-8">
-										<input type="datetime-local" class="form-control" name="fecha" value="<?php echo date("Y/m/d H:i:s"); ?>">
-									</div>
-								</div>
 
 								<datalist id="mylist">
 						      		@foreach($productos as $p)
@@ -53,7 +45,6 @@
 									</div>
 									<div class="form-group col-sm-8">
 										<input  class="form-control" name="stock_id_stock" placeholder="Buscar..." list="mylist">
-
 									</div>
 								</div>
 								@if(auth()->user()->superusuario==0)
