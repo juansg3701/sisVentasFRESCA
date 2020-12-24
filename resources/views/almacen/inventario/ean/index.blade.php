@@ -245,7 +245,7 @@
 								</div>
 						<div class="form-group col-sm-8">
 							
-								<input type="text" class="form-control" name="cantidad" min="1" id="cantidadJ">
+								<input type="number" step="any" class="form-control" name="cantidad" min="1" id="cantidadJ" onkeyup="format(this)"  onchange="format(this)" >
 						</div>
 					</div>
 
@@ -333,7 +333,16 @@
 		</div>
 	</div>		                       
 		<script type="text/javascript">
-			
+	
+
+	
+	function format(input)
+{
+const abono =$('#cantidadJ')
+        var final = abono.val().replace(',', '.');
+        abono.val(final)
+}
+
 			$( () => {
 					$("#producto_manual").keyup(function(e) {
 						var producto_m=document.getElementById('producto_manual').value;
