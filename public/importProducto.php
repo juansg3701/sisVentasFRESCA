@@ -53,8 +53,9 @@ if(isset($_FILES["name"])){
                 $x_imagen = "";
                 
                 $excedente= ($x_costo_compra*0.35)+$x_costo_compra;
+
                 
-                if($excedente<=$x_precio_1 && $excedente<=$x_precio_2 && $excedente<=$x_precio_3 && $excedente<=$x_precio_4){
+                if(($excedente<=$x_precio_1) && ($excedente<=$x_precio_2 || $x_precio_2==0) && ($excedente<=$x_precio_3 || $x_precio_3==0) && ($excedente<=$x_precio_4 || $x_precio_4==0)){
                     //echo "sirve".$excedente;
 
 
@@ -89,6 +90,13 @@ if(isset($_FILES["name"])){
                         $ean=$rows['ean'];
                     }
 
+                    $consulta_plu = "SELECT * FROM producto WHERE plu = \"$x_plu\"";
+                    $result_plu=mysqli_query($link, $consulta_plu);
+                    $count_plu=0; 
+                    while($rows=mysqli_fetch_assoc($result_plu)){
+                        $count_plu++;
+                        $plu=$rows['ean'];
+                    }
 
 
 
@@ -119,14 +127,18 @@ if(isset($_FILES["name"])){
 
                         if($count_imp!=0 && $count_cat!=0 && $count_des!=0){
 
-                            if ($count_ean==0) {
+
+
+                            if ($count_ean==0 && $count_plu==0) {
                                 $sql = "insert into producto (id_producto, plu, ean, nombre, categoria_id_categoria, unidad_de_medida, impuestos_id_impuestos, descuento_id_descuento, stock_minimo, imagen, precio_1, precio_2, precio_3, precio_4, costo_compra, punto_venta_id_punto_venta, empleado_id_empleado, fecha_registro) value";
 
                                 $sql .= " (\"$x_id_producto\",\"$x_plu\",\"$x_ean\",\"$x_nombre\",\"$categoria_i\",\"$x_unidad_de_medida\",\"$impuesto_i\",\"$descuento_i\",\"$x_stock_minimo\",\"$x_imagen\",\"$x_precio_1\",\"$x_precio_2\",\"$x_precio_3\",\"$x_precio_4\",\"$x_costo_compra\",\"$x_punto_venta_id_punto_venta\",\"$id\",\"$fecha_actual\")";
                                 
                             }else{
-                                echo '<script language="javascript">alert("EAN y PLU deben ser valores únicos, los registros con estos campos repetidos no se guardarán.'.$count_ean.'");</script>';
+                                echo '<script language="javascript">alert("EAN y PLU deben ser valores únicos, no se guardará el registro con el id: '.$x_id_producto.'");</script>';
                             }
+
+
 
                         }else{
 
@@ -139,10 +151,11 @@ if(isset($_FILES["name"])){
 
                         if($count_imp!=0 && $count_cat!=0 && $count_des!=0){
 
-                            if ($count_ean==0) {
+                            if ($count_ean>=0 && $count_ean<=1 && $count_plu>=0 && $count_plu<=1) {
 
                                 $sql = "UPDATE producto SET plu=\"$x_plu\", ean=\"$x_ean\", nombre=\"$x_nombre\", categoria_id_categoria=\"$categoria_i\", unidad_de_medida=\"$x_unidad_de_medida\", impuestos_id_impuestos=\"$impuesto_i\", descuento_id_descuento=\"$descuento_i\", stock_minimo=\"$x_stock_minimo\", precio_1=\"$x_precio_1\", precio_2=\"$x_precio_2\", precio_3=\"$x_precio_3\", precio_4=\"$x_precio_4\", costo_compra=\"$x_costo_compra\", punto_venta_id_punto_venta=\"$x_punto_venta_id_punto_venta\", empleado_id_empleado=\"$id\", fecha_registro=\"$fecha_actual\" WHERE id_producto = \"$x_id_producto\"";
-                                
+                            }else{
+                                echo '<script language="javascript">alert("----EAN y PLU deben ser valores únicos, no se guardarán cambios en el registro con el id: '.$x_id_producto.'");</script>';
                             }
 
                         }else{
@@ -155,7 +168,7 @@ if(isset($_FILES["name"])){
 
                 }else{
 
-                    echo '<script language="javascript">alert("Los valores de algunos registros sobrepasan el 35% del costo de compra, por lo tanto no se actualizarán");</script>';
+                    echo '<script language="javascript">alert("Por favor valide correctamente los valores especificados en los campos de  precio. Existen errores en los registros, por lo tanto no se insertarán/actualizarán.");</script>';
                 }
 
             }
