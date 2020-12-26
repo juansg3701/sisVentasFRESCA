@@ -160,7 +160,9 @@
 								</label>
 							</td>
 							<td>
-								<a href="" title="Registro de cambios" data-target="#modal-precios" data-toggle="modal"><button class="btn btn-outline-primary btn-sm">Precios</button></a>
+								
+								<a href="" title="Registro de cambios" data-target="#modal-precios-{{$ps->id_producto}}" data-toggle="modal"><button class="btn btn-outline-primary btn-sm">Precios</button></a>
+								
 							</td>
 							<td>
 								<a href="{{URL::action('ProductoSedeController@edit',$ps->id_producto)}}"><button class="btn btn-outline-primary btn-sm">Editar</button></a>
@@ -169,7 +171,7 @@
 								<a href="" data-target="#modal-delete-{{$ps->id_producto}}" data-toggle="modal"><button class="btn btn-outline-danger btn-sm">Eliminar</button></a>
 							</td>
 							<td>
-								<a href="" title="Registro de cambios" data-target="#modal-infoProductos" data-toggle="modal"><button class="btn btn-outline-secondary btn-sm">+</button></a>
+								<a href="" title="Registro de cambios" data-target="#modal-infoProductos-{{$ps->id_producto}}" data-toggle="modal"><button class="btn btn-outline-secondary btn-sm">+</button></a>
 							</td>
 						</tr>
 						@include('almacen.inventario.producto-sede.productoCompleto.modal')

@@ -5,9 +5,7 @@
 	<div class="form-group">	
 		<div class="form-row col-sm-12">
 			
-		
-
-			<div class="form-row col-sm-12">
+					<div class="form-row col-sm-12">
 				<div class="form-group col-sm-4">
 					<label>Nombre:</label>
 				</div>

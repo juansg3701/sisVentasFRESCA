@@ -49,6 +49,11 @@
 				</div>
 			</div>
 		</div>
+		<datalist id="mylist2">
+       @foreach($producto as $p)
+			<option>{{ $p->ean}}</option>
+       @endforeach
+      </datalist>
 	</div>
  <!--Formulario de registro-->	
 	<div class="col-md-12">
@@ -78,7 +83,7 @@
 
 								
 								<div class="input-group">
-								<input type="text" class="form-control" name="searchText" placeholder="Buscar..." value="{{$searchText}}">
+								<input type="text" class="form-control" name="searchText" placeholder="Buscar..." list="mylist2" value="{{$searchText}}">
 							
 								<span class="input-group-btn">
 									<button type="submit" class="btn btn-primary">Buscar</button>
@@ -86,7 +91,6 @@
 									</div>
 							{{Form::close()}}
 							</div>
-							<?php $valor_producto=0;?>
 							<div class="form-group col-sm-3">
 									
 									@if($valor!=0)
@@ -97,12 +101,8 @@
 										}
 
 										?>
-										{{$valor_producto}}
 
-									<a href="{{URL::action('ProductoSedeController@edit',$valor_producto)}}"><button class="btn btn-outline-primary btn-sm">Editar</button></a>
-
-									<a href="" data-target="#modal-actualizar-{{$valor_producto}}" data-toggle="modal">
-									<button class="btn btn-info" id="cambiar1" >Cambiar valor 2</button></a>
+									<a href="{{URL::action('ProductoSedeController@edit',$valor_producto)}}"><button class="btn btn-outline-primary btn-sm">Editar producto</button></a>
 
 									@endif
 								
@@ -140,6 +140,8 @@
 									<option>{{ $p->nombre}}</option>
 						       @endforeach
 						      </datalist>
+
+						      
 
 							<div class="form-row">
 								<div class="form-group col-sm-4">
@@ -340,22 +342,7 @@ const abono =$('#cantidadJ')
 }
 
 			$( () => {
-					$("#producto_manual").keyup(function(e) {
-						var producto_m=document.getElementById('producto_manual').value;
-
-						@foreach ($producto as $p)
-								
-						 	if ('{{$p->nombre}}'==producto_m) {
-						 		valorP={{$p->costo_compra}}
-						 		
-						 		"<?php $valor_producto=$p->nombre?>"
-						 		document.getElementById('cambiar1').disabled=false;
-						 		
-						 		
-						 	}
-			            @endforeach
-
-					});
+					
 
 					$("#cantidadJ").keyup(function(e) {
 					var cantidadS=document.getElementById('cantidadJ').value;

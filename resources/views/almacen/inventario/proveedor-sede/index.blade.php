@@ -179,7 +179,7 @@
 								<a href="" data-target="#modal-delete-{{$ps->id_stock}}" data-toggle="modal"><button class="btn btn-outline-danger btn-sm">Eliminar</button></a>
 							</td>
 							<td>
-								<a href="" title="Registro de cambios" data-target="#modal-infoProductos" data-toggle="modal"><button class="btn btn-outline-secondary btn-sm">+</button></a>
+								<a href="" title="Registro de cambios" data-target="#modal-infoProductos-{{$ps->id_stock}}" data-toggle="modal"><button class="btn btn-outline-secondary btn-sm">+</button></a>
 							</td>
 						</tr>
 						@include('almacen.inventario.proveedor-sede.modalInfoProductos')
@@ -231,7 +231,7 @@
 								<a href="" data-target="#modal-delete-{{$ps->id_stock}}" data-toggle="modal"><button class="btn btn-outline-danger btn-sm">Eliminar</button></a>
 							</td>
 							<td>
-								<a href="" title="Registro de cambios" data-target="#modal-infoProductos" data-toggle="modal"><button class="btn btn-outline-secondary btn-sm">+</button></a>
+								<a href="" title="Registro de cambios" data-target="#modal-infoProductos-{{$ps->id_stock}}" data-toggle="modal"><button class="btn btn-outline-secondary btn-sm">+</button></a>
 							</td>
 						</tr>
 						@include('almacen.inventario.proveedor-sede.modalInfoProductos')

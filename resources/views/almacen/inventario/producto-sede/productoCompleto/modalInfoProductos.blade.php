@@ -1,6 +1,6 @@
 <!--Este es el archivo de la ventana modal para mostrar información del LOG-->
 <div class="modal fade modal-slide-in-right" aria-hidden="true"
-role="dialog" tabindex="-1" id="modal-infoProductos">
+role="dialog" tabindex="-1" id="modal-infoProductos-{{$ps->id_producto}}">
 	<!--Información de la ventana emergente-->
 	{{Form::Open(array('action'=>array('ProductoSedeController@destroy',$ps->id_producto), 'method'=>'delete'))}}
 	<div class="modal-dialog">
@@ -15,14 +15,17 @@ role="dialog" tabindex="-1" id="modal-infoProductos">
 			<div class="modal-body">
 				<p>Información:</p>
             </div>
+            @foreach($productos as $ps1)
+           		 @if($ps1->id_producto==$ps->id_producto)
 
+           		 
             <div class="form-row">
 				<div class="form-group col-sm-6">
 					<div>Empleado:</div>
 				</div>
 				<div class="form-group col-sm-6">
                     @foreach($empleados as $e)
-							@if($ps->empleado_id_empleado==$e->id_empleado)
+							@if($ps1->empleado_id_empleado==$e->id_empleado)
 						{{ $e->nombre}}
 							@endif
 					@endforeach
@@ -34,7 +37,7 @@ role="dialog" tabindex="-1" id="modal-infoProductos">
 					<div>Fecha:</div>
 				</div>
 				<div class="form-group col-sm-6">
-                    {{ $ps->fecha_registro}}
+                    {{ $ps1->fecha_registro}}
 				</div>
             </div>
 
@@ -43,9 +46,11 @@ role="dialog" tabindex="-1" id="modal-infoProductos">
 					<div>Punto venta:</div>
 				</div>
 				<div class="form-group col-sm-6">
-                    {{ $ps->nombrePV}}
+                    {{ $ps1->nombrePV}}
 				</div>
             </div>
+            @endif
+           	@endforeach
                                     
 			<div class="modal-footer">
 				<button type="button" class="btn btn-default" data-dismiss="modal">Cancelar</button>

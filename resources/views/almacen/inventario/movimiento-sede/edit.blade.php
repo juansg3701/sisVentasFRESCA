@@ -4,7 +4,8 @@
 <head>
 	<title>Productos</title>
     <!--<link rel="stylesheet" href="{{ asset('css/Almacen/usuario/styles-iniciar.css') }}" />-->
-
+<script src="{{asset('assets/js/jQuery_3.4.1.min.js')}}"></script>
+    <script src="{{asset('assets/js/jquery-ui.min.js')}}"></script>
 </head>
 <body>
 	<!--Control de errores en los campos del formulario-->	
@@ -68,6 +69,15 @@
 			                     <strong>Formulario de edición</strong>
 			                </div>
 
+							<datalist id="mylist">
+						      		
+									@foreach($productoDB as $pb)
+											
+									<option>{{$pb->nombre}}</option>
+											
+									@endforeach
+						      </datalist>
+
 			                <div class="card-body card-block" align="center">
 			               
 								<div class="form-row">
@@ -76,30 +86,16 @@
 									</div>
 									<div class="form-group col-sm-8">
 
-										<select name="stock_id_stock" class="form-control">
+								@foreach($productos as $p)
+								@foreach($productoDB as $pb)
+								@if($movimientos->stock_id_stock==$p->id_stock)
+								@if($pb->id_producto==$p->producto_id_producto)
+								<input  class="form-control" name="stock_id_stock" placeholder="Buscar..." list="mylist" value="{{$pb->nombre}}">
+								@endif
+								@endif
+								@endforeach
+								@endforeach
 
-											@foreach($productos as $p)
-											@foreach($productoDB as $pb)
-											@if($pb->id_producto==$p->producto_id_producto)
-											@if($movimientos->stock_id_stock==$pb->id_producto)
-											<option value="{{$pb->nombre}}">{{$pb->nombre}} ({{$p->nombre_sede}}, {{$p->nombre_proveedor}})</option>
-											@endif
-											@endif
-											@endforeach
-											@endforeach
-
-											@foreach($productos as $p)
-											@foreach($productoDB as $pb)
-											@if($pb->id_producto==$p->producto_id_producto)
-											@if($movimientos->stock_id_stock!=$pb->id_producto)
-											<option value="{{$pb->nombre}}">{{$pb->nombre}} ({{$p->nombre_sede}}, {{$p->nombre_proveedor}})</option>
-											@endif
-											@endif
-											@endforeach
-											@endforeach
-
-										
-										</select>
 									</div>
 								</div>
 
@@ -172,7 +168,7 @@
 										<div>Cantidad:</div>
 									</div>
 									<div class="form-group col-sm-8">
-										<input type="text" class="form-control" name="cantidad" min="1"  id="cantidadJ" value="{{$movimientos->cantidad}}">
+										<input type="text" class="form-control" name="cantidad" min="1"  id="cantidadJ" value="{{$movimientos->cantidad}}" onkeyup="format(this)"  onchange="format(this)">
 									</div>
 								</div>
 
@@ -225,7 +221,15 @@
 	</div>
 
 
+<script type="text/javascript">
 	
+	function format(input)
+{
+const abono =$('#cantidadJ')
+        var final = abono.val().replace(',', '.');
+        abono.val(final)
+}
+</script>	
 {!!Form::close()!!}		
 </body>
 

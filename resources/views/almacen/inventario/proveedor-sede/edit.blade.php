@@ -4,7 +4,8 @@
 <head>
 	<title>Productos proveedor</title>
     <!--<link rel="stylesheet" href="{{ asset('css/Almacen/usuario/styles-iniciar.css') }}" />-->
-
+<script src="{{asset('assets/js/jQuery_3.4.1.min.js')}}"></script>
+    <script src="{{asset('assets/js/jquery-ui.min.js')}}"></script>
 
 </head>
 <body>
@@ -49,7 +50,11 @@
 			</div>
 		</div>
 	</div>
-
+ <datalist id="mylist">
+   @foreach($producto as $p)
+		<option>{{ $p->nombre}}</option>
+   @endforeach
+  </datalist>
 <!--Formulario de registro-->	
 	<div class="col-md-12">
 		<div class="card">
@@ -78,19 +83,13 @@
 									<div>Producto:</div>
 								</div>
 								<div class="form-group col-sm-8">
-									<select name="producto_id_producto" class="form-control" value="{{$stock->producto_id_producto}}">
-										@foreach($producto as $p)
-										@if($stock->producto_id_producto==$p->id_producto)
-										<option value="{{$p->id_producto}}">{{$p->nombre}}</option>
-										@endif
-										@endforeach
 
-										@foreach($producto as $p)
-										@if($stock->producto_id_producto!=$p->id_producto)
-										<option value="{{$p->id_producto}}">{{$p->nombre}}</option>
+									@foreach($producto as $p)
+										@if($stock->producto_id_producto==$p->id_producto)
+										<input  class="form-control" name="producto_id_producto" placeholder="Buscar..." list="mylist" id="producto_manual" value="{{$p->nombre}}">
 										@endif
-										@endforeach
-									</select>
+									@endforeach
+
 								</div>
 							</div>
 					
@@ -187,7 +186,7 @@
 									<div>Cantidad:</div>
 								</div>
 						<div class="form-group col-sm-8">
-							<input type="text" class="form-control" name="cantidad" value="{{$stock->cantidad}}" min="1" >
+							<input type="text" class="form-control" name="cantidad" value="{{$stock->cantidad}}" min="1" id="cantidadJ" onkeyup="format(this)"  onchange="format(this)">
 			
 						</div>
 					</div>
@@ -229,7 +228,7 @@
 							<div>Total:</div>
 						</div>
 						<div class="form-group col-sm-8">
-							<input type="number" class="form-control" name="total" value="{{$stock->total}}" min="1" pattern="^[0-9]+">
+							<input type="number" class="form-control" id="total" name="total" value="{{$stock->total}}" min="1">
 						</div>
 					</div>
 					<div class="form-row">
@@ -281,7 +280,52 @@
 	</div>		                       
 
 
+	<script type="text/javascript">
+	
 
+	
+	function format(input)
+{
+const abono =$('#cantidadJ')
+        var final = abono.val().replace(',', '.');
+        abono.val(final)
+}
+$( () => {
+					
+
+					$("#cantidadJ").keyup(function(e) {
+					var cantidadS=document.getElementById('cantidadJ').value;
+				
+						var valorP=0;
+						var producto_ma=document.getElementById('producto_manual').value;
+
+						producto_ma=producto_ma.replace(/á/gi,"&aacute;");
+						producto_ma=producto_ma.replace(/é/gi,"&eacute;");
+						producto_ma=producto_ma.replace(/í/gi,"&iacute;");
+						producto_ma=producto_ma.replace(/ó/gi,"&oacute;");
+						producto_ma=producto_ma.replace(/ú/gi,"&uacute;");
+
+						producto_ma=producto_ma.replace(/Á/gi,"&Aacute;");
+						producto_ma=producto_ma.replace(/É/gi,"&Eacute;");
+						producto_ma=producto_ma.replace(/Í/gi,"&Iacute;");
+						producto_ma=producto_ma.replace(/Ó/gi,"&Oacute;");
+						producto_ma=producto_ma.replace(/Ú/gi,"&Uacute;");
+						 @foreach ($producto as $p)
+								
+						 	if ('{{$p->nombre}}'==producto_ma) {
+						 		valorP={{$p->costo_compra}}
+						 	}
+			            @endforeach
+						
+						
+
+				
+					document.getElementById("total").value=cantidadS*valorP;
+						
+            		});
+				
+			});
+</script>
 </body>
 
 @stop

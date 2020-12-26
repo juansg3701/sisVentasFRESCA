@@ -4,7 +4,8 @@
 <head>
 	<title>Inventario</title>
     <!--<link rel="stylesheet" href="{{ asset('css/Almacen/usuario/styles-iniciar.css') }}" />-->
-
+<script src="{{asset('assets/js/jQuery_3.4.1.min.js')}}"></script>
+    <script src="{{asset('assets/js/jquery-ui.min.js')}}"></script>
 </head>
 <body>
 
@@ -30,12 +31,11 @@
 			                <div class="card-body card-block" align="center">
 
 								<datalist id="mylist">
-						      		@foreach($productos as $p)
+						      		
 										@foreach($productoDB as $pb)
-											@if($pb->id_producto==$p->producto_id_producto)
-											<option value="{{$pb->nombre}}">{{$pb->nombre}} ({{$p->nombre_sede}}, {{$p->nombre_proveedor}})</option>
-											@endif
-										@endforeach
+											
+									<option>{{$pb->nombre}}</option>
+											
 									@endforeach
 						      </datalist>
 
@@ -96,7 +96,7 @@
 										<div>Cantidad:</div>
 									</div>
 									<div class="form-group col-sm-8">
-										<input type="text" class="form-control" name="cantidad" min="1"  id="cantidadJ">
+										<input type="text" class="form-control" name="cantidad" min="1"  id="cantidadJ" onkeyup="format(this)"  onchange="format(this)">
 									</div>
 								</div>
 								
@@ -143,7 +143,15 @@
 			</div>
 		</div>
 	</div>
-
+<script type="text/javascript">
+	
+	function format(input)
+{
+const abono =$('#cantidadJ')
+        var final = abono.val().replace(',', '.');
+        abono.val(final)
+}
+</script>
 {!!Form::close()!!}	
 </body>
 

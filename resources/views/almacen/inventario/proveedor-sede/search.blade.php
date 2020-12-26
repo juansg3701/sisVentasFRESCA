@@ -1,30 +1,56 @@
 {!! Form::open(array('url'=>'almacen/inventario/proveedor-sede','method'=>'GET','autocomplete'=>'off','role'=>'search')) !!}
 <div class="form-group">
-	Nombre:
-		 <br>
-		<input id="buscar2" type="text" class="form-control" name="searchText0" placeholder="Buscar..." >
-	
-		</br>
-	PLU:
-	<br>
-		<input id="pluP"  type="text" class="form-control" name="searchText1" placeholder="Buscar..." >
-	
-	</br>
-	Sede:
-	<br>
-		<input id="sed1" type="text" class="form-control" name="searchText2" placeholder="Buscar..." >
-	
-	</br>
-	Proveedor:
-	<br>
-		<input id="pro3" type="text" class="form-control" name="searchText3" placeholder="Buscar..." >
-	
-	</br>
-		<span class="input-group-btn">
-			<button type="submit" class="btn btn-primary">Buscar</button>
-		</span>
 
+	<div class="form-row col-sm-12">
+				<div class="form-group col-sm-4">
+					<label>Nombre:</label>
+				</div>
+				<div class="form-group col-sm-8">
+					<input id="buscar2" type="text" class="form-control" name="searchText0" placeholder="Buscar..." >
+				</div>
+			</div>
 
+			<div class="form-row col-sm-12">
+				<div class="form-group col-sm-4">
+					<label>PLU:</label>
+				</div>
+				<div class="form-group col-sm-8">
+						<input id="pluP"  type="text" class="form-control" name="searchText1" placeholder="Buscar..." >
+				</div>
+			</div>
+
+			<div class="form-row col-sm-12">
+				<div class="form-group col-sm-4">
+					<label>EAN:</label>
+				</div>
+				<div class="form-group col-sm-8">
+						<input id="tags" type="text" class="form-control" name="searchText2" placeholder="Buscar..." >
+				</div>
+			</div>
+
+			<div class="form-row col-sm-12">
+				<div class="form-group col-sm-4">
+					<label>Sede:</label>
+				</div>
+				<div class="form-group col-sm-8">
+						<input id="sed1" type="text" class="form-control" name="searchText2" placeholder="Buscar..." >
+				</div>
+			</div>
+
+			<div class="form-row col-sm-12">
+				<div class="form-group col-sm-4">
+					<label>Proveedor:</label>
+				</div>
+				<div class="form-group col-sm-8">
+						<input id="pro3" type="text" class="form-control" name="searchText3" placeholder="Buscar..." >
+				</div>
+			</div>
+
+			<div class="form-group col-sm-12">
+				<span class="input-group-btn">
+					<button id="btnBuscar" type="submit"  class="btn btn-primary">Buscar</button>
+				</span>
+			</div>
 
 </div>
 
