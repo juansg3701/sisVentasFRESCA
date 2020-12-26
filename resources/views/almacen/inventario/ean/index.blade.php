@@ -88,22 +88,18 @@
 							</div>
 							<?php $valor_producto=0;?>
 							<div class="form-group col-sm-3">
-								@include('almacen.inventario.ean.modalActualizar')
-									@if($valor==0)
-									{{$valor_producto}}
-									<a href="" data-target="#modal-actualizar-{{$valor_producto}}" data-toggle="modal">
-									<button class="btn btn-info" id="cambiar1" disabled="true">Cambiar valor 1</button></a>
-										
-									@endif
+									
 									@if($valor!=0)
 										<?php
 										 
 										foreach($pEAN as $pE){
-										 $ps->id_producto=$pE->id_producto;
+										 $valor_producto=$pE->id_producto;
 										}
 
 										?>
 										{{$valor_producto}}
+
+									<a href="{{URL::action('ProductoSedeController@edit',$valor_producto)}}"><button class="btn btn-outline-primary btn-sm">Editar</button></a>
 
 									<a href="" data-target="#modal-actualizar-{{$valor_producto}}" data-toggle="modal">
 									<button class="btn btn-info" id="cambiar1" >Cambiar valor 2</button></a>
@@ -245,7 +241,7 @@
 								</div>
 						<div class="form-group col-sm-8">
 							
-								<input type="number" step="any" class="form-control" name="cantidad" min="1" id="cantidadJ" onkeyup="format(this)"  onchange="format(this)" >
+								<input type="text" step="any" class="form-control" name="cantidad" min="1" id="cantidadJ" onkeyup="format(this)"  onchange="format(this)" >
 						</div>
 					</div>
 
