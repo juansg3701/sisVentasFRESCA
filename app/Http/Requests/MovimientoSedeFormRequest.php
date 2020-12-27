@@ -31,6 +31,7 @@ class MovimientoSedeFormRequest extends Request
             'sede_id_sede2'=>'required|max:45',
             't_movimiento_id_tmovimiento'=>'required|max:45',
             'id_empleado'=>'required|max:45',
+            'total'=>'required|max:45',
 
         ];
     }

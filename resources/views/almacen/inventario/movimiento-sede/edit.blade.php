@@ -90,7 +90,7 @@
 								@foreach($productoDB as $pb)
 								@if($movimientos->stock_id_stock==$p->id_stock)
 								@if($pb->id_producto==$p->producto_id_producto)
-								<input  class="form-control" name="stock_id_stock" placeholder="Buscar..." list="mylist" value="{{$pb->nombre}}">
+								<input  class="form-control" name="stock_id_stock" placeholder="Buscar..." list="mylist" value="{{$pb->nombre}}" id="producto_manual">
 								@endif
 								@endif
 								@endforeach
@@ -172,6 +172,15 @@
 									</div>
 								</div>
 
+								<div class="form-row">
+									<div class="form-group col-sm-4">
+										<div>Total:</div>
+									</div>
+									<div class="form-group col-sm-8">
+										<input type="number" class="form-control" name="total" id="total">
+									</div>
+								</div>
+
 								<input type="hidden" name="t_movimiento_id_tmovimiento" value="{{$movimientos->t_movimiento_id_tmovimiento}}">
 								
 
@@ -229,6 +238,75 @@ const abono =$('#cantidadJ')
         var final = abono.val().replace(',', '.');
         abono.val(final)
 }
+
+$( () => {
+					
+
+					$("#cantidadJ").keyup(function(e) {
+					var cantidadS=document.getElementById('cantidadJ').value;
+				
+					
+						var valorP=0;
+						var producto_ma=document.getElementById('producto_manual').value;
+
+						producto_ma=producto_ma.replace(/á/gi,"&aacute;");
+						producto_ma=producto_ma.replace(/é/gi,"&eacute;");
+						producto_ma=producto_ma.replace(/í/gi,"&iacute;");
+						producto_ma=producto_ma.replace(/ó/gi,"&oacute;");
+						producto_ma=producto_ma.replace(/ú/gi,"&uacute;");
+
+						producto_ma=producto_ma.replace(/Á/gi,"&Aacute;");
+						producto_ma=producto_ma.replace(/É/gi,"&Eacute;");
+						producto_ma=producto_ma.replace(/Í/gi,"&Iacute;");
+						producto_ma=producto_ma.replace(/Ó/gi,"&Oacute;");
+						producto_ma=producto_ma.replace(/Ú/gi,"&Uacute;");
+						 @foreach ($productoDB as $p)
+								
+						 	if ('{{$p->nombre}}'==producto_ma) {
+						 		valorP={{$p->costo_compra}}
+						 	}
+			            @endforeach
+						
+						
+
+				
+					document.getElementById("total").value=cantidadS*valorP;
+						
+            		});
+            		
+            		$("#producto_manual").keyup(function(e) {
+					var cantidadS=document.getElementById('cantidadJ').value;
+				
+					
+						var valorP=0;
+						var producto_ma=document.getElementById('producto_manual').value;
+
+						producto_ma=producto_ma.replace(/á/gi,"&aacute;");
+						producto_ma=producto_ma.replace(/é/gi,"&eacute;");
+						producto_ma=producto_ma.replace(/í/gi,"&iacute;");
+						producto_ma=producto_ma.replace(/ó/gi,"&oacute;");
+						producto_ma=producto_ma.replace(/ú/gi,"&uacute;");
+
+						producto_ma=producto_ma.replace(/Á/gi,"&Aacute;");
+						producto_ma=producto_ma.replace(/É/gi,"&Eacute;");
+						producto_ma=producto_ma.replace(/Í/gi,"&Iacute;");
+						producto_ma=producto_ma.replace(/Ó/gi,"&Oacute;");
+						producto_ma=producto_ma.replace(/Ú/gi,"&Uacute;");
+						 @foreach ($productoDB as $p)
+								
+						 	if ('{{$p->nombre}}'==producto_ma) {
+						 		valorP={{$p->costo_compra}}
+						 	}
+			            @endforeach
+						
+						
+
+				
+					document.getElementById("total").value=cantidadS*valorP;
+						
+            		});
+				
+			});
 </script>	
 {!!Form::close()!!}		
 </body>

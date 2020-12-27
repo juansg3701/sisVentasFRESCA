@@ -125,19 +125,23 @@ class MovimientoSedeController extends Controller
 		 		$ps->empleado_id_empleado=$mv->id_empleado;
 		 		$ps->transformacion_stock_id=6;
 		 		$ps->noFactura=0;
-		 		$ps->total=0;
+		 		$ps->total=$mv->total;
 			 		$ps->save();
 
 			 		return back()->with('msj','Producto guardado');
 		 		}else{
 		 		$stock = ProveedorSede::findOrFail($existe[0]->id);
 		 		$actCantidad=$stock->cantidad;
-		 		$stock->cantidad=$actCantidad+1;
+		 		$actTotal=$stock->total;
+		 		$stock->cantidad=$actCantidad+$mv->cantidad;
+		 		$stock->total=$actTotal+$mv->total;
 		 		$stock->update();	
 
 		 		$stock1 = ProveedorSede::findOrFail($idStock);
 			 	$actualC=$stock1->cantidad;
-		 		$stock1->cantidad=$actualC-1;
+			 	$actualT=$stock1->total;
+		 		$stock1->cantidad=$actualC-$mv->cantidad;
+		 		$stock1->total=$actualC-$mv->total;
 		 		$stock1->update(); 		
 
 		 		return back()->with('msj','Estado actualizado');
@@ -147,9 +151,6 @@ class MovimientoSedeController extends Controller
 	 			return back()->with('errormsj','No hay suficiente en stock');
 	 		}
 
-	 		
-
-			
 	 	}
 
 		public function create(){
@@ -209,6 +210,7 @@ class MovimientoSedeController extends Controller
 			 		$mv->t_movimiento_id_tmovimiento=$request->get('t_movimiento_id_tmovimiento');
 			 		$mv->id_empleado=$request->get('id_empleado');
 			 		$mv->cantidad=$cantidadR;
+			 		$mv->total=$request->get('total');
 			 		$mv->save();
 
 	 		return back()->with('msj','Movimiento guardado');
@@ -246,6 +248,7 @@ class MovimientoSedeController extends Controller
 			 		$mv->t_movimiento_id_tmovimiento=$request->get('t_movimiento_id_tmovimiento');
 			 		$mv->id_empleado=$request->get('id_empleado');
 			 		$mv->cantidad=$request->get('cantidad');
+			 		$mv->total=$request->get('total');
 			 		$mv->update();
 
 	 		return back()->with('msj','Movimiento actualizado');
