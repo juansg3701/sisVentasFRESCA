@@ -177,7 +177,7 @@
 										<div>Total:</div>
 									</div>
 									<div class="form-group col-sm-8">
-										<input type="number" class="form-control" name="total" id="total">
+										<input type="number" class="form-control" name="total" id="total" value="{{$movimientos->total}}">
 									</div>
 								</div>
 

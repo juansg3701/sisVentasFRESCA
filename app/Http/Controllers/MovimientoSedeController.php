@@ -30,7 +30,7 @@ class MovimientoSedeController extends Controller
 	 			->join('t_movimiento as mv','m.t_movimiento_id_tmovimiento','=','mv.id_tmovimiento')
 	 			->join('empleado as e','m.id_empleado','=','e.id_empleado')
 	 			->join('proveedor as pr','st.proveedor_id_proveedor','=','pr.id_proveedor')
-	 			->select('m.id_mstock','m.fecha','s.nombre_sede as sede_id_sede','s2.nombre_sede as sede_id_sede2','st.producto_id_producto as stock_id_stock','mv.descripcion as t_movimiento_id_tmovimiento','e.nombre as id_empleado','pr.nombre_proveedor as nombre_proveedor','m.t_movimiento_id_tmovimiento as mov','m.cantidad as cantidad')
+	 			->select('m.id_mstock','m.fecha','s.nombre_sede as sede_id_sede','s2.nombre_sede as sede_id_sede2','st.producto_id_producto as stock_id_stock','mv.descripcion as t_movimiento_id_tmovimiento','e.nombre as id_empleado','pr.nombre_proveedor as nombre_proveedor','m.t_movimiento_id_tmovimiento as mov','m.cantidad as cantidad','m.total as total')
 	 			->where('m.fecha','like','%'.$query0.'%')
  	 			->orderBy('m.fecha', 'desc')
 	 			->paginate(10);
@@ -141,8 +141,10 @@ class MovimientoSedeController extends Controller
 			 	$actualC=$stock1->cantidad;
 			 	$actualT=$stock1->total;
 		 		$stock1->cantidad=$actualC-$mv->cantidad;
-		 		$stock1->total=$actualC-$mv->total;
-		 		$stock1->update(); 		
+		 		$stock1->total=$actualT-$mv->total;
+		 		$stock1->update(); 
+
+		 		dd($stock1->cantidad.'+'.$stock1->total.'+'.$stock->cantidad.'+'.$stock->total);		
 
 		 		return back()->with('msj','Estado actualizado');
 		 		}

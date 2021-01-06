@@ -69,6 +69,7 @@
 							<th>CANTIDAD</th>
 							<th>ESTADO MOVIMIENTO</th>
 							<th>FECHA</th>
+							<th>TOTAL</th>
 							<th colspan="3">OPCIONES</th>
 						</thead>
 						@foreach($movimientos as $mv)
@@ -84,7 +85,7 @@
 							<td >{{ $mv->cantidad}}</td>
 							<td name="t_movimiento_id_tmovimiento">{{ $mv->t_movimiento_id_tmovimiento}}</td>
 							<td name="fecha">{{ $mv->fecha}}</td>
-							
+							<td >{{ $mv->total}}</td>
 
 								@if($mv->mov==2)
 							<td>
