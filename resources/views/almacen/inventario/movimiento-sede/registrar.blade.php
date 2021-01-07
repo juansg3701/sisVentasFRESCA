@@ -138,7 +138,7 @@
 
 								<div class="form-row">
 									<div class="form-group col-sm-12">
-										<button type="submit" class="btn btn-info">Registrar Producto</button>
+										<button type="submit" class="btn btn-info">Registrar movimiento</button>
 										
 											<a href="{{url('almacen/inventario/movimiento-sede')}}" class="btn btn-danger">Volver</a>
 									</div>

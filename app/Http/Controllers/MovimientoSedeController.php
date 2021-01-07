@@ -103,15 +103,18 @@ class MovimientoSedeController extends Controller
 	 		->where('proveedor_id_proveedor','=',$proveedorR[0]->id_proveedor)
 	 		->where('cantidad','>=',$mv->cantidad)
 	 		->orderBy('id_stock', 'desc')->get();
+
 	 		$fecha_actual=date("Y-m-d H:i:s"); 
 
 	 		$stock1 = ProveedorSede::findOrFail($idStock);
 		 	$actualC=$stock1->cantidad;
+		 	$actualP=$stock1->total;
 		 	
 
 	 		if($actualC>=$mv->cantidad){
 	 			if(count($existe)==0){
 	 		$stock1->cantidad=$actualC-$mv->cantidad;
+	 		$stock1->total=$actualP-$mv->total;
 	 		$stock1->update();
 
 		 			$ps = new ProveedorSede;
@@ -137,14 +140,10 @@ class MovimientoSedeController extends Controller
 		 		$stock->total=$actTotal+$mv->total;
 		 		$stock->update();	
 
-		 		$stock1 = ProveedorSede::findOrFail($idStock);
-			 	$actualC=$stock1->cantidad;
-			 	$actualT=$stock1->total;
+			 
 		 		$stock1->cantidad=$actualC-$mv->cantidad;
-		 		$stock1->total=$actualT-$mv->total;
-		 		$stock1->update(); 
-
-		 		dd($stock1->cantidad.'+'.$stock1->total.'+'.$stock->cantidad.'+'.$stock->total);		
+		 		$stock1->total=$actualP-$mv->total;
+		 		$stock1->update(); 	
 
 		 		return back()->with('msj','Estado actualizado');
 		 		}
@@ -191,6 +190,7 @@ class MovimientoSedeController extends Controller
 
 	 	public function store(MovimientoSedeFormRequest $request){
 	 		$productoR=$request->get('stock_id_stock');
+	 		$sedeR=$request->get('sede_id_sede');
 	 		$cantidadR=$request->get('cantidad');
 
 	 		$productoBuscar=ProductoSede::where('producto.nombre','=', $productoR)
@@ -200,6 +200,7 @@ class MovimientoSedeController extends Controller
 	 		if(count($productoBuscar)>0){
 	 			$stockBuscar=ProveedorSede::where('producto_id_producto','=', $productoBuscar[0]->id_producto)
 	 				->where('cantidad','>=', $cantidadR)
+	 				->where('sede_id_sede','=', $sedeR)
 			 		->orderBy('id_stock', 'desc')
 			 		->paginate(10);
 
@@ -207,7 +208,7 @@ class MovimientoSedeController extends Controller
 			 		$mv = new MovimientoSede;
 			 		$mv->fecha=$request->get('fecha');
 			 		$mv->stock_id_stock=$stockBuscar[0]->id_stock;
-			 		$mv->sede_id_sede=$request->get('sede_id_sede');
+			 		$mv->sede_id_sede=$sedeR;
 			 		$mv->sede_id_sede2=$request->get('sede_id_sede2');
 			 		$mv->t_movimiento_id_tmovimiento=$request->get('t_movimiento_id_tmovimiento');
 			 		$mv->id_empleado=$request->get('id_empleado');
