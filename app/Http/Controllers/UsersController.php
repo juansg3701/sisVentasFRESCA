@@ -107,6 +107,7 @@ public function index(Request $request){
 	 		return view("almacen/usuario/permiso/cuenta.edit",["cargos"=>$cargos,"sedes"=>$sedes,"usuario"=>Usuario::findOrFail($idEmpleado[0]->id), "modulos"=>$modulos,"punto_venta"=>$punto_venta]);
 	 	}
 
+
 	 	public function update(NominaUsuFormRequest $request, $id){
 	 		$id=$id;
 	 		$correoR=$request->get('correo');
