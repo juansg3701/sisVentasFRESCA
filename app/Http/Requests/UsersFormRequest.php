@@ -29,8 +29,9 @@ class UsersFormRequest extends Request
             'email'=>'required|max:255',
             'password'=>'required|max:255',
             'tipo_cargo_id_cargo'=>'required|max:45',
-            'sede_id_sede'=>'required|max:45',
+            'sede_id_sede'=>'required|max:45', 
             'superusuario'=>'max:45',
+            'punto_venta_id_punto_venta'=>'max:45',
         ];
     }
 }

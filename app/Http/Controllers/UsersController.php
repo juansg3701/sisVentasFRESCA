@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use sisVentas\Http\Requests;
 use sisVentas\User;
 use sisVentas\Usuario;
+use sisVentas\PuntoVenta;
 use Illuminate\Support\Facades\Redirect;
 use sisVentas\Http\Requests\UsersFormRequest;
 use DB;
@@ -56,8 +57,9 @@ public function index(Request $request){
 	 			->orderBy('id_cargo', 'desc')->get();
 
 	 			$usersP=User::get();
+	 			$punto_venta=PuntoVenta::get();
 
-	 			return view('almacen.usuario.permiso.cuenta.index',["cargos"=>$cargos,"sedes"=>$sedes,"usuarios"=>$usuarios,"searchText"=>$query, "searchText1"=>$query1, "searchText2"=>$query2, "modulos"=>$modulos]);
+	 			return view('almacen.usuario.permiso.cuenta.index',["cargos"=>$cargos,"sedes"=>$sedes,"usuarios"=>$usuarios,"searchText"=>$query, "searchText1"=>$query1, "searchText2"=>$query2, "modulos"=>$modulos,"punto_venta"=>$punto_venta]);
 	 		}
 	 	}
 
@@ -100,8 +102,9 @@ public function index(Request $request){
 	 			->select('id_empleado as id')
 	 			->where('user_id_user','=',$id)
 	 			->orderBy('id_empleado', 'desc')->get();
+	 			$punto_venta=PuntoVenta::get();
 	 			
-	 		return view("almacen/usuario/permiso/cuenta.edit",["cargos"=>$cargos,"sedes"=>$sedes,"usuario"=>Usuario::findOrFail($idEmpleado[0]->id), "modulos"=>$modulos]);
+	 		return view("almacen/usuario/permiso/cuenta.edit",["cargos"=>$cargos,"sedes"=>$sedes,"usuario"=>Usuario::findOrFail($idEmpleado[0]->id), "modulos"=>$modulos,"punto_venta"=>$punto_venta]);
 	 	}
 
 	 	public function update(NominaUsuFormRequest $request, $id){

@@ -165,6 +165,26 @@
 										<input type="number" class="form-control" name="documento" value="{{$usuario->documento}}">
 									</div>
 								</div>
+
+								<div class="form-row">
+									<div class="form-group col-sm-4">
+										<div>Punto de venta:</div>
+									</div>
+									<div class="form-group col-sm-8">
+										<select name="punto_venta_id_punto_venta" class="form-control">
+											@foreach($punto_venta as $pv)
+												@if($pv->id_punto_venta==1)
+												<option value="{{$pv->id_punto_venta}}">No: {{$pv->no}}, {{$pv->nombre}}</option>
+												@endif
+											@endforeach
+											@foreach($punto_venta as $pv)
+												@if($pv->id_punto_venta!=1)
+												<option value="{{$pv->id_punto_venta}}">No: {{$pv->no}}, {{$pv->nombre}}</option>
+												@endif
+											@endforeach
+										</select>
+									</div>
+								</div>
 								
 								<div class="form-row">
 									<div class="form-group col-sm-4">

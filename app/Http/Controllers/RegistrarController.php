@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use sisVentas\Http\Requests;
 use sisVentas\User;
 use sisVentas\Usuario;
+use sisVentas\PuntoVenta;
 use Illuminate\Support\Facades\Redirect;
 use sisVentas\Http\Requests\UsersFormRequest;
 use sisVentas\Http\Requests\UsuarioFormRequest;
@@ -36,9 +37,10 @@ class RegistrarController extends Controller
 	 			$modulos=DB::table('cargo_modulo')
 	 			->where('id_cargo','=',$cargoUsuario)
 	 			->orderBy('id_cargo', 'desc')->get();
-	 			
+	
+				$punto_venta=PuntoVenta::get();	 			
 
-	 			return view('almacen.usuario.registrar.index',["cargos"=>$cargos,"sedes"=>$sedes, "usuarios"=>$usuarios,"searchText"=>$query, "modulos"=>$modulos]);
+	 			return view('almacen.usuario.registrar.index',["cargos"=>$cargos,"sedes"=>$sedes, "usuarios"=>$usuarios,"searchText"=>$query, "modulos"=>$modulos,"punto_venta"=>$punto_venta]);
 	 		}
 	 	}
 
@@ -78,6 +80,7 @@ class RegistrarController extends Controller
 			 		$usuario->tipo_cargo_id_cargo=$cargoR;
 			 		$usuario->sede_id_sede=$sedeR;
 			 		$usuario->superusuario=$request->get('superusuario');
+			 		$usuario->punto_venta_id_punto_venta=$request->get('punto_venta_id_punto_venta');
 			 		$usuario->save();
 
 			 		$empleadoU= new Usuario;

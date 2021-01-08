@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use sisVentas\Http\Requests;
 use sisVentas\Usuario;
 use sisVentas\User;
+use sisVentas\PuntoVenta;
 use Illuminate\Support\Facades\Redirect;
 use sisVentas\Http\Requests\NominaUsuFormRequest;
 use DB;
@@ -71,8 +72,9 @@ class EmpleadoController extends Controller
 	 			->orderBy('id_cargo', 'desc')->get();
 
 	 			$usersP=User::get();
+	 			$punto_venta=PuntoVenta::get();
 
-	 			return view('almacen.usuario.permiso.cuenta.empleados',["cargos"=>$cargos,"sedes"=>$sedes,"usuarios"=>$usuarios,"searchText"=>$query, "searchText1"=>$query1, "searchText2"=>$query2, "modulos"=>$modulos]);
+	 			return view('almacen.usuario.permiso.cuenta.empleados',["cargos"=>$cargos,"sedes"=>$sedes,"usuarios"=>$usuarios,"searchText"=>$query, "searchText1"=>$query1, "searchText2"=>$query2, "modulos"=>$modulos,"punto_venta"=>$punto_venta]);
 	 		}
 	 	}
 	 		
@@ -110,6 +112,7 @@ class EmpleadoController extends Controller
 	 		$id=$id;
 	 		$cargos=DB::table('tipo_cargo')->get();
 	 		$sedes=DB::table('sede')->get();
+	 		$punto_venta=PuntoVenta::get();
 
 	 		$cargoUsuario=auth()->user()->tipo_cargo_id_cargo;
 	 			$modulos=DB::table('cargo_modulo')
@@ -121,7 +124,7 @@ class EmpleadoController extends Controller
 	 			->where('user_id_user','=',$id)
 	 			->orderBy('id_empleado', 'desc')->get();
 	 			
-	 		return view("almacen/usuario/permiso/cuenta.empleadoEditar",["cargos"=>$cargos,"sedes"=>$sedes,"usuario"=>Usuario::findOrFail($idEmpleado[0]->id), "modulos"=>$modulos]);
+	 		return view("almacen/usuario/permiso/cuenta.empleadoEditar",["cargos"=>$cargos,"sedes"=>$sedes,"usuario"=>Usuario::findOrFail($idEmpleado[0]->id), "modulos"=>$modulos,"punto_venta"=>$punto_venta]);
 	 	}
 	 	
 	 	//Actualizacion de datos en las cuentas
@@ -180,6 +183,7 @@ class EmpleadoController extends Controller
 							$us->email=$correoR;
 							$us->tipo_cargo_id_cargo=$cargoR;
 							$us->sede_id_sede=$sedeR;
+							$us->punto_venta_id_punto_venta=$request->get('punto_venta_id_punto_venta');
 							$us->save();
 
 							$usuario = Usuario::findOrFail($id);
@@ -214,6 +218,7 @@ class EmpleadoController extends Controller
 							$us->email=$correoR;
 							$us->tipo_cargo_id_cargo=$cargoR;
 							$us->sede_id_sede=$sedeR;
+							$us->punto_venta_id_punto_venta=$request->get('punto_venta_id_punto_venta');
 							$us->update();
 
 							$usuario->user_id_user=$us->id;

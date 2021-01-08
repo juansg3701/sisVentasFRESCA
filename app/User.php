@@ -17,7 +17,7 @@ protected $primaryKey='id';
 
     protected $fillable = [
         'name', 'email', 'password','tipo_cargo_id_cargo','sede_id_sede',
-            'superusuario'
+            'superusuario','punto_venta_id_punto_venta '
     ];
 
     /**

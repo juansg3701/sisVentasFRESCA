@@ -112,6 +112,7 @@
 								<th>Correo</th>
 								<th>Cargo</th>
 								<th>Sede</th>
+								<th>Punto de venta</th>
 								<th>OPCIONES</th>
 							</thead>
 
@@ -132,6 +133,14 @@
 								<td>{{ $sp->nombre_sede}}</td>
 								@endif
 								@endforeach
+
+								@foreach($punto_venta as $pv)
+								@if($pv->id_punto_venta==$usu->punto_venta_id_punto_venta)
+								<td>{{ $pv->nombre}}</td>
+								@endif
+								@endforeach
+
+
 								<td>
 									<a href="{{URL::action('UsersController@edit',$usu->id)}}"><button class="btn btn-outline-primary btn-sm">Editar</button></a>
 									
@@ -154,6 +163,12 @@
 								@foreach($sedes as $sp)
 								@if($sp->id_sede==$usu->sede_id_sede)
 								<td>{{ $sp->nombre_sede}}</td>
+								@endif
+								@endforeach
+
+								@foreach($punto_venta as $pv)
+								@if($pv->id_punto_venta==$usu->punto_venta_id_punto_venta)
+								<td>{{ $pv->nombre}}</td>
 								@endif
 								@endforeach
 								
