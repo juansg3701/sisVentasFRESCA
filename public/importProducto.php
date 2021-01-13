@@ -99,7 +99,6 @@ if(isset($_FILES["name"])){
                     }
 
 
-
                     $result_imp=mysqli_query($link, $consulta_imp);
                     $result_cat=mysqli_query($link, $consulta_cat);
                     $result_des=mysqli_query($link, $consulta_des);
@@ -127,9 +126,7 @@ if(isset($_FILES["name"])){
 
                         if($count_imp!=0 && $count_cat!=0 && $count_des!=0){
 
-
-
-                            if ($count_ean==0 && $count_plu==0) {
+                            if ($count_ean==0 && $count_plu==0){
                                 $sql = "insert into producto (id_producto, plu, ean, nombre, categoria_id_categoria, unidad_de_medida, impuestos_id_impuestos, descuento_id_descuento, stock_minimo, imagen, precio_1, precio_2, precio_3, precio_4, costo_compra, punto_venta_id_punto_venta, empleado_id_empleado, fecha_registro) value";
 
                                 $sql .= " (\"$x_id_producto\",\"$x_plu\",\"$x_ean\",\"$x_nombre\",\"$categoria_i\",\"$x_unidad_de_medida\",\"$impuesto_i\",\"$descuento_i\",\"$x_stock_minimo\",\"$x_imagen\",\"$x_precio_1\",\"$x_precio_2\",\"$x_precio_3\",\"$x_precio_4\",\"$x_costo_compra\",\"$x_punto_venta_id_punto_venta\",\"$id\",\"$fecha_actual\")";
@@ -138,12 +135,8 @@ if(isset($_FILES["name"])){
                                 echo '<script language="javascript">alert("EAN y PLU deben ser valores únicos, no se guardará el registro con el id: '.$x_id_producto.'");</script>';
                             }
 
-
-
                         }else{
-
                             echo '<script language="javascript">alert("Los datos ingresados en categoría, impuesto o descuento son incorrectos.  Error en el registro con el id: '.$x_id_producto.'");</script>';
-
                         }
                         
 
