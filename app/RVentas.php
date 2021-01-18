@@ -6,6 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class RVentas extends Model
 {
+	protected $connection = 'general';
     protected $table = 'reporteventas';
     protected $primaryKey='id_rVentas';
     public $timestamps =false;

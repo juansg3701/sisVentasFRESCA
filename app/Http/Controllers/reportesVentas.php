@@ -26,10 +26,11 @@ class reportesVentas extends Controller
 	 			->where('id_cargo','=',$cargoUsuario)
 	 			->orderBy('id_cargo', 'desc')->get();
 
-	 			$reportes=DB::table('reporteventas')
-	 			->orderBy('id_rVentas','desc')->get();
+	 			$reportes=RVentas::orderBy('id_rVentas', 'desc')->get();
+	 			$usuarios=DB::table('empleado')->get();
 	 			
-	 			return view('almacen.reportes.ventas.ventas',["sedes"=>$sedes,"searchText"=>$query, "modulos"=>$modulos,"reportes"=>$reportes]);
+
+	 			return view('almacen.reportes.ventas.ventas',["sedes"=>$sedes,"searchText"=>$query, "modulos"=>$modulos,"reportes"=>$reportes,"usuarios"=>$usuarios]);
 	 		}
 	 	}
 
@@ -74,23 +75,6 @@ class reportesVentas extends Controller
 	 			->orderBy('id_cargo', 'desc')->get();
 	 			$r=RVentas::findOrFail($id);
 	 		
-	 			$grafican=DB::table('factura as f')
-	 			->join('detalle_factura as df','f.id_factura','=','df.factura_id_factura')
-	 			->join('stock as p','df.producto_id_producto','=','p.id_stock')
-	 			->join('producto as pr','p.producto_id_producto','=','pr.id_producto')
-	 			->select('pr.nombre as nombrep')
-	 			->where('f.fecha','>=',$r->fechaInicial)
-	 			->where('f.fecha','<=',$r->fechaFinal)
-	 			->orderBy('f.id_factura', 'desc')->get();
-
-	 			$graficac=DB::table('factura as f')
-	 			->join('detalle_factura as df','f.id_factura','=','df.factura_id_factura')
-	 			->join('stock as p','df.producto_id_producto','=','p.id_stock')
-	 			->join('producto as pr','p.producto_id_producto','=','pr.id_producto')
-	 			->select('df.cantidad as cantidad')
-	 			->where('f.fecha','>=',$r->fechaInicial)
-	 			->where('f.fecha','<=',$r->fechaFinal)
-	 			->orderBy('f.id_factura', 'desc')->get();
 
 	 			$NoPagoE=DB::table('factura as f')
 	 			->select(DB::raw('count(*) as numero'))
@@ -131,29 +115,6 @@ class reportesVentas extends Controller
 	 			->paginate(50);
 
 	 			if(auth()->user()->superusuario==0){
-	 				$grafican=DB::table('factura as f')
-	 			->join('detalle_factura as df','f.id_factura','=','df.factura_id_factura')
-	 			->join('stock as p','df.producto_id_producto','=','p.id_stock')
-	 			->join('producto as pr','p.producto_id_producto','=','pr.id_producto')
-	 			->join('empleado as em','f.empleado_id_empleado','=','em.id_empleado')
-	 			->join('sede as sed','em.sede_id_sede','=','sed.id_sede')
-	 			->select('pr.nombre as nombrep')
-	 			->where('f.fecha','>=',$r->fechaInicial)
-	 			->where('sed.id_sede','=',auth()->user()->sede_id_sede)
-	 			->where('f.fecha','<=',$r->fechaFinal)
-	 			->orderBy('f.id_factura', 'desc')->get();
-
-	 			$graficac=DB::table('factura as f')
-	 			->join('detalle_factura as df','f.id_factura','=','df.factura_id_factura')
-	 			->join('stock as p','df.producto_id_producto','=','p.id_stock')
-	 			->join('producto as pr','p.producto_id_producto','=','pr.id_producto')
-	 			->join('empleado as em','f.empleado_id_empleado','=','em.id_empleado')
-	 			->join('sede as sed','em.sede_id_sede','=','sed.id_sede')
-	 			->select('df.cantidad as cantidad')
-	 			->where('f.fecha','>=',$r->fechaInicial)
-	 			->where('f.fecha','<=',$r->fechaFinal)
-	 			->where('sed.id_sede','=',auth()->user()->sede_id_sede)
-	 			->orderBy('f.id_factura', 'desc')->get();
 
 	 			$NoPagoE=DB::table('factura as f')
 	 			->join('empleado as em','f.empleado_id_empleado','=','em.id_empleado')
@@ -207,9 +168,8 @@ class reportesVentas extends Controller
 	 			->orderBy('f.id_factura', 'desc')
 	 			->paginate(50);
 	 			}
-
 	 			 			
-	 		return view("almacen.reportes.ventas.grafica",["modulos"=>$modulos,"grafican"=>$grafican,"graficac"=>$graficac,"NoPagoE"=>$NoPagoE,"NoPagoD"=>$NoPagoD,"NoPagoP"=>$NoPagoP,"NoPagoC"=>$NoPagoC,"id"=>$id,"ventas"=>$ventas]);
+	 		return view("almacen.reportes.ventas.grafica",["modulos"=>$modulos,"NoPagoE"=>$NoPagoE,"NoPagoD"=>$NoPagoD,"NoPagoP"=>$NoPagoP,"NoPagoC"=>$NoPagoC,"id"=>$id,"ventas"=>$ventas]);
 	 	}
 	 		public function show($id){
 	 		return view("almacen.cliente.show",["cliente"=>Cliente::findOrFail($id)]);
