@@ -71,6 +71,7 @@ if(isset($_FILES["name"])){
                     $empleado = "SELECT * FROM empleado WHERE user_id_user=\"$empleado\"";
                     $result2=mysqli_query($link2, $empleado);
 
+                    
                     if($result2){
                         while($rows=mysqli_fetch_assoc($result2)){
                              $id=$rows['id_empleado'];
@@ -145,7 +146,6 @@ if(isset($_FILES["name"])){
                         if($count_imp!=0 && $count_cat!=0 && $count_des!=0){
 
                             if ($count_ean!=0  && $count_plu!=0 ) {
-
                                 $sql = "UPDATE producto SET nombre=\"$x_nombre\", categoria_id_categoria=\"$categoria_i\", unidad_de_medida=\"$x_unidad_de_medida\", impuestos_id_impuestos=\"$impuesto_i\", descuento_id_descuento=\"$descuento_i\", stock_minimo=\"$x_stock_minimo\", precio_1=\"$x_precio_1\", precio_2=\"$x_precio_2\", precio_3=\"$x_precio_3\", precio_4=\"$x_precio_4\", costo_compra=\"$x_costo_compra\", punto_venta_id_punto_venta=\"$x_punto_venta_id_punto_venta\", empleado_id_empleado=\"$id\", fecha_registro=\"$fecha_actual\" WHERE id_producto = \"$x_id_producto\"";
                             }else{
                                 echo '<script language="javascript">alert("----Hay registros con el ID repetido, no se guardarán cambios en el registro con el id: '.$x_id_producto.' y nombre: '.$x_nombre.'");</script>';
@@ -160,7 +160,6 @@ if(isset($_FILES["name"])){
                     $con->query($sql);
 
                 }else{
-
                     echo '<script language="javascript">alert("Por favor valide correctamente los valores especificados en los campos de  precio. Existen errores en los registros, por lo tanto no se insertarán/actualizarán. Error en el registro con el id: '.$x_id_producto.'");</script>';
                 }
 
