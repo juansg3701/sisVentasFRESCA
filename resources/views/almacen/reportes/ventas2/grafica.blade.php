@@ -23,8 +23,8 @@
           graficaCS[2]=parseInt(<?php echo $NoPagoP[0]->numero?>,10);
           graficaCS[3]=parseInt(<?php echo $NoPagoC[0]->numero?>,10);
 
-          data.addRows([["Pago efectivo",graficaCS[0]]]);
-          data.addRows([["Pago datafono",graficaCS[1]]]);
+          data.addRows([["Pago datafono",graficaCS[0]]]);
+          data.addRows([["Pago efectivo",graficaCS[1]]]);
           data.addRows([["Pago pasarela",graficaCS[2]]]);
           data.addRows([["Pago cartera",graficaCS[3]]]);
           
@@ -41,27 +41,75 @@
    </head>
 
 <body>
+<!--Formulario de búsqueda y opciones-->
+  <div class="content">
+    <div class="animated fadeIn">
+      <div class="row">
+        <div class="col-md-12">
+          <div class="card">
+            <div class="card-header" align="center">
+              <h2 class="pb-2 display-5">REPORTE DE VENTAS</h2>
+            </div><br>
+            <div class="row" align="center">  
+              <div class="col-sm-3" align="center"></div>
+                <div class="col-sm-6" align="center">
+                  <div class="card" align="center">
+                    <div class="card-header" align="center">
+                      <strong></strong>
+                    </div>
+                    <div class="card-body card-block" align="center">
+                      <div id=formulario>
+                        <div class="form-group">
 
-	<div class="row">
-			 <div id="piechart" style="width: 620px; height: 300px;"></div>
-	</div>
+                          <div align="center">
+                            <div class="row"  align="center">
+                                 <div id="piechart" style="width: 620px; height: 300px;"></div>
+                            </div>
 
-  <div align="center">
-     <a href="{{url('almacen/reportes/ventas')}}" class="btn btn-danger">Volver</a>
+                            <div align="center">
+                               <a href="{{url('almacen/reportes/ventas')}}" class="btn btn-danger">Volver</a>
+                            </div>
+                          </div>
+
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              <div class="col-sm-3" align="center"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
   </div>
+  
+	
 	
 </body>
 @stop
 
 
 @section('tabla')
-<div class="container">
-<div class="row">
-        <div class="table-responsive">
-          <table class="table table-striped table-bordered table-condensed table-hover">
-            <thead>
+
+<!--Tabla de registros realizados-->
+<div class="content">
+  <div class="animated fadeIn">
+    <div class="row">
+      <div class="col-md-12">
+        <div class="card">
+          <div class="card-header" align="center">
+            <h3 class="pb-2 display-5">DETALLE DE REPORTE</h3>
+            
+            
+          </div>
+
+          <div class="card-body">
+      
+            <table id="bootstrap-data-table" class="table table-striped table-bordered">
+              <thead>
               <th>ID</th>
-              <th>FECHA</th>
+              <th>FECHA--</th>
               <th>No. PRODUCTOS</th>
               <th>PAGO TOTAL</th>
               <th>METODO DE PAGO</th>
@@ -78,7 +126,12 @@
           </table>
         </div>
         {{$ventas->render()}}
-    
-      </div><br>
+        </div>
       </div>
+    </div>
+  </div>
+</div>
+
+
+
 @stop

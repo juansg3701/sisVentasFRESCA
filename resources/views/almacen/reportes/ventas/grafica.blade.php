@@ -41,26 +41,64 @@
    </head>
 
 <body>
+<!--Formulario de búsqueda y opciones-->
+  <div class="content">
+    <div class="animated fadeIn">
+      <div class="row">
+        <div class="col-md-12">
+          <div class="card">
+            <div class="card-header" align="center">
+              <h2 class="pb-2 display-5">REPORTE DE VENTAS</h2>
+            </div><br>
+            <div class="row" align="center">  
+              <div class="col-sm-3" align="center"></div>
+                <div class="col-sm-6" align="center">
+                  <div class="card" align="center">
+               
+                     <div align="center">
+                            <div class="row">
+                               <div id="piechart" style="width: 620px; height: 300px;"></div>
+                          </div>
 
-	<div class="row">
-			 <div id="piechart" style="width: 620px; height: 300px;"></div>
-	</div>
-
-  <div align="center">
-    <a href="{{url('almacen/reportes/ventas')}}" class="btn btn-danger">Volver</a>
-    
+                          <div align="center">
+                            <a href="{{url('almacen/reportes/ventas')}}" class="btn btn-danger">Volver</a>
+                            
+                          </div>
+                          </div>
+                  </div>
+                </div>
+              <div class="col-sm-3" align="center"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
   </div>
+	
 	
 </body>
 @stop
 
 
 @section('tabla')
-<div class="container">
-<div class="row">
-        <div class="table-responsive">
-          <table class="table table-striped table-bordered table-condensed table-hover">
-            <thead>
+
+
+<!--Tabla de registros realizados-->
+<div class="content">
+  <div class="animated fadeIn">
+    <div class="row">
+      <div class="col-md-12">
+        <div class="card">
+          <div class="card-header" align="center">
+            <h3 class="pb-2 display-5">DETALLE DE REPORTE</h3>
+            
+            
+          </div>
+
+          <div class="card-body">
+      
+            <table id="bootstrap-data-table" class="table table-striped table-bordered">
+              <thead>
               <th>ID</th>
               <th>FECHA</th>
               <th>No. PRODUCTOS</th>
@@ -79,7 +117,10 @@
           </table>
         </div>
         {{$ventas->render()}}
-    
-      </div><br>
+        </div>
       </div>
+    </div>
+  </div>
+</div>
+
 @stop
