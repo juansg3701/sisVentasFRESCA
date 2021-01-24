@@ -77,28 +77,28 @@ class reportesVentas extends Controller
 	 		
 
 	 			$NoPagoE=DB::table('factura as f')
-	 			->select(DB::raw('count(*) as numero'))
+	 			->select(DB::raw('sum(pago_total) as numero'))
 	 			->where('f.fecha','>=',$r->fechaInicial)
 	 			->where('f.fecha','<=',$r->fechaFinal)
 	 			->where('f.tipo_pago_id_tpago','=',1)
 	 			->orderBy('f.id_factura', 'desc')->get();
 
 	 			$NoPagoD=DB::table('factura as f')
-	 			->select(DB::raw('count(*) as numero'))
+	 			->select(DB::raw('sum(pago_total) as numero'))
 	 			->where('f.fecha','>=',$r->fechaInicial)
 	 			->where('f.fecha','<=',$r->fechaFinal)
 	 			->where('f.tipo_pago_id_tpago','=',2)
 	 			->orderBy('f.id_factura', 'desc')->get();
 
 	 			$NoPagoP=DB::table('factura as f')
-	 			->select(DB::raw('count(*) as numero'))
+	 			->select(DB::raw('sum(pago_total) as numero'))
 	 			->where('f.fecha','>=',$r->fechaInicial)
 	 			->where('f.fecha','<=',$r->fechaFinal)
 	 			->where('f.tipo_pago_id_tpago','=',3)
 	 			->orderBy('f.id_factura', 'desc')->get();
 
 	 			$NoPagoC=DB::table('factura as f')
-	 			->select(DB::raw('count(*) as numero'))
+	 			->select(DB::raw('sum(pago_total) as numero'))
 	 			->where('f.fecha','>=',$r->fechaInicial)
 	 			->where('f.fecha','<=',$r->fechaFinal)
 	 			->where('f.tipo_pago_id_tpago','=',4)
@@ -119,7 +119,7 @@ class reportesVentas extends Controller
 	 			$NoPagoE=DB::table('factura as f')
 	 			->join('empleado as em','f.empleado_id_empleado','=','em.id_empleado')
 	 			->join('sede as sed','em.sede_id_sede','=','sed.id_sede')
-	 			->select(DB::raw('count(*) as numero'))
+	 			->select(DB::raw('sum(pago_total) as numero'))
 	 			->where('f.fecha','>=',$r->fechaInicial)
 	 			->where('f.fecha','<=',$r->fechaFinal)
 	 			->where('f.tipo_pago_id_tpago','=',1)
@@ -129,7 +129,7 @@ class reportesVentas extends Controller
 	 			$NoPagoD=DB::table('factura as f')
 	 			->join('empleado as em','f.empleado_id_empleado','=','em.id_empleado')
 	 			->join('sede as sed','em.sede_id_sede','=','sed.id_sede')
-	 			->select(DB::raw('count(*) as numero'))
+	 			->select(DB::raw('sum(pago_total) as numero'))
 	 			->where('f.fecha','>=',$r->fechaInicial)
 	 			->where('f.fecha','<=',$r->fechaFinal)
 	 			->where('sed.id_sede','=',auth()->user()->sede_id_sede)
@@ -139,7 +139,7 @@ class reportesVentas extends Controller
 	 			$NoPagoP=DB::table('factura as f')
 	 			->join('empleado as em','f.empleado_id_empleado','=','em.id_empleado')
 	 			->join('sede as sed','em.sede_id_sede','=','sed.id_sede')
-	 			->select(DB::raw('count(*) as numero'))
+	 			->select(DB::raw('sum(pago_total) as numero'))
 	 			->where('f.fecha','>=',$r->fechaInicial)
 	 			->where('f.fecha','<=',$r->fechaFinal)
 	 			->where('sed.id_sede','=',auth()->user()->sede_id_sede)
@@ -149,7 +149,7 @@ class reportesVentas extends Controller
 	 			$NoPagoC=DB::table('factura as f')
 	 			->join('empleado as em','f.empleado_id_empleado','=','em.id_empleado')
 	 			->join('sede as sed','em.sede_id_sede','=','sed.id_sede')
-	 			->select(DB::raw('count(*) as numero'))
+	 			->select(DB::raw('sum(pago_total) as numero'))
 	 			->where('f.fecha','>=',$r->fechaInicial)
 	 			->where('f.fecha','<=',$r->fechaFinal)
 	 			->where('sed.id_sede','=',auth()->user()->sede_id_sede)
@@ -169,7 +169,7 @@ class reportesVentas extends Controller
 	 			->paginate(50);
 	 			}
 	 			 			
-	 		return view("almacen.reportes.ventas.grafica",["modulos"=>$modulos,"NoPagoE"=>$NoPagoE,"NoPagoD"=>$NoPagoD,"NoPagoP"=>$NoPagoP,"NoPagoC"=>$NoPagoC,"id"=>$id,"ventas"=>$ventas]);
+	 		return view("almacen.reportes.ventas.grafica",["modulos"=>$modulos,"NoPagoE"=>$NoPagoE,"NoPagoD"=>$NoPagoD,"NoPagoP"=>$NoPagoP,"NoPagoC"=>$NoPagoC,"id"=>$id,"ventas"=>$ventas,"r"=>$r]);
 	 	}
 	 		public function show($id){
 	 		return view("almacen.cliente.show",["cliente"=>Cliente::findOrFail($id)]);

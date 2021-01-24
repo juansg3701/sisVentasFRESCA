@@ -53,8 +53,8 @@
           graficaCS2[2]=parseInt(<?php echo $NoPagoP2[0]->numero?>,10);
            graficaCS2[3]=parseInt(<?php echo $NoPagoC2[0]->numero?>,10);
 
-           data2.addRows([["Pago efectivo",graficaCS2[0]]]);
-           data2.addRows([["Pago datafono",graficaCS2[1]]]);
+           data2.addRows([["Pago datafono",graficaCS2[0]]]);
+           data2.addRows([["Pago efectivo",graficaCS2[1]]]);
            data2.addRows([["Pago pasarela",graficaCS2[2]]]);
            data2.addRows([["Pago cartera",graficaCS2[3]]]);
           
@@ -69,41 +69,91 @@
       }
     </script>
    </head>
-<div align="center"><h3>COMPARAR REPORTES DE VENTAS<h3></div>
-{!! Form::open(array('url'=>'almacen/reportes/compararG','method'=>'GET','autocomplete'=>'off','role'=>'search')) !!}
+   <body>
+   <!--Formulario de búsqueda y opciones-->
+  <div class="content">
+    <div class="animated fadeIn">
+      <div class="row">
+        <div class="col-md-12">
+          <div class="card">
+            <div class="card-header" align="center">
+              <h2 class="pb-2 display-5">ELEGIR REPORTES</h2>
+            </div><br>
+            <div class="row" align="center">  
+              <div class="col-sm-3" align="center"></div>
+                <div class="col-sm-6" align="center">
+                  <div class="card" align="center">
+               
+                     <div align="center">
+                         
+                      {!! Form::open(array('url'=>'almacen/reportes/compararG','method'=>'GET','autocomplete'=>'off','role'=>'search')) !!}
 
-  <select name="id1" class="form-control" >
-        @foreach($reportes as $r)
-        <option value="{{$r->id_rVentas}}">No: {{$r->id_rVentas}}, Fecha: {{$r->fechaActual}}</option>
-        @endforeach
-      </select>
-      <br>
-      <select name="id2" class="form-control">
-        @foreach($reportes as $r)
-        <option value="{{$r->id_rVentas}}">No: {{$r->id_rVentas}}, Fecha: {{$r->fechaActual}}</option>
-        @endforeach
-      </select><br>
+                        <select name="id1" class="form-control" >
+                              @foreach($reportes as $r)
+                              <option value="{{$r->id_rVentas}}">No: {{$r->id_rVentas}}, Fecha: {{$r->fechaActual}}</option>
+                              @endforeach
+                            </select>
+                            <br>
+                            <select name="id2" class="form-control">
+                              @foreach($reportes as $r)
+                              <option value="{{$r->id_rVentas}}">No: {{$r->id_rVentas}}, Fecha: {{$r->fechaActual}}</option>
+                              @endforeach
+                            </select><br>
 
 
-      <div align="center"><button type="submit" class="btn btn-info">Comparar Gráficas</button></div><br>
-      
-{!!Form::close()!!} 
+                            <div align="center"><button type="submit" class="btn btn-info">Comparar Gráficas</button></div><br>
+                            
+                      {!!Form::close()!!} 
 
-       <div align="center"><a href="{{URL::action('reportesVentas@index',0)}}"><button class="btn btn-danger">Volver</button></a></div>
-<body>
+                             <div align="center"><a href="{{URL::action('reportesVentas@index',0)}}"><button class="btn btn-danger">Volver</button></a></div>
+                        </div>
+                  </div>
+                </div>
+              <div class="col-sm-3" align="center"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+
 
 </body>
 @stop
 
 
 @section('tabla')
-<div class="container">
-<div class="col-sm-6">
-  
-   <div id="piechart" style="width: 500px; height: 500px;"></div>
-</div>
+<!--Formulario de búsqueda y opciones-->
+  <div class="content">
+    <div class="animated fadeIn">
+      <div class="row">
+        <div class="col-md-12">
+          <div class="card">
+            <div class="card-header" align="center">
+              <h2 class="pb-2 display-5">REPORTES DE VENTAS</h2>
+            </div><br>
+            <div class="row" align="center">
+                <div class="col-sm-12" align="center">
+                  
+               
+                     <div align="center" class="row">
+                               <div class="col-sm-6">  
+                                   <div id="piechart" style="width: 450px; height: 450px;"></div>
+                                </div>
 
-<div class="col-sm-6">  
-  <div id="piechart2" style="width: 500px; height: 500px;"></div></div>
-</div>     
+                                <div class="col-sm-6">  
+                                  <div id="piechart2" style="width: 450px; height: 450px;"></div>
+                                </div>
+
+                       </div>
+                  
+                </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+   
 @stop

@@ -23,8 +23,8 @@
           graficaCS[2]=parseInt(<?php echo $NoPagoP[0]->numero?>,10);
           graficaCS[3]=parseInt(<?php echo $NoPagoC[0]->numero?>,10);
 
-          data.addRows([["Pago efectivo",graficaCS[0]]]);
-          data.addRows([["Pago datafono",graficaCS[1]]]);
+          data.addRows([["Pago datafono",graficaCS[0]]]);
+          data.addRows([["Pago efectivo",graficaCS[1]]]);
           data.addRows([["Pago pasarela",graficaCS[2]]]);
           data.addRows([["Pago cartera",graficaCS[3]]]);
           
@@ -51,23 +51,33 @@
               <h2 class="pb-2 display-5">REPORTE DE VENTAS</h2>
             </div><br>
             <div class="row" align="center">  
-              <div class="col-sm-3" align="center"></div>
-                <div class="col-sm-6" align="center">
-                  <div class="card" align="center">
-               
-                     <div align="center">
-                            <div class="row">
-                               <div id="piechart" style="width: 620px; height: 300px;"></div>
-                          </div>
+                <div class="col-sm-12" align="center">
+                 
+                    <div class="row" align="center">
+                            <div  class="col-sm-8" align="center">
+                                 <div id="piechart" style="width: 620px; height: 300px;"></div>
 
-                          <div align="center">
-                            <a href="{{url('almacen/reportes/ventas')}}" class="btn btn-danger">Volver</a>
-                            
+                            </div>
+                            <div class="col-sm-4">
+                              <div align="center">
+                                <?php 
+                             $total_ventas=$NoPagoD[0]->numero+$NoPagoE[0]->numero+$NoPagoP[0]->numero+$NoPagoC[0]->numero;
+                             ?> 
+                             <br>
+                           <b> Ventas generadas entre:</b><br>
+                            {{$r->fechaInicial}} y {{$r->fechaFinal}}<br>
+                            <b>Total ventas:</b> $<?php echo number_format($total_ventas , 2 , "," , ".") . "\n";?><br>
+                              </div>
+                             <br>
+                            <div align="center">
+                              <a href="{{url('almacen/reportes/ventas')}}" class="btn btn-danger">Volver</a>
+                            </div>
+                               
+                            </div>
+
                           </div>
-                          </div>
-                  </div>
+                  
                 </div>
-              <div class="col-sm-3" align="center"></div>
             </div>
           </div>
         </div>
