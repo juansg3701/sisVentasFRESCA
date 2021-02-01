@@ -109,7 +109,7 @@
               <th>FECHA</th>
               <th>PRODUCTO</th>
               <th>PAGO TOTAL</th>
-              <th>METODO DE PAGO</th>
+              <th>TRANSFORMACI&Oacute;N</th>
             </thead>
             @foreach($ventas as $ps)
               @foreach($productos as $pr)
