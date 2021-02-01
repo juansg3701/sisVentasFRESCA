@@ -51,12 +51,6 @@ class reporteVentasComparar extends Controller
 	 			->where('f.tipo_pago_id_tpago','=',3)
 	 			->orderBy('f.id_factura', 'desc')->get();
 
-	 			$NoPagoC=DB::table('factura as f')
-	 			->select(DB::raw('sum(pago_total) as numero'))
-	 			->where('f.fecha','>=',$r->fechaInicial)
-	 			->where('f.fecha','<=',$r->fechaFinal)
-	 			->where('f.tipo_pago_id_tpago','=',4)
-	 			->orderBy('f.id_factura', 'desc')->get();
 
 	 			$NoPagoE2=DB::table('factura as f')
 	 			->select(DB::raw('sum(pago_total) as numero'))
@@ -79,12 +73,6 @@ class reporteVentasComparar extends Controller
 	 			->where('f.tipo_pago_id_tpago','=',3)
 	 			->orderBy('f.id_factura', 'desc')->get();
 
-	 			$NoPagoC2=DB::table('factura as f')
-	 			->select(DB::raw('sum(pago_total) as numero'))
-	 			->where('f.fecha','>=',$r2->fechaInicial)
-	 			->where('f.fecha','<=',$r2->fechaFinal)
-	 			->where('f.tipo_pago_id_tpago','=',4)
-	 			->orderBy('f.id_factura', 'desc')->get();
 
 	 			if(auth()->user()->superusuario==0){
 	 				$NoPagoE=DB::table('factura as f')
@@ -117,16 +105,6 @@ class reporteVentasComparar extends Controller
 	 			->where('f.tipo_pago_id_tpago','=',3)
 	 			->orderBy('f.id_factura', 'desc')->get();
 
-	 			$NoPagoC=DB::table('factura as f')
-	 			->join('empleado as em','f.empleado_id_empleado','=','em.id_empleado')
-	 			->join('sede as sed','em.sede_id_sede','=','sed.id_sede')
-	 			->select(DB::raw('sum(pago_total) as numero'))
-	 			->where('sed.id_sede','=',auth()->user()->sede_id_sede)
-	 			->where('f.fecha','>=',$r->fechaInicial)
-	 			->where('f.fecha','<=',$r->fechaFinal)
-	 			->where('f.tipo_pago_id_tpago','=',4)
-	 			->orderBy('f.id_factura', 'desc')->get();
-
 	 			$NoPagoE2=DB::table('factura as f')
 	 			->join('empleado as em','f.empleado_id_empleado','=','em.id_empleado')
 	 			->join('sede as sed','em.sede_id_sede','=','sed.id_sede')
@@ -157,21 +135,12 @@ class reporteVentasComparar extends Controller
 	 			->where('f.tipo_pago_id_tpago','=',3)
 	 			->orderBy('f.id_factura', 'desc')->get();
 
-	 			$NoPagoC2=DB::table('factura as f')
-	 			->join('empleado as em','f.empleado_id_empleado','=','em.id_empleado')
-	 			->join('sede as sed','em.sede_id_sede','=','sed.id_sede')
-	 			->select(DB::raw('sum(pago_total) as numero'))
-	 			->where('sed.id_sede','=',auth()->user()->sede_id_sede)
-	 			->where('f.fecha','>=',$r2->fechaInicial)
-	 			->where('f.fecha','<=',$r2->fechaFinal)
-	 			->where('f.tipo_pago_id_tpago','=',4)
-	 			->orderBy('f.id_factura', 'desc')->get();
 	 			}
 
 	 			
 
 	 		$reportes=RVentas::orderBy('id_rVentas','desc')->get(); 			
-	 		return view("almacen.reportes.compararG.index",["modulos"=>$modulos,"NoPagoE"=>$NoPagoE,"NoPagoD"=>$NoPagoD,"NoPagoP"=>$NoPagoP,"NoPagoC"=>$NoPagoC,"NoPagoE2"=>$NoPagoE2,"NoPagoD2"=>$NoPagoD2,"NoPagoP2"=>$NoPagoP2,"NoPagoC2"=>$NoPagoC2, "searchText"=>$query,"id1"=>$id1,"id2"=>$id2,"reportes"=>$reportes,"fechaR1"=>$fechaR1,"fechaR2"=>$fechaR2]);
+	 		return view("almacen.reportes.compararG.index",["modulos"=>$modulos,"NoPagoE"=>$NoPagoE,"NoPagoD"=>$NoPagoD,"NoPagoP"=>$NoPagoP,"NoPagoE2"=>$NoPagoE2,"NoPagoD2"=>$NoPagoD2,"NoPagoP2"=>$NoPagoP2, "searchText"=>$query,"id1"=>$id1,"id2"=>$id2,"reportes"=>$reportes,"fechaR1"=>$fechaR1,"fechaR2"=>$fechaR2]);
 	 		}
 	 	}
 

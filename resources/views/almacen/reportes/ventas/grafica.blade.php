@@ -21,12 +21,10 @@
           graficaCS[0]=parseInt(<?php echo $NoPagoD[0]->numero?>,10);
           graficaCS[1]=parseInt(<?php echo $NoPagoE[0]->numero?>,10);
           graficaCS[2]=parseInt(<?php echo $NoPagoP[0]->numero?>,10);
-          graficaCS[3]=parseInt(<?php echo $NoPagoC[0]->numero?>,10);
 
           data.addRows([["Pago datafono",graficaCS[0]]]);
           data.addRows([["Pago efectivo",graficaCS[1]]]);
           data.addRows([["Pago pasarela",graficaCS[2]]]);
-          data.addRows([["Pago cartera",graficaCS[3]]]);
           
 
         var options = {
@@ -61,7 +59,7 @@
                             <div class="col-sm-4">
                               <div align="center">
                                 <?php 
-                             $total_ventas=$NoPagoD[0]->numero+$NoPagoE[0]->numero+$NoPagoP[0]->numero+$NoPagoC[0]->numero;
+                             $total_ventas=$NoPagoD[0]->numero+$NoPagoE[0]->numero+$NoPagoP[0]->numero;
                              ?> 
                              <br>
                            <b> Ventas generadas entre:</b><br>
