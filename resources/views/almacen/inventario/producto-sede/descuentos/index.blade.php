@@ -83,7 +83,7 @@
 										<div>Tarifa descuento %:</div>
 									</div>
 									<div class="form-group col-sm-8">
-										<input type="number" class="form-control" name="valor_descuento" min="1" pattern="^[0-9]+">
+										<input type="number" class="form-control" name="valor_descuento" min="0" pattern="^[0-9]+">
 									</div>
 								</div>
 
