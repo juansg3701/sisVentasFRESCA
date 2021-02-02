@@ -97,12 +97,6 @@ class reportesVentas extends Controller
 	 			->where('f.tipo_pago_id_tpago','=',3)
 	 			->orderBy('f.id_factura', 'desc')->get();
 
-	 			$NoPagoC=DB::table('factura as f')
-	 			->select(DB::raw('sum(pago_total) as numero'))
-	 			->where('f.fecha','>=',$r->fechaInicial)
-	 			->where('f.fecha','<=',$r->fechaFinal)
-	 			->where('f.tipo_pago_id_tpago','=',4)
-	 			->orderBy('f.id_factura', 'desc')->get();
 
 	 			$ventas=DB::table('factura as f')
 	 			->join('empleado as e','f.empleado_id_empleado','=','e.id_empleado')
@@ -146,15 +140,6 @@ class reportesVentas extends Controller
 	 			->where('f.tipo_pago_id_tpago','=',3)
 	 			->orderBy('f.id_factura', 'desc')->get();
 
-	 			$NoPagoC=DB::table('factura as f')
-	 			->join('empleado as em','f.empleado_id_empleado','=','em.id_empleado')
-	 			->join('sede as sed','em.sede_id_sede','=','sed.id_sede')
-	 			->select(DB::raw('sum(pago_total) as numero'))
-	 			->where('f.fecha','>=',$r->fechaInicial)
-	 			->where('f.fecha','<=',$r->fechaFinal)
-	 			->where('sed.id_sede','=',auth()->user()->sede_id_sede)
-	 			->where('f.tipo_pago_id_tpago','=',4)
-	 			->orderBy('f.id_factura', 'desc')->get();
 
 	 			$ventas=DB::table('factura as f')
 	 			->join('empleado as e','f.empleado_id_empleado','=','e.id_empleado')
@@ -169,31 +154,21 @@ class reportesVentas extends Controller
 	 			->paginate(50);
 	 			}
 	 			 			
-	 		return view("almacen.reportes.ventas.grafica",["modulos"=>$modulos,"NoPagoE"=>$NoPagoE,"NoPagoD"=>$NoPagoD,"NoPagoP"=>$NoPagoP,"NoPagoC"=>$NoPagoC,"id"=>$id,"ventas"=>$ventas,"r"=>$r]);
+	 		return view("almacen.reportes.ventas.grafica",["modulos"=>$modulos,"NoPagoE"=>$NoPagoE,"NoPagoD"=>$NoPagoD,"NoPagoP"=>$NoPagoP,"id"=>$id,"ventas"=>$ventas,"r"=>$r]);
 	 	}
+
 	 		public function show($id){
 	 		return view("almacen.cliente.show",["cliente"=>Cliente::findOrFail($id)]);
 	 	}
 
 	 	public function update(ClienteFormRequest $request, $id){
-	 		$cliente = Cliente::findOrFail($id);
-	 		$cliente->nombre=$request->get('nombre');
-	 		$cliente->direccion=$request->get('direccion');
-	 		$cliente->telefono=$request->get('telefono');
-	 		$cliente->correo=$request->get('correo');
-	 		$cliente->documento=$request->get('documento');
-	 		$cliente->verificacion_nit=$request->get('verificacion_nit');
-	 		$cliente->nombre_empresa=$request->get('nombre_empresa');
-	 		$cliente->cartera_activa=$request->get('cartera_activa');
-	 		$cliente->update();
-	 		return Redirect::to('almacen/cliente');
+
 	 	}
 
 	 	public function destroy($id){
 	 		$reporte=RVentas::findOrFail($id);
 	 		$reporte->delete();
 
-	 		
 	 	return back()->with('msj','Reporte eliminado');
 	 	}
 	 

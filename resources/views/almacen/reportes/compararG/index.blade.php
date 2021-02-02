@@ -3,6 +3,8 @@
 	<head>
 	<title>Reportes</title>
 	 <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+  <script src="{{asset('assets/js/jQuery.js')}}"></script>
     <script type="text/javascript">
       google.charts.load('current', {'packages':['corechart']});
       google.charts.setOnLoadCallback(drawChart);
@@ -20,12 +22,10 @@
             graficaCS[0]=parseInt(<?php echo $NoPagoD[0]->numero?>,10);
            graficaCS[1]=parseInt(<?php echo $NoPagoE[0]->numero?>,10);
           graficaCS[2]=parseInt(<?php echo $NoPagoP[0]->numero?>,10);
-           graficaCS[3]=parseInt(<?php echo $NoPagoC[0]->numero?>,10);
 
            data.addRows([["Pago efectivo",graficaCS[0]]]);
            data.addRows([["Pago datafono",graficaCS[1]]]);
            data.addRows([["Pago pasarela",graficaCS[2]]]);
-           data.addRows([["Pago cartera",graficaCS[3]]]);
           
 
         var options = {
@@ -51,12 +51,10 @@
             graficaCS2[0]=parseInt(<?php echo $NoPagoD2[0]->numero?>,10);
            graficaCS2[1]=parseInt(<?php echo $NoPagoE2[0]->numero?>,10);
           graficaCS2[2]=parseInt(<?php echo $NoPagoP2[0]->numero?>,10);
-           graficaCS2[3]=parseInt(<?php echo $NoPagoC2[0]->numero?>,10);
 
            data2.addRows([["Pago datafono",graficaCS2[0]]]);
            data2.addRows([["Pago efectivo",graficaCS2[1]]]);
            data2.addRows([["Pago pasarela",graficaCS2[2]]]);
-           data2.addRows([["Pago cartera",graficaCS2[3]]]);
           
            
         var options2 = {
@@ -139,11 +137,11 @@
                
                      <div align="center" class="row">
                                <div class="col-sm-6">  
-                                   <div id="piechart" style="width: 450px; height: 450px;"></div>
+                                   <div id="piechart" style="width: 500px; height: 500px;"></div>
                                 </div>
 
                                 <div class="col-sm-6">  
-                                  <div id="piechart2" style="width: 450px; height: 450px;"></div>
+                                  <div id="piechart2" style="width: 500px; height: 500px;"></div>
                                 </div>
 
                        </div>
@@ -155,5 +153,13 @@
       </div>
     </div>
   </div>
+      <script type="text/javascript">
+  //Esconder el menu para tener toda la pantalla
+  $(document).ready(function(){
+    
+    document.getElementById("menuToggle").click();
    
+
+});
+</script>
 @stop

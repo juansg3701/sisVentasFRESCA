@@ -16,42 +16,88 @@ class reporteInventarioC1 extends Controller
 		} 
 	 	public function index(Request $request){
 	 	if ($request) {
-	 		$query=trim($request->get('searchText'));
-	 		$id1=trim($request->get('id1'));
-	 		$id2=trim($request->get('id2'));
-	 		$cargoUsuario=auth()->user()->tipo_cargo_id_cargo;
-	 		$modulos=DB::table('cargo_modulo')
-	 		->where('id_cargo','=',$cargoUsuario)
-	 		->orderBy('id_cargo', 'desc')->get();
-	 		$r=RInventarios::findOrFail($id1);
-	 		$fechaR1=$r->fechaActual;
-	 		$r2=RInventarios::findOrFail($id2);
-	 		$fechaR2=$r2->fechaActual;
-	 
-		 	$productos=DB::table('producto as p')
-		 	->join('categoria as c','p.categoria_id_categoria','=','c.id_categoria')
-		 	->join('impuestos as i','p.impuestos_id_impuestos','=','i.id_impuestos')
-		 	->select('p.id_producto','p.nombre','p.plu','p.ean','c.nombre as categoria_id_categoria','p.unidad_de_medida','p.precio','i.nombre as impuestos_id_impuestos','p.stock_minimo')
-		 	->where('p.fecha_registro','>=',$r->fechaInicial)
-		 	->where('p.fecha_registro','<=',$r->fechaFinal)
-		 	->orderBy('p.id_producto', 'desc')
-		 	->paginate(10);
+	 			$query=trim($request->get('searchText'));
+	 			$id1=trim($request->get('id1'));
+	 			$id2=trim($request->get('id2'));
+	 			$cargoUsuario=auth()->user()->tipo_cargo_id_cargo;
+	 			$modulos=DB::table('cargo_modulo')
+	 			->where('id_cargo','=',$cargoUsuario)
+	 			->orderBy('id_cargo', 'desc')->get();
+	 			$r=RInventarios::findOrFail($id1);
+	 			$fechaR1=$r->fechaActual;
+	 			$r2=RInventarios::findOrFail($id2);
+	 			$fechaR2=$r2->fechaActual;
 
-			$productos2=DB::table('producto as p')
-		 	->join('categoria as c','p.categoria_id_categoria','=','c.id_categoria')
-		 	->join('impuestos as i','p.impuestos_id_impuestos','=','i.id_impuestos')
-		 	->select('p.id_producto','p.nombre','p.plu','p.ean','c.nombre as categoria_id_categoria','p.unidad_de_medida','p.precio','i.nombre as impuestos_id_impuestos','p.stock_minimo')
-		 	->where('p.fecha_registro','>=',$r2->fechaInicial)
-		 	->where('p.fecha_registro','<=',$r2->fechaFinal)
-		 	->orderBy('p.id_producto', 'desc')
-		 	->paginate(10);
+	 			$Transformado=DB::table('stock as s')
+	 			->select(DB::raw('sum(total) as numero'))
+	 			->where('s.fecha_registro','>=',$r->fechaInicial)
+	 			->where('s.fecha_registro','<=',$r->fechaFinal)
+	 			->where('s.transformacion_stock_id','!=',6)
+	 			->orderBy('s.id_stock', 'desc')->get();
 
-			$reportes=DB::table('reporteinventarios')
-	 		->orderBy('id_rInventarios','desc')->get();
-		        
-	 	}	 			
-	 	return view("almacen.reportes.compararGI1.index",["modulos"=>$modulos, "productos"=>$productos,"searchText"=>$query,"id1"=>$id1,"id2"=>$id2,"reportes"=>$reportes,"fechaR1"=>$fechaR1,"fechaR2"=>$fechaR2, "productos2"=>$productos2]);
- 		
+	 			$NoTransformado=DB::table('stock as s')
+	 			->select(DB::raw('sum(total) as numero'))
+	 			->where('s.fecha_registro','>=',$r->fechaInicial)
+	 			->where('s.fecha_registro','<=',$r->fechaFinal)
+	 			->where('s.transformacion_stock_id','=',6)
+	 			->orderBy('s.id_stock', 'desc')->get();
+
+	 			$Transformado2=DB::table('stock as s')
+	 			->select(DB::raw('sum(total) as numero'))
+	 			->where('s.fecha_registro','>=',$r2->fechaInicial)
+	 			->where('s.fecha_registro','<=',$r2->fechaFinal)
+	 			->where('s.transformacion_stock_id','!=',6)
+	 			->orderBy('s.id_stock', 'desc')->get();
+
+	 			$NoTransformado2=DB::table('stock as s')
+	 			->select(DB::raw('sum(total) as numero'))
+	 			->where('s.fecha_registro','>=',$r2->fechaInicial)
+	 			->where('s.fecha_registro','<=',$r2->fechaFinal)
+	 			->where('s.transformacion_stock_id','=',6)
+	 			->orderBy('s.id_stock', 'desc')->get();
+
+	 			if(auth()->user()->superusuario==0){
+
+	 			$Transformado=DB::table('stock as s')
+	 			->select(DB::raw('sum(total) as numero'))
+	 			->where('s.fecha_registro','>=',$r->fechaInicial)
+	 			->where('s.fecha_registro','<=',$r->fechaFinal)
+	 			->where('s.id_sede','=',auth()->user()->sede_id_sede)
+	 			->where('s.transformacion_stock_id','!=',6)
+	 			->orderBy('s.id_stock', 'desc')->get();
+
+	 			$NoTransformado=DB::table('stock as s')
+	 			->select(DB::raw('sum(total) as numero'))
+	 			->where('s.fecha_registro','>=',$r->fechaInicial)
+	 			->where('s.fecha_registro','<=',$r->fechaFinal)
+	 			->where('s.id_sede','=',auth()->user()->sede_id_sede)
+	 			->where('s.transformacion_stock_id','=',6)
+	 			->orderBy('s.id_stock', 'desc')->get();
+
+	 			$Transformado2=DB::table('stock as s')
+	 			->select(DB::raw('sum(total) as numero'))
+	 			->where('s.fecha_registro','>=',$r2->fechaInicial)
+	 			->where('s.fecha_registro','<=',$r2->fechaFinal)
+	 			->where('s.id_sede','=',auth()->user()->sede_id_sede)
+	 			->where('s.transformacion_stock_id','!=',6)
+	 			->orderBy('s.id_stock', 'desc')->get();
+
+	 			$NoTransformado2=DB::table('stock as s')
+	 			->select(DB::raw('sum(total) as numero'))
+	 			->where('s.fecha_registro','>=',$r2->fechaInicial)
+	 			->where('s.fecha_registro','<=',$r2->fechaFinal)
+	 			->where('s.id_sede','=',auth()->user()->sede_id_sede)
+	 			->where('s.transformacion_stock_id','=',6)
+	 			->orderBy('s.id_stock', 'desc')->get();
+
+	 			
+	 			}
+
+
+	 		$reportes=RInventarios::get(); 
+
+	 		return view("almacen.reportes.compararGI1.index",["modulos"=>$modulos, "searchText"=>$query,"id1"=>$id1,"id2"=>$id2,"reportes"=>$reportes,"fechaR1"=>$fechaR1,"fechaR2"=>$fechaR2,"Transformado"=>$Transformado,"NoTransformado"=>$NoTransformado, "Transformado2"=>$Transformado2,"NoTransformado2"=>$NoTransformado2]);
+	 		}
 		}
 
 

@@ -207,7 +207,7 @@
                             </li>
                             <li><i class="fa fa-table"></i><a href="{{url('almacen/reportes/inventario')}}">Productos</a>
                             </li> 
-                            <li><i class="fa fa-table"></i><a href="{{url('almacen/reportes/inventario2')}}">Inventario</a>
+                            <li><i class="fa fa-table"></i><a href="{{url('almacen/reportes/inventario')}}">Inventario</a>
                             </li>                
                         </ul>
                     </li>

@@ -55,7 +55,6 @@ Route::resource('almacen/inventario/corte-sede/productosCorte', 'ProductosCorteC
 Route::resource('almacen/inventario/categoriaTransformado', 'CategoriaTransformadoController');
 
 Route::resource('almacen/reportes/inventario', 'reportesInventario');
-Route::resource('almacen/reportes/inventario2', 'reportesInventario2');
 Route::resource('almacen/reportes/inventario/descargas', 'reportesInventarioEX');
 Route::resource('almacen/reportes/inventario/descargas2', 'reportesInventarioPDF');
 Route::resource('almacen/reportes/inventario2/descargas', 'reportesInventarioEX2');
