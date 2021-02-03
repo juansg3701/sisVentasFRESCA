@@ -130,7 +130,7 @@
 										<div>Precio No.1:</div>
 									</div>
 									<div class="form-group col-sm-3">
-										<input type="number" class="form-control" name="precio_1" id="precio_1" min="1" pattern="^[0-9]+">
+										<input type="number" class="form-control" name="precio_1" id="precio_1" min="0" pattern="^[0-9]+">
 									</div>
 									
 								
@@ -157,7 +157,7 @@
 										<div>Precio No.2:</div>
 									</div>
 									<div class="form-group col-sm-3">
-										<input type="number" class="form-control" name="precio_2" id="precio_2" min="1" pattern="^[0-9]+">
+										<input type="number" class="form-control" name="precio_2" id="precio_2" min="0" pattern="^[0-9]+">
 									</div>
 									
 									<div class="form-group col-sm-1"></div>
@@ -186,7 +186,7 @@
 										<div>Precio No.3:</div>
 									</div>
 									<div class="form-group col-sm-3">
-										<input type="number" class="form-control" name="precio_3" id="precio_3" min="1" pattern="^[0-9]+">
+										<input type="number" class="form-control" name="precio_3" id="precio_3" min="0" pattern="^[0-9]+">
 									</div>
 									
 									
@@ -217,7 +217,7 @@
 										<div>Precio No.4:</div>
 									</div>
 									<div class="form-group col-sm-3">
-										<input type="number" class="form-control" name="precio_4" id="precio_4" min="1" pattern="^[0-9]+">
+										<input type="number" class="form-control" name="precio_4" id="precio_4" min="0" pattern="^[0-9]+">
 									</div>									
 									<div class="form-group col-sm-1"></div>
 									<div class="form-group col-sm-2">
@@ -350,9 +350,11 @@
 
 
         }else {	
-        	if(costo<=precio1 && costo<=precio2 && costo<=precio3 && costo<=precio4){
+        	if((costo<=precio1 || precio1==0) && (costo<=precio2 || precio2==0) && (costo<=precio3 || precio3==0) && (costo<=precio4 || precio4==0)){
         	 document.getElementById("envio").click(); 
         	}else{
+        		
+
         		Swal.fire({
                 icon: 'error',
                 text: 'Los precios deben ser mayores al precio de compra',
