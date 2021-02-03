@@ -241,8 +241,8 @@
         <header id="header" class="header">
             <div class="top-left">
                 <div class="navbar-header">
-                    <a class="navbar-brand" href="{{url('/')}}"><img src="{{asset('images/logo1.jpeg')}}" width="35" height="35">&nbsp Cosecha fresca</a>
-                    <a class="navbar-brand hidden" href="{{url('/')}}"><img src="{{asset('images/logo1.jpeg')}}" width="35" height="35">&nbsp Cosecha fresca</a>
+                    <a class="navbar-brand" href="{{url('/')}}"><img src="{{asset('images/Logo1.jpeg')}}" width="35" height="35">&nbsp Cosecha fresca</a>
+                    <a class="navbar-brand hidden" href="{{url('/')}}"><img src="{{asset('images/Logo1.jpeg')}}" width="35" height="35">&nbsp Cosecha fresca</a>
                     <a id="menuToggle" class="menutoggle"><i class="fa fa-bars"></i></a>
                 </div>
             </div>
