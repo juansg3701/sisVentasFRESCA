@@ -177,13 +177,8 @@
 			
 							<td>
 								<a href="{{URL::action('reportesVentas@edit',$rep->id_rVentas)}}"><button class="btn btn-info">Gráfica</button></a>
-								<!--
-								<a href="{{URL::action('reportesVentasPDF@edit',$rep->id_rVentas)}}"><button class="btn btn-warning"><i>pdf</i></button></a>
-								<a href="{{URL::action('reportesVentasEX@show',$rep->id_rVentas)}}"><button class="btn btn-success"><i>xls</i></button></a>
-								-->
-
-								<a href="{{URL::action('reportesVentas@downloadExcelReport',$rep->id_rVentas)}}"><button class="btn btn-success"><i>xls</i></button></a>
 								<a href="{{URL::action('reportesVentas@downloadPDFReport',$rep->id_rVentas)}}"><button class="btn btn-warning"><i>pdf</i></button></a>
+								<a href="{{URL::action('reportesVentas@downloadExcelReport',$rep->id_rVentas)}}"><button class="btn btn-success"><i>xls</i></button></a>
 								<a href="" data-target="#modal-delete-{{$rep->id_rVentas}}" data-toggle="modal"><button class="btn btn-danger">Eliminar</button></a>
 							</td>
 						</tr>

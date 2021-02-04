@@ -15,16 +15,6 @@ class reportesVentasEX extends Controller
 			$this->middleware('auth');	
 		} 
 
-	 	public function show($id){
-			$i=RVentas::findOrFail($id);
-			$ini=$i->fechaInicial;
-			$fin=$i->fechaFinal;
-			$desde=$ini;
-		 	$hasta=$fin;
-			return view('almacen.reportes.ventas.descargas.pdf',["desde"=>$desde, "hasta"=>$hasta]);
-	 	}
-
-
 	 	public function edit($id){
 	 		
 	 		$cargoUsuario=auth()->user()->tipo_cargo_id_cargo;
