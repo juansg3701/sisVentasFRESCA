@@ -136,3 +136,6 @@ Route::resource('almacen/facturacion/FacturaVenta', 'facturacionFListaVentas');
 Route::resource('almacen/inventario/producto-sede/descuentos', 'DescuentoProducto');
 
 Route::get('downloadExcel', 'ProductoSedeController@downloadExcel');
+
+Route::get('downloadExcelReport/{id}', 'reportesVentas@downloadExcelReport');
+Route::get('downloadPDFReport/{id}', 'reportesVentas@downloadPDFReport');

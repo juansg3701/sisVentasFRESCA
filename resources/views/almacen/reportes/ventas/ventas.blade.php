@@ -26,7 +26,7 @@
 	{!!Form::open(array('url'=>'almacen/reportes/ventas','method'=>'POST','autocomplete'=>'off'))!!}
     {{Form::token()}}
     
-<div class="col-md-12">
+	<div class="col-md-12">
 		<div class="card">
 			<div class="card-header" align="center">
 				<h3 class="pb-2 display-5">Registrar reporte ventas</h3>
@@ -91,9 +91,9 @@
 									<div class="form-group col-sm-12">
 										
 										<div align="center">
-			<button type="submit" class="btn btn-info">Generar Reporte</button>
-			<a href="{{url('/')}}" class="btn btn-danger">Volver</a>
-			</div>
+											<button type="submit" class="btn btn-info">Generar Reporte</button>
+											<a href="{{url('/')}}" class="btn btn-danger">Volver</a>
+										</div>
 									
 									</div>
 								</div>
@@ -180,7 +180,10 @@
 								<!--
 								<a href="{{URL::action('reportesVentasPDF@edit',$rep->id_rVentas)}}"><button class="btn btn-warning"><i>pdf</i></button></a>
 								<a href="{{URL::action('reportesVentasEX@show',$rep->id_rVentas)}}"><button class="btn btn-success"><i>xls</i></button></a>
-							-->
+								-->
+
+								<a href="{{URL::action('reportesVentas@downloadExcelReport',$rep->id_rVentas)}}"><button class="btn btn-success"><i>xls</i></button></a>
+								<a href="{{URL::action('reportesVentas@downloadPDFReport',$rep->id_rVentas)}}"><button class="btn btn-warning"><i>pdf</i></button></a>
 								<a href="" data-target="#modal-delete-{{$rep->id_rVentas}}" data-toggle="modal"><button class="btn btn-danger">Eliminar</button></a>
 							</td>
 						</tr>

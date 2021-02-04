@@ -22,7 +22,7 @@ class reportesVentasEX extends Controller
 			$desde=$ini;
 		 	$hasta=$fin;
 			return view('almacen.reportes.ventas.descargas.pdf',["desde"=>$desde, "hasta"=>$hasta]);
-	 	} 
+	 	}
 
 
 	 	public function edit($id){
@@ -42,17 +42,8 @@ class reportesVentasEX extends Controller
 	 		->where('tc.fecha_solicitud','<=',$r->fechaFinal)
 	 		->orderBy('tc.id_remision', 'desc')
 	 		->paginate(10);
-	 		
-	
 	 			 			
 	 		return view("almacen.reportes.pedidos.grafica",["modulos"=>$modulos,"pedidosCliente"=>$pedidosCliente]);
 	 	}
 
-
-
-
-
-
-
-	 
 }

@@ -6,10 +6,17 @@
 			var $baseDatos;
 
 			function __construct(){
-				$this->ruta       ="localhost"; //
+
+				$this->ruta       ="remotemysql.com"; //
+				$this->usuario    ="MTvDp0bqcd"; //usuario que tengas definido
+				$this->contrasena ="SxQzQi4dyT"; //contraseña que tengas definidad
+				$this->baseDatos  ="MTvDp0bqcd"; //base de datos personas, si quieres utilizar otra base de datos solamente cambiala
+
+
+				/*$this->ruta       ="localhost"; //
 				$this->usuario    ="root"; //usuario que tengas definido
 				$this->contrasena =""; //contraseña que tengas definidad
-				$this->baseDatos  ="final"; //base de datos personas, si quieres utilizar otra base de datos solamente cambiala
+				$this->baseDatos  ="final"; //base de datos personas, si quieres utilizar otra base de datos solamente cambiala*/
 			}
 
 			function conectarse(){

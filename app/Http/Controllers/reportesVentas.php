@@ -157,7 +157,7 @@ class reportesVentas extends Controller
 	 		return view("almacen.reportes.ventas.grafica",["modulos"=>$modulos,"NoPagoE"=>$NoPagoE,"NoPagoD"=>$NoPagoD,"NoPagoP"=>$NoPagoP,"id"=>$id,"ventas"=>$ventas,"r"=>$r]);
 	 	}
 
-	 		public function show($id){
+	 	public function show($id){
 	 		return view("almacen.cliente.show",["cliente"=>Cliente::findOrFail($id)]);
 	 	}
 
@@ -169,7 +169,30 @@ class reportesVentas extends Controller
 	 		$reporte=RVentas::findOrFail($id);
 	 		$reporte->delete();
 
-	 	return back()->with('msj','Reporte eliminado');
+	 		return back()->with('msj','Reporte eliminado');
+	 	}
+
+
+	 	public function downloadExcelReport($id){
+			$i=RVentas::findOrFail($id);
+			$ini=$i->fechaInicial;
+			$fin=$i->fechaFinal;
+			$desde=$ini;
+		 	$hasta=$fin;
+
+			return view('almacen.reportes.ventas.reporteExcel.excel',["desde"=>$desde, "hasta"=>$hasta]);
+	 	} 
+
+	 	public function downloadPDFReport($id){
+			$i=RVentas::findOrFail($id);
+			$ini=$i->fechaInicial;
+			$fin=$i->fechaFinal;
+			$desde=$ini;
+		 	$hasta=$fin;
+
+		 	$productos="SELECT f.id_factura, f.pago_total, f.noproductos, tp.nombre as tipo_pago_id_tpago, f.fecha FROM factura as f, tipo_pago as tp, cliente as c, empleado as e WHERE f.tipo_pago_id_tpago=tp.id_tpago and f.empleado_id_empleado=e.id_empleado and f.cliente_id_cliente=c.id_cliente and f.fecha>='$desde' and f.fecha<='$hasta' ORDER BY f.id_factura DESC";
+
+			return view('almacen.reportes.ventas.reportePDF.pdf',["desde"=>$desde, "hasta"=>$hasta, "productos"=>$productos]);
 	 	}
 	 
 }
