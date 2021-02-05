@@ -60,7 +60,7 @@ Route::resource('almacen/reportes/inventario/descargas2', 'reportesInventarioPDF
 Route::resource('almacen/reportes/inventario2/descargas', 'reportesInventarioEX2');
 Route::resource('almacen/reportes/inventario2/descargas2', 'reportesInventarioPDF2');
 Route::resource('almacen/reportes/pedidos/descargas', 'reportesInventarioEXP');
-Route::resource('almacen/reportes/pedidos', 'reportesPedidos');
+Route::resource('almacen/reportes/comparacion', 'reportesComparacion');
 Route::resource('almacen/reportes/pedidos2', 'reportesPedidos2');
 Route::resource('almacen/reportes/pedidos/descargas', 'reportesPedidosEX');
 Route::resource('almacen/reportes/pedidos2/descargas', 'reportesPedidosEX2');

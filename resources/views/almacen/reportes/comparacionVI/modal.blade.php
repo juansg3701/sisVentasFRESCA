@@ -1,7 +1,7 @@
 <div class="modal fade modal-slide-in-right" aria-hidden="true"
-role="dialog" tabindex="-1" id="modal-delete-{{$rep->id_rPedidos}}">
+role="dialog" tabindex="-1" id="modal-delete-{{$rep->id_rComparacion}}">
 	
-	{{Form::Open(array('action'=>array('reportesPedidos@destroy',$rep->id_rPedidos), 'method'=>'delete'))}}
+	{{Form::Open(array('action'=>array('reportesComparacion@destroy',$rep->id_rComparar), 'method'=>'delete'))}}
 
 	<div class="modal-dialog">
 		<div class="modal-content">
