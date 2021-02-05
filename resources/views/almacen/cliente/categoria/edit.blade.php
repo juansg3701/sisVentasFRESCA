@@ -86,7 +86,14 @@
 										<input type="text" class="form-control" value="{{$categoria->descripcion}}" name="descripcion">
 									</div>
 								</div>
-
+								<div class="form-row">
+									<div class="form-group col-sm-4">
+										<div>No. columna:</div>
+									</div>
+									<div class="form-group col-sm-8">
+										<input type="text" class="form-control" value="{{$categoria->no_precio}}" disabled="true">
+									</div>
+								</div>
 								<div class="form-row">
 									<div class="form-group col-sm-4">
 										<div>Fecha:</div>

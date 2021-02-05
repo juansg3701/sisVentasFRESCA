@@ -24,9 +24,9 @@ class CategoriaClienteController extends Controller
 	 			$categorias=DB::table('categoria_cliente as cc')
 	 			->join('empleado as u','cc.empleado_id_empleado','=','u.id_empleado')
 	 			->join('sede as s','cc.sede_id_sede','=','s.id_sede')
-	 			->select('cc.id_categoria','cc.nombre','cc.descripcion','s.nombre_sede as sede_id_sede','u.nombre as empleado_id_empleado', 'cc.fecha')
+	 			->select('cc.id_categoria','cc.nombre','cc.descripcion','s.nombre_sede as sede_id_sede','u.nombre as empleado_id_empleado', 'cc.fecha','cc.no_precio')
 	 			->where('cc.nombre','LIKE', '%'.$query.'%')
-	 			->orderBy('cc.id_categoria', 'desc')
+	 			->orderBy('cc.id_categoria', 'asc')
 	 			->paginate(10);
 
 
@@ -51,6 +51,7 @@ class CategoriaClienteController extends Controller
 	 	public function store(CategoriaClienteFormRequest $request){
 	 		$categoria = new CategoriaCliente;
 	 		$categoria->nombre=$request->get('nombre');
+	 		$categoria->no_precio=$request->get('no_precio');
 	 		$categoria->descripcion=$request->get('descripcion');
 	 		$categoria->fecha=$request->get('fecha');
 			$categoria->empleado_id_empleado=$request->get('empleado_id_empleado');
