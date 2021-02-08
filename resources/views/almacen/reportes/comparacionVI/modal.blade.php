@@ -1,16 +1,17 @@
 <div class="modal fade modal-slide-in-right" aria-hidden="true"
-role="dialog" tabindex="-1" id="modal-delete-{{$rep->id_rComparacion}}">
+role="dialog" tabindex="-1" id="modal-delete-{{$rep->id_rComparar}}">
 	
 	{{Form::Open(array('action'=>array('reportesComparacion@destroy',$rep->id_rComparar), 'method'=>'delete'))}}
 
 	<div class="modal-dialog">
 		<div class="modal-content">
 			<div class="modal-header">
+				 <h4 class="modal-title">Eliminar Registro</h4>
 				<button type="button" class="close" data-dismiss="modal" 
 				aria-label="Close">
                      <span aria-hidden="true">×</span>
                 </button>
-                <h4 class="modal-title">Eliminar Registro</h4>
+               
 			</div>
 			<div class="modal-body">
 				<p>¿Desea eliminar el registro?</p>

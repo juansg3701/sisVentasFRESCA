@@ -34,15 +34,15 @@ class reportesComparacion extends Controller
 
 
 
-	 	public function store(RPedidosFormRequest $request){
+	 	public function store(RComparacionFormRequest $request){
 	 		$fechaInicialR=$request->get('fechaInicial');
 	 		$fechaFinalR=$request->get('fechaFinal');
 
 	 		if($fechaInicialR<=$fechaFinalR){
 
 	 		$reporte = new RComparar;
-	 		$reporte->fechaInicial=$request->get('fechaInicial');
-	 		$reporte->fechaFinal=$request->get('fechaFinal');
+	 		$reporte->fechaInicial=$fechaInicialR;
+	 		$reporte->fechaFinal=$fechaFinalR;
 	 		$reporte->fechaActual=$request->get('fechaActual');
 
 	 		$nop="SELECT SUM(df.cantidad) FROM detalle_factura as df,factura as f WHERE df.factura_id_factura=f.id_factura";
