@@ -74,7 +74,7 @@
 								
 								<div class="form-row">
 									<div class="form-group col-sm-4">
-										<div>Descripción:</div>
+										<div>Descripci&oacute;n:</div>
 									</div>
 									<div class="form-group col-sm-8">
 										<input type="text" class="form-control" name="descripcion">
@@ -149,7 +149,7 @@
 						<table id="bootstrap-data-table" class="table table-striped table-bordered">
 						<thead>
 							<th>NOMBRE</th>
-							<th>DESCRIPCIÓN</th>
+							<th>DESCRIPCI&Oacute;N</th>
 							<th>FECHA</th>
 							<th>EMPLEADO</th>
 							<th>OPCIONES</th>

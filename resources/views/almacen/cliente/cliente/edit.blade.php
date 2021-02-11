@@ -88,7 +88,7 @@
 				 	<div class="col-sm-6" align="center">
 						<div class="card" align="center">
 			                <div class="card-header" align="center">
-			                     <strong>Formulario de edición</strong>
+			                     <strong>Formulario de edici&oacute;n</strong>
 			                </div><br>
 			                <div class="card-body card-block" align="center">
 								<div class="form-row">
@@ -101,7 +101,7 @@
 								</div>
 								<div class="form-row">
 									<div class="form-group col-sm-4">
-										<div>Dirección:</div>
+										<div>Direcci&oacute;n:</div>
 									</div>
 									<div class="form-group col-sm-8">
 										<input type="text" class="form-control" name="direccion" value="{{$cliente->direccion}}">
@@ -117,7 +117,7 @@
 								</div>
 								<div class="form-row">
 									<div class="form-group col-sm-4">
-										<div>Teléfono:</div>
+										<div>Tel&eacute;fono:</div>
 									</div>
 									<div class="form-group col-sm-8">
 										<input type="number" class="form-control" name="telefono" value="{{$cliente->telefono}}">
@@ -134,7 +134,7 @@
 
 								<div class="form-row">
 									<div class="form-group col-sm-4">
-										<div>Categoría:</div>
+										<div>Categor&iacute;a:</div>
 									</div>
 									<div class="form-group col-sm-8">
 										<select name="categoria_cliente_id_categoria" class="form-control">

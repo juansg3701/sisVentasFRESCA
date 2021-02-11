@@ -103,7 +103,7 @@
 
                             <li><i class="fa fa-desktop"></i><a href="{{url('almacen/usuario/permiso/cargo')}}">Cargos</a>
                             </li>
-                            <li><i class="fa fa-th-large"></i><a href="{{url('almacen/usuario/permiso/usuario')}}">Módulos</a>
+                            <li><i class="fa fa-th-large"></i><a href="{{url('almacen/usuario/permiso/usuario')}}">M&oacute;dulos</a>
                             </li>
                             <li><i class="fa fa-users"></i><a href="{{url('almacen/usuario/permiso/cuenta')}}">Cuentas</a>
                             </li>
@@ -153,13 +153,6 @@
                   @endif
               @endforeach
 
-              @foreach($modulos as $m)
-                @if($m->id_modulo==6)
-                <li>
-                        <a href="{{url('almacen/pedidosDevoluciones/devoluciones')}}"><i class="menu-icon fa fa-truck"></i>Devoluciones </a>
-                    </li>
-                  @endif
-              @endforeach
 
               @foreach($modulos as $m)
                 @if($m->id_modulo==7)
@@ -179,23 +172,6 @@
               @endforeach
 
 
-              @foreach($modulos as $m)
-                @if($m->id_modulo==8)
-                <li class="menu-item-has-children dropdown">
-                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> <i class="menu-icon fa fa-barcode"></i>Facturación</a>
-                        <ul class="sub-menu children dropdown-menu">                        
-
-                            <li><i class="fa fa-list-alt"></i><a href="{{url('almacen/caja')}}">Caja</a>
-                            </li> 
-                            <li><i class="fa fa-shopping-cart"></i><a href="{{url('almacen/facturacion/listaVentas')}}">Nueva venta</a>
-                            </li>
-                            <li><i class="fa fa-list-alt"></i><a href="{{URL::action('facturacionListaVentas@show',0)}}">Lista de ventas</a>
-                            </li> 
-
-                        </ul>
-                    </li>
-                  @endif
-              @endforeach
 
               @foreach($modulos as $m)
                 @if($m->id_modulo==9)
@@ -205,9 +181,9 @@
 
                             <li><i class="fa fa-table"></i><a href="{{url('almacen/reportes/ventas')}}">Ventas</a>
                             </li>
-                            <li><i class="fa fa-table"></i><a href="{{url('almacen/reportes/inventario')}}">Inventario</a>
+                            <li><i class="fa fa-table"></i><a href="{{url('almacen/reportes/inventario')}}">Productos</a>
                             </li> 
-                            <li><i class="fa fa-table"></i><a href="{{url('almacen/reportes/comparacion')}}">Comparaci&oacute;n</a>
+                            <li><i class="fa fa-table"></i><a href="{{url('almacen/reportes/inventario')}}">Inventario</a>
                             </li>                
                         </ul>
                     </li>
@@ -286,7 +262,7 @@
             <div class="footer-inner bg-white">
                 <div class="row">
                     <div class="col-sm-6">
-                        Copyright &copy; 2018 Ela Admin
+                        Copyright &copy; 2021
                     </div>
                     <div class="col-sm-6 text-right">
                         Designed by <a href="https://colorlib.com">Colorlib</a>

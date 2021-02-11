@@ -98,7 +98,6 @@
 																$chek3="";
 																$chek4="";
 																$chek5="";
-																$chek6="";
 																$chek7="";
 																$chek8="";
 																$chek9="";?>
@@ -126,10 +125,6 @@
 														<?php $chek5="checked";	?>
 														@endif
 
-														@if($mg->id_modulo==6)
-														<?php $chek6="checked";	?>
-														@endif
-
 														@if($mg->id_modulo==7)
 														<?php $chek7="checked";	?>
 														@endif
@@ -150,7 +145,6 @@
 														<label><input type="checkbox" id="cbox2" value="first_checkbox" disabled="true" <?php echo $chek3?>> Proveedores</label><br>
 														<label><input type="checkbox" id="cbox1" value="first_checkbox" disabled="true" <?php echo $chek4?>> Clientes</label><br>
 														<label><input type="checkbox" id="cbox1" value="first_checkbox" disabled="true" <?php echo $chek5?>> Sedes</label><br>
-														<label><input type="checkbox" id="cbox1" value="first_checkbox" disabled="true" <?php echo $chek6?>> Devoluciones</label><br>
 														<label><input type="checkbox" id="cbox1" value="first_checkbox" disabled="true" <?php echo $chek7?>> Inventario</label><br>
 														<label><input type="checkbox" id="cbox1" value="first_checkbox" disabled="true" <?php echo $chek8?>> Facturación</label><br>
 														<label><input type="checkbox" id="cbox1" value="first_checkbox" disabled="true" <?php echo $chek9?>> Reportes</label><br><br>

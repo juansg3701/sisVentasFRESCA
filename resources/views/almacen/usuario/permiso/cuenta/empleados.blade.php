@@ -111,9 +111,9 @@
 								<th>Correo</th>
 								<th>Cargo</th>
 								<th>Sede</th>
-								<th>Código</th>
+								<th>C&oacute;digo</th>
 								<th>Documento</th>
-								<th>Dirección</th>
+								<th>Direcci&oacute;n</th>
 								<th>Telefono</th>
 								<th>OPCIONES</th>
 							</thead>
@@ -140,7 +140,7 @@
 								<td>{{ $usu->direccion}}</td>
 								<td>{{ $usu->telefono}}</td>
 								<td>
-									<a href="{{URL::action('UsersController@edit',$usu->id)}}"><button class="btn btn-outline-primary btn-sm">Editar</button></a>
+									<a href="{{URL::action('EmpleadoController@edit',$usu->user_id_user)}}"><button class="btn btn-outline-primary btn-sm">Editar</button></a>
 									
 								</td>	
 							</tr>

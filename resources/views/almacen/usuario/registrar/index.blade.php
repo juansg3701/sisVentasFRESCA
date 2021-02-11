@@ -101,7 +101,7 @@
 
                         	<div class="form-row">
 									<div class="form-group col-sm-4">
-										<div>Contraseña:</div>
+										<div>Contrase&ntilde;a:</div>
 									</div>
 									<div class="form-group col-sm-8">
 										<input id="password" type="password" class="form-control" name="password">
@@ -115,26 +115,10 @@
 								</div>
                         </div>
 
-                        <div class="form-group{{ $errors->has('password_confirmation') ? ' has-error' : '' }}">
-
-                        	<div class="form-row">
-									<div class="form-group col-sm-4">
-										<div>Confirmar contraseña:</div>
-									</div>
-									<div class="form-group col-sm-8">
-										<input id="password-confirm" type="password" class="form-control" name="password_confirmation">
-
-		                                @if ($errors->has('password_confirmation'))
-		                                    <span class="help-block">
-		                                        <strong>{{ $errors->first('password_confirmation') }}</strong>
-		                                    </span>
-		                                @endif
-									</div>
-								</div>
-                        </div>
+        
 								<div class="form-row">
 									<div class="form-group col-sm-4">
-										<div>Código:</div>
+										<div>C&oacute;digo:</div>
 									</div>
 									<div class="form-group col-sm-8">
 										
@@ -143,7 +127,7 @@
 								</div>
 								<div class="form-row">
 									<div class="form-group col-sm-4">
-										<div>Dirección:</div>
+										<div>Direcci&oacute;n:</div>
 									</div>
 									<div class="form-group col-sm-8">
 										

@@ -22,10 +22,10 @@ class PermisoCargoController extends Controller
 	 		if ($request) {
 	 			$query=trim($request->get('searchText'));
 	 			$cargos=DB::table('tipo_cargo as tp')
-	 			->join('empleado as e','tp.empleado_id_empleado','=','e.user_id_user')
+	 			->join('empleado as e','tp.empleado_id_empleado','=','e.id_empleado')
 	 			->select('tp.id_cargo as id_cargo','tp.nombre as nombre','tp.descripcion as descripcion','tp.fecha as fecha','e.nombre as empleado')
 	 			->where('tp.nombre','LIKE', '%'.$query.'%')
-	 			->orderBy('tp.id_cargo', 'asc')
+	 			->orderBy('tp.id_cargo', 'desc')
 	 			->paginate(10);
 
 	 			$cargoUsuario=auth()->user()->tipo_cargo_id_cargo;

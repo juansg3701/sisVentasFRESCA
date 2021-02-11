@@ -48,7 +48,7 @@
 	{!!Form::model($usuario,['method'=>'PATCH','route'=>['almacen.nomina.empleado.update',$usuario->id_empleado]])!!}
     {{Form::token()}}
 
-     <!--Formulario de edición-->	
+     <!--Formulario de edici贸n-->	
 	<div class="col-md-12">
 		<div class="card">
 			<div class="card-header" align="center">
@@ -64,7 +64,7 @@
 				 	<div class="col-sm-6" align="center">
 						<div class="card" align="center">
 			                <div class="card-header" align="center">
-			                     <strong>Formulario de edición</strong>
+			                     <strong>Formulario de edici&oacute;n</strong>
 			                </div>
 			                <div class="card-body card-block" align="center">
 			                	<div align="center">
@@ -133,7 +133,7 @@
 								</div>
 								<div class="form-row">
 									<div class="form-group col-sm-4">
-										<div>Código:</div>
+										<div>C&oacute;digo:</div>
 									</div>
 									<div class="form-group col-sm-8">
 										<input type="text" class="form-control" name="codigo" value="{{$usuario->codigo}}">
@@ -142,7 +142,7 @@
 
 								<div class="form-row">
 									<div class="form-group col-sm-4">
-										<div>Dirección:</div>
+										<div>Direcci&oacute;n:</div>
 									</div>
 									<div class="form-group col-sm-8">
 										<input type="text" class="form-control" name="direccion" value="{{$usuario->direccion}}">

@@ -54,7 +54,7 @@
 				<div class="col-md-12">
 					<div class="card">
 						<div class="card-header" align="center">
-							<h2 class="pb-2 display-5">MÓDULO DE CLIENTES</h2>
+							<h2 class="pb-2 display-5">M&Oacute;DULO DE CLIENTES</h2>
 						</div><br>
 						<div class="row" align="center">	
 							<div class="col-sm-3" align="center"></div>
@@ -69,7 +69,7 @@
 
 													<div align="center">
 														<a href="{{URL::action('ClienteController@create',0)}}"><button class="btn btn-info">Registrar Cliente</button></a>
-														<a href="{{URL::action('CategoriaClienteController@index',0)}}"><button class="btn btn-info">Categoría Cliente</button></a>
+														<a href="{{URL::action('CategoriaClienteController@index',0)}}"><button class="btn btn-info">Categor&iacute;a Cliente</button></a>
 														<!--<a href="{{url('almacen/facturacion/listaVentas')}}" class="btn btn-warning">Ventas</a>-->
 														<a href="{{url('/')}}" class="btn btn-danger">Regresar</a>
 													</div>
@@ -117,9 +117,9 @@
 							<thead>
 								<th>CONTACTO</th>
 								<th>EMPRESA</th>
-								<th>CATEGORÍA</th>
+								<th>CATEGOR&Iacute;A</th>
 								<th>DIRECCIÓN</th>
-								<th>TELÉFONO</th>
+								<th>TEL&Eacute;FONO</th>
 								<th>CORREO</th>
 								<th>NO. DOCUMENTO</th>
 								<th colspan="2">NIT</th>
