@@ -62,7 +62,7 @@ class reportesVentas extends Controller
 	 		$reporte->total=$request->get('total');
 	 		$reporte->save();
 
-	 			return back()->with('msj','Reporte guardado');
+	 		return back()->with('msj','Reporte guardado');
 	 		}else{
 	 			return back()->with('errormsj','¡Las fechas no son correctas!');
 	 		}
