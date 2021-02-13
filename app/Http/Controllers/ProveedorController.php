@@ -66,9 +66,16 @@ class ProveedorController extends Controller
 	 		$documentoR=$request->get('documento');
 	 		$correoR=$request->get('correo');
 
-	 		$DocumenRegis=DB::table('proveedor')
-	 		->where('documento','=',$documentoR)
-	 		->orderBy('id_proveedor','desc')->get();
+	 		if($documentoR!=""){
+	 			$DocumenRegis=DB::table('proveedor')
+		 		->where('documento','=',$documentoR)
+		 		->orderBy('id_proveedor','desc')->get();
+	 		}else{
+	 			$DocumenRegis=DB::table('proveedor')
+		 		->where('documento','=',"NINGUNO")
+		 		->orderBy('id_proveedor','desc')->get();
+	 		}
+	 		
 
 	 		$CorreoRegis=DB::table('proveedor')
 	 		->where('correo','=',$correoR)

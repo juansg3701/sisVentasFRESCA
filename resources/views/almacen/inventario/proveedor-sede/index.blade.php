@@ -77,8 +77,6 @@
 													</div>
 													<br>
 													<div align="center">
-													<button class="btn btn-success">Cargar xls</button>
-													<button class="btn btn-success">Descargar xls</button>
 													<a href="{{url('/')}}" class="btn btn-danger">Volver</a>
 				
 													</div>

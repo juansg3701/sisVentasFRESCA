@@ -99,9 +99,16 @@ class ClienteController extends Controller
 	 		$nitR=$request->get('nit');
 	 		$correoR=$request->get('correo');
 
-	 		$DocumenRegis=DB::table('cliente')
+	 		if($documentoR!=""){
+	 			$DocumenRegis=DB::table('cliente')
 	 		->where('documento','=',$documentoR)
 	 		->orderBy('id_cliente','desc')->get();
+	 		}else{
+	 			$DocumenRegis=DB::table('cliente')
+	 		->where('documento','=',"NINGUNO")
+	 		->orderBy('id_cliente','desc')->get();	
+	 		}
+	 		
 
 	 		$nitRegis=DB::table('cliente')
 	 		->where('nit','=',$nitR)

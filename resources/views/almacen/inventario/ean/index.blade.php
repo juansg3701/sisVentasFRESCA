@@ -123,7 +123,7 @@
 							@foreach($pEAN as $pE)
 							<div class="form-row">
 								<div class="form-group col-sm-4">
-									<div>Producto automático:</div>
+									<div>Producto autom&aacute;tico:</div>
 								</div>
 								<div class="form-group col-sm-8">
 									<input type="hidden" class="form-control" name="producto_id_producto" value="{{$pE->nombre}}">
@@ -217,7 +217,7 @@
 						<div class="form-group col-sm-8">
 							<select name="proveedor_id_proveedor" class="form-control">
 									@foreach($proveedor as $pr)
-								<option value="{{$pr->id_proveedor}}">{{$pr->nombre_proveedor}}</option>
+								<option value="{{$pr->id_proveedor}}">{{$pr->nombre_empresa}}</option>
 								@endforeach
 							</select>
 						</div>
