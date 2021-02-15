@@ -91,42 +91,43 @@ class SedeController extends Controller
 
  	//Función para eliminar el registro especificado en el módulo de sedes
  	public function destroy($id){
+/*
  		$id=$id;
- 		$sede=Sede::findOrFail($id);
-	 	$sede->delete();
- 		return back()->with('msj','Sede eliminada');
-
- 		/*$id=$id;
  		$existeC=DB::table('caja')
  		->where('sede_id_sede','=',$id)
  		->orderBy('id_caja', 'desc')->get();
- 		$existeCI=DB::table('c_inventario')
+
+ 		$existeCL=DB::table('cliente')
  		->where('sede_id_sede','=',$id)
- 		->orderBy('id_corte', 'desc')->get();
- 		$existeD=DB::table('descuentos')
+ 		->orderBy('id_cliente', 'desc')->get();
+
+ 		$existePR=DB::table('proveedor')
  		->where('sede_id_sede','=',$id)
- 		->orderBy('id_descuento', 'desc')->get();
- 		$existeDB=DB::table('detalle_banco')
- 		->where('sede_id_sede','=',$id)
- 		->orderBy('id_Dbanco', 'desc')->get();
+ 		->orderBy('id_proveedor', 'desc')->get();
+ 
  		$existeE=DB::table('empleado')
  		->where('sede_id_sede','=',$id)
  		->orderBy('id_empleado', 'desc')->get();
+
  		$existeM=DB::table('m_stock')
  		->where('sede_id_sede','=',$id)
  		->orderBy('id_mstock', 'desc')->get();
+
  		$existeS=DB::table('stock')
  		->where('sede_id_sede','=',$id)
  		->orderBy('id_stock', 'desc')->get();
+
  		$existeU=DB::table('users')
  		->where('sede_id_sede','=',$id)
  		->orderBy('id', 'desc')->get();
+
  		if(count($existeC)==0 && count($existeCI)==0 && count($existeD)==0 && count($existeDB)==0 && count($existeE)==0 && count($existeM)==0 && count($existeS)==0 && count($existeU)==0){
 	 		$sede=Sede::findOrFail($id);
 	 		$sede->delete();
  			return back()->with('msj','Sede eliminada');
  		}else{
+ 			*/
  			return back()->with('errormsj','¡Sede relacionada!');	 			
- 		}*/	
+ 		
  	}
 }
