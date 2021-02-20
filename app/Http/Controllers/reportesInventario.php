@@ -87,7 +87,16 @@ class reportesInventario extends Controller
 	 			->join('empleado as e','s.empleado_id_empleado','=','e.id_empleado')
 	 			->join('proveedor as p','s.proveedor_id_proveedor','=','p.id_proveedor')
 	 			->join('categoria_producto_trans as tp','s.transformacion_stock_id','=','tp.id_categoria')
-	 			->select('s.id_stock','s.total', 'tp.nombre as categoria', 's.fecha_registro','s.producto_id_producto')
+	 			->select('s.id_stock','s.total', 'tp.nombre as categoria', 's.fecha_registro','s.producto_id_producto','s.noFactura','s.cantidad')
+	 			->where('s.fecha_registro','>=',$r->fechaInicial)
+	 			->where('s.fecha_registro','<=',$r->fechaFinal)
+	 			->orderBy('s.id_stock', 'desc')
+	 			->paginate(50);
+
+	 			$productos_stock=DB::table('stock as s')
+	 			->join('empleado as e','s.empleado_id_empleado','=','e.id_empleado')
+	 			->join('proveedor as p','s.proveedor_id_proveedor','=','p.id_proveedor')
+	 			->select('s.id_stock','s.total', 's.fecha_registro','s.producto_id_producto','p.nombre_proveedor as nombre_proveedor','s.cantidad')
 	 			->where('s.fecha_registro','>=',$r->fechaInicial)
 	 			->where('s.fecha_registro','<=',$r->fechaFinal)
 	 			->orderBy('s.id_stock', 'desc')
@@ -116,8 +125,18 @@ class reportesInventario extends Controller
 	 			->join('empleado as e','s.empleado_id_empleado','=','e.id_empleado')
 	 			->join('proveedor as p','s.proveedor_id_proveedor','=','p.id_proveedor')
 	 			->join('categoria_producto_trans as tp','s.transformacion_stock_id','=','tp.id_categoria')
-	 			->select('s.id_stock','s.total', 'tp.nombre as categoria', 's.fecha_registro','s.producto_id_producto')
+	 			->select('s.id_stock','s.total', 'tp.nombre as categoria', 's.fecha_registro','s.producto_id_producto','s.noFactura','s.cantidad')
 	 			->where('s.id_sede','=',auth()->user()->sede_id_sede)
+	 			->where('s.fecha_registro','>=',$r->fechaInicial)
+	 			->where('s.fecha_registro','<=',$r->fechaFinal)
+	 			->orderBy('s.id_stock', 'desc')
+	 			->paginate(50);
+
+	 			$productos_stock=DB::table('stock as s')
+	 			->join('empleado as e','s.empleado_id_empleado','=','e.id_empleado')
+	 			->join('proveedor as p','s.proveedor_id_proveedor','=','p.id_proveedor')
+	 			->select('s.id_stock','s.total', 's.fecha_registro','s.producto_id_producto','p.nombre_proveedor as nombre_proveedor','s.cantidad')
+	 			->where('s.sede_id_sede','=',auth()->user()->sede_id_sede)
 	 			->where('s.fecha_registro','>=',$r->fechaInicial)
 	 			->where('s.fecha_registro','<=',$r->fechaFinal)
 	 			->orderBy('s.id_stock', 'desc')
@@ -125,9 +144,12 @@ class reportesInventario extends Controller
 
 	 			
 	 			}
+	 			
+
 	 			$productos=ProductoSede::get();
-	 			 			
-	 		return view("almacen.reportes.inventario.grafica",["modulos"=>$modulos,"Transformado"=>$Transformado,"NoTransformado"=>$NoTransformado,"id"=>$id,"ventas"=>$ventas,"r"=>$r,"productos"=>$productos]);
+	 		
+
+	 		return view("almacen.reportes.inventario.grafica",["modulos"=>$modulos,"Transformado"=>$Transformado,"NoTransformado"=>$NoTransformado,"id"=>$id,"ventas"=>$ventas,"r"=>$r,"productos"=>$productos,"productos_stock"=>$productos_stock]);
 	 	}
 
 

@@ -181,9 +181,9 @@
 
                             <li><i class="fa fa-table"></i><a href="{{url('almacen/reportes/ventas')}}">Ventas</a>
                             </li>
-                            <li><i class="fa fa-table"></i><a href="{{url('almacen/reportes/inventario')}}">Productos</a>
-                            </li> 
                             <li><i class="fa fa-table"></i><a href="{{url('almacen/reportes/inventario')}}">Inventario</a>
+                            </li> 
+                            <li><i class="fa fa-table"></i><a href="{{url('almacen/reportes/comparacion')}}">Comparacion</a>
                             </li>                
                         </ul>
                     </li>

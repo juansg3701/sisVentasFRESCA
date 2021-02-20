@@ -9,25 +9,22 @@
 
       function drawChart() {
 
-         var graficaCS = [];
+      var data = google.visualization.arrayToDataTable([
+          ['Productos', 'mes'],
+            @foreach ($productos_stock as $pastels)
+              @foreach ($productos as $p)
+                @if ($pastels->producto_id_producto===$p->id_producto) 
+                  ['({{$p->nombre}}, {{$pastels->nombre_proveedor}})',{{$pastels->cantidad}}],
+                @endif
+              @endforeach
+            @endforeach
+      ]);
 
-
-
-          var data = new google.visualization.DataTable();
-
-          data.addColumn('string', 'Producto');
-          data.addColumn('number', 'Cantidad');
-
-          graficaCS[0]=parseInt(<?php echo $Transformado[0]->numero?>,10);
-          graficaCS[1]=parseInt(<?php echo $NoTransformado[0]->numero?>,10);
-
-          data.addRows([["Transformado",graficaCS[0]]]);
-          data.addRows([["No transformado",graficaCS[1]]]);
-          
-
-        var options = {
+        
+        var options = {  
           title: 'Gráfica de inventario'
         };
+
 
         var chart = new google.visualization.PieChart(document.getElementById('piechart'));
 
@@ -51,7 +48,7 @@
                  
                     <div class="row" align="center">
                             <div  class="col-sm-8" align="center">
-                                 <div id="piechart" style="width: 620px; height: 300px;"></div>
+                                 <div id="piechart" style="width: 800px; height: 300px;"></div>
 
                             </div>
                             <div class="col-sm-4">
@@ -107,9 +104,10 @@
               <thead>
               <th>ID</th>
               <th>FECHA</th>
+              <th>No. FACTURA</th>
               <th>PRODUCTO</th>
+              <th>CANTIDAD</th>
               <th>PAGO TOTAL</th>
-              <th>TRANSFORMACI&Oacute;N</th>
             </thead>
             @foreach($ventas as $ps)
               @foreach($productos as $pr)
@@ -117,9 +115,11 @@
               <tr>
               <td>{{ $ps->id_stock}}</td>
               <td>{{ $ps->fecha_registro}}</td>
+              <td>{{ $ps->noFactura}}</td>
               <td>{{ $pr->nombre}}</td>
+              <td>{{ $ps->cantidad}}</td>
               <td>{{ $ps->total}}</td>
-              <td>{{ $ps->categoria}}</td>
+              
             </tr>
                 @endif  
               @endforeach
