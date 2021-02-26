@@ -159,5 +159,32 @@ class reportesInventario extends Controller
 	 		return back()->with('msj','Reporte eliminado');
 	 	}
 
+	 	public function downloadExcelReport($id){
+
+			$i=RInventarios::findOrFail($id);
+			$ini=$i->fechaInicial;
+			$fin=$i->fechaFinal;
+			$desde=$ini;
+		 	$hasta=$fin;
+			return view('almacen.reportes.inventario.reporteExcel.excel',["desde"=>$desde, "hasta"=>$hasta]);
+	 	} 
+
+	 	public function downloadPDFReport($id){
+
+			$i=RInventarios::findOrFail($id);
+			$ini=$i->fechaInicial;
+			$fin=$i->fechaFinal;
+
+			$desde=$ini;
+		 	$hasta=$fin;
+
+		 	$productos="SELECT s.id_stock, s.total, tp.nombre as categoria, s.fecha_registro, s.producto_id_producto, s.noFactura,s.cantidad, s.producto_id_producto FROM stock as s, empleado as e, categoria_producto_trans as tp, proveedor as p WHERE s.fecha_registro>='$desde' and s.fecha_registro<='$hasta' and s.transformacion_stock_id=tp.id_categoria and s.empleado_id_empleado=e.id_empleado and s.proveedor_id_proveedor=p.id_proveedor ORDER BY s.id_stock desc";
+
+		 	$productos2="SELECT p.id_producto, p.nombre as nombre_producto FROM producto as p";
+
+
+			return view('almacen.reportes.inventario.reportePDF.pdf',["desde"=>$desde, "hasta"=>$hasta,"productos"=>$productos,"productos2"=>$productos2]);
+	 	}
+
 	 
 }

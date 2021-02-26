@@ -177,7 +177,8 @@
 			
 							<td>
 								<a href="{{URL::action('reportesInventario@edit',$rep->id_rInventario)}}"><button class="btn btn-info">Gráfica</button></a>
-							
+								<a href="{{URL::action('reportesInventario@downloadPDFReport',$rep->id_rInventario)}}"><button class="btn btn-warning"><i>pdf</i></button></a>
+								<a href="{{URL::action('reportesInventario@downloadExcelReport',$rep->id_rInventario)}}"><button class="btn btn-success"><i>xls</i></button></a>
 								<a href="" data-target="#modal-delete-{{$rep->id_rInventario}}" data-toggle="modal"><button class="btn btn-danger">Eliminar</button></a>
 							</td>
 						</tr>
