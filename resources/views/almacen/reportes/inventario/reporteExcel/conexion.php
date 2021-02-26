@@ -8,9 +8,9 @@
 			function __construct(){
 
 				$this->ruta       ="remotemysql.com"; //
-				$this->usuario    ="MTvDp0bqcd"; //usuario que tengas definido
-				$this->contrasena ="SxQzQi4dyT"; //contraseña que tengas definidad
-				$this->baseDatos  ="MTvDp0bqcd"; //base de datos personas, si quieres utilizar otra base de datos solamente cambiala
+				$this->usuario    ="FzhnWzfWhw"; //usuario que tengas definido
+				$this->contrasena ="4lwAqoEP8s"; //contraseña que tengas definidad
+				$this->baseDatos  ="FzhnWzfWhw"; //base de datos personas, si quieres utilizar otra base de datos solamente cambiala
 
 
 				/*$this->ruta       ="localhost"; //
