@@ -37,6 +37,10 @@ class ProveedorSedeController extends Controller
 	 			->orderBy('s.id_stock', 'asc')
 	 			->paginate(100);
 
+	 			$productosBuscar_transformar=ProductoSede::where('producto.unidad_de_medida','=','UNIDAD')
+	 			->orderBy('id_producto', 'desc')
+	 			->get();
+
 	 			$productosBuscar=ProductoSede::where('producto.nombre','LIKE', '%'.$query0.'%')
 	 			->where('plu','LIKE', '%'.$query1.'%')
 	 			->orderBy('id_producto', 'desc')
@@ -58,7 +62,7 @@ class ProveedorSedeController extends Controller
 	 			$usuarios=DB::table('empleado')->get();
 
 
-	 			return view('almacen.inventario.proveedor-sede.index',["productos"=>$productos,"searchText0"=>$query0,"searchText1"=>$query1,"searchText2"=>$query2,"searchText3"=>$query3, "modulos"=>$modulos,"eanP"=>$eanP,"sedesP"=>$sedesP,"proveedoresP"=>$proveedoresP,"productosBuscar"=>$productosBuscar,"empleados"=>$empleados,"categoriaTrans"=>$categoriaTrans, "usuarios"=>$usuarios]);
+	 			return view('almacen.inventario.proveedor-sede.index',["productos"=>$productos,"searchText0"=>$query0,"searchText1"=>$query1,"searchText2"=>$query2,"searchText3"=>$query3, "modulos"=>$modulos,"eanP"=>$eanP,"sedesP"=>$sedesP,"proveedoresP"=>$proveedoresP,"productosBuscar"=>$productosBuscar,"productosBuscar_transformar"=>$productosBuscar_transformar,"empleados"=>$empleados,"categoriaTrans"=>$categoriaTrans, "usuarios"=>$usuarios]);
 	 		}
 	 	}
 	 	

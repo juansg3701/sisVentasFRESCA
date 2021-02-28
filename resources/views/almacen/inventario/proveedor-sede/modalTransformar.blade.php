@@ -6,18 +6,18 @@ role="dialog" tabindex="-1" id="modal-transformar-{{$ps->id_stock}}">
 	<div class="modal-dialog">
 		<div class="modal-content">
 			<div class="modal-header">
-				<h4 class="modal-title">Transformación de producto</h4>
+				<h4 class="modal-title">Transformaci&oacute;n de producto</h4>
 				<button type="button" class="close" data-dismiss="modal" 
 				aria-label="Close">
                      <span aria-hidden="true">×</span>
                 </button>
 			</div>
 			<div class="modal-body">
-				<p>Información:</p>
+				<p>Informaci&oacute;n:</p>
             </div>
         <!-- datlist para el autocompletado -->
 	       <datalist id="mylist">
-	       @foreach($productosBuscar as $pb)
+	       @foreach($productosBuscar_transformar as $pb)
 	       		
 				<option>{{ $pb->nombre}}</option>
 			
