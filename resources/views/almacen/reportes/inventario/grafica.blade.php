@@ -96,6 +96,11 @@
             
             
           </div>
+  
+          <div class="card-body">
+               <div align="center">
+            
+          
           {!! Form::open(array('url'=>'almacen/reportes/inventario/descargas','method'=>'GET','autocomplete'=>'off','role'=>'search')) !!}
 <!--Formulario para establecer los filtros de búsqueda-->
 <div class="container">
@@ -109,7 +114,7 @@
         <div class="form-group col-sm-8">
           <input type="hidden" name="id" value="{{$id}}">
           <select name="searchText" class="form-control">
-            <option>Todos los productos</option>
+            <option value="">Todos los productos</option>
              @foreach($productos_buscar as $pb) 
              <?php $cont=0;?>
                 @foreach($ventas as $v)
@@ -133,8 +138,7 @@
   </div>
 </div>
 {{Form::close()}}
-          <div class="card-body">
-      
+</div>
             <table id="bootstrap-data-table" class="table table-striped table-bordered">
               <thead>
               <th>ID</th>
