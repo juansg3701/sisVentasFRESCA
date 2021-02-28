@@ -17,6 +17,8 @@
 				$this->usuario    ="root"; //usuario que tengas definido
 				$this->contrasena =""; //contraseña que tengas definidad
 				$this->baseDatos  ="final"; //base de datos personas, si quieres utilizar otra base de datos solamente cambiala*/
+
+
 			}
 
 			function conectarse(){
