@@ -36,7 +36,7 @@ class CategoriaTransformadoController extends Controller
 	 			->where('id_cargo','=',$cargoUsuario)
 	 			->orderBy('id_cargo', 'desc')->get();
 	 			
-	 			return view('almacen.inventario.CategoriaTransformado.index',["categorias"=>$categorias,"searchText"=>$query, "modulos"=>$modulos, "usuarios"=>$usuarios, "sedes"=>$sedes]);
+	 			return view('almacen.inventario.categoria-transformado.index',["categorias"=>$categorias,"searchText"=>$query, "modulos"=>$modulos, "usuarios"=>$usuarios, "sedes"=>$sedes]);
 	 		}
 	 	}
 
@@ -46,7 +46,7 @@ class CategoriaTransformadoController extends Controller
 	 			->where('id_cargo','=',$cargoUsuario)
 	 			->orderBy('id_cargo', 'desc')->get();
 	 			
-	 		return view("almacen.inventario.categoriaTransformado.index",["modulos"=>$modulos]);
+	 		return view("almacen.inventario.categoria-transformado.index",["modulos"=>$modulos]);
 	 	}
 
 	 	public function store(CategoriaTransformadoFormRequest $request){
@@ -62,7 +62,7 @@ class CategoriaTransformadoController extends Controller
 	 	}
 
 	 	public function show($id){
-	 		return view("almacen.inventario.categoriaTransformado.show",["categoria"=>CategoriaTransformado::findOrFail($id)]);
+	 		return view("almacen.inventario.categoria-transformado.show",["categoria"=>CategoriaTransformado::findOrFail($id)]);
 	 	}
 
 	 	public function edit($id){
@@ -75,7 +75,7 @@ class CategoriaTransformadoController extends Controller
 	 			->where('id_cargo','=',$cargoUsuario)
 	 			->orderBy('id_cargo', 'desc')->get();
 	 			
-	 		return view("almacen.inventario.categoriaTransformado.edit",["categoria"=>CategoriaTransformado::findOrFail($id), "modulos"=>$modulos, "usuarios"=>$usuarios, "sedes"=>$sedes]);
+	 		return view("almacen.inventario.categoria-transformado.edit",["categoria"=>CategoriaTransformado::findOrFail($id), "modulos"=>$modulos, "usuarios"=>$usuarios, "sedes"=>$sedes]);
 	 	}
 
 	 	public function update(CategoriaTransformadoFormRequest $request, $id){

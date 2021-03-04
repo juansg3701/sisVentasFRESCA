@@ -84,6 +84,8 @@ class reportesInventario extends Controller
 	 			->orderBy('s.id_stock', 'desc')->get();
 
 
+
+
 	 			$ventas=DB::table('stock as s')
 	 			->join('empleado as e','s.empleado_id_empleado','=','e.id_empleado')
 	 			->join('proveedor as p','s.proveedor_id_proveedor','=','p.id_proveedor')
@@ -147,15 +149,12 @@ class reportesInventario extends Controller
 	 			}
 	 			
 	 			$productos=ProductoSede::get();
-	 			$productos_buscar=ProductoSede::get();
-	 			   foreach($productos_stock as $pastels){
-              foreach ($productos as $p){
-                if ($pastels->producto_id_producto===$p->id_producto){
-                  $pastels->producto_id_producto=$p->nombre;
-				                }
-				            }
-				    }
+				foreach($productos_stock as $pastels){	 	
+				$productos->where('id_producto','=',$pastels->producto_id_producto);	
+	 			}
+	 	
 
+	 			$productos_buscar=ProductoSede::get();
 	 		
 
 	 		return view("almacen.reportes.inventario.grafica",["modulos"=>$modulos,"Transformado"=>$Transformado,"NoTransformado"=>$NoTransformado,"id"=>$id,"ventas"=>$ventas,"r"=>$r,"productos"=>$productos,"productos_stock"=>$productos_stock,"id"=>$id, "productos_buscar"=>$productos_buscar]);

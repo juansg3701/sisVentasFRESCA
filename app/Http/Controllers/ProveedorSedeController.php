@@ -41,11 +41,16 @@ class ProveedorSedeController extends Controller
 	 			->orderBy('id_producto', 'desc')
 	 			->get();
 
-	 			$productosBuscar=ProductoSede::where('producto.nombre','LIKE', '%'.$query0.'%')
+	 			$productosBuscar2=ProductoSede::where('producto.nombre','LIKE', '%'.$query0.'%')
 	 			->where('plu','LIKE', '%'.$query1.'%')
 	 			->orderBy('id_producto', 'desc')
 	 			->paginate(100);
-
+    
+    
+                	$productosBuscar=ProductoSede::get();
+				foreach($productos as $pastels){	 	
+				$productosBuscar->where('id_producto','=',$pastels->producto_id_producto);	
+	 			}
 
 
 				$cargoUsuario=auth()->user()->tipo_cargo_id_cargo;

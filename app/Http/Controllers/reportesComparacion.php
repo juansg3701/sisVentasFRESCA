@@ -182,6 +182,7 @@ class reportesComparacion extends Controller
 	 			->where('s.transformacion_stock_id','!=',6)
 	 			->orderBy('s.id_stock', 'desc')->get();
 
+
 	 			$NoTransformado=DB::table('stock as s')
 	 			->select(DB::raw('sum(total) as numero'))
 	 			->where('s.fecha_registro','>=',$r->fechaInicial)

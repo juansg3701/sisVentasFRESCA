@@ -162,7 +162,7 @@
 						<h3 class="pb-2 display-5">CATEGORIAS REGISTRADAS</h3>
 					</div>
 					<div class="card-body">
-						@include('almacen.inventario.categoriaTransformado.search')	
+						@include('almacen.inventario.categoria-transformado.search')	
 						<table id="bootstrap-data-table" class="table table-striped table-bordered">
 							<thead>
 								<th>NOMBRE</th>
@@ -183,8 +183,8 @@
 									<a href="" title="Registro de cambios" data-target="#modal-infoCategoria-{{$cat->id_categoria}}" data-toggle="modal"><button class="btn btn-outline-secondary btn-sm">+</button></a>
 								</td>
 							</tr>
-							@include('almacen.inventario.categoriaTransformado.modal')
-							@include('almacen.inventario.categoriaTransformado.modalInfoCategoria')
+							@include('almacen.inventario.categoria-transformado.modal')
+							@include('almacen.inventario.categoria-transformado.modalInfoCategoria')
 							@endforeach
 						</table>
 					</div>

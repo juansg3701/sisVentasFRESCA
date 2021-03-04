@@ -14,8 +14,12 @@
       var data = google.visualization.arrayToDataTable([
           ['Productos', 'mes'],
             @foreach ($productos_stock as $pastels)
-                  ['({{$pastels->producto_id_producto}}, {{$pastels->nombre_proveedor}})',{{$pastels->cantidad}}],
-             
+              @foreach ($productos as $p)
+                @if($pastels->producto_id_producto==$p->id_producto)
+
+                  ['({{$p->nombre}}, {{$pastels->nombre_proveedor}})',{{$pastels->cantidad}}],
+                @endif
+              @endforeach 
             @endforeach
       ]);
 
@@ -51,7 +55,7 @@
                             </div>
                             <div class="col-sm-4">
                               <div align="center">
-                              
+     
                                 <?php 
                              $total_ventas=$Transformado[0]->numero+$NoTransformado[0]->numero;
                              ?> 
@@ -115,6 +119,8 @@
           <input type="hidden" name="id" value="{{$id}}">
           <select name="searchText" class="form-control">
             <option value="">Todos los productos</option>
+
+
              @foreach($productos_buscar as $pb) 
              <?php $cont=0;?>
                 @foreach($ventas as $v)
