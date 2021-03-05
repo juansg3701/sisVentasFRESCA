@@ -25,6 +25,7 @@ class ProveedorSedeController extends Controller
 	 			$query1=trim($request->get('searchText1'));
 	 			$query2=trim($request->get('searchText2'));
 	 			$query3=trim($request->get('searchText3'));
+	 			$query4=trim($request->get('searchText4'));
 
 
 	 			$productos=DB::table('stock as s')
@@ -32,8 +33,8 @@ class ProveedorSedeController extends Controller
 	 			->join('proveedor as pd','s.proveedor_id_proveedor','=','pd.id_proveedor')
 	 			->join('categoria_producto_trans as cpt','s.transformacion_stock_id','=','cpt.id_categoria')
 	 			->select('s.id_stock','sed.nombre_sede','pd.nombre_proveedor','s.cantidad','s.disponibilidad','s.sede_id_sede as sede_id_sede', 's.producto_id_producto','s.fecha_registro','s.empleado_id_empleado','cpt.nombre as nombreCategoria','s.noFactura as noFactura','s.total as total')
-	 			->where('sed.nombre_sede','LIKE', '%'.$query2.'%')
-	 			->where('pd.nombre_proveedor','LIKE', '%'.$query3.'%')
+	 			->where('sed.nombre_sede','LIKE', '%'.$query3.'%')
+	 			->where('pd.nombre_proveedor','LIKE', '%'.$query4.'%')
 	 			->orderBy('s.id_stock', 'asc')
 	 			->paginate(100);
 
@@ -47,10 +48,12 @@ class ProveedorSedeController extends Controller
 	 			->paginate(100);
     
     
-                	$productosBuscar=ProductoSede::get();
+                	$productosBuscar=ProductoSede::where('nombre','LIKE', '%'.$query0.'%')
+	 			->where('plu','LIKE', '%'.$query1.'%')
+	 			->where('ean','LIKE', '%'.$query2.'%')->get();
 				foreach($productos as $pastels){	 	
 				$productosBuscar->where('id_producto','=',$pastels->producto_id_producto);	
-	 			}
+	 			    }
 
 
 				$cargoUsuario=auth()->user()->tipo_cargo_id_cargo;
@@ -67,7 +70,7 @@ class ProveedorSedeController extends Controller
 	 			$usuarios=DB::table('empleado')->get();
 
 
-	 			return view('almacen.inventario.proveedor-sede.index',["productos"=>$productos,"searchText0"=>$query0,"searchText1"=>$query1,"searchText2"=>$query2,"searchText3"=>$query3, "modulos"=>$modulos,"eanP"=>$eanP,"sedesP"=>$sedesP,"proveedoresP"=>$proveedoresP,"productosBuscar"=>$productosBuscar,"productosBuscar_transformar"=>$productosBuscar_transformar,"empleados"=>$empleados,"categoriaTrans"=>$categoriaTrans, "usuarios"=>$usuarios]);
+	 			return view('almacen.inventario.proveedor-sede.index',["productos"=>$productos,"searchText0"=>$query0,"searchText1"=>$query1,"searchText2"=>$query2,"searchText3"=>$query3,"searchText4"=>$query4, "modulos"=>$modulos,"eanP"=>$eanP,"sedesP"=>$sedesP,"proveedoresP"=>$proveedoresP,"productosBuscar"=>$productosBuscar,"productosBuscar_transformar"=>$productosBuscar_transformar,"empleados"=>$empleados,"categoriaTrans"=>$categoriaTrans, "usuarios"=>$usuarios]);
 	 		}
 	 	}
 	 	

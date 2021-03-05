@@ -207,8 +207,10 @@
 							@endforeach
 							<td>{{ $im->fecha}}</td>
 							<td>
-								<a href="{{URL::action('ImpuestoProducto@edit',$im->id_impuestos)}}"><button class="btn btn-info">Editar</button></a>
-								<a href="" data-target="#modal-delete-{{$im->id_impuestos}}" data-toggle="modal"><button class="btn btn-danger">Eliminar</button></a>
+								<a href="{{URL::action('ImpuestoProducto@edit',$im->id_impuestos)}}"><button class="btn btn-outline-primary btn-sm">Editar</button></a>
+							</td>
+							<td>
+								<a href="" data-target="#modal-delete-{{$im->id_impuestos}}" data-toggle="modal"><button class="btn btn-outline-danger btn-sm">Eliminar</button></a>
 							</td>	
 						</tr>
 						@include('almacen.inventario.producto-sede.impuestoProducto.modal')

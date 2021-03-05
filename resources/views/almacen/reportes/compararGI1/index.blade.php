@@ -48,8 +48,15 @@
            data2.addColumn('string', 'Producto');
            data2.addColumn('number', 'Cantidad');
 
-            graficaCS2[0]=parseInt(<?php echo $Transformado2[0]->numero?>,10);
-           graficaCS2[1]=parseInt(<?php echo $NoTransformado2[0]->numero?>,10);
+
+            graficaCS2[0]=parseInt(<?php if($Transformado2[0]->numero==""){
+                echo 0;}else{
+                echo $Transformado2[0]->numero;
+                    }?>,10);
+           graficaCS2[1]=parseInt(<?php if($NoTransformado2[0]->numero==""){
+                echo 0;}else{
+                echo $NoTransformado2[0]->numero;
+                    }?>,10);
 
            data2.addRows([["Transformado",graficaCS2[0]]]);
            data2.addRows([["No transformado",graficaCS2[1]]]);
@@ -148,11 +155,11 @@
                
                      <div align="center" class="row">
                                <div class="col-sm-6">  
-                                   <div id="piechart" style="width: 500px; height: 500px;"></div>
+                                   <div id="piechart" style="width: 550px; height: 500px;"></div>
                                 </div>
 
                                 <div class="col-sm-6">  
-                                  <div id="piechart2" style="width: 500px; height: 500px;"></div>
+                                  <div id="piechart2" style="width: 550px; height: 500px;"></div>
                                 </div>
 
                        </div>

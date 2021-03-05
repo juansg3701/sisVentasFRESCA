@@ -58,7 +58,7 @@ class reportesComparacion extends Controller
 
 
 	 	public function destroy($id){
-	 		$reporte = RPedidos::findOrFail($id);
+	 		$reporte = RComparar::findOrFail($id);
 	 		$reporte->delete();
 
 	 		return back()->with('msj','Reporte eliminado');

@@ -10,7 +10,7 @@
 					<label>Nombre:</label>
 				</div>
 				<div class="form-group col-sm-8">
-					<input id="buscar2" type="text" class="form-control" name="searchText0" placeholder="Buscar..." >
+					<input id="buscar2" type="text" class="form-control" name="searchText0" placeholder="Buscar..." value="{{$searchText0}}">
 				</div>
 			</div>
 
@@ -19,7 +19,7 @@
 					<label>PLU:</label>
 				</div>
 				<div class="form-group col-sm-8">
-						<input id="pluP"  type="text" class="form-control" name="searchText1" placeholder="Buscar..." >
+						<input id="pluP"  type="text" class="form-control" name="searchText1" placeholder="Buscar..." value="{{$searchText1}}">
 				</div>
 			</div>
 
@@ -28,7 +28,7 @@
 					<label>EAN:</label>
 				</div>
 				<div class="form-group col-sm-8">
-						<input id="tags" type="text" class="form-control" name="searchText2" placeholder="Buscar..." >
+						<input id="tags" type="text" class="form-control" name="searchText2" placeholder="Buscar..." value="{{$searchText2}}">
 				</div>
 			</div>
 

@@ -6,7 +6,8 @@
 					<label>Nombre:</label>
 				</div>
 				<div class="form-group col-sm-8">
-					<input id="buscar2" type="text" class="form-control" name="searchText0" placeholder="Buscar..." >
+					<input id="buscar2" type="text" class="form-control" name="searchText0" placeholder="Buscar..." value="{{$searchText0}}"
+				>
 				</div>
 			</div>
 
@@ -15,7 +16,7 @@
 					<label>PLU:</label>
 				</div>
 				<div class="form-group col-sm-8">
-						<input id="pluP"  type="text" class="form-control" name="searchText1" placeholder="Buscar..." >
+						<input id="pluP"  type="text" class="form-control" name="searchText1" placeholder="Buscar..." value="{{$searchText1}}">
 				</div>
 			</div>
 
@@ -24,7 +25,7 @@
 					<label>EAN:</label>
 				</div>
 				<div class="form-group col-sm-8">
-						<input id="tags" type="text" class="form-control" name="searchText2" placeholder="Buscar..." >
+						<input id="tags" type="text" class="form-control" name="searchText2" placeholder="Buscar..." value="{{$searchText2}}">
 				</div>
 			</div>
 
@@ -33,7 +34,7 @@
 					<label>Sede:</label>
 				</div>
 				<div class="form-group col-sm-8">
-						<input id="sed1" type="text" class="form-control" name="searchText2" placeholder="Buscar..." >
+						<input id="sed1" type="text" class="form-control" name="searchText3" placeholder="Buscar..." value="{{$searchText3}}">
 				</div>
 			</div>
 
@@ -42,7 +43,7 @@
 					<label>Proveedor:</label>
 				</div>
 				<div class="form-group col-sm-8">
-						<input id="pro3" type="text" class="form-control" name="searchText3" placeholder="Buscar..." >
+						<input id="pro3" type="text" class="form-control" name="searchText4" placeholder="Buscar..." value="{{$searchText4}}">
 				</div>
 			</div>
 

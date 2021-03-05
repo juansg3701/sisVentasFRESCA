@@ -214,10 +214,10 @@
 							<td>{{ $des->fecha}}</td>
 							
 							<td>
-								<a href="{{URL::action('DescuentoProducto@edit',$des->id_descuento)}}"><button class="btn btn-info">Editar</button></a>
+								<a href="{{URL::action('DescuentoProducto@edit',$des->id_descuento)}}"><button class="btn btn-outline-primary btn-sm">Editar</button></a>
 							</td>
 							<td>
-								<a href="" data-target="#modal-delete-{{$des->id_descuento}}" data-toggle="modal"><button class="btn btn-danger">Eliminar</button></a>
+								<a href="" data-target="#modal-delete-{{$des->id_descuento}}" data-toggle="modal"><button class="btn btn-outline-danger btn-sm">Eliminar</button></a>
 							</td>	
 						</tr>
 						

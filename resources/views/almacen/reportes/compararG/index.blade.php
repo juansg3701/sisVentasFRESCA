@@ -19,12 +19,21 @@
            data.addColumn('string', 'Producto');
            data.addColumn('number', 'Cantidad');
 
-            graficaCS[0]=parseInt(<?php echo $NoPagoD[0]->numero?>,10);
-           graficaCS[1]=parseInt(<?php echo $NoPagoE[0]->numero?>,10);
-          graficaCS[2]=parseInt(<?php echo $NoPagoP[0]->numero?>,10);
+            graficaCS[0]=parseInt(<?php  if($NoPagoD[0]->numero==""){
+                echo 0;}else{
+                echo $NoPagoD[0]->numero;
+                    }?>,10);
+           graficaCS[1]=parseInt(<?php  if($NoPagoE[0]->numero==""){
+                echo 0;}else{
+                echo $NoPagoE[0]->numero;
+                    }?>,10);
+          graficaCS[2]=parseInt(<?php  if($NoPagoP[0]->numero==""){
+                echo 0;}else{
+                echo $NoPagoP[0]->numero;
+                    }?>,10);
 
-           data.addRows([["Pago efectivo",graficaCS[0]]]);
-           data.addRows([["Pago datafono",graficaCS[1]]]);
+           data.addRows([["Pago datafono",graficaCS[0]]]);
+           data.addRows([["Pago efectivo",graficaCS[1]]]);
            data.addRows([["Pago pasarela",graficaCS[2]]]);
           
 
@@ -48,9 +57,18 @@
            data2.addColumn('string', 'Producto');
            data2.addColumn('number', 'Cantidad');
 
-            graficaCS2[0]=parseInt(<?php echo $NoPagoD2[0]->numero?>,10);
-           graficaCS2[1]=parseInt(<?php echo $NoPagoE2[0]->numero?>,10);
-          graficaCS2[2]=parseInt(<?php echo $NoPagoP2[0]->numero?>,10);
+            graficaCS2[0]=parseInt(<?php  if($NoPagoD2[0]->numero==""){
+                echo 0;}else{
+                echo $NoPagoD2[0]->numero;
+                    }?>,10);
+           graficaCS2[1]=parseInt(<?php  if($NoPagoE2[0]->numero==""){
+                echo 0;}else{
+                echo $NoPagoE2[0]->numero;
+                    }?>,10);
+          graficaCS2[2]=parseInt(<?php  if($NoPagoP2[0]->numero==""){
+                echo 0;}else{
+                echo $NoPagoP2[0]->numero;
+                    }?>,10);
 
            data2.addRows([["Pago datafono",graficaCS2[0]]]);
            data2.addRows([["Pago efectivo",graficaCS2[1]]]);

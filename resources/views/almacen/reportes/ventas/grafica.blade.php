@@ -1,8 +1,8 @@
 @extends ('layouts.admin')
 @section ('contenido')
-	<head>
-	<title>Reportes</title>
-	 <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+  <head>
+  <title>Reportes</title>
+   <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
     <script type="text/javascript">
       google.charts.load('current', {'packages':['corechart']});
       google.charts.setOnLoadCallback(drawChart);
@@ -18,9 +18,18 @@
           data.addColumn('string', 'Producto');
           data.addColumn('number', 'Cantidad');
 
-          graficaCS[0]=parseInt(<?php echo $NoPagoD[0]->numero?>,10);
-          graficaCS[1]=parseInt(<?php echo $NoPagoE[0]->numero?>,10);
-          graficaCS[2]=parseInt(<?php echo $NoPagoP[0]->numero?>,10);
+          graficaCS[0]=parseInt(<?php  if($NoPagoD[0]->numero==""){
+                echo 0;}else{
+                echo $NoPagoD[0]->numero;
+                    }?>,10);
+          graficaCS[1]=parseInt(<?php  if($NoPagoE[0]->numero==""){
+                echo 0;}else{
+                echo $NoPagoE[0]->numero;
+                    }?>,10);
+          graficaCS[2]=parseInt(<?php  if($NoPagoP[0]->numero==""){
+                echo 0;}else{
+                echo $NoPagoP[0]->numero;
+                    }?>,10);
 
           data.addRows([["Pago datafono",graficaCS[0]]]);
           data.addRows([["Pago efectivo",graficaCS[1]]]);
@@ -82,8 +91,8 @@
       </div>
     </div>
   </div>
-	
-	
+  
+  
 </body>
 @stop
 

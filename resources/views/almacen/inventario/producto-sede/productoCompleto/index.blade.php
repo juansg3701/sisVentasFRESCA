@@ -130,7 +130,7 @@
 						<table id="bootstrap-data-table" class="table table-striped table-bordered">
 							<thead>
 							<th>NOMBRE</th>
-							<th>Fecha</th>
+							<th>FECHA</th>
 							<th>PLU</th>
 							<th>EAN</th>
 							<th>CATEGOR&IacuteA</th>

@@ -19,12 +19,21 @@
            data.addColumn('string', 'Producto');
            data.addColumn('number', 'Cantidad');
 
-            graficaCS[0]=parseInt(<?php echo $NoPagoD[0]->numero?>,10);
-           graficaCS[1]=parseInt(<?php echo $NoPagoE[0]->numero?>,10);
-          graficaCS[2]=parseInt(<?php echo $NoPagoP[0]->numero?>,10);
+            graficaCS[0]=parseInt(<?php  if($NoPagoD[0]->numero==""){
+                echo 0;}else{
+                echo $NoPagoD[0]->numero;
+                    }?>,10);
+           graficaCS[1]=parseInt(<?php  if($NoPagoE[0]->numero==""){
+                echo 0;}else{
+                echo $NoPagoE[0]->numero;
+                    }?>,10);
+          graficaCS[2]=parseInt(<?php  if($NoPagoP[0]->numero==""){
+                echo 0;}else{
+                echo $NoPagoP[0]->numero;
+                    }?>,10);
 
-           data.addRows([["Pago efectivo",graficaCS[0]]]);
-           data.addRows([["Pago datafono",graficaCS[1]]]);
+           data.addRows([["Pago datafono",graficaCS[0]]]);
+           data.addRows([["Pago efectivo",graficaCS[1]]]);
            data.addRows([["Pago pasarela",graficaCS[2]]]);
           
 
@@ -44,8 +53,14 @@
            data2.addColumn('string', 'Producto');
            data2.addColumn('number', 'Cantidad');
 
-            graficaCS2[0]=parseInt(<?php echo $Transformado[0]->numero?>,10);
-           graficaCS2[1]=parseInt(<?php echo $NoTransformado[0]->numero?>,10);
+            graficaCS2[0]=parseInt(<?php if($Transformado[0]->numero==""){
+                echo 0;}else{
+                echo $Transformado2[0]->numero;
+                    }?>,10);
+           graficaCS2[1]=parseInt(<?php if($NoTransformado[0]->numero==""){
+                echo 0;}else{
+                echo $NoTransformado2[0]->numero;
+                    }?>,10);
 
            data2.addRows([["Transformado",graficaCS2[0]]]);
            data2.addRows([["No transformado",graficaCS2[1]]]);
