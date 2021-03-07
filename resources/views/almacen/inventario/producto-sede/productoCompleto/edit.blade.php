@@ -319,7 +319,7 @@
   var precio4 = $('#precio_4').val();
   var costo_compra = $('#costo_compra').val();
 
-  var excedente=costo_compra*0.20;
+  var excedente=costo_compra*0.10;
   var costo=parseFloat(costo_compra)+parseFloat(excedente);
 
         

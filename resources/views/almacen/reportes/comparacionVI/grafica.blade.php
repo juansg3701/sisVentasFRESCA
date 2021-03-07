@@ -1,8 +1,8 @@
 @extends ('layouts.admin')
 @section ('contenido')
-	<head>
-	<title>Reportes</title>
-	 <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+  <head>
+  <title>Reportes</title>
+   <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
   <script src="{{asset('assets/js/jQuery.js')}}"></script>
     <script type="text/javascript">
@@ -55,11 +55,11 @@
 
             graficaCS2[0]=parseInt(<?php if($Transformado[0]->numero==""){
                 echo 0;}else{
-                echo $Transformado2[0]->numero;
+                echo $Transformado[0]->numero;
                     }?>,10);
            graficaCS2[1]=parseInt(<?php if($NoTransformado[0]->numero==""){
                 echo 0;}else{
-                echo $NoTransformado2[0]->numero;
+                echo $NoTransformado[0]->numero;
                     }?>,10);
 
            data2.addRows([["Transformado",graficaCS2[0]]]);
@@ -91,9 +91,9 @@
                
                      <div align="center" class="row">
                                <div class="col-sm-6">
-                               	<div align="center">
-                               		
-                               	
+                                <div align="center">
+                                  
+                                
                                 <?php 
                              $total_ventas=$NoPagoD[0]->numero+$NoPagoE[0]->numero+$NoPagoP[0]->numero;
                              ?> 
@@ -108,7 +108,7 @@
 
                                 <div class="col-sm-6"> 
                                 <div align="center">
-                                	  <?php 
+                                    <?php 
                              $total_ventas=$Transformado[0]->numero+$NoTransformado[0]->numero;
                              ?> 
                              <br>

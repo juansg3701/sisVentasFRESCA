@@ -180,16 +180,17 @@
 									<div class="form-group col-sm-4">
 										<div>Punto de venta:</div>
 									</div>
+									<input type="hidden" name="punto_venta_id_punto_venta"value="1">
 									<div class="form-group col-sm-8">
-										<select name="punto_venta_id_punto_venta" class="form-control">
+										<select name="punto_venta_id_punto_venta" class="form-control" disabled="true">
 											@foreach($punto_venta as $pv)
 												@if($pv->id_punto_venta==1)
-												<option value="{{$pv->id_punto_venta}}">No: {{$pv->no}}, {{$pv->nombre}}</option>
+												<option value="1">No: {{$pv->no}}, {{$pv->nombre}}</option>
 												@endif
 											@endforeach
 											@foreach($punto_venta as $pv)
 												@if($pv->id_punto_venta!=1)
-												<option value="{{$pv->id_punto_venta}}">No: {{$pv->no}}, {{$pv->nombre}}</option>
+												<option value="1">No: {{$pv->no}}, {{$pv->nombre}}</option>
 												@endif
 											@endforeach
 										</select>

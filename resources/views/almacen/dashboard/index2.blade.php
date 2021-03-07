@@ -17,7 +17,7 @@
   <body>
   <div class="container" aling="center">
     
-    <h1 style="color:#000099">SOFTWARE CONTABLE COSECHA FRESCA</h1>
+    <h1 style="color:#000099">SOFTWARE COSECHA FRESCA</h1>
     <hr>
     <h2 style="color:#0000CC">Punto No.1: Calle 109</h2>
     <hr>
