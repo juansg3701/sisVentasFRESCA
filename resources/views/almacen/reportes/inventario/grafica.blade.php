@@ -55,7 +55,6 @@
                             </div>
                             <div class="col-sm-4">
                               <div align="center">
-     
                                 <?php 
                              $total_ventas=$Transformado[0]->numero+$NoTransformado[0]->numero;
                              ?> 
