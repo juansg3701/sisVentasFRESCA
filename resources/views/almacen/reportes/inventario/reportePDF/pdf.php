@@ -19,12 +19,13 @@ $pdf->SetFont('Arial','I',8);
     $pdf->Cell(70, 15, '', 0,0);
     $pdf->Cell(15, 15, 'INVENTARIO: PRODUCTOS SEDE', 0,1);
     $pdf->SetTextColor(255,255,255);
+
     $pdf->Cell(15,5,'ID',1,0,"C",true);
-    $pdf->Cell(35,5,'FECHA',1,0,"C",true);
-    $pdf->Cell(35,5,'NO.FACTURA',1,0,"C",true);
-    $pdf->Cell(35,5,'PRODUCTO',1,0,"C",true);
-    $pdf->Cell(35,5,'CANTIDAD',1,0,"C",true);
-    $pdf->Cell(35,5,'PAGO TOTAL',1,1,"C",true);
+    $pdf->Cell(25,5,'FECHA',1,0,"C",true);
+    $pdf->Cell(25,5,'NO.FACTURA',1,0,"C",true);
+    $pdf->Cell(70,5,'PRODUCTO',1,0,"C",true);
+    $pdf->Cell(25,5,'CANTIDAD',1,0,"C",true);
+    $pdf->Cell(25,5,'PAGO TOTAL',1,1,"C",true);
 
     $pdf->SetTextColor(0,0,1);
 
@@ -44,12 +45,13 @@ $pdf->SetFont('Arial','I',8);
         for($i=0; $i<$longitud; $i++){
 
             if ($row['producto_id_producto'] == $vector_id[$i]) {
+
                 $pdf->Cell(15,5,$row['id_stock'],1,0,'C',0);
-                $pdf->Cell(35,5,$row['fecha_registro'],1,0,'C',0);
-                $pdf->Cell(35,5,$row['noFactura'],1,0,'C',0);
-                $pdf->Cell(35,5,$vector_nombre[$i],1,0,'C',0);
-                $pdf->Cell(35,5,$row['cantidad'],1,0,'C',0);
-                $pdf->Cell(35,5,$row['total'],1,1,'C',0);
+                $pdf->Cell(25,5,$row['fecha_registro'],1,0,'C',0);
+                $pdf->Cell(25,5,$row['noFactura'],1,0,'C',0);
+                $pdf->Cell(70,5,$vector_nombre[$i],1,0,'C',0);
+                $pdf->Cell(25,5,$row['cantidad'],1,0,'C',0);
+                $pdf->Cell(25,5,$row['total'],1,1,'C',0);
                
             } 
         }
