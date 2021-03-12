@@ -52,7 +52,7 @@ if(isset($_FILES["name"])){
                 $x_punto_venta_id_punto_venta = $sheet->getCell("O".$row)->getValue();
                 $x_imagen = "";
                 
-                $excedente= ($x_costo_compra*0.20)+$x_costo_compra;
+                $excedente= ($x_costo_compra*0.10)+$x_costo_compra;
 
                 $query="SELECT * FROM producto WHERE id_producto = \"$x_id_producto\"";
                 $result=mysqli_query($link, $query);
