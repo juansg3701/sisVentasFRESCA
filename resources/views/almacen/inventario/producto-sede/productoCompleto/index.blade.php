@@ -112,7 +112,7 @@
 	<div class="animated fadeIn">
 		<div class="row">
 			<div class="col-md-12">
-				<div class="card">
+				<div class="card" align="center" >
 					<div class="card-header" align="center">
 						<h3 class="pb-2 display-5">PRODUCTOS REGISTRADOS</h3>
 						
@@ -126,7 +126,7 @@
 							@include('almacen.inventario.producto-sede.productoCompleto.search')
 						</div>
 					</div>
-					<div class="card-body">
+					<div class="card-body" style="width:1100px; height:500px; overflow-x: auto; overflow-y: auto;  white-space: nowrap;" >
 						<table id="bootstrap-data-table" class="table table-striped table-bordered">
 							<thead>
 							<th>NOMBRE</th>
