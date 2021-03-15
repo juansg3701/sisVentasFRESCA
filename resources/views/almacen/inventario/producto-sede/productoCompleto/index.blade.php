@@ -126,7 +126,7 @@
 							@include('almacen.inventario.producto-sede.productoCompleto.search')
 						</div>
 					</div>
-					<div class="card-body" style="width:1100px; height:500px; overflow-x: auto; overflow-y: auto;  white-space: nowrap;" >
+					<div class="card-body" >
 						<table id="bootstrap-data-table" class="table table-striped table-bordered">
 							<thead>
 							<th>NOMBRE</th>

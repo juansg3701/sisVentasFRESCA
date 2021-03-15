@@ -18,16 +18,11 @@
                 <div class="col-sm-12" align="center">
                  
                     <div class="row" align="center">
-                            <div  class="col-sm-8" align="center" >
-                               <canvas id="buyers" width="600" height="400"></canvas>
+                            <div  class="col-sm-12" align="center">
+                               <canvas id="buyers"style="width:400px; height:200px; overflow-x: auto; overflow-y: auto;  white-space: nowrap;"></canvas>
 
                             </div>
-                            <div  style="width:100px; height:100px; overflow-x: : auto; overflow-y: hidden;  white-space: nowrap;">Aquí saldrá un scroll
-
-sólo
-dale
-interlineados
-simple
+                            <div  style="width:100px; height:100px; overflow-x: auto; overflow-y: hidden;  white-space: nowrap;">Aquí saldrá un scroll sólo dale interlineados simple
 no ?
 </div>
 
@@ -107,7 +102,7 @@ no ?
   </div>
 </div>
  <script>
-  
+  //ARREGLAR PARA SUMAR POR DIAS LAS VENTAS Y DEJAR EL TOTAL
   var buyerData = {
     labels : [@foreach($ventas as $ps)
               "{{$ps->fecha}}",
