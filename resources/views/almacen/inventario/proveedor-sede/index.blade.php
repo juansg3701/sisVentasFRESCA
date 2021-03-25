@@ -116,7 +116,7 @@
 							@include('almacen.inventario.proveedor-sede.search')
 						</div>
 					</div>
-					<div class="card-body" align="center">
+					<div class="card-body" align="center" >
 						<table id="bootstrap-data-table" class="table table-striped table-bordered">
 						<thead>
 							<th>NO. FACTURA</th>

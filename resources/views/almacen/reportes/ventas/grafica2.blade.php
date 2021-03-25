@@ -1,50 +1,9 @@
 @extends ('layouts.admin')
 @section ('contenido')
-  <head>
-  <title>Reportes</title>
-   <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
-    <script type="text/javascript">
-      google.charts.load('current', {'packages':['corechart']});
-      google.charts.setOnLoadCallback(drawChart);
-
-      function drawChart() {
-
-         var graficaCS = [];
-
-          var data = new google.visualization.DataTable();
-
-          data.addColumn('string', 'Producto');
-          data.addColumn('number', 'Cantidad');
-
-          graficaCS[0]=parseInt(<?php  if($NoPagoD[0]->numero==""){
-                echo 0;}else{
-                echo $NoPagoD[0]->numero;
-                    }?>,10);
-          graficaCS[1]=parseInt(<?php  if($NoPagoE[0]->numero==""){
-                echo 0;}else{
-                echo $NoPagoE[0]->numero;
-                    }?>,10);
-          graficaCS[2]=parseInt(<?php  if($NoPagoP[0]->numero==""){
-                echo 0;}else{
-                echo $NoPagoP[0]->numero;
-                    }?>,10);
-
-          data.addRows([["Pago datafono",graficaCS[0]]]);
-          data.addRows([["Pago efectivo",graficaCS[1]]]);
-          data.addRows([["Pago pasarela",graficaCS[2]]]);
-          
-
-        var options = {
-          title: 'Gráfica de ventas'
-        };
-
-        var chart = new google.visualization.PieChart(document.getElementById('piechart'));
-
-        chart.draw(data, options);
-      }
-    </script>
-   </head>
-
+<!DOCTYPE html>
+      <script data-require="chart.js@*" data-semver="1.0.2" src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/1.0.2/Chart.min.js"></script>
+    <link rel="stylesheet" href="style.css" />
+ 
 <body>
 <!--Formulario de búsqueda y opciones-->
   <div class="content">
@@ -59,10 +18,15 @@
                 <div class="col-sm-12" align="center">
                  
                     <div class="row" align="center">
-                            <div  class="col-sm-8" align="center">
-                                 <div id="piechart" style="width: 620px; height: 300px;"></div>
+                            <div  class="col-sm-12" align="center">
+                               <canvas id="buyers"style="width:400px; height:200px; overflow-x: auto; overflow-y: auto;  white-space: nowrap;"></canvas>
 
                             </div>
+                            <div  style="width:100px; height:100px; overflow-x: auto; overflow-y: hidden;  white-space: nowrap;">Aquí saldrá un scroll sólo dale interlineados simple
+no ?
+</div>
+
+
                             <div class="col-sm-4">
                               <div align="center">
                                 <?php 
@@ -137,5 +101,40 @@
     </div>
   </div>
 </div>
+ <script>
+  //ARREGLAR PARA SUMAR POR DIAS LAS VENTAS Y DEJAR EL TOTAL
+  var buyerData = {
+    labels : [@foreach($ventas as $ps)
+              "{{$ps->fecha}}",
+              @endforeach],
+    datasets : [
+      {
+        fillColor : "blue",
+        strokeColor : "red",
+        pointColor : "green",
+        pointStrokeColor : "yellow",
+        data : [@foreach($ventas as $ps)
+              "{{$ps->pago_total}}",
+              @endforeach]
+        
+      }
+    ]
+  }
 
+  var buyers = document.getElementById('buyers').getContext('2d');
+  new Chart(buyers).Line(buyerData, {
+    animation: true,
+    animationSteps: 100,
+    animationEasing: "easeOutQuart",
+    scaleFontSize: 16,
+    responsive: true,
+    showTooltip: true,
+    tooltipTemplate: "<%if (label){%><%=label%>: <%}%><%= value %>",
+    
+    scaleShowGridLines : false,
+    bezierCurve : false,
+    pointDotRadius : 5,
+
+  });
+</script>
 @stop
