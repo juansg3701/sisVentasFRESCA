@@ -71,9 +71,10 @@
 											<div id=formulario>
 												<div class="form-group">
 													<div align="center">
-														
+													@include('almacen.inventario.proveedor-sede.cargar')
 													<a href="{{url('almacen/inventario/ean')}}"><button class="btn btn-info">Registrar productos</button></a>
 													<a href="{{url('almacen/inventario/categoriaTransformado')}}"><button class="btn btn-info">Categor&iacutea transformaci&oacuten</button></a>
+													<a href="" data-target="#modal-cargar" data-toggle="modal"><button class="btn btn-warning">Cargar xlsx/xls</button></a>
 													</div>
 													<br>
 													<div align="center">
