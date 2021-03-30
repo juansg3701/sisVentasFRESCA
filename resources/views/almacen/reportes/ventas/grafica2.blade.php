@@ -22,9 +22,7 @@
                                <canvas id="buyers"style="width:400px; height:200px; overflow-x: auto; overflow-y: auto;  white-space: nowrap;"></canvas>
 
                             </div>
-                            <div  style="width:100px; height:100px; overflow-x: auto; overflow-y: hidden;  white-space: nowrap;">Aquí saldrá un scroll sólo dale interlineados simple
-no ?
-</div>
+
 
 
                             <div class="col-sm-4">
@@ -109,10 +107,10 @@ no ?
               @endforeach],
     datasets : [
       {
-        fillColor : "blue",
-        strokeColor : "red",
-        pointColor : "green",
-        pointStrokeColor : "yellow",
+        fillColor : "#AFCBFF",
+        strokeColor : "#85E3FF",
+        pointColor : "#6EB5FF",
+        pointStrokeColor : "#6EB5FF",
         data : [@foreach($ventas as $ps)
               "{{$ps->pago_total}}",
               @endforeach]
