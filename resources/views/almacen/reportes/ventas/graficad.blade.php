@@ -18,22 +18,21 @@
                 <div class="col-sm-12" align="center">
                  
                     <div class="row" align="center">
-                            <div  class="col-sm-8" align="center">
+
+                            <div  class="col-sm-12" align="center">
                                <canvas id="buyers"style="width:400px; height:200px; overflow-x: auto; overflow-y: auto;  white-space: nowrap;"></canvas>
 
                             </div>
-
-
-
-                            <div class="col-sm-4">
+                          </div>
+                           <div class="row" align="center">
+                            <div class="col-sm-12" align="center">
                               <div align="center">
-                                <?php 
-                             $total_ventas=$NoPagoD[0]->numero+$NoPagoE[0]->numero+$NoPagoP[0]->numero;
-                             ?> 
+               
                              <br>
-                           <b> Ventas generadas entre:</b><br>
-                            {{$r->fechaInicial}} y {{$r->fechaFinal}}<br>
-                            <b>Total ventas:</b> $<?php echo number_format($total_ventas , 2 , "," , ".") . "\n";?><br>
+                           <b> Ventas del:</b><br>
+                            {{$fecha_d}}<br>
+                            <b>Total ventas: </b>$<?php echo number_format($total_ventas[0]->pago_total , 2 , "," , ".") . "\n";?><br>
+
                               </div>
                              <br>
                             <div align="center">
@@ -134,5 +133,14 @@
     pointDotRadius : 5,
 
   });
+</script>
+<script type="text/javascript">
+  //Esconder el menu para tener toda la pantalla
+  $(document).ready(function(){
+    
+    document.getElementById("menuToggle").click();
+   
+
+});
 </script>
 @stop

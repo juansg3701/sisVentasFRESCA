@@ -9,6 +9,7 @@ use sisVentas\ProductosFactura;
 use Illuminate\Support\Facades\Redirect;
 use sisVentas\Http\Requests\RVentasFormRequest;
 use DB;
+use DateTime;
 
 class reportesVentas extends Controller
 {
@@ -46,7 +47,10 @@ class reportesVentas extends Controller
 	 	}
 
 	 	public function store(RVentasFormRequest $request){
-
+	 			$cargoUsuario=auth()->user()->tipo_cargo_id_cargo;
+	 			$modulos=DB::table('cargo_modulo')
+	 			->where('id_cargo','=',$cargoUsuario)
+	 			->orderBy('id_cargo', 'desc')->get();
 	 		$fechaInicialR=$request->get('fechaInicial');
 	 		$fechaFinalR=$request->get('fechaFinal');
 
@@ -73,86 +77,12 @@ class reportesVentas extends Controller
 	 			$modulos=DB::table('cargo_modulo')
 	 			->where('id_cargo','=',$cargoUsuario)
 	 			->orderBy('id_cargo', 'desc')->get();
-	 			$r=RVentas::findOrFail($id);
 	 		
 
-	 			$NoPagoE=DB::table('factura as f')
-	 			->select(DB::raw('sum(pago_total) as numero'))
-	 			->where('f.fecha','>=',$r->fechaInicial)
-	 			->where('f.fecha','<=',$r->fechaFinal)
-	 			->where('f.tipo_pago_id_tpago','=',1)
-	 			->orderBy('f.id_factura', 'desc')->get();
 
-	 			$NoPagoD=DB::table('factura as f')
-	 			->select(DB::raw('sum(pago_total) as numero'))
-	 			->where('f.fecha','>=',$r->fechaInicial)
-	 			->where('f.fecha','<=',$r->fechaFinal)
-	 			->where('f.tipo_pago_id_tpago','=',2)
-	 			->orderBy('f.id_factura', 'desc')->get();
-
-	 			$NoPagoP=DB::table('factura as f')
-	 			->select(DB::raw('sum(pago_total) as numero'))
-	 			->where('f.fecha','>=',$r->fechaInicial)
-	 			->where('f.fecha','<=',$r->fechaFinal)
-	 			->where('f.tipo_pago_id_tpago','=',3)
-	 			->orderBy('f.id_factura', 'desc')->get();
-
-
-	 			$ventas=DB::table('factura as f')
-	 			->join('empleado as e','f.empleado_id_empleado','=','e.id_empleado')
-	 			->join('cliente as c','f.cliente_id_cliente','=','c.id_cliente')
-	 			->join('tipo_pago as tp','f.tipo_pago_id_tpago','=','tp.id_tpago')
-	 			->select('f.id_factura','f.pago_total','f.noproductos', 'tp.nombre as tipo_pago_id_tpago', 'f.fecha')
-	 			->where('f.fecha','>=',$r->fechaInicial)
-	 			->where('f.fecha','<=',$r->fechaFinal)
-	 			->orderBy('f.id_factura', 'desc')
-	 			->paginate(50);
-
-	 			if(auth()->user()->superusuario==0){
-
-	 			$NoPagoE=DB::table('factura as f')
-	 			->join('empleado as em','f.empleado_id_empleado','=','em.id_empleado')
-	 			->join('sede as sed','em.sede_id_sede','=','sed.id_sede')
-	 			->select(DB::raw('sum(pago_total) as numero'))
-	 			->where('f.fecha','>=',$r->fechaInicial)
-	 			->where('f.fecha','<=',$r->fechaFinal)
-	 			->where('f.tipo_pago_id_tpago','=',1)
-	 			->where('sed.id_sede','=',auth()->user()->sede_id_sede)
-	 			->orderBy('f.id_factura', 'desc')->get();
-
-	 			$NoPagoD=DB::table('factura as f')
-	 			->join('empleado as em','f.empleado_id_empleado','=','em.id_empleado')
-	 			->join('sede as sed','em.sede_id_sede','=','sed.id_sede')
-	 			->select(DB::raw('sum(pago_total) as numero'))
-	 			->where('f.fecha','>=',$r->fechaInicial)
-	 			->where('f.fecha','<=',$r->fechaFinal)
-	 			->where('sed.id_sede','=',auth()->user()->sede_id_sede)
-	 			->where('f.tipo_pago_id_tpago','=',2)
-	 			->orderBy('f.id_factura', 'desc')->get();
-
-	 			$NoPagoP=DB::table('factura as f')
-	 			->join('empleado as em','f.empleado_id_empleado','=','em.id_empleado')
-	 			->join('sede as sed','em.sede_id_sede','=','sed.id_sede')
-	 			->select(DB::raw('sum(pago_total) as numero'))
-	 			->where('f.fecha','>=',$r->fechaInicial)
-	 			->where('f.fecha','<=',$r->fechaFinal)
-	 			->where('sed.id_sede','=',auth()->user()->sede_id_sede)
-	 			->where('f.tipo_pago_id_tpago','=',3)
-	 			->orderBy('f.id_factura', 'desc')->get();
-
-
-	 			$ventas=DB::table('factura as f')
-	 			->join('empleado as e','f.empleado_id_empleado','=','e.id_empleado')
-	 			->join('cliente as c','f.cliente_id_cliente','=','c.id_cliente')
-	 			->join('tipo_pago as tp','f.tipo_pago_id_tpago','=','tp.id_tpago')
-	 			->join('sede as sed','e.sede_id_sede','=','sed.id_sede')
-	 			->select('f.id_factura','f.pago_total','f.noproductos', 'tp.nombre as tipo_pago_id_tpago', 'f.fecha')
-	 			->where('f.fecha','>=',$r->fechaInicial)
-	 			->where('f.fecha','<=',$r->fechaFinal)
-	 			->where('sed.id_sede','=',auth()->user()->sede_id_sede)
-	 			->orderBy('f.id_factura', 'desc')
-	 			->paginate(50);
-	 			}
+	 			$fecha = new DateTime($r->fechaInicial);
+				$semana = $fecha->format('W');
+				dd("Semana: ".$semana);
 	 			 			
 	 		return view("almacen.reportes.ventas.grafica2",["modulos"=>$modulos,"NoPagoE"=>$NoPagoE,"NoPagoD"=>$NoPagoD,"NoPagoP"=>$NoPagoP,"id"=>$id,"ventas"=>$ventas,"r"=>$r]);
 	 	}
@@ -161,9 +91,73 @@ class reportesVentas extends Controller
 	 		return view("almacen.cliente.show",["cliente"=>Cliente::findOrFail($id)]);
 	 	}
 
-	 	public function update(ClienteFormRequest $request, $id){
+	 	public function update(Request $request, $id){
+	 		$cargoUsuario=auth()->user()->tipo_cargo_id_cargo;
+	 			$modulos=DB::table('cargo_modulo')
+	 			->where('id_cargo','=',$cargoUsuario)
+	 			->orderBy('id_cargo', 'desc')->get();
+	 		$tipo_consulta=$request->get('tipo');
+	 		$fecha_actual=date('Y-m-d');
+	 		
 
-	 	}
+
+	 		if($tipo_consulta==1){
+	 			$fecha_d=$request->get('fecha_diaria');
+
+	 			if($fecha_d>$fecha_actual || $fecha_d==""){
+	 				return back()->with('errormsj','¡¡La fecha no debe ser mayor a la actual!!');
+	 			}else{
+
+	 			$ventas=DB::table('factura as f')
+	 			->join('empleado as e','f.empleado_id_empleado','=','e.id_empleado')
+	 			->join('cliente as c','f.cliente_id_cliente','=','c.id_cliente')
+	 			->join('tipo_pago as tp','f.tipo_pago_id_tpago','=','tp.id_tpago')
+	 			->join('sede as sed','e.sede_id_sede','=','sed.id_sede')
+	 			->select('f.id_factura','f.pago_total','f.noproductos', 'tp.nombre as tipo_pago_id_tpago', 'f.fecha')
+	 			->where('f.fecha','LIKE', '%'.$fecha_d.'%')
+	 			->orderBy('f.id_factura', 'asc')
+	 			->paginate(100);
+
+	 			$total_ventas=DB::table('factura as f')
+	 			->select(DB::raw('sum(f.pago_total) as pago_total'))
+	 			->where('f.fecha','LIKE', '%'.$fecha_d.'%')
+	 			->orderBy('f.id_factura', 'desc')
+	 			->paginate(100);
+
+	 				if(auth()->user()->superusuario==0){
+	 				$ventas=DB::table('factura as f')
+		 			->join('empleado as e','f.empleado_id_empleado','=','e.id_empleado')
+		 			->join('cliente as c','f.cliente_id_cliente','=','c.id_cliente')
+		 			->join('tipo_pago as tp','f.tipo_pago_id_tpago','=','tp.id_tpago')
+		 			->join('sede as sed','e.sede_id_sede','=','sed.id_sede')
+		 			->select('f.id_factura','f.pago_total','f.noproductos', 'tp.nombre as tipo_pago_id_tpago', 'f.fecha')
+		 			->where('f.fecha','LIKE', '%'.$fecha_d.'%')
+		 			->where('sed.id_sede','=',auth()->user()->sede_id_sede)
+		 			->orderBy('f.id_factura', 'asc')
+		 			->paginate(100);
+
+		 			$total_ventas=DB::table('factura as f')
+		 			->select(DB::raw('sum(f.pago_total) as pago_total'))
+		 			->where('f.fecha','LIKE', '%'.$fecha_d.'%')
+		 			->where('sed.id_sede','=',auth()->user()->sede_id_sede)
+		 			->orderBy('f.id_factura', 'desc')
+		 			->paginate(100);
+		 			}
+
+
+		 			return view("almacen.reportes.ventas.graficad",["modulos"=>$modulos,"ventas"=>$ventas,"fecha_d"=>$fecha_d,"total_ventas"=>$total_ventas]);
+
+	 			}
+
+	 		}
+	 		if ($tipo_consulta==2) {
+	 			# code...
+	 		}
+	 		if($tipo_consulta==3){
+
+	 		}
+
+	 	}	
 
 	 	public function destroy($id){
 	 		$reporte=RVentas::findOrFail($id);
