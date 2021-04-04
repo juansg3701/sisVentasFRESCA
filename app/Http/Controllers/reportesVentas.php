@@ -195,22 +195,91 @@ class reportesVentas extends Controller
 
 	 		}
 	 		if($tipo_consulta==3){
+	 			
 
-	 			$fecha_semana_inicial=$request->get('fecha_semana_inicial');
-	 			$fecha_semana_final=$request->get('fecha_semana_final');
+	 			$fecha_mes_inicial=$request->get('fecha_mes_inicial');
+	 			$fecha_mes_final=$request->get('fecha_mes_final');
 
-	 			$ventas_semanal=DB::table('factura as f')
+	 			if($fecha_mes_inicial>$fecha_mes_final || $fecha_mes_inicial=="" || $fecha_mes_final==""){
+	 				return back()->with('errormsj','¡¡La fecha inicial no debe ser mayor a la final!!');
+	 			}else{
+
+	 			$ventas_mensuales=DB::table('factura as f')
 	 			->join('empleado as e','f.empleado_id_empleado','=','e.id_empleado')
 	 			->join('cliente as c','f.cliente_id_cliente','=','c.id_cliente')
 	 			->join('tipo_pago as tp','f.tipo_pago_id_tpago','=','tp.id_tpago')
 	 			->join('sede as sed','e.sede_id_sede','=','sed.id_sede')
-	 			->select('f.id_factura',DB::raw('sum(f.pago_total) as pago_total'),DB::raw('sum(f.noproductos) as noproductos'), 'tp.nombre as tipo_pago_id_tpago', DB::raw('date(f.fecha) as fecha'))
-	 			->where(DB::raw('date(f.fecha)'),'>=',$fecha_semana_inicial)
-	 			->where(DB::raw('date(f.fecha)'),'<=',$fecha_semana_final)
-	 			->where(DB::raw('YEAR(f.fecha)'),'=',$año_semana)
+	 			->select('f.id_factura',DB::raw('sum(f.pago_total) as pago_total'),DB::raw('sum(f.noproductos) as noproductos'), 'tp.nombre as tipo_pago_id_tpago', DB::raw('MONTH(f.fecha) as fecha'), DB::raw('YEAR(f.fecha) as fecha_year'))
+	 			->where(DB::raw('date(f.fecha)'),'>=',$fecha_mes_inicial)
+	 			->where(DB::raw('date(f.fecha)'),'<=',$fecha_mes_final)
 	 			->orderBy('f.id_factura', 'asc')
 	 			->groupBy(DB::raw('MONTH(f.fecha)'))
 	 			->paginate(100);
+
+
+	 			$total_ventas_mensuales=0;
+	 			foreach ($ventas_mensuales as $key => $value) {	
+		 				$total_ventas_mensuales=intval($total_ventas_mensuales)+intval($ventas_mensuales[$key]->pago_total);
+
+		 				switch ($ventas_mensuales[$key]->fecha) {
+		 					case '1':
+		 						$ventas_mensuales[$key]->fecha="Enero";
+		 					break;
+
+		 					case '2':
+		 						$ventas_mensuales[$key]->fecha="Febrero";
+		 					break;
+
+		 					case '3':
+		 						$ventas_mensuales[$key]->fecha="Marzo";
+		 					break;
+
+		 					case '4':
+		 						$ventas_mensuales[$key]->fecha="Abril";
+		 					break;
+
+		 					case '5':
+		 						$ventas_mensuales[$key]->fecha="Mayo";
+		 					break;
+
+		 					case '6':
+		 						$ventas_mensuales[$key]->fecha="Junio";
+		 					break;
+
+		 					case '7':
+		 						$ventas_mensuales[$key]->fecha="Julio";
+		 					break;
+
+		 					case '8':
+		 						$ventas_mensuales[$key]->fecha="Agosto";
+		 					break;
+
+		 					case '9':
+		 						$ventas_mensuales[$key]->fecha="Septiembre";
+		 					break;
+
+		 					case '10':
+		 						$ventas_mensuales[$key]->fecha="Octubre";
+		 					break;
+
+		 					case '11':
+		 						$ventas_mensuales[$key]->fecha="Noviembre";
+		 					break;
+
+		 					case '12':
+		 						$ventas_mensuales[$key]->fecha="Diciembre";
+		 					break;
+		 					
+		 					default:
+		 						$ventas_mensuales[$key]->fecha="Ninguno";
+		 							break;
+		 				}
+		 			}
+
+		
+	 			return view("almacen.reportes.ventas.graficam",["modulos"=>$modulos,"ventas"=>$ventas_mensuales,"fecha_inicial"=>$fecha_mes_inicial,"fecha_final"=>$fecha_mes_final,"total_ventas"=>$total_ventas_mensuales]);
+	 			}
+
 	 		}
 
 	 	}	

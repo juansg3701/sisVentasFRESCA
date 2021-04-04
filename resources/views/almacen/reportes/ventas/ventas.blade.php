@@ -129,7 +129,7 @@
 
 	{!!Form::close()!!}	
 
-	{!!Form::open(array('url'=>'almacen/reportes/ventas','method'=>'POST','autocomplete'=>'off'))!!}
+	{!!Form::model(0,['method'=>'PATCH','route'=>['almacen.reportes.ventas.update',0]])!!}
     {{Form::token()}}
     
 	<div class="col-md-12">
@@ -145,64 +145,26 @@
 			                     <strong>Formulario de consulta</strong>
 			                </div><br>
 			                <div class="card-body card-block" align="center">
+
 								<div class="form-row">
 									<div class="form-group col-sm-4">
-										<div>Mes inicial:</div>
+										<div>Fecha de mes inicial:</div>
 									</div>
 									<div class="form-group col-sm-8">
-								<select name="year" class="form-control">
-                      				<option value="0">Mes</option>
-			                    	<option value="1">Enero</option>
-			                      	<option value="2">Febrero</option>
-			                      	<option value="3">Marzo</option>
-			                      	<option value="4">Abril</option>
-                          			<option value="5">Mayo</option>
-                            		<option value="6">Junio</option>
-                             		<option value="7">Julio</option>
-                              		<option value="8">Agosto</option>
-                               		<option value="9">Septiembre</option>
-                                	<option value="10">Octubre</option>
-                                 	<option value="11">Noviembre</option>
-                                  	<option value="12">Diciembre</option>
-                  				</select>
+										<input type="date" class="form-control" name="fecha_mes_inicial">
 									</div>
 								</div>	
 
 								<div class="form-row">
 									<div class="form-group col-sm-4">
-										<div>Mes final:</div>
+										<div>Fecha de mes final:</div>
 									</div>
 									<div class="form-group col-sm-8">
-								<select name="year" class="form-control">
-                      				<option value="0">Mes</option>
-			                    	<option value="1">Enero</option>
-			                      	<option value="2">Febrero</option>
-			                      	<option value="3">Marzo</option>
-			                      	<option value="4">Abril</option>
-                          			<option value="5">Mayo</option>
-                            		<option value="6">Junio</option>
-                             		<option value="7">Julio</option>
-                              		<option value="8">Agosto</option>
-                               		<option value="9">Septiembre</option>
-                                	<option value="10">Octubre</option>
-                                 	<option value="11">Noviembre</option>
-                                  	<option value="12">Diciembre</option>
-                  				</select>
+										<input type="date" class="form-control" name="fecha_mes_final">
 									</div>
 								</div>
-
-								<div class="form-row">
-									<div class="form-group col-sm-4">
-										<div>Año:</div>
-									</div>
-									<div class="form-group col-sm-8">
-					<select name="year" class="form-control">
-                      <option value="0">Año</option>
-                      <?php  for($i=2019;$i<=2099;$i++) { echo "<option value='".$i."'>".$i."</option>"; } ?>
-                    </select>
-									</div>
-								</div>			
 				
+								<input type="hidden" name="tipo" value="3">
 		
 								<div class="form-row">
 									<div class="form-group col-sm-12">

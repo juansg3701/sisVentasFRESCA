@@ -11,7 +11,7 @@
         <div class="col-md-12">
           <div class="card">
             <div class="card-header" align="center">
-              <h2 class="pb-2 display-5">REPORTE DE VENTAS POR SEMANA</h2>
+              <h2 class="pb-2 display-5">REPORTE DE VENTAS MENSUAL</h2>
             </div><br>
             <div class="row" align="center">  
                 <div class="col-sm-12" align="center">
@@ -85,7 +85,7 @@
             </thead>
             @foreach($ventas as $ps)
             <tr>
-              <td>Semana del: {{ $ps->fecha}}</td>
+              <td>{{ $ps->fecha}} - {{$ps->fecha_year}}</td>
               <td>{{ $ps->noproductos}}</td>
               <td>$<?php echo number_format($ps->pago_total, 2 , "," , ".") . "\n";?></td>
             </tr>   
@@ -103,14 +103,14 @@
   //ARREGLAR PARA SUMAR POR DIAS LAS VENTAS Y DEJAR EL TOTAL
   var buyerData = {
     labels : [@foreach($ventas as $ps)
-              "{{$ps->fecha}}",
+              "{{$ps->fecha}} - {{$ps->fecha_year}}",
               @endforeach],
     datasets : [
       {
-        fillColor : "#BDECB6",
-        strokeColor : "#77DD77",
-        pointColor : "#77DD77",
-        pointStrokeColor : "#77DD77",
+        fillColor : "#FFB7B2",
+        strokeColor : "#D291BC",
+        pointColor : "#D291BC",
+        pointStrokeColor : "#D291BC",
         data : [@foreach($ventas as $ps)
               "{{$ps->pago_total}}",
               @endforeach]
