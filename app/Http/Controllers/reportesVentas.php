@@ -217,6 +217,22 @@ class reportesVentas extends Controller
 	 			->paginate(100);
 
 
+	 			if(auth()->user()->superusuario==0){
+	 			$ventas_mensuales=DB::table('factura as f')
+	 			->join('empleado as e','f.empleado_id_empleado','=','e.id_empleado')
+	 			->join('cliente as c','f.cliente_id_cliente','=','c.id_cliente')
+	 			->join('tipo_pago as tp','f.tipo_pago_id_tpago','=','tp.id_tpago')
+	 			->join('sede as sed','e.sede_id_sede','=','sed.id_sede')
+	 			->select('f.id_factura',DB::raw('sum(f.pago_total) as pago_total'),DB::raw('sum(f.noproductos) as noproductos'), 'tp.nombre as tipo_pago_id_tpago', DB::raw('MONTH(f.fecha) as fecha'), DB::raw('YEAR(f.fecha) as fecha_year'))
+	 			->where(DB::raw('date(f.fecha)'),'>=',$fecha_mes_inicial)
+	 			->where(DB::raw('date(f.fecha)'),'<=',$fecha_mes_final)
+	 			->where('sed.id_sede','=',auth()->user()->sede_id_sede)
+	 			->orderBy('f.id_factura', 'asc')
+	 			->groupBy(DB::raw('MONTH(f.fecha)'))
+	 			->paginate(100);	
+	 			}
+
+
 	 			$total_ventas_mensuales=0;
 	 			foreach ($ventas_mensuales as $key => $value) {	
 		 				$total_ventas_mensuales=intval($total_ventas_mensuales)+intval($ventas_mensuales[$key]->pago_total);
