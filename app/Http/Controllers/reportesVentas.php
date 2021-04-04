@@ -151,10 +151,66 @@ class reportesVentas extends Controller
 
 	 		}
 	 		if ($tipo_consulta==2) {
-	 			# code...
+	 			$fecha_semana_inicial=$request->get('fecha_semana_inicial');
+	 			$fecha_semana_final=$request->get('fecha_semana_final');
+
+	 			if($fecha_semana_inicial>$fecha_semana_final || $fecha_semana_inicial=="" || $fecha_semana_final==""){
+	 				return back()->with('errormsj','¡¡La fecha inicial no debe ser mayor a la final!!');
+	 			}else{
+
+	 			$ventas_semanal=DB::table('factura as f')
+	 			->join('empleado as e','f.empleado_id_empleado','=','e.id_empleado')
+	 			->join('cliente as c','f.cliente_id_cliente','=','c.id_cliente')
+	 	
+	 			->join('sede as sed','e.sede_id_sede','=','sed.id_sede')
+	 			->select('f.id_factura',DB::raw('sum(f.pago_total) as pago_total'),DB::raw('sum(f.noproductos) as noproductos'), DB::raw('date(f.fecha) as fecha'))
+	 			->where(DB::raw('date(f.fecha)'),'>=',$fecha_semana_inicial)
+	 			->where(DB::raw('date(f.fecha)'),'<=',$fecha_semana_final)
+	 			->orderBy('f.id_factura', 'asc')
+	 			->groupBy(DB::raw('WEEK(f.fecha)'))
+	 			->paginate(100);
+
+	 			if(auth()->user()->superusuario==0){
+	 				$ventas_semanal=DB::table('factura as f')
+	 			->join('empleado as e','f.empleado_id_empleado','=','e.id_empleado')
+	 			->join('cliente as c','f.cliente_id_cliente','=','c.id_cliente')
+	 	
+	 			->join('sede as sed','e.sede_id_sede','=','sed.id_sede')
+	 			->select('f.id_factura',DB::raw('sum(f.pago_total) as pago_total'),DB::raw('sum(f.noproductos) as noproductos'), DB::raw('date(f.fecha) as fecha'))
+	 			->where(DB::raw('date(f.fecha)'),'>=',$fecha_semana_inicial)
+	 			->where(DB::raw('date(f.fecha)'),'<=',$fecha_semana_final)
+	 			->where('sed.id_sede','=',auth()->user()->sede_id_sede)
+	 			->orderBy('f.id_factura', 'asc')
+	 			->groupBy(DB::raw('WEEK(f.fecha)'))
+	 			->paginate(100);
+	 			}
+
+	 			$total_ventas_semanales=0;
+	 			foreach ($ventas_semanal as $key => $value) {	
+		 				$total_ventas_semanales=intval($total_ventas_semanales)+intval($ventas_semanal[$key]->pago_total);
+		 			}
+
+	 			return view("almacen.reportes.ventas.graficas",["modulos"=>$modulos,"ventas"=>$ventas_semanal,"fecha_inicial"=>$fecha_semana_inicial,"fecha_final"=>$fecha_semana_final,"total_ventas"=>$total_ventas_semanales]);
+	 			}
+
 	 		}
 	 		if($tipo_consulta==3){
 
+	 			$fecha_semana_inicial=$request->get('fecha_semana_inicial');
+	 			$fecha_semana_final=$request->get('fecha_semana_final');
+
+	 			$ventas_semanal=DB::table('factura as f')
+	 			->join('empleado as e','f.empleado_id_empleado','=','e.id_empleado')
+	 			->join('cliente as c','f.cliente_id_cliente','=','c.id_cliente')
+	 			->join('tipo_pago as tp','f.tipo_pago_id_tpago','=','tp.id_tpago')
+	 			->join('sede as sed','e.sede_id_sede','=','sed.id_sede')
+	 			->select('f.id_factura',DB::raw('sum(f.pago_total) as pago_total'),DB::raw('sum(f.noproductos) as noproductos'), 'tp.nombre as tipo_pago_id_tpago', DB::raw('date(f.fecha) as fecha'))
+	 			->where(DB::raw('date(f.fecha)'),'>=',$fecha_semana_inicial)
+	 			->where(DB::raw('date(f.fecha)'),'<=',$fecha_semana_final)
+	 			->where(DB::raw('YEAR(f.fecha)'),'=',$año_semana)
+	 			->orderBy('f.id_factura', 'asc')
+	 			->groupBy(DB::raw('MONTH(f.fecha)'))
+	 			->paginate(100);
 	 		}
 
 	 	}	

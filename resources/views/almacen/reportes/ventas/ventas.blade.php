@@ -72,7 +72,7 @@
 
 	{!!Form::close()!!}	
 
-	{!!Form::open(array('url'=>'almacen/reportes/ventas','method'=>'POST','autocomplete'=>'off'))!!}
+	{!!Form::model(0,['method'=>'PATCH','route'=>['almacen.reportes.ventas.update',0]])!!}
     {{Form::token()}}
     
 	<div class="col-md-12">
@@ -93,7 +93,7 @@
 										<div>Fecha de semana inicial:</div>
 									</div>
 									<div class="form-group col-sm-8">
-										<input type="date" class="form-control" name="fechaFinal">
+										<input type="date" class="form-control" name="fecha_semana_inicial">
 									</div>
 								</div>	
 
@@ -102,22 +102,11 @@
 										<div>Fecha de semana final:</div>
 									</div>
 									<div class="form-group col-sm-8">
-										<input type="date" class="form-control" name="fechaFinal">
+										<input type="date" class="form-control" name="fecha_semana_final">
 									</div>
 								</div>
-
-								<div class="form-row">
-									<div class="form-group col-sm-4">
-										<div>Año de consulta:</div>
-									</div>
-									<div class="form-group col-sm-8">
-					<select name="year" class="form-control">
-                      <option value="0">Año</option>
-                      <?php  for($i=2019;$i<=2099;$i++) { echo "<option value='".$i."'>".$i."</option>"; } ?>
-                    </select>
-									</div>
-								</div>			
-				
+								<input type="hidden" name="tipo" value="2">
+			
 		
 								<div class="form-row">
 									<div class="form-group col-sm-12">
