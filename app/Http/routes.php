@@ -99,7 +99,7 @@ Route::resource('almacen/pagosCobros/Bancos', 'BancoController');
 Route::resource('almacen/pagosCobros/FacturasPagar', 'FacturasPagarController');
 
 Route::resource('almacen/facturacion/listaVentas', 'facturacionListaVentas');
-Route::resource('almacen/facturacion/listaVentas/Factura', 'FacturaController');
+Route::resource('almacen/facturacion/Factura', 'FacturaController');
 Route::resource('almacen/facturacion/listaPedidosClientes', 'facturacionListaPedidosClientes');
 
 Route::resource('almacen/facturacion/listaPedidosProveedores', 'facturacionListaPedidosProveedor');

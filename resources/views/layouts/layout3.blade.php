@@ -139,6 +139,9 @@
                             <li><i class="fa fa-table"></i><a href="{{url('almacen/reportes/inventario')}}">Inventario</a>
                             </li> 
                             <li><i class="fa fa-table"></i><a href="{{url('almacen/reportes/comparacion')}}">Comparacion</a>
+                            </li>  
+
+                             <li><i class="fa fa-table"></i><a href="{{url('almacen/facturacion/Factura')}}">Lista de de facturas</a>
                             </li>                
                         </ul>
                     </li>

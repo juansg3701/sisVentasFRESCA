@@ -27,49 +27,57 @@
 <div class="container">
 <div class="row">
 				<div class="table-responsive">
-					<table class="table table-striped table-bordered table-condensed table-hover">
+					<table class="table table-responsive table-wrapper-scroll-y my-custom-scrollbar">
 						<thead>
-							<th>id</th>
-							<th>Fecha</th>
-							<th>Metodo de pago</th>
-							<th>No.Productos</th>
-							<th>Cliente</th>
-							<th>Empleado</th>
+							<th>Id</th>
+							<th>Id factura web</th>
 							<th>Pago total</th>
-							<th>Pago factura</th>
-							<th>Lugar</th>
+							<th>No.Productos</th>
+							<th>Fecha</th>
+							<th>Factura paga</th>
+							<th>Metodo de pago</th>
+							<th>Empleado</th>
+							<th>Empleado domicialiario</th>
+							<th>Cliente</th>
+							<th>Sede</th>
+							<th>Anulacion</th>
+							<th>Referencia de pago</th>
+							<th>Tipo web</th>
+							
 							<th>Opciones</th>
 						</thead>
 
 						@foreach($facturas as $f)
 						<tr>
 							<td>{{ $f->id_factura}}</td>
-							<td>{{ $f->fecha}}</td>
-							<td>{{ $f->tipo_pago_id_tpago}}</td>
-							<td>{{ $f->noproductos}}</td>
-							<td>{{ $f->cliente_id_cliente}}</td>
-							<td>{{ $f->empleado_id_empleado}}</td>
+							<td>{{ $f->id_factura_web}}</td>
 							<td>{{ $f->pago_total}}</td>
+							<td>{{ $f->noproductos}}</td>
+							<td>{{ $f->fecha}}</td>
 
-							@if($f->facturaPaga=='0')
+							@if($f->facturapaga=='0')
 							<td>No realizado</td>
 							@endif
 
-							@if($f->facturaPaga=='1')
+							@if($f->facturapaga=='1')
 							<td>Realizado</td>
 							@endif
 							
+							<td>{{ $f->nombre_pago}}</td>
+							<td>{{ $f->nombre_empleado}}</td>
+							<td>{{ $f->nombre_domiciliario}}</td>
+							<td>{{ $f->nombre_cliente}}</td>
+							<td>{{ $f->nombre_sede}}</td>
+							<td>{{ $f->anulacion}}</td>
+							<td>{{ $f->referencia_pago}}</td>
+							<td>{{ $f->tipo_web}}</td>
+
 							
-							@if($f->tiendaodomicilio=='0')
-							<td>Tienda</td>
-							@endif
-							@if($f->tiendaodomicilio=='1')
-							<td>Domicilio</td>
-							@endif
+
 								<td>
 
 								<a href="{{URL::action('facturacionListaVentas@edit',$f->id_factura)}}"><button class="btn btn-info">Productos/Pagos</button></a>
-								@if($f->facturaPaga=='0')
+								@if($f->facturapaga=='0')
 								<a href="{{URL::action('FacturaController@edit',$f->id_factura)}}" target="_blank"><button href="" class="btn btn-warning" >Ver Factura</button></a>
 								<a href="" data-target="#modal-delete-{{$f->id_factura}}" data-toggle="modal"><button class="btn btn-danger">Eliminar</button></a>
 								@else
@@ -79,7 +87,7 @@
 							</td>
 						</tr>
 							@include('almacen.facturacion.listaVentas.modal')
-							@include('almacen.facturacion.listaVentas.datafono')
+						
 						@endforeach
 					</table>
 				</div>
