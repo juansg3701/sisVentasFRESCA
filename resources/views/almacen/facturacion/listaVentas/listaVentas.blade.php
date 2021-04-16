@@ -2,47 +2,68 @@
 @section ('contenido')
 	<head>
 	<title>Facturación</title>
-    <!--<link rel="stylesheet" href="{{ asset('css/Almacen/usuario/styles-iniciar.css') }}" />-->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 </head>
 
 <body>
-	<div class="row">
-		<div class="col-lg-8 col-md-8 col-sm-8 col-xs-12">
-			<h3>Lista de ventas</h3>
-			
-		</div>
-	</div>
+	<!--Código de JQuery para mostrar/esconder los campos del atributo documento-->
+	<script type="text/javascript">
+		$(function() {
+    		$("#btn_search").on("click", function() {
+    			$("#divBuscar").prop("style", "display:hidden");
+    			$("#btn_search").prop("style", "display:none");
+    			$("#btn_search2").prop("style", "display:hidden");
+    		});
+    		$("#btn_search2").on("click", function() {
+    			$("#divBuscar").prop("style", "display:none");
+    			$("#btn_search2").prop("style", "display:none");
+    			$("#btn_search").prop("style", "display:hidden");
+    		});
+		});
+	</script>
 
-
-	<div id=formulario>
-		<div class="form-group" align="center">
-			@include('almacen.facturacion.listaVentas.search')
-		
-			</div>
-	</div>
-	<a href="{{url('almacen/facturacion/listaVentas')}}" class="btn btn-danger">Volver</a>
+	
+	
 </body>
 @stop
 @section('tabla')
-<div class="container">
-<div class="row">
-				<div class="table-responsive">
-					<table class="table table-responsive table-wrapper-scroll-y my-custom-scrollbar">
-						<thead>
-							<th>Id</th>
-							<th>Id factura web</th>
-							<th>Pago total</th>
-							<th>No.Productos</th>
+
+<!--Tabla de registros realizados-->
+<div class="content">
+	<div class="animated fadeIn">
+		<div class="row">
+			<div class="col-md-12">
+				<div class="card">
+					<div class="card-header" align="center">
+						<h3 class="pb-2 display-5">FACTURAS REGISTRADAS</h3>
+						<div align="center">
+							<a href="{{url('almacen/facturacion/listaVentas')}}" class="btn btn-danger">Volver</a>
+						</div>
+						<div class="form-group col-sm-8" align="center">
+							<button id="btn_search" class="btn btn-outline-secondary btn-lg btn-block" style="display:hidden">Establecer filtros de búsqueda</button>
+							<button id="btn_search2" class="btn btn-outline-secondary btn-lg btn-block" style="display:none">Ocultar filtros de búsqueda</button>
+						</div>
+		
+						<div id="divBuscar" class="form-group col-sm-8" align="center" style="display:none">
+							<!--Incluir la ventana modal de búsqueda-->	
+						@include('almacen.facturacion.listaVentas.search')
+						</div>
+					</div>
+					<div class="card-body">
+			
+						<table id="bootstrap-data-table" class="table table-striped table-bordered">
+
+						@if($searchText==1)
+						<p> Facturas realizadas</p>
+							<thead>
+							<th>ID</th>
+							<th>Total</th>
+							<th>#Productos</th>
 							<th>Fecha</th>
-							<th>Factura paga</th>
-							<th>Metodo de pago</th>
+							<th>Tipo pago</th>
 							<th>Empleado</th>
-							<th>Empleado domicialiario</th>
 							<th>Cliente</th>
 							<th>Sede</th>
-							<th>Anulacion</th>
-							<th>Referencia de pago</th>
-							<th>Tipo web</th>
 							
 							<th>Opciones</th>
 						</thead>
@@ -50,48 +71,151 @@
 						@foreach($facturas as $f)
 						<tr>
 							<td>{{ $f->id_factura}}</td>
-							<td>{{ $f->id_factura_web}}</td>
 							<td>{{ $f->pago_total}}</td>
 							<td>{{ $f->noproductos}}</td>
-							<td>{{ $f->fecha}}</td>
-
-							@if($f->facturapaga=='0')
-							<td>No realizado</td>
-							@endif
-
-							@if($f->facturapaga=='1')
-							<td>Realizado</td>
-							@endif
-							
+							<td>{{ $f->fecha}}</td>							
 							<td>{{ $f->nombre_pago}}</td>
+							<td>{{ $f->nombre_empleado}}</td>
+							<td>{{ $f->nombre_cliente}}</td>
+							<td>{{ $f->nombre_sede}}</td>
+
+								<td>
+							@include('almacen.facturacion.listaVentas.modal')
+							
+								<a href="" data-target="#modal-delete-{{$f->id_factura}}" data-toggle="modal"><button class="btn btn-primary">Ver productos</button></a>
+						
+							</td>
+						</tr>
+						
+						@endforeach
+					@endif
+
+					@if($searchText==2)
+					<p> Facturas anuladas</p>
+							<thead>
+							<th>#Factura</th>
+							<th>#Nota</th>
+							<th>Total</th>
+							<th>Cantidad</th>
+							<th>Fecha</th>
+							<th>Tipo_pago</th>
+							<th>Empleado</th>
+							<th>Cliente</th>
+							<th>Sede</th>
+							
+							<th>Opciones</th>
+						</thead>
+
+						@foreach($facturas as $f)
+						<tr>
+							<td>{{ $f->id_factura}}</td>
+							@foreach($notas as $n)
+								@if($n->factura_id_factura==$f->id_factura)
+								<td>{{ $n->id_nota}}</td>	
+								@endif
+							@endforeach
+							
+							<td>{{ $f->pago_total}}</td>
+							<td>{{ $f->noproductos}}</td>
+							<td>{{ $f->fecha}}</td>							
+							<td>{{ $f->nombre_pago}}</td>
+							<td>{{ $f->nombre_empleado}}</td>
+							<td>{{ $f->nombre_cliente}}</td>
+							<td>{{ $f->nombre_sede}}</td>
+
+								<td>
+							@include('almacen.facturacion.listaVentas.modal')
+								<a href="" data-target="#modal-delete-{{$f->id_factura}}" data-toggle="modal"><button class="btn btn-primary">Ver productos</button></a>
+						
+							</td>
+						</tr>
+					
+						
+						@endforeach
+					@endif
+
+					@if($searchText==3)
+					<p> Facturas pendientes</p>
+							<thead>
+							<th>ID</th>
+							<th>Total</th>
+							<th>#</th>
+							<th>Fecha</th>
+							<th>Cajero</th>
+							<th>Domiciliario</th>
+							<th>Cliente</th>
+							<th>Sede</th>
+							<th>Opciones</th>
+							
+						</thead>
+
+						@foreach($facturas as $f)
+						<tr>
+							<td>{{ $f->id_factura}}</td>
+							<td>{{ $f->pago_total}}</td>
+							<td>{{ $f->noproductos}}</td>
+							<td>{{ $f->fecha}}</td>			
 							<td>{{ $f->nombre_empleado}}</td>
 							<td>{{ $f->nombre_domiciliario}}</td>
 							<td>{{ $f->nombre_cliente}}</td>
 							<td>{{ $f->nombre_sede}}</td>
-							<td>{{ $f->anulacion}}</td>
-							<td>{{ $f->referencia_pago}}</td>
-							<td>{{ $f->tipo_web}}</td>
-
-							
 
 								<td>
-
-								<a href="{{URL::action('facturacionListaVentas@edit',$f->id_factura)}}"><button class="btn btn-info">Productos/Pagos</button></a>
-								@if($f->facturapaga=='0')
-								<a href="{{URL::action('FacturaController@edit',$f->id_factura)}}" target="_blank"><button href="" class="btn btn-warning" >Ver Factura</button></a>
-								<a href="" data-target="#modal-delete-{{$f->id_factura}}" data-toggle="modal"><button class="btn btn-danger">Eliminar</button></a>
-								@else
-								<a href="{{URL::action('FacturaController@edit',$f->id_factura)}}" target="_blank"><button href="" class="btn btn-warning" >Ver Factura</button></a>
-								<a href="" data-target="#modal-delete-{{$f->id_factura}}" data-toggle="modal"><button class="btn btn-danger" disabled="true">Eliminar</button></a>
-								@endif
+								@include('almacen.facturacion.listaVentas.modal')
+								<a href="" data-target="#modal-delete-{{$f->id_factura}}" data-toggle="modal"><button class="btn btn-primary">Ver productos</button></a>
+						
 							</td>
 						</tr>
-							@include('almacen.facturacion.listaVentas.modal')
+						
 						
 						@endforeach
-					</table>
+					@endif
+
+					@if($searchText==4)
+					<p> Facturas web</p>
+							<thead>
+							<th>ID</th>
+							<th>Total</th>
+							<th>#Productos</th>
+							<th>Fecha</th>
+							<th>Tipo_pago</th>
+							<th>Empleado</th>
+							<th>Cliente</th>
+							<th>Sede</th>
+							<th>Opciones</th>
+							
+							<th>Opciones</th>
+						</thead>
+
+						@foreach($facturas as $f)
+						<tr>
+							<td>{{ $f->id_factura}}</td>
+							<td>{{ $f->pago_total}}</td>
+							<td>{{ $f->noproductos}}</td>
+							<td>{{ $f->fecha}}</td>	
+							<td>{{ $f->nombre_pago}}</td>		
+							<td>{{ $f->nombre_empleado}}</td>
+							<td>{{ $f->nombre_cliente}}</td>
+							<td>{{ $f->nombre_sede}}</td>
+
+								<td>
+								<a href="" data-target="#modal-delete-{{$f->id_factura}}" data-toggle="modal"><button class="btn btn-primary">Ver productos</button></a>
+								@include('almacen.facturacion.listaVentas.modal')
+								
+							</td>
+						</tr>
+						
+						
+						@endforeach
+					@endif
+						</table>
+					
+					</div>
+				{{$facturas->render()}}
 				</div>
-				
-			</div><br>
 			</div>
+		</div>
+	</div>
+</div>
+
 @stop
