@@ -11,7 +11,7 @@
         <div class="col-md-12">
           <div class="card">
             <div class="card-header" align="center">
-              <h2 class="pb-2 display-5">REPORTE DE VENTAS POR SEMANA</h2>
+              <h2 class="pb-2 display-5">REPORTE DE INVENTARIO MENSUAL</h2>
             </div><br>
             <div class="row" align="center">  
                 <div class="col-sm-12" align="center">
@@ -28,19 +28,19 @@
                               <div align="center">
                
                              <br>
-                           <b> Ventas entre:</b><br>
+                           <b>Inventario entre:</b><br>
                             <b>Inicio:</b> {{$fecha_inicial}} <br>
                             <b>Fin:</b> {{$fecha_final}}<br>
         
        
-                            <b>Total ventas: </b>
-                            $<?php echo number_format($total_ventas, 2 , "," , ".") . "\n";?>
+                            <b>Total compras: </b>
+                            $<?php echo number_format($total_stock, 2 , "," , ".") . "\n";?>
                        <br>
 
                               </div>
                              <br>
                             <div align="center">
-                              <a href="{{url('almacen/reportes/ventas')}}" class="btn btn-danger">Volver</a>
+                              <a href="{{url('almacen/inventario/ventas')}}" class="btn btn-danger">Volver</a>
                             </div>
                                
                             </div>
@@ -83,16 +83,16 @@
               <th>No. PRODUCTOS</th>
               <th>PAGO TOTAL</th>
             </thead>
-            @foreach($ventas as $ps)
+            @foreach($stock as $ps)
             <tr>
-              <td>Semana No. {{ $ps->fecha}}</td>
-              <td>{{ $ps->noproductos}}</td>
-              <td>$<?php echo number_format($ps->pago_total, 2 , "," , ".") . "\n";?></td>
+              <td>{{ $ps->fecha_registro}} - {{$ps->fecha_year}}</td>
+              <td>{{ $ps->cantidad_rep}}</td>
+              <td>$<?php echo number_format($ps->total, 2 , "," , ".") . "\n";?></td>
             </tr>   
             @endforeach
           </table>
         </div>
-        {{$ventas->render()}}
+        {{$stock->render()}}
         </div>
       </div>
     </div>
@@ -102,17 +102,17 @@
  <script>
   //ARREGLAR PARA SUMAR POR DIAS LAS VENTAS Y DEJAR EL TOTAL
   var buyerData = {
-    labels : [@foreach($ventas as $ps)
-              "{{$ps->fecha}}",
+    labels : [@foreach($stock as $ps)
+              "{{$ps->fecha_registro}} - {{$ps->fecha_year}}",
               @endforeach],
     datasets : [
       {
-        fillColor : "#BDECB6",
-        strokeColor : "#77DD77",
-        pointColor : "#77DD77",
-        pointStrokeColor : "#77DD77",
-        data : [@foreach($ventas as $ps)
-              "{{$ps->pago_total}}",
+        fillColor : "#FFB7B2",
+        strokeColor : "#D291BC",
+        pointColor : "#D291BC",
+        pointStrokeColor : "#D291BC",
+        data : [@foreach($stock as $ps)
+              "{{$ps->total}}",
               @endforeach]
         
       }

@@ -22,13 +22,11 @@ class FacturaController extends Controller
 
 	 			$query=trim($request->get('searchText'));
 	 			$query0=trim($request->get('searchText0'));
+	 			$query1=trim($request->get('searchText1'));
 
 	 			if($query==""){
 	 				$query=1;
 	 			}
-
-
-
 
 	 		switch ($query) {
 	 			case 1:
@@ -41,6 +39,7 @@ class FacturaController extends Controller
  			->where('f.anulacion','=',0)
  			->where('f.facturapaga','=',1)
  			->where('f.id_factura','LIKE', '%'.$query0.'%')
+ 			->where('c.nombre','LIKE', '%'.$query1.'%')
  			->orderBy('f.id_factura', 'desc')
  			->paginate(10);
 
@@ -54,6 +53,7 @@ class FacturaController extends Controller
  			->where('f.anulacion','=',0)
  			->where('f.facturapaga','=',1)
  			->where('f.id_factura','LIKE', '%'.$query0.'%')
+ 			->where('c.nombre','LIKE', '%'.$query1.'%')
  			->where('f.sede_id_sede','=',auth()->user()->sede_id_sede)
  			->orderBy('f.id_factura', 'desc')
  			->paginate(10);	
@@ -70,6 +70,7 @@ class FacturaController extends Controller
  			->select('f.id_factura','f.id_factura_web','f.pago_total','f.noproductos','f.fecha','f.facturapaga','tp.nombre as nombre_pago','e.nombre as nombre_empleado','c.nombre as nombre_cliente','s.nombre_sede as nombre_sede','f.anulacion','f.referencia_pago','f.tipo_web')
  			->where('f.anulacion','=',1 )
  			->where('f.id_factura','LIKE', '%'.$query0.'%')
+ 			->where('c.nombre','LIKE', '%'.$query1.'%')
  			->orderBy('f.id_factura', 'desc')
  			->paginate(10);
 
@@ -85,6 +86,7 @@ class FacturaController extends Controller
  			->select('f.id_factura','f.id_factura_web','f.pago_total','f.noproductos','f.fecha','f.facturapaga','tp.nombre as nombre_pago','e.nombre as nombre_empleado','c.nombre as nombre_cliente','s.nombre_sede as nombre_sede','f.anulacion','f.referencia_pago','f.tipo_web')
  			->where('f.anulacion','=',1 )
  			->where('f.id_factura','LIKE', '%'.$query0.'%')
+ 			->where('c.nombre','LIKE', '%'.$query1.'%')
  			->where('f.sede_id_sede','=',auth()->user()->sede_id_sede)
  			->orderBy('f.id_factura', 'desc')
  			->paginate(10);
@@ -102,6 +104,7 @@ class FacturaController extends Controller
  			->where('f.empleado_id_domiciliario','!=',0 )
  			->where('f.facturapaga','=',0 )
  			->where('f.id_factura','LIKE', '%'.$query0.'%')
+ 			->where('c.nombre','LIKE', '%'.$query1.'%')
  			->orderBy('f.id_factura', 'desc')
  			->paginate(10);
 
@@ -116,6 +119,7 @@ class FacturaController extends Controller
  			->where('f.empleado_id_domiciliario','!=',0 )
  			->where('f.facturapaga','=',0 )
  			->where('f.id_factura','LIKE', '%'.$query0.'%')
+ 			->where('c.nombre','LIKE', '%'.$query1.'%')
  			->where('f.sede_id_sede','=',auth()->user()->sede_id_sede)
  			->orderBy('f.id_factura', 'desc')
  			->paginate(10);
@@ -131,6 +135,7 @@ class FacturaController extends Controller
  			->select('f.id_factura','f.id_factura_web','f.pago_total','f.noproductos','f.fecha','f.facturapaga','tp.nombre as nombre_pago','e.nombre as nombre_empleado','c.nombre as nombre_cliente','s.nombre_sede as nombre_sede','f.anulacion','f.referencia_pago','f.tipo_web')
  			->where('f.id_factura_web','!=',0)
  			->where('f.id_factura','LIKE', '%'.$query0.'%')
+ 			->where('c.nombre','LIKE', '%'.$query1.'%')
  			->orderBy('f.id_factura', 'desc')
  			->paginate(10);
 
@@ -143,6 +148,7 @@ class FacturaController extends Controller
  			->select('f.id_factura','f.id_factura_web','f.pago_total','f.noproductos','f.fecha','f.facturapaga','tp.nombre as nombre_pago','e.nombre as nombre_empleado','c.nombre as nombre_cliente','s.nombre_sede as nombre_sede','f.anulacion','f.referencia_pago','f.tipo_web')
  			->where('f.id_factura_web','!=',0)
  			->where('f.id_factura','LIKE', '%'.$query0.'%')
+ 			->where('c.nombre','LIKE', '%'.$query1.'%')
  			->where('f.sede_id_sede','=',auth()->user()->sede_id_sede)
  			->orderBy('f.id_factura', 'desc')
  			->paginate(10);
@@ -160,6 +166,7 @@ class FacturaController extends Controller
  			->join('sede as s','f.sede_id_sede','=','s.id_sede')
  			->select('f.id_factura','f.id_factura_web','f.pago_total','f.noproductos','f.fecha','f.facturapaga','tp.nombre as nombre_pago','e.nombre as nombre_empleado','em.nombre as nombre_domiciliario','c.nombre as nombre_cliente','s.nombre_sede as nombre_sede','f.anulacion','f.referencia_pago','f.tipo_web')
  			->where('f.id_factura','LIKE', '%'.$query0.'%')
+ 			->where('c.nombre','LIKE', '%'.$query1.'%')
  			->orderBy('f.id_factura', 'desc')
  			->paginate(10);
 
@@ -172,6 +179,7 @@ class FacturaController extends Controller
  			->join('sede as s','f.sede_id_sede','=','s.id_sede')
  			->select('f.id_factura','f.id_factura_web','f.pago_total','f.noproductos','f.fecha','f.facturapaga','tp.nombre as nombre_pago','e.nombre as nombre_empleado','em.nombre as nombre_domiciliario','c.nombre as nombre_cliente','s.nombre_sede as nombre_sede','f.anulacion','f.referencia_pago','f.tipo_web')
  			->where('f.id_factura','LIKE', '%'.$query0.'%')
+ 			->where('c.nombre','LIKE', '%'.$query1.'%')
  			->where('f.sede_id_sede','=',auth()->user()->sede_id_sede)
  			->orderBy('f.id_factura', 'desc')
  			->paginate(10);
@@ -205,7 +213,7 @@ class FacturaController extends Controller
 	 				}
 	 			}
 	 		}
-	 		return view('almacen.facturacion.listaVentas.listaVentas',["modulos"=>$modulos,"facturas"=>$facturas,"searchText"=>$query, "searchText0"=>$query0,"productos"=>$productos,"notas"=>$notas]);
+	 		return view('almacen.facturacion.listaVentas.listaVentas',["modulos"=>$modulos,"facturas"=>$facturas,"searchText"=>$query, "searchText0"=>$query0,"searchText1"=>$query1,"productos"=>$productos,"notas"=>$notas]);
 	 	}
  	}
 

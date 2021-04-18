@@ -22,7 +22,16 @@
 				<div class="form-group col-sm-8">
 					<input type="text" class="form-control" name="searchText0" placeholder="Buscar..." value="{{$searchText0}}">
 				</div>
-			</div>
+		</div>
+
+		<div class="form-row col-sm-12">
+				<div class="form-group col-sm-4">
+					<label> Nombre cliente:</label>
+				</div>
+				<div class="form-group col-sm-8">
+					<input type="text" class="form-control" name="searchText1" placeholder="Buscar..." value="{{$searchText1}}">
+				</div>
+		</div>
 
 		<div class="form-group col-sm-12">
 				<span class="input-group-btn">

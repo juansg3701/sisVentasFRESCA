@@ -138,6 +138,7 @@ Route::resource('almacen/inventario/producto-sede/descuentos', 'DescuentoProduct
 Route::get('downloadExcel', 'ProductoSedeController@downloadExcel');
 
 Route::get('downloadExcelReport/{id}', 'reportesVentas@downloadExcelReport');
+Route::get('almacen/editproductos/{id}', 'reportesVentas@editProductos');
 Route::get('downloadPDFReport/{id}', 'reportesVentas@downloadPDFReport');
 
 Route::get('downloadExcelReport2/{id}', 'reportesInventario@downloadExcelReport');

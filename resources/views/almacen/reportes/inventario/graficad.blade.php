@@ -11,7 +11,7 @@
         <div class="col-md-12">
           <div class="card">
             <div class="card-header" align="center">
-              <h2 class="pb-2 display-5">REPORTE DE VENTAS POR SEMANA</h2>
+              <h2 class="pb-2 display-5">REPORTE DE INVENTARIO POR D&Iacute;A</h2>
             </div><br>
             <div class="row" align="center">  
                 <div class="col-sm-12" align="center">
@@ -28,19 +28,18 @@
                               <div align="center">
                
                              <br>
-                           <b> Ventas entre:</b><br>
-                            <b>Inicio:</b> {{$fecha_inicial}} <br>
-                            <b>Fin:</b> {{$fecha_final}}<br>
-        
-       
-                            <b>Total ventas: </b>
-                            $<?php echo number_format($total_ventas, 2 , "," , ".") . "\n";?>
-                       <br>
+                           <b> Inventario del:</b><br>
+                            {{$fecha_d}}<br>
+                            <b>Total comprado: </b>
+                            @if(count($total_stock)>0)
+                            $<?php echo number_format($total_stock[0]->pago_total , 2 , "," , ".") . "\n";?>
+                            @endif
+                            <br>
 
                               </div>
                              <br>
                             <div align="center">
-                              <a href="{{url('almacen/reportes/ventas')}}" class="btn btn-danger">Volver</a>
+                              <a href="{{url('almacen/reportes/inventario')}}" class="btn btn-danger">Volver</a>
                             </div>
                                
                             </div>
@@ -79,20 +78,29 @@
       
             <table id="bootstrap-data-table" class="table table-striped table-bordered">
               <thead>
+              <th>ID</th>
               <th>FECHA</th>
               <th>No. PRODUCTOS</th>
               <th>PAGO TOTAL</th>
+              <th>OPCIONES</th>
             </thead>
-            @foreach($ventas as $ps)
+            @foreach($stock as $ps)
             <tr>
-              <td>Semana No. {{ $ps->fecha}}</td>
-              <td>{{ $ps->noproductos}}</td>
-              <td>$<?php echo number_format($ps->pago_total, 2 , "," , ".") . "\n";?></td>
+              <td>{{ $ps->id_stock}}</td>
+              <td>{{ $ps->fecha_registro}}</td>
+              <td>{{ $ps->cantidad_rep}}</td>
+              <td>$<?php echo number_format($ps->total, 2 , "," , ".") . "\n"?></td>
+              <td> 
+                <?php
+                $valor_fechas=$ps->id_stock.'.'.$fecha_d.'.d';
+                ?>
+                
+                <a href="{{url('almacen/editproductos/'.$valor_fechas)}}"><button class="btn btn-outline-primary btn-sm">Categor&iacute;as</button></a></td>
             </tr>   
             @endforeach
           </table>
         </div>
-        {{$ventas->render()}}
+        {{$stock->render()}}
         </div>
       </div>
     </div>
@@ -102,17 +110,17 @@
  <script>
   //ARREGLAR PARA SUMAR POR DIAS LAS VENTAS Y DEJAR EL TOTAL
   var buyerData = {
-    labels : [@foreach($ventas as $ps)
-              "{{$ps->fecha}}",
+    labels : [@foreach($stock as $ps)
+              "{{$ps->fecha_registro}}",
               @endforeach],
     datasets : [
       {
-        fillColor : "#BDECB6",
-        strokeColor : "#77DD77",
-        pointColor : "#77DD77",
-        pointStrokeColor : "#77DD77",
-        data : [@foreach($ventas as $ps)
-              "{{$ps->pago_total}}",
+        fillColor : "#AFCBFF",
+        strokeColor : "#85E3FF",
+        pointColor : "#6EB5FF",
+        pointStrokeColor : "#6EB5FF",
+        data : [@foreach($stock as $ps)
+              "{{$ps->total}}",
               @endforeach]
         
       }

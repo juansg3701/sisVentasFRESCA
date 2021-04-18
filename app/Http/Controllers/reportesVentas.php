@@ -77,8 +77,6 @@ class reportesVentas extends Controller
 	 			$modulos=DB::table('cargo_modulo')
 	 			->where('id_cargo','=',$cargoUsuario)
 	 			->orderBy('id_cargo', 'desc')->get();
-	 		
-
 
 	 			$fecha = new DateTime($r->fechaInicial);
 				$semana = $fecha->format('W');
@@ -89,6 +87,136 @@ class reportesVentas extends Controller
 
 	 	public function show($id){
 	 		return view("almacen.cliente.show",["cliente"=>Cliente::findOrFail($id)]);
+	 	}
+
+	 	public function editProductos($id){
+	 			$cargoUsuario=auth()->user()->tipo_cargo_id_cargo;
+	 			$modulos=DB::table('cargo_modulo')
+	 			->where('id_cargo','=',$cargoUsuario)
+	 			->orderBy('id_cargo', 'desc')->get();
+	 		
+
+	 			$cadena=$id;
+	 			$separador = ".";
+
+	 			$separada = explode($separador, $cadena);
+			$count=1;
+
+			$valor_no1=0;
+			$valor_no2=0;
+			$valor_no3=0;
+
+			if(count($separada)==3){
+				$valor_no1=$separada[0];
+				$valor_no2=$separada[1];
+				$valor_no3=$separada[2];
+
+
+				switch ($valor_no3) {
+					case 'd':
+						# code...
+						break;
+
+					case 's':
+						# code...
+						break;
+
+					case 'm':
+						# code...
+						break;
+					
+					default:
+						# code...
+						break;
+				}
+
+
+			}
+
+			dd($valor_no1." ".$valor_no2);
+
+
+	 			$r=RVentas::findOrFail($id);
+
+	 			$NoPagoE=DB::table('factura as f')
+	 			->select(DB::raw('sum(pago_total) as numero'))
+	 			->where('f.fecha','>=',$r->fechaInicial)
+	 			->where('f.fecha','<=',$r->fechaFinal)
+	 			->where('f.tipo_pago_id_tpago','=',1)
+	 			->orderBy('f.id_factura', 'desc')->get();
+
+	 			$NoPagoD=DB::table('factura as f')
+	 			->select(DB::raw('sum(pago_total) as numero'))
+	 			->where('f.fecha','>=',$r->fechaInicial)
+	 			->where('f.fecha','<=',$r->fechaFinal)
+	 			->where('f.tipo_pago_id_tpago','=',2)
+	 			->orderBy('f.id_factura', 'desc')->get();
+
+	 			$NoPagoP=DB::table('factura as f')
+	 			->select(DB::raw('sum(pago_total) as numero'))
+	 			->where('f.fecha','>=',$r->fechaInicial)
+	 			->where('f.fecha','<=',$r->fechaFinal)
+	 			->where('f.tipo_pago_id_tpago','=',3)
+	 			->orderBy('f.id_factura', 'desc')->get();
+
+
+	 			$ventas=DB::table('factura as f')
+	 			->join('empleado as e','f.empleado_id_empleado','=','e.id_empleado')
+	 			->join('cliente as c','f.cliente_id_cliente','=','c.id_cliente')
+	 			->join('tipo_pago as tp','f.tipo_pago_id_tpago','=','tp.id_tpago')
+	 			->select('f.id_factura','f.pago_total','f.noproductos', 'tp.nombre as tipo_pago_id_tpago', 'f.fecha')
+	 			->where('f.fecha','>=',$r->fechaInicial)
+	 			->where('f.fecha','<=',$r->fechaFinal)
+	 			->orderBy('f.id_factura', 'desc')
+	 			->paginate(50);
+
+	 			if(auth()->user()->superusuario==0){
+
+	 			$NoPagoE=DB::table('factura as f')
+	 			->join('empleado as em','f.empleado_id_empleado','=','em.id_empleado')
+	 			->join('sede as sed','em.sede_id_sede','=','sed.id_sede')
+	 			->select(DB::raw('sum(pago_total) as numero'))
+	 			->where('f.fecha','>=',$r->fechaInicial)
+	 			->where('f.fecha','<=',$r->fechaFinal)
+	 			->where('f.tipo_pago_id_tpago','=',1)
+	 			->where('sed.id_sede','=',auth()->user()->sede_id_sede)
+	 			->orderBy('f.id_factura', 'desc')->get();
+
+	 			$NoPagoD=DB::table('factura as f')
+	 			->join('empleado as em','f.empleado_id_empleado','=','em.id_empleado')
+	 			->join('sede as sed','em.sede_id_sede','=','sed.id_sede')
+	 			->select(DB::raw('sum(pago_total) as numero'))
+	 			->where('f.fecha','>=',$r->fechaInicial)
+	 			->where('f.fecha','<=',$r->fechaFinal)
+	 			->where('sed.id_sede','=',auth()->user()->sede_id_sede)
+	 			->where('f.tipo_pago_id_tpago','=',2)
+	 			->orderBy('f.id_factura', 'desc')->get();
+
+	 			$NoPagoP=DB::table('factura as f')
+	 			->join('empleado as em','f.empleado_id_empleado','=','em.id_empleado')
+	 			->join('sede as sed','em.sede_id_sede','=','sed.id_sede')
+	 			->select(DB::raw('sum(pago_total) as numero'))
+	 			->where('f.fecha','>=',$r->fechaInicial)
+	 			->where('f.fecha','<=',$r->fechaFinal)
+	 			->where('sed.id_sede','=',auth()->user()->sede_id_sede)
+	 			->where('f.tipo_pago_id_tpago','=',3)
+	 			->orderBy('f.id_factura', 'desc')->get();
+
+
+	 			$ventas=DB::table('factura as f')
+	 			->join('empleado as e','f.empleado_id_empleado','=','e.id_empleado')
+	 			->join('cliente as c','f.cliente_id_cliente','=','c.id_cliente')
+	 			->join('tipo_pago as tp','f.tipo_pago_id_tpago','=','tp.id_tpago')
+	 			->join('sede as sed','e.sede_id_sede','=','sed.id_sede')
+	 			->select('f.id_factura','f.pago_total','f.noproductos', 'tp.nombre as tipo_pago_id_tpago', 'f.fecha')
+	 			->where('f.fecha','>=',$r->fechaInicial)
+	 			->where('f.fecha','<=',$r->fechaFinal)
+	 			->where('sed.id_sede','=',auth()->user()->sede_id_sede)
+	 			->orderBy('f.id_factura', 'desc')
+	 			->paginate(50);
+	 			}
+	 			 			
+	 		return view("almacen.reportes.ventas.grafica",["modulos"=>$modulos,"NoPagoE"=>$NoPagoE,"NoPagoD"=>$NoPagoD,"NoPagoP"=>$NoPagoP,"id"=>$id,"ventas"=>$ventas,"r"=>$r]);
 	 	}
 
 	 	public function update(Request $request, $id){
@@ -163,7 +291,7 @@ class reportesVentas extends Controller
 	 			->join('cliente as c','f.cliente_id_cliente','=','c.id_cliente')
 	 	
 	 			->join('sede as sed','e.sede_id_sede','=','sed.id_sede')
-	 			->select('f.id_factura',DB::raw('sum(f.pago_total) as pago_total'),DB::raw('sum(f.noproductos) as noproductos'), DB::raw('date(f.fecha) as fecha'))
+	 			->select('f.id_factura',DB::raw('sum(f.pago_total) as pago_total'),DB::raw('sum(f.noproductos) as noproductos'), DB::raw('WEEK(f.fecha) as fecha'))
 	 			->where(DB::raw('date(f.fecha)'),'>=',$fecha_semana_inicial)
 	 			->where(DB::raw('date(f.fecha)'),'<=',$fecha_semana_final)
 	 			->orderBy('f.id_factura', 'asc')
@@ -176,7 +304,7 @@ class reportesVentas extends Controller
 	 			->join('cliente as c','f.cliente_id_cliente','=','c.id_cliente')
 	 	
 	 			->join('sede as sed','e.sede_id_sede','=','sed.id_sede')
-	 			->select('f.id_factura',DB::raw('sum(f.pago_total) as pago_total'),DB::raw('sum(f.noproductos) as noproductos'), DB::raw('date(f.fecha) as fecha'))
+	 			->select('f.id_factura',DB::raw('sum(f.pago_total) as pago_total'),DB::raw('sum(f.noproductos) as noproductos'), DB::raw('WEEK(f.fecha) as fecha'))
 	 			->where(DB::raw('date(f.fecha)'),'>=',$fecha_semana_inicial)
 	 			->where(DB::raw('date(f.fecha)'),'<=',$fecha_semana_final)
 	 			->where('sed.id_sede','=',auth()->user()->sede_id_sede)
@@ -299,6 +427,10 @@ class reportesVentas extends Controller
 	 		}
 
 	 	}	
+
+	 	public function update2(Request $request, $id){
+	 		dd("prueba");
+	 	}
 
 	 	public function destroy($id){
 	 		$reporte=RVentas::findOrFail($id);
