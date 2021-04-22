@@ -38,13 +38,7 @@
 
                               </div>
                              <br>
-{!!Form::model(0,['method'=>'PATCH','route'=>['almacen.reportes.ventas.update2',0]])!!}
-    {{Form::token()}}
-
-    <button class="btn btn-danger">Prueba</button>
-{!!Form::close()!!} 
-
-                            <div align="center">
+                             <div align="center">  
                               <a href="{{url('almacen/reportes/ventas')}}" class="btn btn-danger">Volver</a>
                             </div>
                                
@@ -89,7 +83,6 @@
               <th>No. PRODUCTOS</th>
               <th>PAGO TOTAL</th>
               <th>METODO DE PAGO</th>
-              <th>OPCIONES</th>
             </thead>
             @foreach($ventas as $ps)
             <tr>
@@ -98,12 +91,7 @@
               <td>{{ $ps->noproductos}}</td>
               <td>$<?php echo number_format($ps->pago_total, 2 , "," , ".") . "\n";?></td>
               <td>{{ $ps->tipo_pago_id_tpago}}</td>
-              <td> 
-                <?php
-                $valor_fechas=$ps->id_factura.'.'.$fecha_d.'.d';
-                ?>
-                
-                <a href="{{url('almacen/editproductos/'.$valor_fechas)}}"><button class="btn btn-outline-primary btn-sm">Categor&iacute;as</button></a></td>
+        
             </tr>   
             @endforeach
           </table>

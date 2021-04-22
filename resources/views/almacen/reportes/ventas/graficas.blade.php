@@ -82,12 +82,20 @@
               <th>FECHA</th>
               <th>No. PRODUCTOS</th>
               <th>PAGO TOTAL</th>
+              <th></th>
             </thead>
             @foreach($ventas as $ps)
             <tr>
               <td>Semana No. {{ $ps->fecha}}</td>
               <td>{{ $ps->noproductos}}</td>
               <td>$<?php echo number_format($ps->pago_total, 2 , "," , ".") . "\n";?></td>
+
+              <td> 
+                <?php
+                $valores=$ps->id_factura.'.'.$fecha_d.'.d';
+                ?>
+                
+                <a href="{{url('almacen/editproductos/'.$valores)}}"><button class="btn btn-outline-primary btn-sm">Detalle</button></a></td>
             </tr>   
             @endforeach
           </table>

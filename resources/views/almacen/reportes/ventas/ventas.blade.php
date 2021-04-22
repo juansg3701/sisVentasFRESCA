@@ -48,6 +48,20 @@
 										<input type="date" class="form-control" name="fecha_diaria">
 									</div>
 									<input type="hidden" name="tipo" value="1">
+								</div>	
+
+								<div class="form-row">
+									<div class="form-group col-sm-12">
+										<div>Seleccione tipo de reporte:</div>
+									</div>
+									<div class="form-group col-sm-12">
+										<select class="form-control" name="tipo_reporte">
+											<option value="1">General</option>
+											<option value="2">Detallado</option>
+										</select>
+										
+									</div>
+									
 								</div>			
 				
 		
@@ -106,7 +120,21 @@
 									</div>
 								</div>
 								<input type="hidden" name="tipo" value="2">
-			
+				
+								<div class="form-row">
+									<div class="form-group col-sm-12">
+										<div>Seleccione tipo de reporte:</div>
+									</div>
+									<div class="form-group col-sm-12">
+										<select class="form-control" name="tipo_reporte">
+											<option value="1">General</option>
+											<option value="2">Detallado</option>
+										</select>
+										
+									</div>
+									
+								</div>
+
 		
 								<div class="form-row">
 									<div class="form-group col-sm-12">
@@ -165,7 +193,21 @@
 								</div>
 				
 								<input type="hidden" name="tipo" value="3">
-		
+								
+								<div class="form-row">
+									<div class="form-group col-sm-12">
+										<div>Seleccione tipo de reporte:</div>
+									</div>
+									<div class="form-group col-sm-12">
+										<select class="form-control" name="tipo_reporte">
+											<option value="1">General</option>
+											<option value="2">Detallado</option>
+										</select>
+										
+									</div>
+									
+								</div>
+								
 								<div class="form-row">
 									<div class="form-group col-sm-12">
 										
