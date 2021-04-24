@@ -29,9 +29,14 @@ class FacturaFormRequest extends Request
             'tipo_pago_id_tpago'=>'required|max:45',
             'empleado_id_empleado'=>'required|max:45',
             'cliente_id_cliente'=>'required|max:45',
-            'fecha'=>'max:45',
-            'tiendaodomicilio'=>'max:45',
             'facturaPaga'=>'max:45',
+            'id_factura_web'=>'max:45',
+            'fecha'=>'max:45',
+            'empleado_id_domiciliario'=>'max:45',
+            'sede_id_sede'=>'max:45',
+            'anulacion'=>'max:45',
+            'referencia_pago'=>'max:45',
+            'tipo_web'=>'max:45',
         ];
     }
 }

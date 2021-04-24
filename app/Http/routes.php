@@ -67,6 +67,7 @@ Route::resource('almacen/reportes/pedidos2/descargas', 'reportesPedidosEX2');
 Route::resource('almacen/reportes/pedidos/descargas2', 'reportesPedidosPDF');
 Route::resource('almacen/reportes/pedidos2/descargas2', 'reportesPedidosPDF2');
 Route::resource('almacen/reportes/ventas', 'reportesVentas');
+Route::resource('almacen/reportes/ventas2', 'reportesVentas2');
 Route::resource('almacen/reportes/ventas/descargas', 'reportesVentasEX');
 Route::resource('almacen/reportes/ventas/descargas2', 'reportesVentasPDF');
 Route::resource('almacen/reportes/pagosCobros/cobros', 'reportesPC2');
@@ -99,7 +100,7 @@ Route::resource('almacen/pagosCobros/Bancos', 'BancoController');
 Route::resource('almacen/pagosCobros/FacturasPagar', 'FacturasPagarController');
 
 Route::resource('almacen/facturacion/listaVentas', 'facturacionListaVentas');
-Route::resource('almacen/facturacion/listaVentas/Factura', 'FacturaController');
+Route::resource('almacen/facturacion/Factura', 'FacturaController');
 Route::resource('almacen/facturacion/listaPedidosClientes', 'facturacionListaPedidosClientes');
 
 Route::resource('almacen/facturacion/listaPedidosProveedores', 'facturacionListaPedidosProveedor');
@@ -138,6 +139,7 @@ Route::resource('almacen/inventario/producto-sede/descuentos', 'DescuentoProduct
 Route::get('downloadExcel', 'ProductoSedeController@downloadExcel');
 
 Route::get('downloadExcelReport/{id}', 'reportesVentas@downloadExcelReport');
+Route::get('almacen/editproductos/{id}', 'reportesVentas@detalleVenta');
 Route::get('downloadPDFReport/{id}', 'reportesVentas@downloadPDFReport');
 
 Route::get('downloadExcelReport2/{id}', 'reportesInventario@downloadExcelReport');

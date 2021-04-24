@@ -10,7 +10,7 @@ class Factura extends Model
     protected $primaryKey='id_factura';
     public $timestamps =false;
     
-    protected $fillable=['pago_total', 'noproductos', 'tipo_pago_id_tpago','empleado_id_empleado','cliente_id_cliente','fecha','tiendaodomicilio','facturaPaga'];
+    protected $fillable=['pago_total', 'noproductos', 'tipo_pago_id_tpago','empleado_id_empleado','cliente_id_cliente','facturaPaga','id_factura_web','fecha','empleado_id_domiciliario','sede_id_sede','anulacion','referencia_pago','tipo_web'];
     protected $guarded=[];
 }
 

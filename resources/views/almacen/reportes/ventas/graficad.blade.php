@@ -3,7 +3,6 @@
 <!DOCTYPE html>
       <script data-require="chart.js@*" data-semver="1.0.2" src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/1.0.2/Chart.min.js"></script>
     <link rel="stylesheet" href="style.css" />
- 
 <body>
 <!--Formulario de búsqueda y opciones-->
   <div class="content">
@@ -12,33 +11,34 @@
         <div class="col-md-12">
           <div class="card">
             <div class="card-header" align="center">
-              <h2 class="pb-2 display-5">REPORTE DE VENTAS</h2>
+              <h2 class="pb-2 display-5">REPORTE DE VENTAS POR D&Iacute;A</h2>
             </div><br>
             <div class="row" align="center">  
                 <div class="col-sm-12" align="center">
                  
                     <div class="row" align="center">
+
                             <div  class="col-sm-12" align="center">
                                <canvas id="buyers"style="width:400px; height:200px; overflow-x: auto; overflow-y: auto;  white-space: nowrap;"></canvas>
 
                             </div>
-                            <div  style="width:100px; height:100px; overflow-x: auto; overflow-y: hidden;  white-space: nowrap;">Aquí saldrá un scroll sólo dale interlineados simple
-no ?
-</div>
-
-
-                            <div class="col-sm-4">
+                          </div>
+                           <div class="row" align="center">
+                            <div class="col-sm-12" align="center">
                               <div align="center">
-                                <?php 
-                             $total_ventas=$NoPagoD[0]->numero+$NoPagoE[0]->numero+$NoPagoP[0]->numero;
-                             ?> 
+               
                              <br>
-                           <b> Ventas generadas entre:</b><br>
-                            {{$r->fechaInicial}} y {{$r->fechaFinal}}<br>
-                            <b>Total ventas:</b> $<?php echo number_format($total_ventas , 2 , "," , ".") . "\n";?><br>
+                           <b> Ventas del:</b><br>
+                            {{$fecha_d}}<br>
+                            <b>Total ventas: </b>
+                            @if(count($total_ventas)>0)
+                            $<?php echo number_format($total_ventas[0]->pago_total , 2 , "," , ".") . "\n";?>
+                            @endif
+                            <br>
+
                               </div>
                              <br>
-                            <div align="center">
+                             <div align="center">  
                               <a href="{{url('almacen/reportes/ventas')}}" class="btn btn-danger">Volver</a>
                             </div>
                                
@@ -89,8 +89,9 @@ no ?
               <td>{{ $ps->id_factura}}</td>
               <td>{{ $ps->fecha}}</td>
               <td>{{ $ps->noproductos}}</td>
-              <td>{{ $ps->pago_total}}</td>
+              <td>$<?php echo number_format($ps->pago_total, 2 , "," , ".") . "\n";?></td>
               <td>{{ $ps->tipo_pago_id_tpago}}</td>
+        
             </tr>   
             @endforeach
           </table>
@@ -101,6 +102,7 @@ no ?
     </div>
   </div>
 </div>
+
  <script>
   //ARREGLAR PARA SUMAR POR DIAS LAS VENTAS Y DEJAR EL TOTAL
   var buyerData = {
@@ -109,10 +111,10 @@ no ?
               @endforeach],
     datasets : [
       {
-        fillColor : "blue",
-        strokeColor : "red",
-        pointColor : "green",
-        pointStrokeColor : "yellow",
+        fillColor : "#AFCBFF",
+        strokeColor : "#85E3FF",
+        pointColor : "#6EB5FF",
+        pointStrokeColor : "#6EB5FF",
         data : [@foreach($ventas as $ps)
               "{{$ps->pago_total}}",
               @endforeach]
@@ -137,4 +139,5 @@ no ?
 
   });
 </script>
+
 @stop
