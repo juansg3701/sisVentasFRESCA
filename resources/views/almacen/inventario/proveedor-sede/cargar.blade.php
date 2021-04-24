@@ -5,7 +5,7 @@ role="dialog" tabindex="-1" id="modal-cargar">
 	<div class="modal-dialog">
 		<div class="modal-content">
 			<div class="modal-header">
-				<h4 class="modal-title">Cargarrrrr Archivo xlsx/xls</h4>
+				<h4 class="modal-title">Cargar Archivo xlsx/xls</h4>
 				<button type="button" class="close" data-dismiss="modal" aria-label="Close">
 					<span aria-hidden="true">×</span>
 				</button>
