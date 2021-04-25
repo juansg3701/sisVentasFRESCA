@@ -92,7 +92,7 @@
 
               <td> 
                 <?php
-                $valores=$ps->id_factura.'.'.$fecha_d.'.d';
+                $valores=$ps->fecha.'.'.$fecha_inicial.'.'.$fecha_final.'s';
                 ?>
                 
                 <a href="{{url('almacen/editproductos/'.$valores)}}"><button class="btn btn-outline-primary btn-sm">Detalle</button></a></td>
