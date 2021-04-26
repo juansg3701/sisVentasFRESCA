@@ -91,10 +91,13 @@ class reportesVentas extends Controller
 	 		return  Redirect::to("almacen/reportes/ventas");
 	 	}
 
-/*
+
 		public function detalleVenta($id){
-	
-		}
+		$cargoUsuario=auth()->user()->tipo_cargo_id_cargo;
+	 			$modulos=DB::table('cargo_modulo')
+	 			->where('id_cargo','=',$cargoUsuario)
+	 			->orderBy('id_cargo', 'desc')->get();
+
 	 			$cadena=$id;
 	 			$separador = ".";
 
@@ -105,25 +108,48 @@ class reportesVentas extends Controller
 			$valor_no2=0;
 			$valor_no3=0;
 
-			if(count($separada)==3){
-				$valor_no1=$separada[0];
-				$valor_no2=$separada[1];
-				$valor_no3=$separada[2];
+			if(count($separada)==4){
+				$valor_clave=$separada[0];
+				$valor_fecha_inicial=$separada[1];
+				$valor_fecha_final=$separada[2];
+				$valor_tipo=$separada[3];
 
 
-				switch ($valor_no3) {
-					case 'd':
-						# code...
-						break;
-
+				switch ($valor_tipo) {
 					case 's':
-						# code...
+						$ventas2=DB::table('detalle_factura as df')
+		 			->join('stock as s','df.stock_id_stock','=','s.id_stock')
+		 			->join('factura as f','df.factura_id_factura','=','f.id_factura')
+		 			->join('sede as sed','f.sede_id_sede','=','sed.id_sede')
+		 			->select('s.producto_id_producto as producto',DB::raw('sum(df.cantidad) as cantidad'),DB::raw('sum(df.total) as total'),DB::raw('WEEK(f.fecha) as prueba'))
+		 			->where(DB::raw('date(f.fecha)'),'>=',$valor_fecha_inicial)
+	 				->where(DB::raw('date(f.fecha)'),'<=',$valor_fecha_final)
+	 				->where(DB::raw('WEEK(f.fecha)'),'=',$valor_clave)
+		 			->where('f.facturapaga','=',1)
+		 			->where('f.anulacion','=',0)
+		 			->orderBy('df.id_detallef', 'asc')
+		 			->groupBy('s.producto_id_producto')
+		 			->paginate(100);
+
+		 			$productosDB=ProductoSede::get();
+					$total_ventas_diarias=0;
+				
+		 			foreach ($ventas2 as $key => $value) {
+		 				foreach ($productosDB as $key2 => $value2) {
+		 					if($ventas2[$key]->producto==$productosDB[$key2]->id_producto){
+		 						$ventas2[$key]->producto=$ventas2[$key]->prueba;
+		 					}
+		 				}
+		 			$total_ventas_diarias=intval($total_ventas_diarias)+intval($ventas2[$key]->total);
+		 			}
+		 			
+		 			return view("almacen.reportes.ventas.graficad2",["modulos"=>$modulos,"ventas"=>$ventas2,"fecha_d"=>$valor_fecha_inicial,"total_ventas"=>$total_ventas_diarias]);
 						break;
 
 					case 'm':
 						# code...
 						break;
-					
+
 					default:
 						# code...
 						break;
@@ -134,7 +160,7 @@ class reportesVentas extends Controller
 
 			dd($valor_no1." ".$valor_no2);
 
-*/
+		}
 	 			
 
 	 	public function update(Request $request, $id){
