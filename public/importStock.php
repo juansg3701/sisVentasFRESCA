@@ -104,7 +104,7 @@ if(isset($_FILES["name"])){
                 }
 
 
-                $consulta_prov = "SELECT id_proveedor FROM proveedor WHERE nombre_proveedor=\"$x_proveedor_id_proveedor\"";
+                $consulta_prov = "SELECT id_proveedor FROM proveedor WHERE nombre_empresa=\"$x_proveedor_id_proveedor\"";
                 $consulta_sed = "SELECT id_sede FROM sede WHERE nombre_sede=\"$x_sede_id_sede\"";
 
 

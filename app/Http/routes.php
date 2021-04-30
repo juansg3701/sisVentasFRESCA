@@ -143,4 +143,4 @@ Route::get('almacen/editproductos/{id}', 'reportesVentas@detalleVenta');
 Route::get('downloadPDFReport/{id}', 'reportesVentas@downloadPDFReport');
 
 Route::get('downloadExcelReport2/{id}', 'reportesInventario@downloadExcelReport');
-Route::get('downloadPDFReport2/{id}', 'reportesInventario@downloadPDFReport');
+Route::get('downloadPDFReport2/{request}', 'reportesInventario@downloadPDFReport');

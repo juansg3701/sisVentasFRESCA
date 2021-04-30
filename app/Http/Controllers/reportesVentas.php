@@ -259,7 +259,7 @@ class reportesVentas extends Controller
 	 			}else{
 
 	 		
-	 				$ventas_semanal=DB::table('factura as f')
+	 			$ventas_semanal=DB::table('factura as f')
 	 			->join('empleado as e','f.empleado_id_empleado','=','e.id_empleado')
 	 			->join('cliente as c','f.cliente_id_cliente','=','c.id_cliente')
 	 	
@@ -399,10 +399,9 @@ class reportesVentas extends Controller
 		 					
 		 					default:
 		 						$ventas_mensuales[$key]->fecha="Ninguno";
-		 							break;
+		 					break;
 		 				}
 		 			}
-
 		
 	 			return view("almacen.reportes.ventas.graficam",["modulos"=>$modulos,"ventas"=>$ventas_mensuales,"fecha_inicial"=>$fecha_mes_inicial,"fecha_final"=>$fecha_mes_final,"total_ventas"=>$total_ventas_mensuales]);
 	 			}
@@ -423,17 +422,275 @@ class reportesVentas extends Controller
 	 	}
 
 
+	 	
+
+	 	public function downloadPDFReport($id){
+
+	 		$cadena=$id;
+	 		$separador = ".";
+	 		$separada = explode($separador, $cadena);
+			$count=1;
+
+			$desde=0;
+			$hasta=0;
+			$valor=0;
+
+			if(count($separada)==3){
+				$desde=$separada[0];
+				$hasta=$separada[1];
+				$valor=$separada[2];
+			}
+
+			//dd($id);
+
+		 	//$productos="SELECT f.id_factura, f.pago_total, f.noproductos, tp.nombre as tipo_pago_id_tpago, f.fecha, f.sede_id_sede FROM factura as f, tipo_pago as tp, cliente as c, empleado as e, sede as sed WHERE f.tipo_pago_id_tpago=tp.id_tpago and f.empleado_id_empleado=e.id_empleado and f.cliente_id_cliente=c.id_cliente and f.sede_id_sede=sed.id_sede f.fecha>='$desde' and f.fecha<='$hasta' ORDER BY f.id_factura DESC";
+
+		 	//$productos="SELECT f.id_factura, SUM(f.pago_total) as pago_total, SUM(f.noproductos) as noproductos, tp.nombre as tipo_pago_id_tpago, MONTH(f.fecha) as fecha, YEAR(f.fecha) as fecha_year FROM factura as f, tipo_pago as tp, cliente as c, empleado as e, sede as sed WHERE DATE(f.fecha)>='$desde' and DATE(f.fecha)<='$hasta' and f.facturapaga=1 and f.anulacion=0 and f.tipo_pago_id_tpago=tp.id_tpago and f.empleado_id_empleado=e.id_empleado and f.cliente_id_cliente=c.id_cliente and f.sede_id_sede=sed.id_sede";
+
+		 	/*$productos="SELECT f.id_factura, sum(f.pago_total) as pago_total, f.noproductos as noproductos, tp.nombre as tipo_pago_id_tpago, f.fecha as fecha, f.fecha as fecha_year FROM factura as f, tipo_pago as tp, cliente as c, empleado as e, sede as sed WHERE DATE(f.fecha)>='$desde' and DATE(f.fecha)<='$hasta' and f.facturapaga=1 and f.anulacion=0 and f.tipo_pago_id_tpago=tp.id_tpago and f.empleado_id_empleado=e.id_empleado and f.cliente_id_cliente=c.id_cliente and f.sede_id_sede=sed.id_sede";*/
+		 	
+		 	//dd($desde.' '.$hasta);
+
+		 	if($valor==3){
+
+		 		$productos=DB::table('factura as f')
+	 			->join('empleado as e','f.empleado_id_empleado','=','e.id_empleado')
+	 			->join('cliente as c','f.cliente_id_cliente','=','c.id_cliente')
+	 			->join('tipo_pago as tp','f.tipo_pago_id_tpago','=','tp.id_tpago')
+	 			->join('sede as sed','e.sede_id_sede','=','sed.id_sede')
+	 			->select('f.id_factura',DB::raw('sum(f.pago_total) as pago_total'),DB::raw('sum(f.noproductos) as noproductos'), 'tp.nombre as tipo_pago_id_tpago', DB::raw('MONTH(f.fecha) as fecha'), DB::raw('YEAR(f.fecha) as fecha_year'))
+	 			->where(DB::raw('date(f.fecha)'),'>=',$desde)
+	 			->where(DB::raw('date(f.fecha)'),'<=',$hasta)
+	 			->where('f.facturapaga','=',1)
+		 		->where('f.anulacion','=',0)
+	 			->orderBy('f.id_factura', 'asc')
+	 			->groupBy(DB::raw('MONTH(f.fecha)'))
+	 			->paginate(100);
+
+	 			foreach ($productos as $key => $value) {	
+
+	 				switch ($productos[$key]->fecha) {
+	 					case '1':
+	 						$productos[$key]->fecha="Enero";
+	 					break;
+
+	 					case '2':
+	 						$productos[$key]->fecha="Febrero";
+	 					break;
+
+	 					case '3':
+	 						$productos[$key]->fecha="Marzo";
+	 					break;
+
+	 					case '4':
+	 						$productos[$key]->fecha="Abril";
+	 					break;
+
+	 					case '5':
+	 						$productos[$key]->fecha="Mayo";
+	 					break;
+
+	 					case '6':
+	 						$productos[$key]->fecha="Junio";
+	 					break;
+
+	 					case '7':
+	 						$productos[$key]->fecha="Julio";
+	 					break;
+
+	 					case '8':
+	 						$productos[$key]->fecha="Agosto";
+	 					break;
+
+	 					case '9':
+	 						$productos[$key]->fecha="Septiembre";
+	 					break;
+
+	 					case '10':
+	 						$productos[$key]->fecha="Octubre";
+	 					break;
+
+	 					case '11':
+	 						$productos[$key]->fecha="Noviembre";
+	 					break;
+
+	 					case '12':
+	 						$productos[$key]->fecha="Diciembre";
+	 					break;
+	 					
+	 					default:
+	 						$productos[$key]->fecha="Ninguno";
+	 					break;
+	 				}
+		 		}
+		 		$valor==3;
+				return view('almacen.reportes.ventas.reportePDF.pdf',["desde"=>$desde, "hasta"=>$hasta, "productos"=>$productos, "valor"=>$valor]);
+
+		 	}
+
+
+		 	if($valor==2){
+
+		 		$productos=DB::table('factura as f')
+	 			->join('empleado as e','f.empleado_id_empleado','=','e.id_empleado')
+	 			->join('cliente as c','f.cliente_id_cliente','=','c.id_cliente')
+	 	
+	 			->join('sede as sed','e.sede_id_sede','=','sed.id_sede')
+	 			->select('f.id_factura',DB::raw('sum(f.pago_total) as pago_total'),DB::raw('sum(f.noproductos) as noproductos'), DB::raw('WEEK(f.fecha) as fecha'))
+	 			->where(DB::raw('date(f.fecha)'),'>=',$desde)
+	 			->where(DB::raw('date(f.fecha)'),'<=',$hasta)
+	 			->where('f.facturapaga','=',1)
+		 		->where('f.anulacion','=',0)
+	 			->orderBy(DB::raw('WEEK(f.fecha)'), 'asc')
+	 			->groupBy(DB::raw('WEEK(f.fecha)'))
+	 			->paginate(100);
+
+
+		 		$valor=2;
+				return view('almacen.reportes.ventas.reportePDF.pdf',["desde"=>$desde, "hasta"=>$hasta, "productos"=>$productos, "valor"=>$valor]);
+
+		 	}
+
+		 	
+	 	} 
+
+
+
 	 	public function downloadExcelReport($id){
+
+		 	$cadena=$id;
+	 		$separador = ".";
+	 		$separada = explode($separador, $cadena);
+			$count=1;
+
+			$desde=0;
+			$hasta=0;
+			$valor=0;
+
+			if(count($separada)==3){
+				$desde=$separada[0];
+				$hasta=$separada[1];
+				$valor=$separada[2];
+			}
+
+		 	
+		 	//dd($desde.' '.$hasta);
+
+		 	if($valor==3){
+
+		 		/*$productos=DB::table('factura as f')
+		 		->select('f.id_factura')
+	 			->paginate(100);*/
+
+		 		$productos=DB::table('factura as f')
+	 			->join('empleado as e','f.empleado_id_empleado','=','e.id_empleado')
+	 			->join('cliente as c','f.cliente_id_cliente','=','c.id_cliente')
+	 			->join('tipo_pago as tp','f.tipo_pago_id_tpago','=','tp.id_tpago')
+	 			->join('sede as sed','e.sede_id_sede','=','sed.id_sede')
+	 			->select('f.id_factura',DB::raw('sum(f.pago_total) as pago_total'),DB::raw('sum(f.noproductos) as noproductos'), 'tp.nombre as tipo_pago_id_tpago', DB::raw('MONTH(f.fecha) as fecha'), DB::raw('YEAR(f.fecha) as fecha_year'))
+	 			->where(DB::raw('date(f.fecha)'),'>=',$desde)
+	 			->where(DB::raw('date(f.fecha)'),'<=',$hasta)
+	 			->where('f.facturapaga','=',1)
+		 		->where('f.anulacion','=',0)
+	 			->orderBy('f.id_factura', 'asc')
+	 			->groupBy(DB::raw('MONTH(f.fecha)'))
+	 			->paginate(100);
+
+	 			foreach ($productos as $key => $value) {	
+
+	 				switch ($productos[$key]->fecha) {
+	 					case '1':
+	 						$productos[$key]->fecha="Enero";
+	 					break;
+
+	 					case '2':
+	 						$productos[$key]->fecha="Febrero";
+	 					break;
+
+	 					case '3':
+	 						$productos[$key]->fecha="Marzo";
+	 					break;
+
+	 					case '4':
+	 						$productos[$key]->fecha="Abril";
+	 					break;
+
+	 					case '5':
+	 						$productos[$key]->fecha="Mayo";
+	 					break;
+
+	 					case '6':
+	 						$productos[$key]->fecha="Junio";
+	 					break;
+
+	 					case '7':
+	 						$productos[$key]->fecha="Julio";
+	 					break;
+
+	 					case '8':
+	 						$productos[$key]->fecha="Agosto";
+	 					break;
+
+	 					case '9':
+	 						$productos[$key]->fecha="Septiembre";
+	 					break;
+
+	 					case '10':
+	 						$productos[$key]->fecha="Octubre";
+	 					break;
+
+	 					case '11':
+	 						$productos[$key]->fecha="Noviembre";
+	 					break;
+
+	 					case '12':
+	 						$productos[$key]->fecha="Diciembre";
+	 					break;
+	 					
+	 					default:
+	 						$productos[$key]->fecha="Ninguno";
+	 					break;
+	 				}
+		 		}
+
+				return view('almacen.reportes.ventas.reporteExcel.excel',["desde"=>$desde, "hasta"=>$hasta, "productos"=>$productos]);
+		 	}
+
+			//return view('almacen.reportes.ventas.reporteExcel.excel',["desde"=>$desde, "hasta"=>$hasta]);
+	 	} 
+
+
+
+}
+
+
+
+/*public function downloadExcelReport($id){
 			$i=RVentas::findOrFail($id);
 			$ini=$i->fechaInicial;
 			$fin=$i->fechaFinal;
 			$desde=$ini;
 		 	$hasta=$fin;
 
-			return view('almacen.reportes.ventas.reporteExcel.excel',["desde"=>$desde, "hasta"=>$hasta]);
-	 	} 
+		 	$cadena=$id;
+	 		$separador = ".";
+	 		$separada = explode($separador, $cadena);
+			$count=1;
 
-	 	public function downloadPDFReport($id){
+			$desde=0;
+			$hasta=0;
+			$valor=0;
+
+			if(count($separada)==3){
+				$desde=$separada[0];
+				$hasta=$separada[1];
+				$valor=$separada[2];
+			}
+
+			return view('almacen.reportes.ventas.reporteExcel.excel',["desde"=>$desde, "hasta"=>$hasta]);
+	 	} */
+
+	 	/*public function downloadPDFReport($id){
 			$i=RVentas::findOrFail($id);
 			$ini=$i->fechaInicial;
 			$fin=$i->fechaFinal;
@@ -443,6 +700,4 @@ class reportesVentas extends Controller
 		 	$productos="SELECT f.id_factura, f.pago_total, f.noproductos, tp.nombre as tipo_pago_id_tpago, f.fecha FROM factura as f, tipo_pago as tp, cliente as c, empleado as e WHERE f.tipo_pago_id_tpago=tp.id_tpago and f.empleado_id_empleado=e.id_empleado and f.cliente_id_cliente=c.id_cliente and f.fecha>='$desde' and f.fecha<='$hasta' ORDER BY f.id_factura DESC";
 
 			return view('almacen.reportes.ventas.reportePDF.pdf',["desde"=>$desde, "hasta"=>$hasta, "productos"=>$productos]);
-	 	}
-	 
-}
+	 	}*/

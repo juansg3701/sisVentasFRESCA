@@ -71,18 +71,25 @@
         <div class="card">
           <div class="card-header" align="center">
             <h3 class="pb-2 display-5">DETALLE DE REPORTE</h3>
-            
-            
           </div>
 
           <div class="card-body">
+
+            <?php
+                $valores=$fecha_inicial.'.'.$fecha_final.'.'.'3';
+            ?>
+
+            <div align="center">
+              <a href="{{URL::action('reportesVentas@downloadExcelReport',$valores)}}"><button class="btn btn-outline-success btn-sm">Descargar Excel</button></a>
+              <a href="{{URL::action('reportesVentas@downloadPDFReport',$valores)}}"><button class="btn btn-outline-danger btn-sm">Descargar PDF</button></a>
+            </div>
       
             <table id="bootstrap-data-table" class="table table-striped table-bordered">
               <thead>
               <th>FECHA</th>
               <th>No. PRODUCTOS</th>
               <th>PAGO TOTAL</th>
-            </thead>
+              </thead>
             @foreach($ventas as $ps)
             <tr>
               <td>{{ $ps->fecha}} - {{$ps->fecha_year}}</td>
