@@ -117,6 +117,8 @@ class reportesVentas extends Controller
 
 				switch ($valor_tipo) {
 					case 's':
+
+					//Detallado de semana
 						$ventas2=DB::table('detalle_factura as df')
 		 			->join('stock as s','df.stock_id_stock','=','s.id_stock')
 		 			->join('factura as f','df.factura_id_factura','=','f.id_factura')
@@ -146,6 +148,8 @@ class reportesVentas extends Controller
 						break;
 
 					case 'm':
+
+					//Detallado de mes
 						$ventas2=DB::table('detalle_factura as df')
 		 			->join('stock as s','df.stock_id_stock','=','s.id_stock')
 		 			->join('factura as f','df.factura_id_factura','=','f.id_factura')
@@ -310,7 +314,7 @@ class reportesVentas extends Controller
 	 				return back()->with('errormsj','¡¡La fecha inicial no debe ser mayor a la final!!');
 	 			}else{
 
-	 		
+	 			//General
 	 			$ventas_semanal=DB::table('factura as f')
 	 			->join('empleado as e','f.empleado_id_empleado','=','e.id_empleado')
 	 			->join('cliente as c','f.cliente_id_cliente','=','c.id_cliente')
