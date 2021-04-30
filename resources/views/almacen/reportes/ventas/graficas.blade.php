@@ -95,13 +95,13 @@
             </thead>
             @foreach($ventas as $ps)
             <tr>
-              <td>Semana No. {{ $ps->fecha}}</td>
+              <td>Semana No. {{ $ps->fecha}} - {{$ps->year}}</td>
               <td>{{ $ps->noproductos}}</td>
               <td>$<?php echo number_format($ps->pago_total, 2 , "," , ".") . "\n";?></td>
 
               <td> 
                 <?php
-                $valores=$ps->fecha.'.'.$fecha_inicial.'.'.$fecha_final.'s';
+                $valores=$ps->fecha.'.'.$ps->year.'.'.$fecha_final.'.'.'s';
                 ?>
                 
                 <a href="{{url('almacen/editproductos/'.$valores)}}"><button class="btn btn-outline-primary btn-sm">Detalle</button></a></td>
@@ -120,7 +120,7 @@
   //ARREGLAR PARA SUMAR POR DIAS LAS VENTAS Y DEJAR EL TOTAL
   var buyerData = {
     labels : [@foreach($ventas as $ps)
-              "{{$ps->fecha}}",
+              "{{$ps->fecha}} - {{$ps->year}}",
               @endforeach],
     datasets : [
       {
