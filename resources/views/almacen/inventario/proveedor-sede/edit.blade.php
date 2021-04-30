@@ -181,15 +181,9 @@
 						</div>
 					</div>
 
-					<div class="form-row">
-								<div class="form-group col-sm-4">
-									<div>Cantidad:</div>
-								</div>
-						<div class="form-group col-sm-8">
-							<input type="text" class="form-control" name="cantidad" value="{{$stock->cantidad}}" min="1" id="cantidadJ" onkeyup="format(this)"  onchange="format(this)">
 			
-						</div>
-					</div>
+							<input type="hidden" class="form-control" name="cantidad" value="{{$stock->cantidad}}" min="1" id="cantidadJ" onkeyup="format(this)"  onchange="format(this)">
+			
 
 					<div class="form-row">
 									<div class="form-group col-sm-4">
@@ -223,14 +217,8 @@
 						</div>
 					</div>
 
-					<div class="form-row">
-						<div class="form-group col-sm-4">
-							<div>Total:</div>
-						</div>
-						<div class="form-group col-sm-8">
-							<input type="number" class="form-control" id="total" name="total" value="{{$stock->total}}" min="1">
-						</div>
-					</div>
+							<input type="hidden" class="form-control" id="total" name="total" value="{{$stock->total}}" min="1">
+					
 					<div class="form-row">
 									<div class="form-group col-sm-4">
 										<div>Fecha:</div>

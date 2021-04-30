@@ -85,7 +85,7 @@
             </thead>
             @foreach($stock as $ps)
             <tr>
-              <td>Semana del: {{ $ps->fecha_registro}}</td>
+              <td>Semana del: {{ $ps->fecha_registro}} - {{$ps->year}}</td>
               <td>{{ $ps->cantidad_rep}}</td>
               <td>$<?php echo number_format($ps->total, 2 , "," , ".") . "\n";?></td>
             </tr>   
