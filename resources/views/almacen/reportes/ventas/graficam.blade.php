@@ -97,7 +97,7 @@
               <td>$<?php echo number_format($ps->pago_total, 2 , "," , ".") . "\n";?></td>
               <td> 
                 <?php
-                $valores2=$ps->fecha.'.'.$ps->year.'.'.$fecha_final.'.'.'m';
+                $valores2=$ps->fecha_mes.'.'.$ps->fecha_year.'.'.$ps->fecha.'.'.'m';
                 ?>
                 
                 <a href="{{url('almacen/editproductos/'.$valores2)}}"><button class="btn btn-outline-primary btn-sm">Detalle</button></a></td>

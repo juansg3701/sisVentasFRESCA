@@ -73,13 +73,30 @@
                     </div>
                     <div class="row" align="center">
                             <div class="col-sm-12">
+
                               <div align="center">
-                           
-                             <br>
-                           <b> Ventas generadas el:</b><br>
-                            {{$fecha_d}}<br>
-                            <b>Total ventas:</b> $<?php echo number_format($total_ventas , 2 , "," , ".") . "\n";?><br>
+                                @if($tipo_reporte_detallado=="d")
+                                 <br>
+                                 <b> Ventas generadas el d&iacute;a:</b><br>
+                                  {{$fecha_d}}<br>
+                                  <b>Total ventas:</b> $<?php echo number_format($total_ventas , 2 , "," , ".") . "\n";?><br>
+                                @endif
+
+                                @if($tipo_reporte_detallado=="s")
+                                <br>
+                                 <b> Ventas generadas la semana No:</b><br>
+                                  {{$fecha_d}}<br>
+                                  <b>Total ventas:</b> $<?php echo number_format($total_ventas , 2 , "," , ".") . "\n";?><br>
+                                @endif
+
+                                @if($tipo_reporte_detallado=="m")
+                                <br>
+                                 <b> Ventas generadas el mes:</b><br>
+                                  {{$fecha_d}}<br>
+                                  <b>Total ventas:</b> $<?php echo number_format($total_ventas , 2 , "," , ".") . "\n";?><br>
+                                @endif
                               </div>
+
                              <br>
                             <div align="center">
                               <a href="{{url('almacen/reportes/ventas')}}" class="btn btn-danger">Volver</a>
@@ -113,8 +130,6 @@
         <div class="card">
           <div class="card-header" align="center">
             <h3 class="pb-2 display-5">DETALLE DE REPORTE</h3>
-            
-            
           </div>
 
           <div class="card-body">

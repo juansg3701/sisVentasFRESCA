@@ -59,6 +59,8 @@ class reportesInventario extends Controller
 	 		
 	 	}
 
+
+
 	 	public function edit($id){
 	 		$id=$id;
 	 			$cargoUsuario=auth()->user()->tipo_cargo_id_cargo;
@@ -267,6 +269,136 @@ class reportesInventario extends Controller
 	 	} 
 	 	}
 
+	 	public function detalleVenta($id){
+		$cargoUsuario=auth()->user()->tipo_cargo_id_cargo;
+	 			$modulos=DB::table('cargo_modulo')
+	 			->where('id_cargo','=',$cargoUsuario)
+	 			->orderBy('id_cargo', 'desc')->get();
+
+	 			$cadena=$id;
+	 			$separador = ".";
+
+	 			$separada = explode($separador, $cadena);
+			$count=1;
+
+			$valor_no1=0;
+			$valor_no2=0;
+			$valor_no3=0;
+
+			if(count($separada)==4){
+				$valor_clave=$separada[0];
+				$valor_year=$separada[1];
+				$valor_fecha_final=$separada[2];
+				$valor_tipo=$separada[3];
+
+
+				switch ($valor_tipo) {
+					case 's':
+
+					//Detallado de semana
+						$ventas2=DB::table('detalle_factura as df')
+		 			->join('stock as s','df.stock_id_stock','=','s.id_stock')
+		 			->join('factura as f','df.factura_id_factura','=','f.id_factura')
+		 			->join('sede as sed','f.sede_id_sede','=','sed.id_sede')
+		 			->select('s.producto_id_producto as producto',DB::raw('sum(df.cantidad) as cantidad'),DB::raw('sum(df.total) as total'),DB::raw('WEEK(f.fecha) as prueba'))
+		 			->where(DB::raw('YEAR(f.fecha)'),'=',$valor_year)
+	 				->where(DB::raw('WEEK(f.fecha)'),'=',$valor_clave)
+		 			->where('f.facturapaga','=',1)
+		 			->where('f.anulacion','=',0)
+		 			->orderBy('df.id_detallef', 'asc')
+		 			->groupBy('s.producto_id_producto')
+		 			->paginate(100);
+
+
+		 			if(auth()->user()->superusuario==0){
+		 			$ventas2=DB::table('detalle_factura as df')
+		 			->join('stock as s','df.stock_id_stock','=','s.id_stock')
+		 			->join('factura as f','df.factura_id_factura','=','f.id_factura')
+		 			->join('sede as sed','f.sede_id_sede','=','sed.id_sede')
+		 			->select('s.producto_id_producto as producto',DB::raw('sum(df.cantidad) as cantidad'),DB::raw('sum(df.total) as total'),DB::raw('WEEK(f.fecha) as prueba'))
+		 			->where(DB::raw('YEAR(f.fecha)'),'=',$valor_year)
+	 				->where(DB::raw('WEEK(f.fecha)'),'=',$valor_clave)
+	 				->where('sed.id_sede','=',auth()->user()->sede_id_sede)
+		 			->where('f.facturapaga','=',1)
+		 			->where('f.anulacion','=',0)
+		 			->orderBy('df.id_detallef', 'asc')
+		 			->groupBy('s.producto_id_producto')
+		 			->paginate(100);
+		 		
+		 			}
+
+		 			$productosDB=ProductoSede::get();
+					$total_ventas_diarias=0;
+				
+		 			foreach ($ventas2 as $key => $value) {
+		 				foreach ($productosDB as $key2 => $value2) {
+		 					if($ventas2[$key]->producto==$productosDB[$key2]->id_producto){
+		 						$ventas2[$key]->producto=$productosDB[$key2]->nombre;
+		 					}
+		 				}
+		 			$total_ventas_diarias=intval($total_ventas_diarias)+intval($ventas2[$key]->total);
+		 			}
+		 			$tipo_reporte_detallado="s";
+		 			return view("almacen.reportes.ventas.graficad2",["modulos"=>$modulos,"ventas"=>$ventas2,"fecha_d"=>$valor_clave,"total_ventas"=>$total_ventas_diarias,"tipo_reporte_detallado"=>$tipo_reporte_detallado]);
+						break;
+
+						
+					case 'm':
+
+					//Detallado de mes
+						$ventas_m=DB::table('detalle_factura as df')
+		 			->join('stock as s','df.stock_id_stock','=','s.id_stock')
+		 			->join('factura as f','df.factura_id_factura','=','f.id_factura')
+		 			->join('sede as sed','f.sede_id_sede','=','sed.id_sede')
+		 			->select('s.producto_id_producto as producto',DB::raw('sum(df.cantidad) as cantidad'),DB::raw('sum(df.total) as total'),DB::raw('WEEK(f.fecha) as prueba'))
+		 			->where(DB::raw('YEAR(f.fecha)'),'=',$valor_year)
+	 				->where(DB::raw('MONTH(f.fecha)'),'=',$valor_clave)
+		 			->where('f.facturapaga','=',1)
+		 			->where('f.anulacion','=',0)
+		 			->orderBy('df.id_detallef', 'asc')
+		 			->groupBy('s.producto_id_producto')
+		 			->paginate(100);
+
+		 			if(auth()->user()->superusuario==0){
+		 				$ventas_m=DB::table('detalle_factura as df')
+		 			->join('stock as s','df.stock_id_stock','=','s.id_stock')
+		 			->join('factura as f','df.factura_id_factura','=','f.id_factura')
+		 			->join('sede as sed','f.sede_id_sede','=','sed.id_sede')
+		 			->select('s.producto_id_producto as producto',DB::raw('sum(df.cantidad) as cantidad'),DB::raw('sum(df.total) as total'),DB::raw('WEEK(f.fecha) as prueba'))
+		 			->where(DB::raw('YEAR(f.fecha)'),'=',$valor_year)
+	 				->where(DB::raw('MONTH(f.fecha)'),'=',$valor_clave)
+	 				->where('sed.id_sede','=',auth()->user()->sede_id_sede)
+		 			->where('f.facturapaga','=',1)
+		 			->where('f.anulacion','=',0)
+		 			->orderBy('df.id_detallef', 'asc')
+		 			->groupBy('s.producto_id_producto')
+		 			->paginate(100);
+		 		
+		 			}
+
+		 			$productosDB=ProductoSede::get();
+					$total_ventas_diarias=0;
+				
+		 			foreach ($ventas_m as $key => $value) {
+		 				foreach ($productosDB as $key2 => $value2) {
+		 					if($ventas_m[$key]->producto==$productosDB[$key2]->id_producto){
+		 						$ventas_m[$key]->producto=$productosDB[$key2]->nombre;
+		 					}
+		 				}
+		 			$total_ventas_diarias=intval($total_ventas_diarias)+intval($ventas_m[$key]->total);
+		 			}
+		 			$tipo_reporte_detallado="m";
+		 			
+		 			return view("almacen.reportes.ventas.graficad2",["modulos"=>$modulos,"ventas"=>$ventas_m,"fecha_d"=>$valor_fecha_final,"total_ventas"=>$total_ventas_diarias,"tipo_reporte_detallado"=>$tipo_reporte_detallado]);
+						break;
+
+					default:
+						# code...
+						break;
+				}
+			}
+		}
+		
 	 	public function update(Request $request, $id){
 	 		$cargoUsuario=auth()->user()->tipo_cargo_id_cargo;
 	 			$modulos=DB::table('cargo_modulo')
