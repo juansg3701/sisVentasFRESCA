@@ -95,6 +95,12 @@
               <td>{{ $ps->fecha}} - {{$ps->fecha_year}}</td>
               <td>{{ $ps->noproductos}}</td>
               <td>$<?php echo number_format($ps->pago_total, 2 , "," , ".") . "\n";?></td>
+              <td> 
+                <?php
+                $valores2=$ps->fecha.'.'.$ps->year.'.'.$fecha_final.'.'.'m';
+                ?>
+                
+                <a href="{{url('almacen/editproductos/'.$valores2)}}"><button class="btn btn-outline-primary btn-sm">Detalle</button></a></td>
             </tr>   
             @endforeach
           </table>
