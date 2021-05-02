@@ -350,7 +350,11 @@ class reportesVentas extends Controller
 	 			->join('empleado as e','f.empleado_id_empleado','=','e.id_empleado')
 	 			->join('cliente as c','f.cliente_id_cliente','=','c.id_cliente')
 	 			->join('sede as sed','e.sede_id_sede','=','sed.id_sede')
-	 			->select('f.id_factura',DB::raw('sum(f.pago_total) as pago_total'),DB::raw('sum(f.noproductos) as noproductos'), DB::raw('WEEK(f.fecha) as fecha'), DB::raw('YEAR(f.fecha) as year'))
+	 			->select('f.id_factura',
+				 DB::raw('sum(f.pago_total) as pago_total'),
+				 DB::raw('sum(f.noproductos) as noproductos'), 
+				 DB::raw('WEEK(f.fecha) as fecha'), 
+				 DB::raw('YEAR(f.fecha) as year'))
 	 			->where(DB::raw('WEEK(f.fecha)'),'>=',$fecha_semana_inicial)
 	 			->where(DB::raw('WEEK(f.fecha)'),'<=',$fecha_semana_final)
 	 			->where(DB::raw('YEAR(f.fecha)'),'=',$fecha_year)
@@ -406,7 +410,13 @@ class reportesVentas extends Controller
 	 			->join('cliente as c','f.cliente_id_cliente','=','c.id_cliente')
 	 			->join('tipo_pago as tp','f.tipo_pago_id_tpago','=','tp.id_tpago')
 	 			->join('sede as sed','e.sede_id_sede','=','sed.id_sede')
-	 			->select('f.id_factura',DB::raw('sum(f.pago_total) as pago_total'),DB::raw('sum(f.noproductos) as noproductos'), 'tp.nombre as tipo_pago_id_tpago', DB::raw('MONTH(f.fecha) as fecha'), DB::raw('YEAR(f.fecha) as fecha_year'),DB::raw('MONTH(f.fecha) as fecha_mes'))
+	 			->select('f.id_factura',
+				 DB::raw('sum(f.pago_total) as pago_total'),
+				 DB::raw('sum(f.noproductos) as noproductos'), 
+				 'tp.nombre as tipo_pago_id_tpago', 
+				 DB::raw('MONTH(f.fecha) as fecha'), 
+				 DB::raw('YEAR(f.fecha) as fecha_year'),
+				 DB::raw('MONTH(f.fecha) as fecha_mes'))
 	 			->where(DB::raw('MONTH(f.fecha)'),'>=',$fecha_mes_inicial)
 	 			->where(DB::raw('MONTH(f.fecha)'),'<=',$fecha_mes_final)
 	 			->where(DB::raw('YEAR(f.fecha)'),'=',$fecha_year)

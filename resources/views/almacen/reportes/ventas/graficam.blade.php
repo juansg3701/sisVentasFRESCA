@@ -100,7 +100,10 @@
                 $valores2=$ps->fecha_mes.'.'.$ps->fecha_year.'.'.$ps->fecha.'.'.'m';
                 ?>
                 
-                <a href="{{url('almacen/editproductos/'.$valores2)}}"><button class="btn btn-outline-primary btn-sm">Detalle</button></a></td>
+                <a href="{{url('almacen/editproductos/'.$valores2)}}">
+                <button class="btn btn-outline-primary btn-sm">Detalle</button>
+                </a>
+                </td>
             </tr>   
             @endforeach
           </table>
