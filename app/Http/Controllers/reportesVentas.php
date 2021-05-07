@@ -132,6 +132,24 @@ class reportesVentas extends Controller
 		 			->groupBy('s.producto_id_producto')
 		 			->paginate(100);
 
+
+		 			if(auth()->user()->superusuario==0){
+		 			$ventas2=DB::table('detalle_factura as df')
+		 			->join('stock as s','df.stock_id_stock','=','s.id_stock')
+		 			->join('factura as f','df.factura_id_factura','=','f.id_factura')
+		 			->join('sede as sed','f.sede_id_sede','=','sed.id_sede')
+		 			->select('s.producto_id_producto as producto',DB::raw('sum(df.cantidad) as cantidad'),DB::raw('sum(df.total) as total'),DB::raw('WEEK(f.fecha) as prueba'))
+		 			->where(DB::raw('YEAR(f.fecha)'),'=',$valor_year)
+	 				->where(DB::raw('WEEK(f.fecha)'),'=',$valor_clave)
+	 				->where('sed.id_sede','=',auth()->user()->sede_id_sede)
+		 			->where('f.facturapaga','=',1)
+		 			->where('f.anulacion','=',0)
+		 			->orderBy('df.id_detallef', 'asc')
+		 			->groupBy('s.producto_id_producto')
+		 			->paginate(100);
+		 		
+		 			}
+
 		 			$productosDB=ProductoSede::get();
 					$total_ventas_diarias=0;
 				
@@ -143,14 +161,15 @@ class reportesVentas extends Controller
 		 				}
 		 			$total_ventas_diarias=intval($total_ventas_diarias)+intval($ventas2[$key]->total);
 		 			}
-		 			
-		 			return view("almacen.reportes.ventas.graficad2",["modulos"=>$modulos,"ventas"=>$ventas2,"fecha_d"=>$valor_year,"total_ventas"=>$total_ventas_diarias]);
+		 			$tipo_reporte_detallado="s";
+		 			return view("almacen.reportes.ventas.graficad2",["modulos"=>$modulos,"ventas"=>$ventas2,"fecha_d"=>$valor_clave,"total_ventas"=>$total_ventas_diarias,"tipo_reporte_detallado"=>$tipo_reporte_detallado]);
 						break;
 
+						
 					case 'm':
 
 					//Detallado de mes
-						$ventas2=DB::table('detalle_factura as df')
+						$ventas_m=DB::table('detalle_factura as df')
 		 			->join('stock as s','df.stock_id_stock','=','s.id_stock')
 		 			->join('factura as f','df.factura_id_factura','=','f.id_factura')
 		 			->join('sede as sed','f.sede_id_sede','=','sed.id_sede')
@@ -163,35 +182,46 @@ class reportesVentas extends Controller
 		 			->groupBy('s.producto_id_producto')
 		 			->paginate(100);
 
+		 			if(auth()->user()->superusuario==0){
+		 				$ventas_m=DB::table('detalle_factura as df')
+		 			->join('stock as s','df.stock_id_stock','=','s.id_stock')
+		 			->join('factura as f','df.factura_id_factura','=','f.id_factura')
+		 			->join('sede as sed','f.sede_id_sede','=','sed.id_sede')
+		 			->select('s.producto_id_producto as producto',DB::raw('sum(df.cantidad) as cantidad'),DB::raw('sum(df.total) as total'),DB::raw('WEEK(f.fecha) as prueba'))
+		 			->where(DB::raw('YEAR(f.fecha)'),'=',$valor_year)
+	 				->where(DB::raw('MONTH(f.fecha)'),'=',$valor_clave)
+	 				->where('sed.id_sede','=',auth()->user()->sede_id_sede)
+		 			->where('f.facturapaga','=',1)
+		 			->where('f.anulacion','=',0)
+		 			->orderBy('df.id_detallef', 'asc')
+		 			->groupBy('s.producto_id_producto')
+		 			->paginate(100);
+		 		
+		 			}
+
 		 			$productosDB=ProductoSede::get();
 					$total_ventas_diarias=0;
 				
-		 			foreach ($ventas2 as $key => $value) {
+		 			foreach ($ventas_m as $key => $value) {
 		 				foreach ($productosDB as $key2 => $value2) {
-		 					if($ventas2[$key]->producto==$productosDB[$key2]->id_producto){
-		 						$ventas2[$key]->producto=$productosDB[$key2]->nombre;
+		 					if($ventas_m[$key]->producto==$productosDB[$key2]->id_producto){
+		 						$ventas_m[$key]->producto=$productosDB[$key2]->nombre;
 		 					}
 		 				}
-		 			$total_ventas_diarias=intval($total_ventas_diarias)+intval($ventas2[$key]->total);
+		 			$total_ventas_diarias=intval($total_ventas_diarias)+intval($ventas_m[$key]->total);
 		 			}
+		 			$tipo_reporte_detallado="m";
 		 			
-		 			return view("almacen.reportes.ventas.graficad2",["modulos"=>$modulos,"ventas"=>$ventas2,"fecha_d"=>$valor_year,"total_ventas"=>$total_ventas_diarias]);
-						break;
+		 			return view("almacen.reportes.ventas.graficad2",["modulos"=>$modulos,"ventas"=>$ventas_m,"fecha_d"=>$valor_fecha_final,"total_ventas"=>$total_ventas_diarias,"tipo_reporte_detallado"=>$tipo_reporte_detallado]);
 						break;
 
 					default:
 						# code...
 						break;
 				}
-
-
 			}
-
-			dd($valor_no1." ".$valor_no2);
-
 		}
 	 			
-
 	 	public function update(Request $request, $id){
 	 		$cargoUsuario=auth()->user()->tipo_cargo_id_cargo;
 	 			$modulos=DB::table('cargo_modulo')
@@ -298,8 +328,9 @@ class reportesVentas extends Controller
 		 				}
 		 			$total_ventas_diarias=intval($total_ventas_diarias)+intval($ventas2[$key]->total);
 		 			}
+		 			$tipo_reporte_detallado="d";
 		 			
-		 			return view("almacen.reportes.ventas.graficad2",["modulos"=>$modulos,"ventas"=>$ventas2,"fecha_d"=>$fecha_d,"total_ventas"=>$total_ventas_diarias]);
+		 			return view("almacen.reportes.ventas.graficad2",["modulos"=>$modulos,"ventas"=>$ventas2,"fecha_d"=>$fecha_d,"total_ventas"=>$total_ventas_diarias,"tipo_reporte_detallado"=>$tipo_reporte_detallado]);
 
 	 				}
 	 			}
@@ -319,7 +350,11 @@ class reportesVentas extends Controller
 	 			->join('empleado as e','f.empleado_id_empleado','=','e.id_empleado')
 	 			->join('cliente as c','f.cliente_id_cliente','=','c.id_cliente')
 	 			->join('sede as sed','e.sede_id_sede','=','sed.id_sede')
-	 			->select('f.id_factura',DB::raw('sum(f.pago_total) as pago_total'),DB::raw('sum(f.noproductos) as noproductos'), DB::raw('WEEK(f.fecha) as fecha'), DB::raw('YEAR(f.fecha) as year'))
+	 			->select('f.id_factura',
+				 DB::raw('sum(f.pago_total) as pago_total'),
+				 DB::raw('sum(f.noproductos) as noproductos'), 
+				 DB::raw('WEEK(f.fecha) as fecha'), 
+				 DB::raw('YEAR(f.fecha) as year'))
 	 			->where(DB::raw('WEEK(f.fecha)'),'>=',$fecha_semana_inicial)
 	 			->where(DB::raw('WEEK(f.fecha)'),'<=',$fecha_semana_final)
 	 			->where(DB::raw('YEAR(f.fecha)'),'=',$fecha_year)
@@ -375,7 +410,13 @@ class reportesVentas extends Controller
 	 			->join('cliente as c','f.cliente_id_cliente','=','c.id_cliente')
 	 			->join('tipo_pago as tp','f.tipo_pago_id_tpago','=','tp.id_tpago')
 	 			->join('sede as sed','e.sede_id_sede','=','sed.id_sede')
-	 			->select('f.id_factura',DB::raw('sum(f.pago_total) as pago_total'),DB::raw('sum(f.noproductos) as noproductos'), 'tp.nombre as tipo_pago_id_tpago', DB::raw('MONTH(f.fecha) as fecha'), DB::raw('YEAR(f.fecha) as fecha_year'))
+	 			->select('f.id_factura',
+				 DB::raw('sum(f.pago_total) as pago_total'),
+				 DB::raw('sum(f.noproductos) as noproductos'), 
+				 'tp.nombre as tipo_pago_id_tpago', 
+				 DB::raw('MONTH(f.fecha) as fecha'), 
+				 DB::raw('YEAR(f.fecha) as fecha_year'),
+				 DB::raw('MONTH(f.fecha) as fecha_mes'))
 	 			->where(DB::raw('MONTH(f.fecha)'),'>=',$fecha_mes_inicial)
 	 			->where(DB::raw('MONTH(f.fecha)'),'<=',$fecha_mes_final)
 	 			->where(DB::raw('YEAR(f.fecha)'),'=',$fecha_year)
@@ -392,7 +433,7 @@ class reportesVentas extends Controller
 	 			->join('cliente as c','f.cliente_id_cliente','=','c.id_cliente')
 	 			->join('tipo_pago as tp','f.tipo_pago_id_tpago','=','tp.id_tpago')
 	 			->join('sede as sed','e.sede_id_sede','=','sed.id_sede')
-	 			->select('f.id_factura',DB::raw('sum(f.pago_total) as pago_total'),DB::raw('sum(f.noproductos) as noproductos'), 'tp.nombre as tipo_pago_id_tpago', DB::raw('MONTH(f.fecha) as fecha'), DB::raw('YEAR(f.fecha) as fecha_year'))
+	 			->select('f.id_factura',DB::raw('sum(f.pago_total) as pago_total'),DB::raw('sum(f.noproductos) as noproductos'), 'tp.nombre as tipo_pago_id_tpago', DB::raw('MONTH(f.fecha) as fecha'), DB::raw('YEAR(f.fecha) as fecha_year'), DB::raw('MONTH(f.fecha) as fecha_mes'))
 	 			->where(DB::raw('MONTH(f.fecha)'),'>=',$fecha_mes_inicial)
 	 			->where(DB::raw('MONTH(f.fecha)'),'<=',$fecha_mes_final)
 	 			->where(DB::raw('YEAR(f.fecha)'),'=',$fecha_year)

@@ -48,7 +48,21 @@
 										<input type="date" class="form-control" name="fecha_diaria">
 									</div>
 									<input type="hidden" name="tipo" value="1">
-								</div>			
+								</div>	
+
+								<div class="form-row">
+									<div class="form-group col-sm-12">
+										<div>Seleccione tipo de reporte:</div>
+									</div>
+									<div class="form-group col-sm-12">
+										<select class="form-control" name="tipo_reporte">
+											<option value="1">General</option>
+											<option value="2">Detallado</option>
+										</select>
+										
+									</div>
+									
+								</div>		
 				
 		
 								<div class="form-row">
@@ -88,21 +102,44 @@
 			                     <strong>Formulario de consulta</strong>
 			                </div><br>
 			                <div class="card-body card-block" align="center">
-								<div class="form-row">
-									<div class="form-group col-sm-4">
-										<div>Fecha de semana inicial:</div>
-									</div>
-									<div class="form-group col-sm-8">
-										<input type="date" class="form-control" name="fecha_semana_inicial">
-									</div>
-								</div>	
+								
 
 								<div class="form-row">
 									<div class="form-group col-sm-4">
-										<div>Fecha de semana final:</div>
+										<div>Seleccione semana de inicio:</div>
 									</div>
 									<div class="form-group col-sm-8">
-										<input type="date" class="form-control" name="fecha_semana_final">
+										<select class="form-control" name="fecha_semana_inicial">
+											 @for($cont=1; $cont<54; $cont++)
+											 <option value="{{$cont}}">{{$cont}}</option>
+											 @endfor
+										</select>
+									</div>
+								</div>
+
+								<div class="form-row">
+									<div class="form-group col-sm-4">
+										<div>Seleccione semana fin:</div>
+									</div>
+									<div class="form-group col-sm-8">
+										<select class="form-control" name="fecha_semana_final">
+											 @for($cont=1; $cont<54; $cont++)
+											 <option value="{{$cont}}">{{$cont}}</option>
+											 @endfor
+										</select>
+									</div>
+								</div>
+
+								<div class="form-row">
+									<div class="form-group col-sm-4">
+										<div>Seleccione el a&ntilde;o:</div>
+									</div>
+									<div class="form-group col-sm-8">
+										<select class="form-control" name="fecha_year">
+											 @for($cont=2019; $cont<2051; $cont++)
+											 <option value="{{$cont}}">{{$cont}}</option>
+											 @endfor
+										</select>
 									</div>
 								</div>
 								<input type="hidden" name="tipo" value="2">
@@ -146,21 +183,66 @@
 			                </div><br>
 			                <div class="card-body card-block" align="center">
 
-								<div class="form-row">
-									<div class="form-group col-sm-4">
-										<div>Fecha de mes inicial:</div>
-									</div>
-									<div class="form-group col-sm-8">
-										<input type="date" class="form-control" name="fecha_mes_inicial">
-									</div>
-								</div>	
+									
 
 								<div class="form-row">
 									<div class="form-group col-sm-4">
-										<div>Fecha de mes final:</div>
+										<div>Seleccione el mes de inicio:</div>
 									</div>
 									<div class="form-group col-sm-8">
-										<input type="date" class="form-control" name="fecha_mes_final">
+										<select class="form-control" name="fecha_mes_inicial">
+											
+										<option value="1">Enero</option>
+										<option value="2">Febrero</option>
+										<option value="3">Marzo</option>
+										<option value="4">Abril</option>
+										<option value="5">Mayo</option>
+										<option value="6">Junio</option>
+										<option value="7">Julio</option>
+										<option value="8">Agosto</option>
+										<option value="9">Septiembre</option>
+										<option value="10">Octubre</option>
+										<option value="11">Noviembre</option>
+										<option value="12">Diciembre</option>
+											
+										</select>
+									</div>
+								</div>
+
+								<div class="form-row">
+									<div class="form-group col-sm-4">
+										<div>Seleccione el mes fin:</div>
+									</div>
+									<div class="form-group col-sm-8">
+										<select class="form-control" name="fecha_mes_final">
+											
+										<option value="1">Enero</option>
+										<option value="2">Febrero</option>
+										<option value="3">Marzo</option>
+										<option value="4">Abril</option>
+										<option value="5">Mayo</option>
+										<option value="6">Junio</option>
+										<option value="7">Julio</option>
+										<option value="8">Agosto</option>
+										<option value="9">Septiembre</option>
+										<option value="10">Octubre</option>
+										<option value="11">Noviembre</option>
+										<option value="12">Diciembre</option>
+											
+										</select>
+									</div>
+								</div>
+				
+								<div class="form-row">
+									<div class="form-group col-sm-4">
+										<div>Seleccione el a&ntilde;o:</div>
+									</div>
+									<div class="form-group col-sm-8">
+										<select class="form-control" name="fecha_year">
+											 @for($cont=2019; $cont<2051; $cont++)
+											 <option value="{{$cont}}">{{$cont}}</option>
+											 @endfor
+										</select>
 									</div>
 								</div>
 				

@@ -101,10 +101,10 @@
 
               <td> 
                 <?php
-                $valores=$ps->fecha.'.'.$ps->year.'.'.$fecha_final.'.'.'s';
+                $valores2=$ps->fecha.'.'.$ps->year.'.'.$fecha_final.'.'.'s';
                 ?>
                 
-                <a href="{{url('almacen/editproductos/'.$valores)}}"><button class="btn btn-outline-primary btn-sm">Detalle</button></a></td>
+                <a href="{{url('almacen/editproductos/'.$valores2)}}"><button class="btn btn-outline-primary btn-sm">Detalle</button></a></td>
             </tr>   
             @endforeach
           </table>

@@ -82,7 +82,6 @@
               <th>FECHA</th>
               <th>No. PRODUCTOS</th>
               <th>PAGO TOTAL</th>
-              <th>OPCIONES</th>
             </thead>
             @foreach($stock as $ps)
             <tr>
@@ -90,12 +89,6 @@
               <td>{{ $ps->fecha_registro}}</td>
               <td>{{ $ps->cantidad_rep}}</td>
               <td>$<?php echo number_format($ps->total, 2 , "," , ".") . "\n"?></td>
-              <td> 
-                <?php
-                $valor_fechas=$ps->id_stock.'.'.$fecha_d.'.d';
-                ?>
-                
-                <a href="{{url('almacen/editproductos/'.$valor_fechas)}}"><button class="btn btn-outline-primary btn-sm">Categor&iacute;as</button></a></td>
             </tr>   
             @endforeach
           </table>

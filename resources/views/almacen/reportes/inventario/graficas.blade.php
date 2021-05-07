@@ -40,7 +40,7 @@
                               </div>
                              <br>
                             <div align="center">
-                              <a href="{{url('almacen/inventario/ventas')}}" class="btn btn-danger">Volver</a>
+                              <a href="{{url('almacen/reportes/inventario')}}" class="btn btn-danger">Volver</a>
                             </div>
                                
                             </div>
@@ -82,13 +82,23 @@
               <th>FECHA</th>
               <th>No. PRODUCTOS</th>
               <th>PAGO TOTAL</th>
+              <th>OPCIONES</th>
             </thead>
             @foreach($stock as $ps)
             <tr>
               <td>Semana del: {{ $ps->fecha_registro}} - {{$ps->year}}</td>
               <td>{{ $ps->cantidad_rep}}</td>
               <td>$<?php echo number_format($ps->total, 2 , "," , ".") . "\n";?></td>
-            </tr>   
+             
+            <td> 
+                <?php
+                $valores2=$ps->fecha_registro.'.'.$ps->year.'.'.$fecha_final.'.'.'s';
+                ?>
+                
+                <a href="{{url('almacen/inventario/editproductos/'.$valores2)}}">
+                <button class="btn btn-outline-primary btn-sm">Detalle</button>
+                </a></td>
+                </tr>  
             @endforeach
           </table>
         </div>

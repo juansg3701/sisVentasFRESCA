@@ -20,7 +20,7 @@
 
         
         var options = {  
-          title: 'Gráfica detallado de ventas por total'
+          title: 'Gráfica detallado de inventario por total'
         };
 
 
@@ -38,7 +38,7 @@
 
         
         var options2 = {  
-          title: 'Gráfica detallado de ventas por cantidad'
+          title: 'Gráfica detallado de inventario por cantidad'
         };
 
 
@@ -57,7 +57,7 @@
         <div class="col-md-12">
           <div class="card">
             <div class="card-header" align="center">
-              <h2 class="pb-2 display-5">REPORTE DE VENTAS</h2>
+              <h2 class="pb-2 display-5">REPORTE DE INVENTARIO</h2>
             </div><br>
             <div class="row" align="center">  
                 <div class="col-sm-12" align="center">
@@ -77,29 +77,29 @@
                               <div align="center">
                                 @if($tipo_reporte_detallado=="d")
                                  <br>
-                                 <b> Ventas generadas el d&iacute;a:</b><br>
+                                 <b> Inventario el d&iacute;a:</b><br>
                                   {{$fecha_d}}<br>
-                                  <b>Total ventas:</b> $<?php echo number_format($total_ventas , 2 , "," , ".") . "\n";?><br>
+                                  <b>Total comprado:</b> $<?php echo number_format($total_ventas , 2 , "," , ".") . "\n";?><br>
                                 @endif
 
                                 @if($tipo_reporte_detallado=="s")
                                 <br>
-                                 <b> Ventas generadas la semana No:</b><br>
+                                 <b> Inventario de la semana No:</b><br>
                                   {{$fecha_d}}<br>
-                                  <b>Total ventas:</b> $<?php echo number_format($total_ventas , 2 , "," , ".") . "\n";?><br>
+                                  <b>Total comprado:</b> $<?php echo number_format($total_ventas , 2 , "," , ".") . "\n";?><br>
                                 @endif
 
                                 @if($tipo_reporte_detallado=="m")
                                 <br>
-                                 <b> Ventas generadas el mes:</b><br>
+                                 <b> Inventario del mes:</b><br>
                                   {{$fecha_d}}<br>
-                                  <b>Total ventas:</b> $<?php echo number_format($total_ventas , 2 , "," , ".") . "\n";?><br>
+                                  <b>Total comprado:</b> $<?php echo number_format($total_ventas , 2 , "," , ".") . "\n";?><br>
                                 @endif
                               </div>
 
                              <br>
                             <div align="center">
-                              <a href="{{url('almacen/reportes/ventas')}}" class="btn btn-danger">Volver</a>
+                              <a href="{{url('almacen/reportes/inventario')}}" class="btn btn-danger">Volver</a>
                             </div>
                                
                             </div>

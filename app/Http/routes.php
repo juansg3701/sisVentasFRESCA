@@ -140,6 +140,7 @@ Route::get('downloadExcel', 'ProductoSedeController@downloadExcel');
 
 Route::get('downloadExcelReport/{id}', 'reportesVentas@downloadExcelReport');
 Route::get('almacen/editproductos/{id}', 'reportesVentas@detalleVenta');
+Route::get('almacen/inventario/editproductos/{id}', 'reportesInventario@detalleVenta');
 Route::get('downloadPDFReport/{id}', 'reportesVentas@downloadPDFReport');
 
 Route::get('downloadExcelReport2/{id}', 'reportesInventario@downloadExcelReport');
