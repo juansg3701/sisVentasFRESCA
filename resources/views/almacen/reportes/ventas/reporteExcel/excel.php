@@ -1,6 +1,6 @@
 <?php
 	header('Content-type:application/xls');
-	header('Content-Disposition: attachment; filename=RP_Ventas.xls');
+	header('Content-Disposition: attachment; filename=RP_VENTAS.xls');
 
 	require_once('conexion2.php');
 	$conn=new Conexion2();
@@ -14,9 +14,9 @@
 
 	$result=mysqli_query($link, $query);
 
-	//$query=$productos;
+	//$query=$ventas;
 	
-	//$result=mysqli_query($link, $productos);
+	//$result=mysqli_query($link, $ventas);
 
 ?>
 
@@ -33,14 +33,13 @@
 	<?php
 
 		if ($valor==3) {
-		
 
-			foreach ($productos as $pro) {
+			foreach ($ventas as $ven) {
 		        ?>
 				<tr>
-						<td><?php echo $pro->fecha.'-'.$pro->fecha_year; ?></td>
-						<td><?php echo $pro->noproductos; ?></td>
-						<td><?php echo $pro->pago_total; ?></td>
+						<td><?php echo $ven->fecha.'-'.$ven->fecha_year; ?></td>
+						<td><?php echo $ven->noproductos; ?></td>
+						<td><?php echo $ven->pago_total; ?></td>
 				</tr>	
 				<?php
 
@@ -53,15 +52,32 @@
 	<?php
 
 		if ($valor==2) {
-			# code...
-		
 
-		foreach ($productos as $pro) {
+		foreach ($ventas as $ven) {
 	        ?>
 			<tr>
-					<td><?php echo 'Semana No.: '.$pro->fecha; ?></td>
-					<td><?php echo $pro->noproductos; ?></td>
-					<td><?php echo $pro->pago_total; ?></td>
+					<td><?php echo 'Semana No. '.$ven->fecha.' - '.$ven->year; ?></td>
+					<td><?php echo $ven->noproductos; ?></td>
+					<td><?php echo $ven->pago_total; ?></td>
+			</tr>	
+			<?php
+
+    	}
+    	}
+
+	?>
+
+
+	<?php
+
+		if ($valor==1) {
+
+		foreach ($ventas as $ven) {
+	        ?>
+			<tr>
+					<td><?php echo $ven->fecha; ?></td>
+					<td><?php echo $ven->noproductos; ?></td>
+					<td><?php echo $ven->pago_total; ?></td>
 			</tr>	
 			<?php
 
