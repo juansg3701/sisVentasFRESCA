@@ -212,7 +212,7 @@ class reportesVentas extends Controller
 	 				//Reporte general
 	 				if($tipo_reporte==1){
 	 				
-	 				$ventas=DB::table('factura as f')
+	 			$ventas=DB::table('factura as f')
 	 			->join('empleado as e','f.empleado_id_empleado','=','e.id_empleado')
 	 			->join('cliente as c','f.cliente_id_cliente','=','c.id_cliente')
 	 			->join('tipo_pago as tp','f.tipo_pago_id_tpago','=','tp.id_tpago')
@@ -352,7 +352,7 @@ class reportesVentas extends Controller
 		 				$total_ventas_semanales=intval($total_ventas_semanales)+intval($ventas_semanal[$key]->pago_total);
 		 			}
 
-	 			return view("almacen.reportes.ventas.graficas",["modulos"=>$modulos,"ventas"=>$ventas_semanal,"fecha_inicial"=>$fecha_semana_inicial,"fecha_final"=>$fecha_semana_final,"total_ventas"=>$total_ventas_semanales]);
+	 			return view("almacen.reportes.ventas.graficas",["modulos"=>$modulos,"ventas"=>$ventas_semanal,"fecha_inicial"=>$fecha_semana_inicial,"fecha_final"=>$fecha_semana_final, "fecha_year"=>$fecha_year,"total_ventas"=>$total_ventas_semanales]);
 
 	 			
 	 			}
@@ -464,7 +464,7 @@ class reportesVentas extends Controller
 		 				}
 		 			}
 		
-	 			return view("almacen.reportes.ventas.graficam",["modulos"=>$modulos,"ventas"=>$ventas_mensuales,"fecha_inicial"=>$fecha_mes_inicial,"fecha_final"=>$fecha_mes_final,"total_ventas"=>$total_ventas_mensuales]);
+	 			return view("almacen.reportes.ventas.graficam",["modulos"=>$modulos,"ventas"=>$ventas_mensuales,"fecha_inicial"=>$fecha_mes_inicial,"fecha_final"=>$fecha_mes_final, "fecha_year"=>$fecha_year, "total_ventas"=>$total_ventas_mensuales]);
 	 			}
 
 	 		}
@@ -494,112 +494,122 @@ class reportesVentas extends Controller
 
 			$desde=0;
 			$hasta=0;
+			$año=0;
 			$valor=0;
 
-			if(count($separada)==3){
+
+			$fecha_d=0;
+
+			if(count($separada)==4){
+				$fecha_d=$separada[0];
 				$desde=$separada[0];
 				$hasta=$separada[1];
-				$valor=$separada[2];
+				$año=$separada[2];
+				$valor=$separada[3];
+				
 			}
 
-			//dd($id);
 
-		 	//$productos="SELECT f.id_factura, f.pago_total, f.noproductos, tp.nombre as tipo_pago_id_tpago, f.fecha, f.sede_id_sede FROM factura as f, tipo_pago as tp, cliente as c, empleado as e, sede as sed WHERE f.tipo_pago_id_tpago=tp.id_tpago and f.empleado_id_empleado=e.id_empleado and f.cliente_id_cliente=c.id_cliente and f.sede_id_sede=sed.id_sede f.fecha>='$desde' and f.fecha<='$hasta' ORDER BY f.id_factura DESC";
-
-		 	//$productos="SELECT f.id_factura, SUM(f.pago_total) as pago_total, SUM(f.noproductos) as noproductos, tp.nombre as tipo_pago_id_tpago, MONTH(f.fecha) as fecha, YEAR(f.fecha) as fecha_year FROM factura as f, tipo_pago as tp, cliente as c, empleado as e, sede as sed WHERE DATE(f.fecha)>='$desde' and DATE(f.fecha)<='$hasta' and f.facturapaga=1 and f.anulacion=0 and f.tipo_pago_id_tpago=tp.id_tpago and f.empleado_id_empleado=e.id_empleado and f.cliente_id_cliente=c.id_cliente and f.sede_id_sede=sed.id_sede";
-
-		 	/*$productos="SELECT f.id_factura, sum(f.pago_total) as pago_total, f.noproductos as noproductos, tp.nombre as tipo_pago_id_tpago, f.fecha as fecha, f.fecha as fecha_year FROM factura as f, tipo_pago as tp, cliente as c, empleado as e, sede as sed WHERE DATE(f.fecha)>='$desde' and DATE(f.fecha)<='$hasta' and f.facturapaga=1 and f.anulacion=0 and f.tipo_pago_id_tpago=tp.id_tpago and f.empleado_id_empleado=e.id_empleado and f.cliente_id_cliente=c.id_cliente and f.sede_id_sede=sed.id_sede";*/
+			//dd($fecha_d);
 		 	
 		 	//dd($desde.' '.$hasta);
 
 		 	if($valor==3){
 
-		 		$productos=DB::table('factura as f')
+
+	 			//Mensual General
+	 			$ventas=DB::table('factura as f')
 	 			->join('empleado as e','f.empleado_id_empleado','=','e.id_empleado')
 	 			->join('cliente as c','f.cliente_id_cliente','=','c.id_cliente')
 	 			->join('tipo_pago as tp','f.tipo_pago_id_tpago','=','tp.id_tpago')
 	 			->join('sede as sed','e.sede_id_sede','=','sed.id_sede')
 	 			->select('f.id_factura',DB::raw('sum(f.pago_total) as pago_total'),DB::raw('sum(f.noproductos) as noproductos'), 'tp.nombre as tipo_pago_id_tpago', DB::raw('MONTH(f.fecha) as fecha'), DB::raw('YEAR(f.fecha) as fecha_year'))
-	 			->where(DB::raw('date(f.fecha)'),'>=',$desde)
-	 			->where(DB::raw('date(f.fecha)'),'<=',$hasta)
+	 			->where(DB::raw('MONTH(f.fecha)'),'>=',$desde)
+	 			->where(DB::raw('MONTH(f.fecha)'),'<=',$hasta)
+	 			->where(DB::raw('YEAR(f.fecha)'),'=',$año)
 	 			->where('f.facturapaga','=',1)
 		 		->where('f.anulacion','=',0)
 	 			->orderBy('f.id_factura', 'asc')
 	 			->groupBy(DB::raw('MONTH(f.fecha)'))
 	 			->paginate(100);
 
-	 			foreach ($productos as $key => $value) {	
+	 			foreach ($ventas as $key => $value) {	
 
-	 				switch ($productos[$key]->fecha) {
+	 				switch ($ventas[$key]->fecha) {
 	 					case '1':
-	 						$productos[$key]->fecha="Enero";
+	 						$ventas[$key]->fecha="Enero";
 	 					break;
 
 	 					case '2':
-	 						$productos[$key]->fecha="Febrero";
+	 						$ventas[$key]->fecha="Febrero";
 	 					break;
 
 	 					case '3':
-	 						$productos[$key]->fecha="Marzo";
+	 						$ventas[$key]->fecha="Marzo";
 	 					break;
 
 	 					case '4':
-	 						$productos[$key]->fecha="Abril";
+	 						$ventas[$key]->fecha="Abril";
 	 					break;
 
 	 					case '5':
-	 						$productos[$key]->fecha="Mayo";
+	 						$ventas[$key]->fecha="Mayo";
 	 					break;
 
 	 					case '6':
-	 						$productos[$key]->fecha="Junio";
+	 						$ventas[$key]->fecha="Junio";
 	 					break;
 
 	 					case '7':
-	 						$productos[$key]->fecha="Julio";
+	 						$ventas[$key]->fecha="Julio";
 	 					break;
 
 	 					case '8':
-	 						$productos[$key]->fecha="Agosto";
+	 						$ventas[$key]->fecha="Agosto";
 	 					break;
 
 	 					case '9':
-	 						$productos[$key]->fecha="Septiembre";
+	 						$ventas[$key]->fecha="Septiembre";
 	 					break;
 
 	 					case '10':
-	 						$productos[$key]->fecha="Octubre";
+	 						$ventas[$key]->fecha="Octubre";
 	 					break;
 
 	 					case '11':
-	 						$productos[$key]->fecha="Noviembre";
+	 						$ventas[$key]->fecha="Noviembre";
 	 					break;
 
 	 					case '12':
-	 						$productos[$key]->fecha="Diciembre";
+	 						$ventas[$key]->fecha="Diciembre";
 	 					break;
 	 					
 	 					default:
-	 						$productos[$key]->fecha="Ninguno";
+	 						$ventas[$key]->fecha="Ninguno";
 	 					break;
 	 				}
 		 		}
-		 		$valor==3;
-				return view('almacen.reportes.ventas.reportePDF.pdf',["desde"=>$desde, "hasta"=>$hasta, "productos"=>$productos, "valor"=>$valor]);
+		 		$tipo="MENSUAL";
+		 		$valor=3;
+
+				return view('almacen.reportes.ventas.reportePDF.pdf',["desde"=>$desde, "hasta"=>$hasta, "ventas"=>$ventas, "tipo"=>$tipo, "valor"=>$valor]);
 
 		 	}
 
 
+		 	
+
 		 	if($valor==2){
 
-		 		$productos=DB::table('factura as f')
+
+	 			$ventas=DB::table('factura as f')
 	 			->join('empleado as e','f.empleado_id_empleado','=','e.id_empleado')
 	 			->join('cliente as c','f.cliente_id_cliente','=','c.id_cliente')
-	 	
 	 			->join('sede as sed','e.sede_id_sede','=','sed.id_sede')
-	 			->select('f.id_factura',DB::raw('sum(f.pago_total) as pago_total'),DB::raw('sum(f.noproductos) as noproductos'), DB::raw('WEEK(f.fecha) as fecha'))
-	 			->where(DB::raw('date(f.fecha)'),'>=',$desde)
-	 			->where(DB::raw('date(f.fecha)'),'<=',$hasta)
+	 			->select('f.id_factura',DB::raw('sum(f.pago_total) as pago_total'),DB::raw('sum(f.noproductos) as noproductos'), DB::raw('WEEK(f.fecha) as fecha'), DB::raw('YEAR(f.fecha) as year'))
+	 			->where(DB::raw('WEEK(f.fecha)'),'>=',$desde)
+	 			->where(DB::raw('WEEK(f.fecha)'),'<=',$hasta)
+	 			->where(DB::raw('YEAR(f.fecha)'),'=',$año)
 	 			->where('f.facturapaga','=',1)
 		 		->where('f.anulacion','=',0)
 	 			->orderBy(DB::raw('WEEK(f.fecha)'), 'asc')
@@ -607,12 +617,34 @@ class reportesVentas extends Controller
 	 			->paginate(100);
 
 
+				$tipo="SEMANAL";
 		 		$valor=2;
-				return view('almacen.reportes.ventas.reportePDF.pdf',["desde"=>$desde, "hasta"=>$hasta, "productos"=>$productos, "valor"=>$valor]);
 
+				return view('almacen.reportes.ventas.reportePDF.pdf',["desde"=>$desde, "hasta"=>$hasta, "ventas"=>$ventas, "tipo"=>$tipo, "valor"=>$valor]);
 		 	}
 
-		 	
+
+		 	if($valor==1){
+
+
+	 			$ventas=DB::table('factura as f')
+	 			->join('empleado as e','f.empleado_id_empleado','=','e.id_empleado')
+	 			->join('cliente as c','f.cliente_id_cliente','=','c.id_cliente')
+	 			->join('tipo_pago as tp','f.tipo_pago_id_tpago','=','tp.id_tpago')
+	 			->join('sede as sed','e.sede_id_sede','=','sed.id_sede')
+	 			->select('f.id_factura','f.pago_total','f.noproductos', 'tp.nombre as tipo_pago_id_tpago', 'f.fecha')
+	 			->where('f.fecha','LIKE', '%'.$fecha_d.'%')
+	 			->where('f.facturapaga','=',1)
+		 		->where('f.anulacion','=',0)
+	 			->orderBy('f.id_factura', 'asc')
+	 			->paginate(100);
+
+				$tipo="DIARIO";
+		 		$valor=1;
+
+				return view('almacen.reportes.ventas.reportePDF.pdf',["desde"=>$desde, "hasta"=>$hasta, "ventas"=>$ventas, "tipo"=>$tipo, "valor"=>$valor]);
+		 	}
+
 	 	} 
 
 
@@ -626,96 +658,154 @@ class reportesVentas extends Controller
 
 			$desde=0;
 			$hasta=0;
+			$año=0;
 			$valor=0;
 
-			if(count($separada)==3){
+			$fecha_d=0;
+			
+
+			if(count($separada)==4){
+				$fecha_d=$separada[0];
 				$desde=$separada[0];
 				$hasta=$separada[1];
-				$valor=$separada[2];
+				$año=$separada[2];
+				$valor=$separada[3];
+				
 			}
-
 		 	
 		 	//dd($desde.' '.$hasta);
 
+
 		 	if($valor==3){
 
-		 		/*$productos=DB::table('factura as f')
-		 		->select('f.id_factura')
-	 			->paginate(100);*/
-
-		 		$productos=DB::table('factura as f')
+	 			//Mensual General
+	 			$ventas=DB::table('factura as f')
 	 			->join('empleado as e','f.empleado_id_empleado','=','e.id_empleado')
 	 			->join('cliente as c','f.cliente_id_cliente','=','c.id_cliente')
 	 			->join('tipo_pago as tp','f.tipo_pago_id_tpago','=','tp.id_tpago')
 	 			->join('sede as sed','e.sede_id_sede','=','sed.id_sede')
 	 			->select('f.id_factura',DB::raw('sum(f.pago_total) as pago_total'),DB::raw('sum(f.noproductos) as noproductos'), 'tp.nombre as tipo_pago_id_tpago', DB::raw('MONTH(f.fecha) as fecha'), DB::raw('YEAR(f.fecha) as fecha_year'))
-	 			->where(DB::raw('date(f.fecha)'),'>=',$desde)
-	 			->where(DB::raw('date(f.fecha)'),'<=',$hasta)
+	 			->where(DB::raw('MONTH(f.fecha)'),'>=',$desde)
+	 			->where(DB::raw('MONTH(f.fecha)'),'<=',$hasta)
+	 			->where(DB::raw('YEAR(f.fecha)'),'=',$año)
 	 			->where('f.facturapaga','=',1)
 		 		->where('f.anulacion','=',0)
 	 			->orderBy('f.id_factura', 'asc')
 	 			->groupBy(DB::raw('MONTH(f.fecha)'))
 	 			->paginate(100);
 
-	 			foreach ($productos as $key => $value) {	
+	 			foreach ($ventas as $key => $value) {	
 
-	 				switch ($productos[$key]->fecha) {
+	 				switch ($ventas[$key]->fecha) {
 	 					case '1':
-	 						$productos[$key]->fecha="Enero";
+	 						$ventas[$key]->fecha="Enero";
 	 					break;
 
 	 					case '2':
-	 						$productos[$key]->fecha="Febrero";
+	 						$ventas[$key]->fecha="Febrero";
 	 					break;
 
 	 					case '3':
-	 						$productos[$key]->fecha="Marzo";
+	 						$ventas[$key]->fecha="Marzo";
 	 					break;
 
 	 					case '4':
-	 						$productos[$key]->fecha="Abril";
+	 						$ventas[$key]->fecha="Abril";
 	 					break;
 
 	 					case '5':
-	 						$productos[$key]->fecha="Mayo";
+	 						$ventas[$key]->fecha="Mayo";
 	 					break;
 
 	 					case '6':
-	 						$productos[$key]->fecha="Junio";
+	 						$ventas[$key]->fecha="Junio";
 	 					break;
 
 	 					case '7':
-	 						$productos[$key]->fecha="Julio";
+	 						$ventas[$key]->fecha="Julio";
 	 					break;
 
 	 					case '8':
-	 						$productos[$key]->fecha="Agosto";
+	 						$ventas[$key]->fecha="Agosto";
 	 					break;
 
 	 					case '9':
-	 						$productos[$key]->fecha="Septiembre";
+	 						$ventas[$key]->fecha="Septiembre";
 	 					break;
 
 	 					case '10':
-	 						$productos[$key]->fecha="Octubre";
+	 						$ventas[$key]->fecha="Octubre";
 	 					break;
 
 	 					case '11':
-	 						$productos[$key]->fecha="Noviembre";
+	 						$ventas[$key]->fecha="Noviembre";
 	 					break;
 
 	 					case '12':
-	 						$productos[$key]->fecha="Diciembre";
+	 						$ventas[$key]->fecha="Diciembre";
 	 					break;
 	 					
 	 					default:
-	 						$productos[$key]->fecha="Ninguno";
+	 						$ventas[$key]->fecha="Ninguno";
 	 					break;
 	 				}
 		 		}
+		 	
+				$tipo="MENSUAL";
+		 		$valor=3;
 
-				return view('almacen.reportes.ventas.reporteExcel.excel',["desde"=>$desde, "hasta"=>$hasta, "productos"=>$productos]);
+				return view('almacen.reportes.ventas.reporteExcel.excel',["desde"=>$desde, "hasta"=>$hasta, "ventas"=>$ventas, "tipo"=>$tipo, "valor"=>$valor]);
+
 		 	}
+
+
+		 	if($valor==2){
+
+	 			$ventas=DB::table('factura as f')
+	 			->join('empleado as e','f.empleado_id_empleado','=','e.id_empleado')
+	 			->join('cliente as c','f.cliente_id_cliente','=','c.id_cliente')
+	 			->join('sede as sed','e.sede_id_sede','=','sed.id_sede')
+	 			->select('f.id_factura',DB::raw('sum(f.pago_total) as pago_total'),DB::raw('sum(f.noproductos) as noproductos'), DB::raw('WEEK(f.fecha) as fecha'), DB::raw('YEAR(f.fecha) as year'))
+	 			->where(DB::raw('WEEK(f.fecha)'),'>=',$desde)
+	 			->where(DB::raw('WEEK(f.fecha)'),'<=',$hasta)
+	 			->where(DB::raw('YEAR(f.fecha)'),'=',$año)
+	 			->where('f.facturapaga','=',1)
+		 		->where('f.anulacion','=',0)
+	 			->orderBy(DB::raw('WEEK(f.fecha)'), 'asc')
+	 			->groupBy(DB::raw('WEEK(f.fecha)'))
+	 			->paginate(100);
+
+
+				$tipo="SEMANAL";
+		 		$valor=2;
+
+				return view('almacen.reportes.ventas.reporteExcel.excel',["desde"=>$desde, "hasta"=>$hasta, "ventas"=>$ventas, "tipo"=>$tipo, "valor"=>$valor]);
+		 	}
+
+
+
+		 	if($valor==1){
+
+
+	 			$ventas=DB::table('factura as f')
+	 			->join('empleado as e','f.empleado_id_empleado','=','e.id_empleado')
+	 			->join('cliente as c','f.cliente_id_cliente','=','c.id_cliente')
+	 			->join('tipo_pago as tp','f.tipo_pago_id_tpago','=','tp.id_tpago')
+	 			->join('sede as sed','e.sede_id_sede','=','sed.id_sede')
+	 			->select('f.id_factura','f.pago_total','f.noproductos', 'tp.nombre as tipo_pago_id_tpago', 'f.fecha')
+	 			->where('f.fecha','LIKE', '%'.$fecha_d.'%')
+	 			->where('f.facturapaga','=',1)
+		 		->where('f.anulacion','=',0)
+	 			->orderBy('f.id_factura', 'asc')
+	 			->paginate(100);
+
+				$tipo="DIARIO";
+		 		$valor=1;
+
+				return view('almacen.reportes.ventas.reporteExcel.excel',["desde"=>$desde, "hasta"=>$hasta, "ventas"=>$ventas, "tipo"=>$tipo, "valor"=>$valor]);
+		 	}
+
+
 
 			//return view('almacen.reportes.ventas.reporteExcel.excel',["desde"=>$desde, "hasta"=>$hasta]);
 	 	} 

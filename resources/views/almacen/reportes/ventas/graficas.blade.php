@@ -76,7 +76,7 @@
           </div>
 
            <?php
-                $valores=$fecha_inicial.'.'.$fecha_final.'.'.'2';
+                $valores=$fecha_inicial.'.'.$fecha_final.'.'.$fecha_year.'.'.'2';
             ?>
 
            <div align="center">

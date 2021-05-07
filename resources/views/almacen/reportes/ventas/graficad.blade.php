@@ -75,6 +75,15 @@
           </div>
 
           <div class="card-body">
+
+            <?php
+                $valores=$fecha_d.'.'.'0'.'.'.'0'.'.'.'1';
+            ?>
+
+            <div align="center">
+              <a href="{{URL::action('reportesVentas@downloadExcelReport',$valores)}}"><button class="btn btn-outline-success btn-sm">Descargar Excel</button></a>
+              <a href="{{URL::action('reportesVentas@downloadPDFReport',$valores)}}"><button class="btn btn-outline-danger btn-sm">Descargar PDF</button></a>
+            </div>
       
             <table id="bootstrap-data-table" class="table table-striped table-bordered">
               <thead>

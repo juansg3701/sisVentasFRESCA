@@ -18,6 +18,7 @@
                  
                     <div class="row" align="center">
 
+
                             <div  class="col-sm-12" align="center">
                                <canvas id="buyers"style="width:400px; height:200px; overflow-x: auto; overflow-y: auto;  white-space: nowrap;"></canvas>
 
@@ -28,14 +29,13 @@
                               <div align="center">
                
                              <br>
-                           <b> Ventas entre:</b><br>
+                            <b> Ventas entre:</b><br>
                             <b>Inicio:</b> {{$fecha_inicial}} <br>
                             <b>Fin:</b> {{$fecha_final}}<br>
-        
-       
+                            
                             <b>Total ventas: </b>
                             $<?php echo number_format($total_ventas, 2 , "," , ".") . "\n";?>
-                       <br>
+                            <br>
 
                               </div>
                              <br>
@@ -76,7 +76,7 @@
           <div class="card-body">
 
             <?php
-                $valores=$fecha_inicial.'.'.$fecha_final.'.'.'3';
+                $valores=$fecha_inicial.'.'.$fecha_final.'.'.$fecha_year.'.'.'3';
             ?>
 
             <div align="center">
