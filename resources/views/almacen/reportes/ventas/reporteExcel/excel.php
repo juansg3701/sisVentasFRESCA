@@ -21,25 +21,85 @@
 ?>
 
 <table border="1">
-	<tr style="background-color:WHITE; height:100px">
+	<!--<tr style="background-color:WHITE; height:100px">
 		<thead>
 			<th>FECHA</th>
 			<th>NO. PRODUCTOS</th>
 			<th>PAGO TOTAL</th>
 		</thead>
-	</tr>
+	</tr>-->
 
 
 	<?php
-
 		if ($valor==3) {
-
+			?>
+			<tr style="background-color:WHITE; height:100px">
+				<thead>
+					<th>FECHA</th>
+					<th>NO. PRODUCTOS</th>
+					<th>PAGO TOTAL</th>
+				</thead>
+			</tr>
+			<?php
 			foreach ($ventas as $ven) {
 		        ?>
 				<tr>
 						<td><?php echo $ven->fecha.'-'.$ven->fecha_year; ?></td>
 						<td><?php echo $ven->noproductos; ?></td>
 						<td><?php echo $ven->pago_total; ?></td>
+				</tr>	
+				<?php
+	    	}
+    	}
+	?>
+
+
+	<?php
+
+		if ($valor==2) {
+			?>
+			<tr style="background-color:WHITE; height:100px">
+				<thead>
+					<th>FECHA</th>
+					<th>NO. PRODUCTOS</th>
+					<th>PAGO TOTAL</th>
+				</thead>
+			</tr>
+			<?php
+			foreach ($ventas as $ven) {
+		        ?>
+				<tr>
+						<td><?php echo 'Semana No. '.$ven->fecha.' - '.$ven->year; ?></td>
+						<td><?php echo $ven->noproductos; ?></td>
+						<td><?php echo $ven->pago_total; ?></td>
+				</tr>	
+				<?php
+	    	}
+    	}
+
+	?>
+
+
+	<?php
+
+		if ($valor==1) {
+			?>
+			<tr style="background-color:WHITE; height:100px">
+				<thead>
+					<th>FECHA</th>
+					<th>NO. PRODUCTOS</th>
+					<th>PAGO TOTAL</th>
+					<th>METODO DE PAGO</th>
+				</thead>
+			</tr>
+			<?php
+			foreach ($ventas as $ven) {
+		        ?>
+				<tr>
+						<td><?php echo $ven->fecha; ?></td>
+						<td><?php echo $ven->noproductos; ?></td>
+						<td><?php echo $ven->pago_total; ?></td>
+						<td><?php echo $ven->tipo_pago_id_tpago; ?></td>
 				</tr>	
 				<?php
 
@@ -51,39 +111,77 @@
 
 	<?php
 
-		if ($valor==2) {
-
-		foreach ($ventas as $ven) {
-	        ?>
-			<tr>
-					<td><?php echo 'Semana No. '.$ven->fecha.' - '.$ven->year; ?></td>
-					<td><?php echo $ven->noproductos; ?></td>
-					<td><?php echo $ven->pago_total; ?></td>
-			</tr>	
+		if ($valor=='m') {
+			?>
+			<tr style="background-color:WHITE; height:100px">
+				<thead>
+					<th>PRODUCTO</th>
+					<th>CANTIDAD</th>
+					<th>TOTAL</th>
+				</thead>
+			</tr>
 			<?php
-
+			foreach ($ventas as $ven) {
+		        ?>
+				<tr>
+						<td><?php echo $ven->producto; ?></td>
+						<td><?php echo $ven->cantidad; ?></td>
+						<td><?php echo $ven->total; ?></td>
+				</tr>	
+				<?php
+	    	}
     	}
+
+	?>
+
+	<?php
+
+		if ($valor=='s') {
+			?>
+			<tr style="background-color:WHITE; height:100px">
+				<thead>
+					<th>PRODUCTO</th>
+					<th>CANTIDAD</th>
+					<th>TOTAL</th>
+				</thead>
+			</tr>
+			<?php
+			foreach ($ventas as $ven) {
+		        ?>
+				<tr>
+						<td><?php echo $ven->producto; ?></td>
+						<td><?php echo $ven->cantidad; ?></td>
+						<td><?php echo $ven->total; ?></td>
+				</tr>	
+				<?php
+
+	    	}
     	}
 
 	?>
 
 
 	<?php
-
-		if ($valor==1) {
-
-		foreach ($ventas as $ven) {
-	        ?>
-			<tr>
-					<td><?php echo $ven->fecha; ?></td>
-					<td><?php echo $ven->noproductos; ?></td>
-					<td><?php echo $ven->pago_total; ?></td>
-			</tr>	
+		if ($valor=='d') {
+			?>
+			<tr style="background-color:WHITE; height:100px">
+				<thead>
+					<th>PRODUCTO</th>
+					<th>CANTIDAD</th>
+					<th>TOTAL</th>
+				</thead>
+			</tr>
 			<?php
-
+			foreach ($ventas as $ven) {
+		        ?>
+				<tr>
+						<td><?php echo $ven->producto; ?></td>
+						<td><?php echo $ven->cantidad; ?></td>
+						<td><?php echo $ven->total; ?></td>
+				</tr>	
+				<?php
+	    	}
     	}
-    	}
-
 	?>
 
 	<!--<?php

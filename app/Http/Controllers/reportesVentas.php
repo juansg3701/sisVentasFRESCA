@@ -162,7 +162,7 @@ class reportesVentas extends Controller
 		 			$total_ventas_diarias=intval($total_ventas_diarias)+intval($ventas2[$key]->total);
 		 			}
 		 			$tipo_reporte_detallado="s";
-		 			return view("almacen.reportes.ventas.graficad2",["modulos"=>$modulos,"ventas"=>$ventas2,"fecha_d"=>$valor_clave,"total_ventas"=>$total_ventas_diarias,"tipo_reporte_detallado"=>$tipo_reporte_detallado]);
+		 			return view("almacen.reportes.ventas.graficad2",["modulos"=>$modulos,"ventas"=>$ventas2,"fecha_d"=>$valor_clave,"total_ventas"=>$total_ventas_diarias,"tipo_reporte_detallado"=>$tipo_reporte_detallado, "valor_year"=>$valor_year, "valor_clave"=>$valor_clave, "valor_fecha_final"=>$valor_fecha_final, "valor_tipo"=>$valor_tipo]);
 						break;
 
 						
@@ -211,8 +211,10 @@ class reportesVentas extends Controller
 		 			$total_ventas_diarias=intval($total_ventas_diarias)+intval($ventas_m[$key]->total);
 		 			}
 		 			$tipo_reporte_detallado="m";
+
+		 			//dd($valor_year.' '.$valor_clave);
 		 			
-		 			return view("almacen.reportes.ventas.graficad2",["modulos"=>$modulos,"ventas"=>$ventas_m,"fecha_d"=>$valor_fecha_final,"total_ventas"=>$total_ventas_diarias,"tipo_reporte_detallado"=>$tipo_reporte_detallado]);
+		 			return view("almacen.reportes.ventas.graficad2",["modulos"=>$modulos,"ventas"=>$ventas_m,"fecha_d"=>$valor_fecha_final,"total_ventas"=>$total_ventas_diarias,"tipo_reporte_detallado"=>$tipo_reporte_detallado, "valor_year"=>$valor_year, "valor_clave"=>$valor_clave, "valor_fecha_final"=>$valor_fecha_final, "valor_tipo"=>$valor_tipo]);
 						break;
 
 					default:
@@ -286,7 +288,7 @@ class reportesVentas extends Controller
 		 			return view("almacen.reportes.ventas.graficad",["modulos"=>$modulos,"ventas"=>$ventas,"fecha_d"=>$fecha_d,"total_ventas"=>$total_ventas]);
 	 				}else{
 
-	 					//Reporte detallado
+	 				//Reporte detallado
 
 		 			$ventas2=DB::table('detalle_factura as df')
 		 			->join('stock as s','df.stock_id_stock','=','s.id_stock')
@@ -388,15 +390,12 @@ class reportesVentas extends Controller
 		 			}
 
 	 			return view("almacen.reportes.ventas.graficas",["modulos"=>$modulos,"ventas"=>$ventas_semanal,"fecha_inicial"=>$fecha_semana_inicial,"fecha_final"=>$fecha_semana_final, "fecha_year"=>$fecha_year,"total_ventas"=>$total_ventas_semanales]);
-
-	 			
 	 			}
 
 	 		}
 	 		//reporte por meses
 	 		if($tipo_consulta==3){
 	 			
-
 	 			$fecha_mes_inicial=$request->get('fecha_mes_inicial');
 	 			$fecha_mes_final=$request->get('fecha_mes_final');
 	 			$fecha_year=$request->get('fecha_year');
@@ -686,7 +685,132 @@ class reportesVentas extends Controller
 				return view('almacen.reportes.ventas.reportePDF.pdf',["desde"=>$desde, "hasta"=>$hasta, "ventas"=>$ventas, "tipo"=>$tipo, "valor"=>$valor]);
 		 	}
 
+
+		 	if($valor=='m'){
+
+	 			//Detallado de mes
+				$ventas=DB::table('detalle_factura as df')
+		 		->join('stock as s','df.stock_id_stock','=','s.id_stock')
+		 		->join('factura as f','df.factura_id_factura','=','f.id_factura')
+		 		->join('sede as sed','f.sede_id_sede','=','sed.id_sede')
+		 		->select('s.producto_id_producto as producto',DB::raw('sum(df.cantidad) as cantidad'),DB::raw('sum(df.total) as total'),DB::raw('WEEK(f.fecha) as prueba'))
+		 		->where(DB::raw('YEAR(f.fecha)'),'=',$hasta)
+	 			->where(DB::raw('MONTH(f.fecha)'),'=',$desde)
+		 		->where('f.facturapaga','=',1)
+		 		->where('f.anulacion','=',0)
+		 		->orderBy('df.id_detallef', 'asc')
+		 		->groupBy('s.producto_id_producto')
+		 		->paginate(100);
+
+
+				$tipo="MENSUAL DETALLADO";
+		 		$valor='m';
+
+		 		$productosDB=ProductoSede::get();
+				$total_ventas_diarias=0;
+			
+	 			foreach ($ventas as $key => $value) {
+	 				foreach ($productosDB as $key2 => $value2) {
+	 					if($ventas[$key]->producto==$productosDB[$key2]->id_producto){
+	 						$ventas[$key]->producto=$productosDB[$key2]->nombre;
+	 					}
+	 				}
+	 			$total_ventas_diarias=intval($total_ventas_diarias)+intval($ventas[$key]->total);
+	 			}
+	 			$tipo_reporte_detallado="m";
+
+				return view('almacen.reportes.ventas.reportePDF.pdf',["desde"=>$desde, "hasta"=>$hasta, "ventas"=>$ventas, "tipo"=>$tipo, "valor"=>$valor,"total_ventas"=>$total_ventas_diarias,"tipo_reporte_detallado"=>$tipo_reporte_detallado,]);
+		 	}
+
+		 	if($valor=='s'){
+
+		 		//Detallado de semana
+					$ventas=DB::table('detalle_factura as df')
+		 			->join('stock as s','df.stock_id_stock','=','s.id_stock')
+		 			->join('factura as f','df.factura_id_factura','=','f.id_factura')
+		 			->join('sede as sed','f.sede_id_sede','=','sed.id_sede')
+		 			->select('s.producto_id_producto as producto',DB::raw('sum(df.cantidad) as cantidad'),DB::raw('sum(df.total) as total'),DB::raw('WEEK(f.fecha) as prueba'))
+		 			->where(DB::raw('YEAR(f.fecha)'),'=',$hasta)
+	 				->where(DB::raw('WEEK(f.fecha)'),'=',$desde)
+		 			->where('f.facturapaga','=',1)
+		 			->where('f.anulacion','=',0)
+		 			->orderBy('df.id_detallef', 'asc')
+		 			->groupBy('s.producto_id_producto')
+		 			->paginate(100);
+
+		 			$tipo="SEMANAL DETALLADO";
+		 			$valor='s';
+
+
+		 			$productosDB=ProductoSede::get();
+					$total_ventas_diarias=0;
+				
+		 			foreach ($ventas as $key => $value) {
+		 				foreach ($productosDB as $key2 => $value2) {
+		 					if($ventas[$key]->producto==$productosDB[$key2]->id_producto){
+		 						$ventas[$key]->producto=$productosDB[$key2]->nombre;
+		 					}
+		 				}
+		 			$total_ventas_diarias=intval($total_ventas_diarias)+intval($ventas[$key]->total);
+		 			}
+		 			$tipo_reporte_detallado="s";
+
+		 			return view('almacen.reportes.ventas.reportePDF.pdf',["desde"=>$desde, "hasta"=>$hasta, "ventas"=>$ventas, "tipo"=>$tipo, "valor"=>$valor,"total_ventas"=>$total_ventas_diarias,"tipo_reporte_detallado"=>$tipo_reporte_detallado,]);
+
+		 	}
+
+
+		 	if($valor=='d'){
+
+		 		//Detallado de semana
+					$ventas=DB::table('detalle_factura as df')
+		 			->join('stock as s','df.stock_id_stock','=','s.id_stock')
+		 			->join('factura as f','df.factura_id_factura','=','f.id_factura')
+		 			->join('sede as sed','f.sede_id_sede','=','sed.id_sede')
+		 			->select('s.producto_id_producto as producto',DB::raw('sum(df.cantidad) as cantidad'),DB::raw('sum(df.total) as total'))
+		 			->where('f.fecha','LIKE', '%'.$fecha_d.'%')
+		 			->where('f.facturapaga','=',1)
+		 			->where('f.anulacion','=',0)
+		 			->orderBy('df.id_detallef', 'asc')
+		 			->groupBy('s.producto_id_producto')
+		 			->paginate(100);
+
+		 			$tipo="DIARIO DETALLADO";
+		 			$valor='d';
+
+		 			$productosDB=ProductoSede::get();
+					$total_ventas_diarias=0;
+				
+		 			foreach ($ventas as $key => $value) {	
+		 				foreach ($productosDB as $key2 => $value2) {
+		 					if($ventas[$key]->producto==$productosDB[$key2]->id_producto){
+		 						$ventas[$key]->producto=$productosDB[$key2]->nombre;
+		 					}
+		 				}
+		 			$total_ventas_diarias=intval($total_ventas_diarias)+intval($ventas[$key]->total);
+		 			}
+		 			$tipo_reporte_detallado="d";
+
+		 			return view('almacen.reportes.ventas.reportePDF.pdf',["desde"=>$desde, "hasta"=>$hasta, "ventas"=>$ventas, "tipo"=>$tipo, "valor"=>$valor,"total_ventas"=>$total_ventas_diarias,"tipo_reporte_detallado"=>$tipo_reporte_detallado,]);
+
+		 	}
+
 	 	} 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -840,10 +964,120 @@ class reportesVentas extends Controller
 	 			->orderBy('f.id_factura', 'asc')
 	 			->paginate(100);
 
+
 				$tipo="DIARIO";
 		 		$valor=1;
 
 				return view('almacen.reportes.ventas.reporteExcel.excel',["desde"=>$desde, "hasta"=>$hasta, "ventas"=>$ventas, "tipo"=>$tipo, "valor"=>$valor]);
+		 	}
+
+		 	if($valor=='m'){
+
+	 			//Detallado de mes
+				$ventas=DB::table('detalle_factura as df')
+		 		->join('stock as s','df.stock_id_stock','=','s.id_stock')
+		 		->join('factura as f','df.factura_id_factura','=','f.id_factura')
+		 		->join('sede as sed','f.sede_id_sede','=','sed.id_sede')
+		 		->select('s.producto_id_producto as producto',DB::raw('sum(df.cantidad) as cantidad'),DB::raw('sum(df.total) as total'),DB::raw('WEEK(f.fecha) as prueba'))
+		 		->where(DB::raw('YEAR(f.fecha)'),'=',$hasta)
+	 			->where(DB::raw('MONTH(f.fecha)'),'=',$desde)
+		 		->where('f.facturapaga','=',1)
+		 		->where('f.anulacion','=',0)
+		 		->orderBy('df.id_detallef', 'asc')
+		 		->groupBy('s.producto_id_producto')
+		 		->paginate(100);
+
+
+				$tipo="MENSUAL DETALLADO";
+		 		$valor='m';
+
+		 		$productosDB=ProductoSede::get();
+				$total_ventas_diarias=0;
+			
+	 			foreach ($ventas as $key => $value) {
+	 				foreach ($productosDB as $key2 => $value2) {
+	 					if($ventas[$key]->producto==$productosDB[$key2]->id_producto){
+	 						$ventas[$key]->producto=$productosDB[$key2]->nombre;
+	 					}
+	 				}
+	 			$total_ventas_diarias=intval($total_ventas_diarias)+intval($ventas[$key]->total);
+	 			}
+	 			$tipo_reporte_detallado="m";
+
+				return view('almacen.reportes.ventas.reporteExcel.excel',["desde"=>$desde, "hasta"=>$hasta, "ventas"=>$ventas, "tipo"=>$tipo, "valor"=>$valor,"total_ventas"=>$total_ventas_diarias,"tipo_reporte_detallado"=>$tipo_reporte_detallado,]);
+		 	}
+
+
+		 	if($valor=='s'){
+
+		 		//Detallado de semana
+					$ventas=DB::table('detalle_factura as df')
+		 			->join('stock as s','df.stock_id_stock','=','s.id_stock')
+		 			->join('factura as f','df.factura_id_factura','=','f.id_factura')
+		 			->join('sede as sed','f.sede_id_sede','=','sed.id_sede')
+		 			->select('s.producto_id_producto as producto',DB::raw('sum(df.cantidad) as cantidad'),DB::raw('sum(df.total) as total'),DB::raw('WEEK(f.fecha) as prueba'))
+		 			->where(DB::raw('YEAR(f.fecha)'),'=',$hasta)
+	 				->where(DB::raw('WEEK(f.fecha)'),'=',$desde)
+		 			->where('f.facturapaga','=',1)
+		 			->where('f.anulacion','=',0)
+		 			->orderBy('df.id_detallef', 'asc')
+		 			->groupBy('s.producto_id_producto')
+		 			->paginate(100);
+
+		 			$tipo="SEMANAL DETALLADO";
+		 			$valor='s';
+
+
+		 			$productosDB=ProductoSede::get();
+					$total_ventas_diarias=0;
+				
+		 			foreach ($ventas as $key => $value) {
+		 				foreach ($productosDB as $key2 => $value2) {
+		 					if($ventas[$key]->producto==$productosDB[$key2]->id_producto){
+		 						$ventas[$key]->producto=$productosDB[$key2]->nombre;
+		 					}
+		 				}
+		 			$total_ventas_diarias=intval($total_ventas_diarias)+intval($ventas[$key]->total);
+		 			}
+		 			$tipo_reporte_detallado="s";
+
+		 			return view('almacen.reportes.ventas.reporteExcel.excel',["desde"=>$desde, "hasta"=>$hasta, "ventas"=>$ventas, "tipo"=>$tipo, "valor"=>$valor,"total_ventas"=>$total_ventas_diarias,"tipo_reporte_detallado"=>$tipo_reporte_detallado,]);
+
+		 	}
+
+		 	if($valor=='d'){
+
+		 		//Detallado de semana
+					$ventas=DB::table('detalle_factura as df')
+		 			->join('stock as s','df.stock_id_stock','=','s.id_stock')
+		 			->join('factura as f','df.factura_id_factura','=','f.id_factura')
+		 			->join('sede as sed','f.sede_id_sede','=','sed.id_sede')
+		 			->select('s.producto_id_producto as producto',DB::raw('sum(df.cantidad) as cantidad'),DB::raw('sum(df.total) as total'))
+		 			->where('f.fecha','LIKE', '%'.$fecha_d.'%')
+		 			->where('f.facturapaga','=',1)
+		 			->where('f.anulacion','=',0)
+		 			->orderBy('df.id_detallef', 'asc')
+		 			->groupBy('s.producto_id_producto')
+		 			->paginate(100);
+
+		 			$tipo="DIARIO DETALLADO";
+		 			$valor='d';
+
+		 			$productosDB=ProductoSede::get();
+					$total_ventas_diarias=0;
+				
+		 			foreach ($ventas as $key => $value) {	
+		 				foreach ($productosDB as $key2 => $value2) {
+		 					if($ventas[$key]->producto==$productosDB[$key2]->id_producto){
+		 						$ventas[$key]->producto=$productosDB[$key2]->nombre;
+		 					}
+		 				}
+		 			$total_ventas_diarias=intval($total_ventas_diarias)+intval($ventas[$key]->total);
+		 			}
+		 			$tipo_reporte_detallado="d";
+
+		 			return view('almacen.reportes.ventas.reporteExcel.excel',["desde"=>$desde, "hasta"=>$hasta, "ventas"=>$ventas, "tipo"=>$tipo, "valor"=>$valor,"total_ventas"=>$total_ventas_diarias,"tipo_reporte_detallado"=>$tipo_reporte_detallado,]);
+
 		 	}
 
 
