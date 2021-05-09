@@ -1085,6 +1085,109 @@ class reportesVentas extends Controller
 			//return view('almacen.reportes.ventas.reporteExcel.excel',["desde"=>$desde, "hasta"=>$hasta]);
 	 	} 
 
+	 	public function downloadExcelReportValorBruto($id){
+
+		 	$cadena=$id;
+	 		$separador = ".";
+	 		$separada = explode($separador, $cadena);
+			$count=1;
+
+			$desde=0;
+			$hasta=0;
+			$valor=0;
+
+			if(count($separada)==3){
+				$desde=$separada[0];
+				$hasta=$separada[1];
+				$valor=$separada[2];
+			}
+
+		 	
+		 	//dd($desde.' '.$hasta);
+
+		 	if($valor==3){
+
+		 		/*$productos=DB::table('factura as f')
+		 		->select('f.id_factura')
+	 			->paginate(100);*/
+
+		 		$productos=DB::table('factura as f')
+	 			->join('empleado as e','f.empleado_id_empleado','=','e.id_empleado')
+	 			->join('cliente as c','f.cliente_id_cliente','=','c.id_cliente')
+	 			->join('tipo_pago as tp','f.tipo_pago_id_tpago','=','tp.id_tpago')
+	 			->join('sede as sed','e.sede_id_sede','=','sed.id_sede')
+	 			->select('f.id_factura',DB::raw('sum(f.pago_total) as pago_total'),DB::raw('sum(f.noproductos) as noproductos'), 'tp.nombre as tipo_pago_id_tpago', DB::raw('MONTH(f.fecha) as fecha'), DB::raw('YEAR(f.fecha) as fecha_year'))
+	 			->where(DB::raw('date(f.fecha)'),'>=',$desde)
+	 			->where(DB::raw('date(f.fecha)'),'<=',$hasta)
+	 			->where('f.facturapaga','=',1)
+		 		->where('f.anulacion','=',0)
+	 			->orderBy('f.id_factura', 'asc')
+	 			->groupBy(DB::raw('MONTH(f.fecha)'))
+	 			->paginate(100);
+
+	 			foreach ($productos as $key => $value) {	
+
+	 				switch ($productos[$key]->fecha) {
+	 					case '1':
+	 						$productos[$key]->fecha="Enero";
+	 					break;
+
+	 					case '2':
+	 						$productos[$key]->fecha="Febrero";
+	 					break;
+
+	 					case '3':
+	 						$productos[$key]->fecha="Marzo";
+	 					break;
+
+	 					case '4':
+	 						$productos[$key]->fecha="Abril";
+	 					break;
+
+	 					case '5':
+	 						$productos[$key]->fecha="Mayo";
+	 					break;
+
+	 					case '6':
+	 						$productos[$key]->fecha="Junio";
+	 					break;
+
+	 					case '7':
+	 						$productos[$key]->fecha="Julio";
+	 					break;
+
+	 					case '8':
+	 						$productos[$key]->fecha="Agosto";
+	 					break;
+
+	 					case '9':
+	 						$productos[$key]->fecha="Septiembre";
+	 					break;
+
+	 					case '10':
+	 						$productos[$key]->fecha="Octubre";
+	 					break;
+
+	 					case '11':
+	 						$productos[$key]->fecha="Noviembre";
+	 					break;
+
+	 					case '12':
+	 						$productos[$key]->fecha="Diciembre";
+	 					break;
+	 					
+	 					default:
+	 						$productos[$key]->fecha="Ninguno";
+	 					break;
+	 				}
+		 		}
+
+				return view('almacen.reportes.valorbruto.reporteExcel.excel',["desde"=>$desde, "hasta"=>$hasta, "productos"=>$productos]);
+		 	}
+
+			//return view('almacen.reportes.ventas.reporteExcel.excel',["desde"=>$desde, "hasta"=>$hasta]);
+	 	} 
+
 
 
 }
