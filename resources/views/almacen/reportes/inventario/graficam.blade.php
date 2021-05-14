@@ -29,8 +29,8 @@
                
                              <br>
                            <b>Inventario entre:</b><br>
-                            <b>Inicio:</b> {{$fecha_inicial}} <br>
-                            <b>Fin:</b> {{$fecha_final}}<br>
+                            <b>Inicio:</b> {{$fecha_letra_inicial}} <br>
+                            <b>Fin:</b> {{$fecha_letra_final}}<br>
         
        
                             <b>Total compras: </b>
