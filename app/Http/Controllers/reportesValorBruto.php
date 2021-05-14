@@ -69,6 +69,7 @@ class reportesValorBruto extends Controller
 
 	 		$mes=$request->get("mes");
 	 		$year=$request->get("year");
+	 		$opcion=$request->get("opcion");
 
 	 		$productos=ProductoSede::get();
 
@@ -179,8 +180,30 @@ class reportesValorBruto extends Controller
 		 					break;
 		 				}
 
+	 		switch ($opcion) {
+	 			case '1':
+
 
 				return view('almacen.reportes.valorbruto.reporteExcel.excel',["mes"=>$mes, "year"=>$year, "productos"=>$productos,"facturas_reporte"=>$facturas_reporte]);
+
+	 				break;
+
+	 			case '2':
+
+	 			$cargoUsuario=auth()->user()->tipo_cargo_id_cargo;
+	 			$modulos=DB::table('cargo_modulo')
+	 			->where('id_cargo','=',$cargoUsuario)
+	 			->orderBy('id_cargo', 'desc')->get();
+
+	 			return view('almacen.reportes.valorbruto.index',["modulos"=>$modulos,"mes"=>$mes, "year"=>$year, "productos"=>$productos,"facturas_reporte"=>$facturas_reporte]);
+	 				break;
+	 			
+	 			default:
+	 				# code...
+	 				break;
+	 		}
+
+	 		
 		 	}
 
 			//return view('almacen.reportes.ventas.reporteExcel.excel',["desde"=>$desde, "hasta"=>$hasta]);

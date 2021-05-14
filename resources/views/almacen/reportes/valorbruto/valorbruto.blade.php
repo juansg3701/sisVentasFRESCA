@@ -76,6 +76,18 @@
 										</select>
 									</div>
 								</div>
+
+								<div class="form-row">
+									<div class="form-group col-sm-4">
+										<div>Seleccione el a&ntilde;o:</div>
+									</div>
+									<div class="form-group col-sm-8">
+										<select class="form-control" name="opcion">
+											 <option value="2">Tabla en aplicaci&oacute;n</option>
+											 <option value="1">Reporte en excel</option>
+										</select>
+									</div>
+								</div>
 								
 								<div class="form-row">
 									<div class="form-group col-sm-12">
