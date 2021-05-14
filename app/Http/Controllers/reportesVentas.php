@@ -504,7 +504,114 @@ class reportesVentas extends Controller
 		 					break;
 		 				}
 		 			}
-		
+
+		 			switch ($fecha_mes_inicial) {
+		 					case '1':
+		 						$fecha_mes_inicial="Enero";
+		 					break;
+
+		 					case '2':
+		 						$fecha_mes_inicial="Febrero";
+		 					break;
+
+		 					case '3':
+		 						$fecha_mes_inicial="Marzo";
+		 					break;
+
+		 					case '4':
+		 						$fecha_mes_inicial="Abril";
+		 					break;
+
+		 					case '5':
+		 						$fecha_mes_inicial="Mayo";
+		 					break;
+
+		 					case '6':
+		 						$fecha_mes_inicial="Junio";
+		 					break;
+
+		 					case '7':
+		 						$fecha_mes_inicial="Julio";
+		 					break;
+
+		 					case '8':
+		 						$fecha_mes_inicial="Agosto";
+		 					break;
+
+		 					case '9':
+		 						$fecha_mes_inicial="Septiembre";
+		 					break;
+
+		 					case '10':
+		 						$fecha_mes_inicial="Octubre";
+		 					break;
+
+		 					case '11':
+		 						$fecha_mes_inicial="Noviembre";
+		 					break;
+
+		 					case '12':
+		 						$fecha_mes_inicial="Diciembre";
+		 					break;
+		 					
+		 					default:
+		 						$fecha_mes_inicial="Ninguno";
+		 					break;
+		 				}
+
+		 				switch ($fecha_mes_final) {
+		 					case '1':
+		 						$fecha_mes_final="Enero";
+		 					break;
+
+		 					case '2':
+		 						$fecha_mes_final="Febrero";
+		 					break;
+
+		 					case '3':
+		 						$fecha_mes_final="Marzo";
+		 					break;
+
+		 					case '4':
+		 						$fecha_mes_final="Abril";
+		 					break;
+
+		 					case '5':
+		 						$fecha_mes_final="Mayo";
+		 					break;
+
+		 					case '6':
+		 						$fecha_mes_final="Junio";
+		 					break;
+
+		 					case '7':
+		 						$fecha_mes_final="Julio";
+		 					break;
+
+		 					case '8':
+		 						$fecha_mes_final="Agosto";
+		 					break;
+
+		 					case '9':
+		 						$fecha_mes_final="Septiembre";
+		 					break;
+
+		 					case '10':
+		 						$fecha_mes_final="Octubre";
+		 					break;
+
+		 					case '11':
+		 						$fecha_mes_final="Noviembre";
+		 					break;
+
+		 					case '12':
+		 						$fecha_mes_final="Diciembre";
+		 					break;
+		 					
+		 					default:
+		 						$fecha_mes_final="Ninguno";
+		 					break;
+		 				}
 	 			return view("almacen.reportes.ventas.graficam",["modulos"=>$modulos,"ventas"=>$ventas_mensuales,"fecha_inicial"=>$fecha_mes_inicial,"fecha_final"=>$fecha_mes_final, "fecha_year"=>$fecha_year, "total_ventas"=>$total_ventas_mensuales]);
 	 			}
 
