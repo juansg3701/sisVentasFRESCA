@@ -133,6 +133,21 @@
           </div>
 
           <div class="card-body">
+
+            <?php
+                //$valores2=$fecha_d.'.'.'0'.'.'.'0'.'.'.'m';
+                if($tipo_reporte_detallado=='d'){
+                  $valores2=$fecha_d.'.'.'0'.'.'.'0'.'.'.'d';
+                }else{
+                  $valores2=$valor_clave.'.'.$valor_year.'.'.$valor_fecha_final.'.'.$valor_tipo;
+                }
+                
+            ?>
+
+            <div align="center">
+              <a href="{{URL::action('reportesVentas@downloadExcelReport',$valores2)}}"><button class="btn btn-outline-success btn-sm">Descargar Excel</button></a>
+              <a href="{{URL::action('reportesVentas@downloadPDFReport',$valores2)}}"><button class="btn btn-outline-danger btn-sm">Descargar PDF</button></a>
+            </div>
       
             <table id="bootstrap-data-table" class="table table-striped table-bordered">
               <thead>
