@@ -150,7 +150,7 @@
 							<td>{{ $pb->plu}}</td>
 							<td>{{ $pb->ean}}</td>
 							<td>{{ $ps->nombre_sede}}</td>
-							<td>{{ $ps->nombre_proveedor}}</td>
+							<td>{{ $ps->nombre_empresa}}</td>
 							<td>{{ $ps->cantidad}}</td>
 							<td>{{ $pb->unidad_de_medida}}</td>
 							<td>{{ $ps->nombreCategoria}}</td>
@@ -200,7 +200,7 @@
 							<td>{{ $pb->plu}}</td>
 							<td>{{ $pb->ean}}</td>
 							<td>{{ $ps->nombre_sede}}</td>
-							<td>{{ $ps->nombre_proveedor}}</td>
+							<td>{{ $ps->nombre_empresa}}</td>
 							<td>{{ $ps->cantidad}}</td>
 							<td>{{ $pb->unidad_de_medida}}</td>
 							<td>{{ $ps->nombreCategoria}}</td>
@@ -245,7 +245,10 @@
 
 					</table>
 				</div>
+				@if($pagination==1)
 				{{$productos->render()}}
+				@endif
+				
 				</div>
 			</div>
 		</div>

@@ -1,4 +1,4 @@
-<!--Configuración general del archivo a descargar y consulta a la base de datos para especificación de la tabla a incluir en el archivo-->
+<!--Configuraci車n general del archivo a descargar y consulta a la base de datos para especificaci車n de la tabla a incluir en el archivo-->
 <?php
 	header('Content-type:application/xls');
 	header('Content-Disposition: attachment; filename=Descarga_Productos.xls');
@@ -35,8 +35,8 @@
 			?>
 			<tr>
 				<td><?php echo $row['id_producto']; ?></td>
-				<td><?php echo $row['plu']; ?></td>
-				<td><?php echo $row['ean']; ?></td>
+				<td  style="mso-number-format:'@';"><?php echo $row['plu']; ?></td>
+			    <td style="mso-number-format:'@';"><?php echo $row['ean']; ?></td>
 				<td><?php echo $row['nombre']; ?></td>
 				<td><?php echo $row['categoria_id_categoria']; ?></td>
 				<td><?php echo $row['unidad_de_medida']; ?></td>

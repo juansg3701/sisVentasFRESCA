@@ -40,7 +40,7 @@
 
 			<div class="form-row col-sm-12">
 				<div class="form-group col-sm-4">
-					<label>Proveedor:</label>
+					<label>Proveedor (nombre empresa):</label>
 				</div>
 				<div class="form-group col-sm-8">
 						<input id="pro3" type="text" class="form-control" name="searchText4" placeholder="Buscar..." value="{{$searchText4}}">
