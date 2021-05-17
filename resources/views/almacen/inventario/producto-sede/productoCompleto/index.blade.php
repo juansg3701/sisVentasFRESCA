@@ -181,7 +181,10 @@
 						@endforeach
 					</table>
 				</div>
+
+				@if($pagination==1)
 				{{$productos->render()}}
+				@endif
 				</div>
 			</div>
 		</div>

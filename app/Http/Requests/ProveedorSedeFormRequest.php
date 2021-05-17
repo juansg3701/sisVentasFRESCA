@@ -34,6 +34,8 @@ class ProveedorSedeFormRequest extends Request
             'transformacion_stock_id'=>'required|max:45',
             'noFactura'=>'required|max:45',
             'total'=>'required|max:45',
+            'costo_compra'=>'max:45',
+            'cantidad_rep'=>'max:45',
         ];
     }
 }

@@ -71,17 +71,22 @@ class registroProductoProveedor extends Controller
 	 		->paginate(10);
 
 	 		if(count($productoBuscar)>0){
+	 			$valor_cantidad=$request->get('cantidad');
+	 					$valor_total=$request->get('total');
 	 		$ps = new ProveedorSede;
 	 		$ps->producto_id_producto=$productoBuscar[0]->id_producto;
 	 		$ps->sede_id_sede=$request->get('sede_id_sede');
 	 		$ps->proveedor_id_proveedor=$request->get('proveedor_id_proveedor');
 	 		$ps->disponibilidad=$request->get('disponibilidad');
-	 		$ps->cantidad=$request->get('cantidad');
+	 		$ps->cantidad=$valor_cantidad;
 	 		$ps->fecha_registro=$request->get('fecha_registro');
 	 		$ps->empleado_id_empleado=$request->get('empleado_id_empleado');
 	 		$ps->transformacion_stock_id=$request->get('transformacion_stock_id');
 	 		$ps->noFactura=$request->get('noFactura');
-	 		$ps->total=$request->get('total');
+	 		$ps->total=$valor_total;
+	 		$ps->costo_compra=$valor_total;
+	 		$ps->cantidad_rep=$valor_cantidad;
+
 	 		$ps->save();
 
 	 		return back()->with('msj','Producto guardado');
