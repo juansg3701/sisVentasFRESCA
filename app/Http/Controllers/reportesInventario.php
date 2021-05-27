@@ -84,8 +84,6 @@ class reportesInventario extends Controller
 	 			->orderBy('s.id_stock', 'desc')->get();
 
 
-
-
 	 			$ventas=DB::table('stock as s')
 	 			->join('empleado as e','s.empleado_id_empleado','=','e.id_empleado')
 	 			->join('proveedor as p','s.proveedor_id_proveedor','=','p.id_proveedor')
@@ -341,7 +339,7 @@ class reportesInventario extends Controller
 		 			}
 		 			$tipo_reporte_detallado="s";
 					 
-		 			return view("almacen.reportes.inventario.graficad2",["modulos"=>$modulos,"ventas"=>$stock2,"fecha_d"=>$valor_clave,"total_ventas"=>$total_inventario_diario,"tipo_reporte_detallado"=>$tipo_reporte_detallado]);
+		 			return view("almacen.reportes.inventario.graficad2",["modulos"=>$modulos,"ventas"=>$stock2,"fecha_d"=>$valor_clave,"total_ventas"=>$total_inventario_diario,"tipo_reporte_detallado"=>$tipo_reporte_detallado, "valor_year"=>$valor_year, "valor_clave"=>$valor_clave, "valor_fecha_final"=>$valor_fecha_final, "valor_tipo"=>$valor_tipo]);
 						break;
 
 						
@@ -397,7 +395,9 @@ class reportesInventario extends Controller
 		 			$tipo_reporte_detallado="m";
 					
 		 			
-		 			return view("almacen.reportes.inventario.graficad2",["modulos"=>$modulos,"ventas"=>$stock_m,"fecha_d"=>$valor_fecha_final,"total_ventas"=>$total_inventario_mes,"tipo_reporte_detallado"=>$tipo_reporte_detallado]);
+		 			return view("almacen.reportes.inventario.graficad2",["modulos"=>$modulos,"ventas"=>$stock_m,"fecha_d"=>$valor_fecha_final,"total_ventas"=>$total_inventario_mes,"tipo_reporte_detallado"=>$tipo_reporte_detallado, "valor_year"=>$valor_year, "valor_clave"=>$valor_clave, "valor_fecha_final"=>$valor_fecha_final, "valor_tipo"=>$valor_tipo]);
+
+
 						break;
 
 					default:
@@ -577,7 +577,7 @@ class reportesInventario extends Controller
 				 ["modulos"=>$modulos,"stock"=>$stock_semanal,
 				 "fecha_inicial"=>$fecha_semana_inicial,
 				 "fecha_final"=>$fecha_semana_final,
-				 "total_stock"=>$total_stock_semanales]);
+				 "total_stock"=>$total_stock_semanales, "fecha_year"=>$fecha_year]);
 			
 	 			
 	 			}
@@ -594,7 +594,9 @@ class reportesInventario extends Controller
 	 			if($fecha_mes_inicial>$fecha_mes_final || $fecha_mes_inicial=="" || $fecha_mes_final==""){
 	 				return back()->with('errormsj','¡¡La fecha inicial no debe ser mayor a la final!!');
 	 			}else{
-					 $stock_mensuales=DB::table('stock as s')
+					
+	 			//GENERAL MENSUAL
+				$stock_mensuales=DB::table('stock as s')
 	 			->join('empleado as e','s.empleado_id_empleado','=','e.id_empleado')
 	 			->join('proveedor as p','s.proveedor_id_proveedor','=','p.id_proveedor')
 	 			->join('sede as sed','s.sede_id_sede','=','sed.id_sede')
@@ -800,7 +802,7 @@ class reportesInventario extends Controller
 		 				}
 
 
-	 			return view("almacen.reportes.inventario.graficam",["modulos"=>$modulos,"stock"=>$stock_mensuales,"fecha_inicial"=>$fecha_mes_inicial,"fecha_final"=>$fecha_mes_final,"total_stock"=>$total_stock_mensuales,"fecha_letra_inicial"=>$fecha_letra_inicial,"fecha_letra_final"=>$fecha_letra_final]);
+	 			return view("almacen.reportes.inventario.graficam",["modulos"=>$modulos,"stock"=>$stock_mensuales,"fecha_inicial"=>$fecha_mes_inicial,"fecha_final"=>$fecha_mes_final,"total_stock"=>$total_stock_mensuales,"fecha_letra_inicial"=>$fecha_letra_inicial,"fecha_letra_final"=>$fecha_letra_final, "fecha_year"=>$fecha_year]);
 	 			
 	 			}
 
@@ -814,32 +816,827 @@ class reportesInventario extends Controller
 	 		return back()->with('msj','Reporte eliminado');
 	 	}
 
-	 	public function downloadExcelReport($id){
-
-			$i=RInventarios::findOrFail($id);
-			$ini=$i->fechaInicial;
-			$fin=$i->fechaFinal;
-			$desde=$ini;
-		 	$hasta=$fin;
-			return view('almacen.reportes.inventario.reporteExcel.excel',["desde"=>$desde, "hasta"=>$hasta]);
-	 	} 
+	 	
 
 	 	public function downloadPDFReport($id){
 
-			$i=RInventarios::findOrFail($id);
-			$ini=$i->fechaInicial;
-			$fin=$i->fechaFinal;
+	 		$cadena=$id;
+	 		$separador = ".";
+	 		$separada = explode($separador, $cadena);
+			$count=1;
 
-			$desde=$ini;
-		 	$hasta=$fin;
+			$desde=0;
+			$hasta=0;
+			$año=0;
+			$valor=0;
+			$fecha_d=0;
 
-		 	$productos="SELECT s.id_stock, s.total, tp.nombre as categoria, s.fecha_registro, s.producto_id_producto, s.noFactura,s.cantidad, s.producto_id_producto FROM stock as s, empleado as e, categoria_producto_trans as tp, proveedor as p WHERE s.fecha_registro>='$desde' and s.fecha_registro<='$hasta' and s.transformacion_stock_id=tp.id_categoria and s.empleado_id_empleado=e.id_empleado and s.proveedor_id_proveedor=p.id_proveedor ORDER BY s.id_stock desc";
+			if(count($separada)==4){
+				$fecha_d=$separada[0];
+				$desde=$separada[0];
+				$hasta=$separada[1];
+				$año=$separada[2];
+				$valor=$separada[3];
+				
+			}
 
-		 	$productos2="SELECT p.id_producto, p.nombre as nombre_producto FROM producto as p";
+			//dd($fecha_d);
+		 	
+		 	//dd($desde.' '.$hasta);
+
+		 	if($valor==3){
+
+	 			$stock=DB::table('stock as s')
+	 			->join('empleado as e','s.empleado_id_empleado','=','e.id_empleado')
+	 			->join('proveedor as p','s.proveedor_id_proveedor','=','p.id_proveedor')
+	 			->join('sede as sed','s.sede_id_sede','=','sed.id_sede')
+	 			->select('s.id_stock',DB::raw('sum(s.total) as total'),
+				 DB::raw('sum(s.cantidad_rep) as cantidad_rep'), 
+				 DB::raw('MONTH(s.fecha_registro) as fecha_registro'), 
+				 DB::raw('YEAR(s.fecha_registro) as fecha_year'),
+				 DB::raw('MONTH(s.fecha_registro) as fecha_mes'))
+	 			->where(DB::raw('MONTH(s.fecha_registro)'),'>=',$desde)
+	 			->where(DB::raw('MONTH(s.fecha_registro)'),'<=',$hasta)
+	 			->where(DB::raw('YEAR(s.fecha_registro)'),'=',$año)
+	 			->orderBy(DB::raw('MONTH(s.fecha_registro)'), 'asc')
+	 			->groupBy(DB::raw('MONTH(s.fecha_registro)'))
+	 			->paginate(100);
 
 
-			return view('almacen.reportes.inventario.reportePDF.pdf',["desde"=>$desde, "hasta"=>$hasta,"productos"=>$productos,"productos2"=>$productos2]);
-	 	}
 
-	 
+	 			$total_stock_mensuales=0;
+	 			foreach ($stock as $key => $value) {	
+		 				$total_stock_mensuales=intval($total_stock_mensuales)+intval($stock[$key]->total);
+
+		 				switch ($stock[$key]->fecha_registro) {
+		 					case '1':
+		 						$stock[$key]->fecha_registro="Enero";
+		 					break;
+
+		 					case '2':
+		 						$stock[$key]->fecha_registro="Febrero";
+		 					break;
+
+		 					case '3':
+		 						$stock[$key]->fecha_registro="Marzo";
+		 					break;
+
+		 					case '4':
+		 						$stock[$key]->fecha_registro="Abril";
+		 					break;
+
+		 					case '5':
+		 						$stock[$key]->fecha_registro="Mayo";
+		 					break;
+
+		 					case '6':
+		 						$stock[$key]->fecha_registro="Junio";
+		 					break;
+
+		 					case '7':
+		 						$stock[$key]->fecha_registro="Julio";
+		 					break;
+
+		 					case '8':
+		 						$stock[$key]->fecha_registro="Agosto";
+		 					break;
+
+		 					case '9':
+		 						$stock[$key]->fecha_registro="Septiembre";
+		 					break;
+
+		 					case '10':
+		 						$stock[$key]->fecha_registro="Octubre";
+		 					break;
+
+		 					case '11':
+		 						$stock[$key]->fecha_registro="Noviembre";
+		 					break;
+
+		 					case '12':
+		 						$stock[$key]->fecha_registro="Diciembre";
+		 					break;
+		 					
+		 					default:
+		 						$stock[$key]->fecha_registro="Ninguno";
+		 							break;
+		 				}
+		 			}
+		 			$fecha_letra_inicial=$desde;
+		 			switch ($fecha_letra_inicial) {
+		 					case '1':
+		 						$fecha_letra_inicial="Enero";
+		 					break;
+
+		 					case '2':
+		 						$fecha_letra_inicial="Febrero";
+		 					break;
+
+		 					case '3':
+		 						$fecha_letra_inicial="Marzo";
+		 					break;
+
+		 					case '4':
+		 						$fecha_letra_inicial="Abril";
+		 					break;
+
+		 					case '5':
+		 						$fecha_letra_inicial="Mayo";
+		 					break;
+
+		 					case '6':
+		 						$fecha_letra_inicial="Junio";
+		 					break;
+
+		 					case '7':
+		 						$fecha_letra_inicial="Julio";
+		 					break;
+
+		 					case '8':
+		 						$fecha_letra_inicial="Agosto";
+		 					break;
+
+		 					case '9':
+		 						$fecha_letra_inicial="Septiembre";
+		 					break;
+
+		 					case '10':
+		 						$fecha_letra_inicial="Octubre";
+		 					break;
+
+		 					case '11':
+		 						$fecha_letra_inicial="Noviembre";
+		 					break;
+
+		 					case '12':
+		 						$fecha_letra_inicial="Diciembre";
+		 					break;
+		 					
+		 					default:
+		 						$fecha_letra_inicial="Ninguno";
+		 					break;
+		 				}
+		 				$fecha_letra_final=$hasta;
+		 				switch ($fecha_letra_final) {
+		 					case '1':
+		 						$fecha_letra_final="Enero";
+		 					break;
+
+		 					case '2':
+		 						$fecha_letra_final="Febrero";
+		 					break;
+
+		 					case '3':
+		 						$fecha_letra_final="Marzo";
+		 					break;
+
+		 					case '4':
+		 						$fecha_letra_final="Abril";
+		 					break;
+
+		 					case '5':
+		 						$fecha_letra_final="Mayo";
+		 					break;
+
+		 					case '6':
+		 						$fecha_letra_final="Junio";
+		 					break;
+
+		 					case '7':
+		 						$fecha_letra_final="Julio";
+		 					break;
+
+		 					case '8':
+		 						$fecha_letra_final="Agosto";
+		 					break;
+
+		 					case '9':
+		 						$fecha_letra_final="Septiembre";
+		 					break;
+
+		 					case '10':
+		 						$fecha_letra_final="Octubre";
+		 					break;
+
+		 					case '11':
+		 						$fecha_letra_final="Noviembre";
+		 					break;
+
+		 					case '12':
+		 						$fecha_letra_final="Diciembre";
+		 					break;
+		 					
+		 					default:
+		 						$fecha_letra_final="Ninguno";
+		 					break;
+		 				}
+
+			 	$tipo="MENSUAL";
+		 		$valor=3;
+
+				return view('almacen.reportes.inventario.reportePDF.pdf',["desde"=>$desde, "hasta"=>$hasta, "stock"=>$stock, "tipo"=>$tipo, "valor"=>$valor, "fecha_letra_final"=>$fecha_letra_final, "fecha_letra_inicial"=>$fecha_letra_inicial, "total_stock_mensuales"=>$total_stock_mensuales, "año"=>$año]);
+
+	 			//return view("almacen.reportes.inventario.graficam",["modulos"=>$modulos,"stock"=>$stock,"fecha_inicial"=>$fecha_mes_inicial,"fecha_final"=>$fecha_mes_final,"total_stock"=>$total_stock_mensuales,"fecha_letra_inicial"=>$fecha_letra_inicial,"fecha_letra_final"=>$fecha_letra_final]);
+		 	}
+
+
+		 	if($valor==2){
+
+	 			$stock=DB::table('stock as s')
+	 			->join('empleado as e','s.empleado_id_empleado','=','e.id_empleado')
+	 			->join('proveedor as p','s.proveedor_id_proveedor','=','p.id_proveedor')
+	 			->join('sede as sed','s.sede_id_sede','=','sed.id_sede')
+	 			->select('s.id_stock',DB::raw('sum(s.total) as total'),
+				 DB::raw('sum(s.cantidad_rep) as cantidad_rep'), 
+				 DB::raw('WEEK(s.fecha_registro) as fecha_registro'),
+				 DB::raw('YEAR(s.fecha_registro) as year'))
+	 			->where(DB::raw('WEEK(s.fecha_registro)'),'>=',$desde)
+	 			->where(DB::raw('WEEK(s.fecha_registro)'),'<=',$hasta)
+	 			->where(DB::raw('YEAR(s.fecha_registro)'),'=',$año)
+	 			->orderBy(DB::raw('WEEK(s.fecha_registro)'), 'asc')
+	 			->groupBy(DB::raw('WEEK(s.fecha_registro)'))
+	 			->paginate(100);
+
+				$tipo="SEMANAL";
+		 		$valor=2;
+
+		 		$total_stock_semanales=0;
+	 			foreach ($stock as $key => $value) {	
+		 			$total_stock_semanales=intval($total_stock_semanales)+intval($stock[$key]->total);
+		 		}
+
+				return view('almacen.reportes.inventario.reportePDF.pdf',["desde"=>$desde, "hasta"=>$hasta, "stock"=>$stock, "tipo"=>$tipo, "valor"=>$valor, "total_stock_semanales"=>$total_stock_semanales]);
+		 	}
+
+
+		 	if($valor==1){
+
+	 			$stock=DB::table('stock as s')
+	 			->join('empleado as e','s.empleado_id_empleado','=','e.id_empleado')
+	 			->join('proveedor as p','s.proveedor_id_proveedor','=','p.id_proveedor')
+	 			->join('sede as sed','s.sede_id_sede','=','sed.id_sede')
+	 			->join('categoria_producto_trans as cpt','s.transformacion_stock_id','=','cpt.id_categoria')
+	 			->select('s.id_stock','s.total','s.cantidad_rep', 's.fecha_registro','s.costo_compra')
+	 			->where('s.fecha_registro','LIKE', '%'.$fecha_d.'%')
+	 			->orderBy('s.id_stock','asc')
+	 			->paginate(100);
+
+				$tipo="DIARIO";
+		 		$valor=1;
+
+		 		$total_stock=DB::table('stock as s')
+	 			->select(DB::raw('sum(s.total) as pago_total'))
+	 			->where('s.fecha_registro','LIKE', '%'.$fecha_d.'%')
+	 			->orderBy('s.id_stock', 'desc')
+	 			->paginate(100);
+
+
+				return view('almacen.reportes.inventario.reportePDF.pdf',["desde"=>$desde, "hasta"=>$hasta, "stock"=>$stock, "tipo"=>$tipo, "valor"=>$valor,"fecha_d"=>$fecha_d,"total_stock"=>$total_stock]);
+		 	}
+	
+
+		 			//return view("almacen.reportes.inventario.graficad",["modulos"=>$modulos,"stock"=>$stock,"fecha_d"=>$fecha_d,"total_stock"=>$total_stock]);
+
+
+		 	if($valor=='m'){
+
+	 			//Detallado de mes
+				$stock=DB::table('stock as s')
+				->join('empleado as e','s.empleado_id_empleado','=','e.id_empleado')
+				->join('proveedor as p','s.proveedor_id_proveedor','=','p.id_proveedor')
+				->join('sede as sed','s.sede_id_sede','=','sed.id_sede')
+				->join('categoria_producto_trans as cpt','s.transformacion_stock_id','=','cpt.id_categoria')
+				->select('s.producto_id_producto as producto',
+				 DB::raw('sum(s.cantidad_rep) as cantidad'),
+				 DB::raw('sum(s.total) as total'))
+				->where(DB::raw('YEAR(s.fecha_registro)'),'=',$hasta)
+				->where(DB::raw('MONTH(s.fecha_registro)'),'=',$desde)
+				->orderBy('s.id_stock','asc')
+				->groupBy('s.producto_id_producto')
+				->paginate(100);
+
+
+				$tipo="MENSUAL DETALLADO";
+		 		$valor='m';
+
+		 		$productosDB=ProductoSede::get();
+				$total_ventas_diarias=0;
+			
+	 			foreach ($stock as $key => $value) {
+	 				foreach ($productosDB as $key2 => $value2) {
+	 					if($stock[$key]->producto==$productosDB[$key2]->id_producto){
+	 						$stock[$key]->producto=$productosDB[$key2]->nombre;
+	 					}
+	 				}
+	 			$total_ventas_diarias=intval($total_ventas_diarias)+intval($stock[$key]->total);
+	 			}
+	 			$tipo_reporte_detallado="m";
+
+				return view('almacen.reportes.inventario.reportePDF.pdf',["desde"=>$desde, "hasta"=>$hasta, "stock"=>$stock, "tipo"=>$tipo, "valor"=>$valor,"total_ventas"=>$total_ventas_diarias,"tipo_reporte_detallado"=>$tipo_reporte_detallado, "año"=>$año]);
+
+		 	}
+
+
+
+		 	if($valor=='s'){
+
+		 		//Detallado de semana
+					$stock=DB::table('stock as s')
+					->join('empleado as e','s.empleado_id_empleado','=','e.id_empleado')
+					->join('proveedor as p','s.proveedor_id_proveedor','=','p.id_proveedor')
+					->join('sede as sed','s.sede_id_sede','=','sed.id_sede')
+					->join('categoria_producto_trans as cpt','s.transformacion_stock_id','=','cpt.id_categoria')
+					->select('s.producto_id_producto as producto',
+						DB::raw('sum(s.cantidad_rep) as cantidad'),
+						DB::raw('sum(s.total) as total'))
+						->where(DB::raw('YEAR(s.fecha_registro)'),'=',$hasta)
+						->where(DB::raw('WEEK(s.fecha_registro)'),'=',$desde)
+					->orderBy('s.id_stock','asc')
+					->groupBy('s.producto_id_producto')
+					->paginate(100);
+
+		 			$tipo="SEMANAL DETALLADO";
+		 			$valor='s';
+
+
+		 			$productosDB=ProductoSede::get();
+					$total_inventario_diario=0;
+				
+		 			foreach ($stock as $key => $value) {
+		 				foreach ($productosDB as $key2 => $value2) {
+		 					if($stock[$key]->producto==$productosDB[$key2]->id_producto){
+		 						$stock[$key]->producto=$productosDB[$key2]->nombre;
+		 					}
+		 				}
+		 			$total_inventario_diario=intval($total_inventario_diario)+intval($stock[$key]->total);
+		 			}
+		 			$tipo_reporte_detallado="s";
+
+		 			return view('almacen.reportes.inventario.reportePDF.pdf',["desde"=>$desde, "hasta"=>$hasta, "stock"=>$stock, "tipo"=>$tipo, "valor"=>$valor,"total_inventario_diario"=>$total_inventario_diario,"tipo_reporte_detallado"=>$tipo_reporte_detallado, "año"=>$año]);
+
+		 	}
+
+		 	if($valor=='d'){
+
+		 		//Detallado de semana
+				$stock=DB::table('stock as s')
+				->join('empleado as e','s.empleado_id_empleado','=','e.id_empleado')
+				->join('proveedor as p','s.proveedor_id_proveedor','=','p.id_proveedor')
+				->join('sede as sed','s.sede_id_sede','=','sed.id_sede')
+				->join('categoria_producto_trans as cpt','s.transformacion_stock_id','=','cpt.id_categoria')
+				->select('s.producto_id_producto as producto',
+					DB::raw('sum(s.cantidad_rep) as cantidad'),
+				 	DB::raw('sum(s.total) as total'))
+				->where('s.fecha_registro','LIKE', '%'.$fecha_d.'%')
+				->orderBy('s.id_stock','asc')
+				->groupBy('s.producto_id_producto')
+				->paginate(100);
+
+	 			$tipo="DIARIO DETALLADO";
+	 			$valor='d';
+
+
+	 			$productosDB=ProductoSede::get();
+				$total_inventario_diario=0;
+			
+	 			foreach ($stock as $key => $value) {
+	 				foreach ($productosDB as $key2 => $value2) {
+	 					if($stock[$key]->producto==$productosDB[$key2]->id_producto){
+	 						$stock[$key]->producto=$productosDB[$key2]->nombre;
+	 					}
+	 				}
+	 			$total_inventario_diario=intval($total_inventario_diario)+intval($stock[$key]->total);
+	 			}
+	 			$tipo_reporte_detallado="d";
+
+	 			return view('almacen.reportes.inventario.reportePDF.pdf',["desde"=>$desde, "hasta"=>$hasta, "stock"=>$stock, "tipo"=>$tipo, "valor"=>$valor,"total_inventario_diario"=>$total_inventario_diario,"tipo_reporte_detallado"=>$tipo_reporte_detallado, "año"=>$año]);
+
+		 	}
+
+
+		 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+		public function downloadExcelReport($id){
+
+			$cadena=$id;
+	 		$separador = ".";
+	 		$separada = explode($separador, $cadena);
+			$count=1;
+
+			$desde=0;
+			$hasta=0;
+			$año=0;
+			$valor=0;
+			$fecha_d=0;
+
+			if(count($separada)==4){
+				$fecha_d=$separada[0];
+				$desde=$separada[0];
+				$hasta=$separada[1];
+				$año=$separada[2];
+				$valor=$separada[3];
+				
+			}
+
+			//dd($fecha_d);
+		 	
+		 	//dd($desde.' '.$hasta);
+
+		 	if($valor==3){
+
+	 			$stock=DB::table('stock as s')
+	 			->join('empleado as e','s.empleado_id_empleado','=','e.id_empleado')
+	 			->join('proveedor as p','s.proveedor_id_proveedor','=','p.id_proveedor')
+	 			->join('sede as sed','s.sede_id_sede','=','sed.id_sede')
+	 			->select('s.id_stock',DB::raw('sum(s.total) as total'),
+				 DB::raw('sum(s.cantidad_rep) as cantidad_rep'), 
+				 DB::raw('MONTH(s.fecha_registro) as fecha_registro'), 
+				 DB::raw('YEAR(s.fecha_registro) as fecha_year'),
+				 DB::raw('MONTH(s.fecha_registro) as fecha_mes'))
+	 			->where(DB::raw('MONTH(s.fecha_registro)'),'>=',$desde)
+	 			->where(DB::raw('MONTH(s.fecha_registro)'),'<=',$hasta)
+	 			->where(DB::raw('YEAR(s.fecha_registro)'),'=',$año)
+	 			->orderBy(DB::raw('MONTH(s.fecha_registro)'), 'asc')
+	 			->groupBy(DB::raw('MONTH(s.fecha_registro)'))
+	 			->paginate(100);
+
+
+
+	 			$total_stock_mensuales=0;
+	 			foreach ($stock as $key => $value) {	
+		 				$total_stock_mensuales=intval($total_stock_mensuales)+intval($stock[$key]->total);
+
+		 				switch ($stock[$key]->fecha_registro) {
+		 					case '1':
+		 						$stock[$key]->fecha_registro="Enero";
+		 					break;
+
+		 					case '2':
+		 						$stock[$key]->fecha_registro="Febrero";
+		 					break;
+
+		 					case '3':
+		 						$stock[$key]->fecha_registro="Marzo";
+		 					break;
+
+		 					case '4':
+		 						$stock[$key]->fecha_registro="Abril";
+		 					break;
+
+		 					case '5':
+		 						$stock[$key]->fecha_registro="Mayo";
+		 					break;
+
+		 					case '6':
+		 						$stock[$key]->fecha_registro="Junio";
+		 					break;
+
+		 					case '7':
+		 						$stock[$key]->fecha_registro="Julio";
+		 					break;
+
+		 					case '8':
+		 						$stock[$key]->fecha_registro="Agosto";
+		 					break;
+
+		 					case '9':
+		 						$stock[$key]->fecha_registro="Septiembre";
+		 					break;
+
+		 					case '10':
+		 						$stock[$key]->fecha_registro="Octubre";
+		 					break;
+
+		 					case '11':
+		 						$stock[$key]->fecha_registro="Noviembre";
+		 					break;
+
+		 					case '12':
+		 						$stock[$key]->fecha_registro="Diciembre";
+		 					break;
+		 					
+		 					default:
+		 						$stock[$key]->fecha_registro="Ninguno";
+		 							break;
+		 				}
+		 			}
+		 			$fecha_letra_inicial=$desde;
+		 			switch ($fecha_letra_inicial) {
+		 					case '1':
+		 						$fecha_letra_inicial="Enero";
+		 					break;
+
+		 					case '2':
+		 						$fecha_letra_inicial="Febrero";
+		 					break;
+
+		 					case '3':
+		 						$fecha_letra_inicial="Marzo";
+		 					break;
+
+		 					case '4':
+		 						$fecha_letra_inicial="Abril";
+		 					break;
+
+		 					case '5':
+		 						$fecha_letra_inicial="Mayo";
+		 					break;
+
+		 					case '6':
+		 						$fecha_letra_inicial="Junio";
+		 					break;
+
+		 					case '7':
+		 						$fecha_letra_inicial="Julio";
+		 					break;
+
+		 					case '8':
+		 						$fecha_letra_inicial="Agosto";
+		 					break;
+
+		 					case '9':
+		 						$fecha_letra_inicial="Septiembre";
+		 					break;
+
+		 					case '10':
+		 						$fecha_letra_inicial="Octubre";
+		 					break;
+
+		 					case '11':
+		 						$fecha_letra_inicial="Noviembre";
+		 					break;
+
+		 					case '12':
+		 						$fecha_letra_inicial="Diciembre";
+		 					break;
+		 					
+		 					default:
+		 						$fecha_letra_inicial="Ninguno";
+		 					break;
+		 				}
+		 				$fecha_letra_final=$hasta;
+		 				switch ($fecha_letra_final) {
+		 					case '1':
+		 						$fecha_letra_final="Enero";
+		 					break;
+
+		 					case '2':
+		 						$fecha_letra_final="Febrero";
+		 					break;
+
+		 					case '3':
+		 						$fecha_letra_final="Marzo";
+		 					break;
+
+		 					case '4':
+		 						$fecha_letra_final="Abril";
+		 					break;
+
+		 					case '5':
+		 						$fecha_letra_final="Mayo";
+		 					break;
+
+		 					case '6':
+		 						$fecha_letra_final="Junio";
+		 					break;
+
+		 					case '7':
+		 						$fecha_letra_final="Julio";
+		 					break;
+
+		 					case '8':
+		 						$fecha_letra_final="Agosto";
+		 					break;
+
+		 					case '9':
+		 						$fecha_letra_final="Septiembre";
+		 					break;
+
+		 					case '10':
+		 						$fecha_letra_final="Octubre";
+		 					break;
+
+		 					case '11':
+		 						$fecha_letra_final="Noviembre";
+		 					break;
+
+		 					case '12':
+		 						$fecha_letra_final="Diciembre";
+		 					break;
+		 					
+		 					default:
+		 						$fecha_letra_final="Ninguno";
+		 					break;
+		 				}
+
+		 	$tipo="MENSUAL";
+	 		$valor=3;
+
+			return view('almacen.reportes.inventario.reporteExcel.excel',["desde"=>$desde, "hasta"=>$hasta, "stock"=>$stock, "tipo"=>$tipo, "valor"=>$valor, "fecha_letra_final"=>$fecha_letra_final, "fecha_letra_inicial"=>$fecha_letra_inicial, "total_stock_mensuales"=>$total_stock_mensuales, "año"=>$año]);
+
+	 			//return view("almacen.reportes.inventario.graficam",["modulos"=>$modulos,"stock"=>$stock,"fecha_inicial"=>$fecha_mes_inicial,"fecha_final"=>$fecha_mes_final,"total_stock"=>$total_stock_mensuales,"fecha_letra_inicial"=>$fecha_letra_inicial,"fecha_letra_final"=>$fecha_letra_final]);
+		 	}
+
+
+
+		 	if($valor==2){
+
+	 			$stock=DB::table('stock as s')
+	 			->join('empleado as e','s.empleado_id_empleado','=','e.id_empleado')
+	 			->join('proveedor as p','s.proveedor_id_proveedor','=','p.id_proveedor')
+	 			->join('sede as sed','s.sede_id_sede','=','sed.id_sede')
+	 			->select('s.id_stock',DB::raw('sum(s.total) as total'),
+				 DB::raw('sum(s.cantidad_rep) as cantidad_rep'), 
+				 DB::raw('WEEK(s.fecha_registro) as fecha_registro'),
+				 DB::raw('YEAR(s.fecha_registro) as year'))
+	 			->where(DB::raw('WEEK(s.fecha_registro)'),'>=',$desde)
+	 			->where(DB::raw('WEEK(s.fecha_registro)'),'<=',$hasta)
+	 			->where(DB::raw('YEAR(s.fecha_registro)'),'=',$año)
+	 			->orderBy(DB::raw('WEEK(s.fecha_registro)'), 'asc')
+	 			->groupBy(DB::raw('WEEK(s.fecha_registro)'))
+	 			->paginate(100);
+
+				$tipo="SEMANAL";
+		 		$valor=2;
+
+		 		$total_stock_semanales=0;
+	 			foreach ($stock as $key => $value) {	
+		 			$total_stock_semanales=intval($total_stock_semanales)+intval($stock[$key]->total);
+		 		}
+
+				return view('almacen.reportes.inventario.reporteExcel.excel',["desde"=>$desde, "hasta"=>$hasta, "stock"=>$stock, "tipo"=>$tipo, "valor"=>$valor, "total_stock_semanales"=>$total_stock_semanales]);
+		 	}
+
+
+		 	if($valor==1){
+
+	 			$stock=DB::table('stock as s')
+	 			->join('empleado as e','s.empleado_id_empleado','=','e.id_empleado')
+	 			->join('proveedor as p','s.proveedor_id_proveedor','=','p.id_proveedor')
+	 			->join('sede as sed','s.sede_id_sede','=','sed.id_sede')
+	 			->join('categoria_producto_trans as cpt','s.transformacion_stock_id','=','cpt.id_categoria')
+	 			->select('s.id_stock','s.total','s.cantidad_rep', 's.fecha_registro','s.costo_compra')
+	 			->where('s.fecha_registro','LIKE', '%'.$fecha_d.'%')
+	 			->orderBy('s.id_stock','asc')
+	 			->paginate(100);
+
+				$tipo="DIARIO";
+		 		$valor=1;
+
+		 		$total_stock=DB::table('stock as s')
+	 			->select(DB::raw('sum(s.total) as pago_total'))
+	 			->where('s.fecha_registro','LIKE', '%'.$fecha_d.'%')
+	 			->orderBy('s.id_stock', 'desc')
+	 			->paginate(100);
+
+
+				return view('almacen.reportes.inventario.reporteExcel.excel',["desde"=>$desde, "hasta"=>$hasta, "stock"=>$stock, "tipo"=>$tipo, "valor"=>$valor,"fecha_d"=>$fecha_d,"total_stock"=>$total_stock]);
+		 	}
+
+
+
+
+		 	if($valor=='m'){
+
+	 			//Detallado de mes
+				$stock=DB::table('stock as s')
+				->join('empleado as e','s.empleado_id_empleado','=','e.id_empleado')
+				->join('proveedor as p','s.proveedor_id_proveedor','=','p.id_proveedor')
+				->join('sede as sed','s.sede_id_sede','=','sed.id_sede')
+				->join('categoria_producto_trans as cpt','s.transformacion_stock_id','=','cpt.id_categoria')
+				->select('s.producto_id_producto as producto',
+				 DB::raw('sum(s.cantidad_rep) as cantidad'),
+				 DB::raw('sum(s.total) as total'))
+				->where(DB::raw('YEAR(s.fecha_registro)'),'=',$hasta)
+				->where(DB::raw('MONTH(s.fecha_registro)'),'=',$desde)
+				->orderBy('s.id_stock','asc')
+				->groupBy('s.producto_id_producto')
+				->paginate(100);
+
+
+				$tipo="MENSUAL DETALLADO";
+		 		$valor='m';
+
+		 		$productosDB=ProductoSede::get();
+				$total_ventas_diarias=0;
+			
+	 			foreach ($stock as $key => $value) {
+	 				foreach ($productosDB as $key2 => $value2) {
+	 					if($stock[$key]->producto==$productosDB[$key2]->id_producto){
+	 						$stock[$key]->producto=$productosDB[$key2]->nombre;
+	 					}
+	 				}
+	 			$total_ventas_diarias=intval($total_ventas_diarias)+intval($stock[$key]->total);
+	 			}
+	 			$tipo_reporte_detallado="m";
+
+				return view('almacen.reportes.inventario.reporteExcel.excel',["desde"=>$desde, "hasta"=>$hasta, "stock"=>$stock, "tipo"=>$tipo, "valor"=>$valor,"total_ventas"=>$total_ventas_diarias,"tipo_reporte_detallado"=>$tipo_reporte_detallado, "año"=>$año]);
+
+		 	}
+
+
+
+		 	if($valor=='s'){
+
+		 		//Detallado de semana
+					$stock=DB::table('stock as s')
+					->join('empleado as e','s.empleado_id_empleado','=','e.id_empleado')
+					->join('proveedor as p','s.proveedor_id_proveedor','=','p.id_proveedor')
+					->join('sede as sed','s.sede_id_sede','=','sed.id_sede')
+					->join('categoria_producto_trans as cpt','s.transformacion_stock_id','=','cpt.id_categoria')
+					->select('s.producto_id_producto as producto',
+						DB::raw('sum(s.cantidad_rep) as cantidad'),
+						DB::raw('sum(s.total) as total'))
+						->where(DB::raw('YEAR(s.fecha_registro)'),'=',$hasta)
+						->where(DB::raw('WEEK(s.fecha_registro)'),'=',$desde)
+					->orderBy('s.id_stock','asc')
+					->groupBy('s.producto_id_producto')
+					->paginate(100);
+
+		 			$tipo="DIARIO DETALLADO";
+		 			$valor='s';
+
+
+		 			$productosDB=ProductoSede::get();
+					$total_inventario_diario=0;
+				
+		 			foreach ($stock as $key => $value) {
+		 				foreach ($productosDB as $key2 => $value2) {
+		 					if($stock[$key]->producto==$productosDB[$key2]->id_producto){
+		 						$stock[$key]->producto=$productosDB[$key2]->nombre;
+		 					}
+		 				}
+		 			$total_inventario_diario=intval($total_inventario_diario)+intval($stock[$key]->total);
+		 			}
+		 			$tipo_reporte_detallado="s";
+
+		 			return view('almacen.reportes.inventario.reporteExcel.excel',["desde"=>$desde, "hasta"=>$hasta, "stock"=>$stock, "tipo"=>$tipo, "valor"=>$valor,"total_inventario_diario"=>$total_inventario_diario,"tipo_reporte_detallado"=>$tipo_reporte_detallado, "año"=>$año]);
+
+		 	}
+
+
+
+		 	if($valor=='d'){
+
+		 		//Detallado de semana
+				$stock=DB::table('stock as s')
+				->join('empleado as e','s.empleado_id_empleado','=','e.id_empleado')
+				->join('proveedor as p','s.proveedor_id_proveedor','=','p.id_proveedor')
+				->join('sede as sed','s.sede_id_sede','=','sed.id_sede')
+				->join('categoria_producto_trans as cpt','s.transformacion_stock_id','=','cpt.id_categoria')
+				->select('s.producto_id_producto as producto',
+					DB::raw('sum(s.cantidad_rep) as cantidad'),
+				 	DB::raw('sum(s.total) as total'))
+				->where('s.fecha_registro','LIKE', '%'.$fecha_d.'%')
+				->orderBy('s.id_stock','asc')
+				->groupBy('s.producto_id_producto')
+				->paginate(100);
+
+	 			$tipo="DIARIO DETALLADO";
+	 			$valor='d';
+
+
+	 			$productosDB=ProductoSede::get();
+				$total_inventario_diario=0;
+			
+	 			foreach ($stock as $key => $value) {
+	 				foreach ($productosDB as $key2 => $value2) {
+	 					if($stock[$key]->producto==$productosDB[$key2]->id_producto){
+	 						$stock[$key]->producto=$productosDB[$key2]->nombre;
+	 					}
+	 				}
+	 			$total_inventario_diario=intval($total_inventario_diario)+intval($stock[$key]->total);
+	 			}
+	 			$tipo_reporte_detallado="d";
+
+	 			return view('almacen.reportes.inventario.reporteExcel.excel',["desde"=>$desde, "hasta"=>$hasta, "stock"=>$stock, "tipo"=>$tipo, "valor"=>$valor,"total_inventario_diario"=>$total_inventario_diario,"tipo_reporte_detallado"=>$tipo_reporte_detallado, "año"=>$año]);
+
+		 	}
+
+
+	 		
+	 	} 
+
+
 }

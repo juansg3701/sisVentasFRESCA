@@ -71,11 +71,19 @@
         <div class="card">
           <div class="card-header" align="center">
             <h3 class="pb-2 display-5">DETALLE DE REPORTE</h3>
-            
-            
+              
           </div>
 
           <div class="card-body">
+
+            <?php
+                $valores=$fecha_inicial.'.'.$fecha_final.'.'.$fecha_year.'.'.'3';
+            ?>
+
+            <div align="center">
+              <a href="{{URL::action('reportesInventario@downloadExcelReport',$valores)}}"><button class="btn btn-outline-success btn-sm">Descargar Excel</button></a>
+              <a href="{{URL::action('reportesInventario@downloadPDFReport',$valores)}}"><button class="btn btn-outline-danger btn-sm">Descargar PDF</button></a>
+            </div>
       
             <table id="bootstrap-data-table" class="table table-striped table-bordered">
               <thead>

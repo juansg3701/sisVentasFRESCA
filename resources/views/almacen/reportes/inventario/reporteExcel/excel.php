@@ -1,123 +1,243 @@
 <?php
 	header('Content-type:application/xls');
-	header('Content-Disposition: attachment; filename=RP_Inventario.xls');
+	header('Content-Disposition: attachment; filename=RP_INVENTARIO.xls');
 
-	require_once('conexion.php');
-	$conn=new Conexion();
+	require_once('conexion2.php');
+	$conn=new Conexion2();
 	$link = $conn->conectarse();
 
-	require('conexion2.php');
-    $conn2=new Conexion2();
-    $link2 = $conn2->conectarse();
-
-    require 'cn.php';
-
-	//$query="SELECT s.id_stock, s.total, tp.nombre as categoria, s.fecha_registro, s.producto_id_producto, s.noFactura,s.cantidad, s.producto_id_producto FROM stock as s, empleado as e, categoria_producto_trans as tp, proveedor as p WHERE s.fecha_registro>='$desde' and s.fecha_registro<='$hasta' and s.transformacion_stock_id=tp.id_categoria and s.empleado_id_empleado=e.id_empleado and s.proveedor_id_proveedor=p.id_proveedor ORDER BY s.id_stock DESC";
-
-	
-
-	$query="SELECT p.id_producto, p.nombre as nombre_producto FROM producto as p";
-
-	//$query2="SELECT * FROM stock";
-
-	$query2="SELECT s.id_stock, s.total, tp.nombre as categoria, s.fecha_registro, s.producto_id_producto, s.noFactura,s.cantidad, s.producto_id_producto FROM stock as s, empleado as e, categoria_producto_trans as tp, proveedor as p WHERE s.fecha_registro>='$desde' and s.fecha_registro<='$hasta' and s.transformacion_stock_id=tp.id_categoria and s.empleado_id_empleado=e.id_empleado and s.proveedor_id_proveedor=p.id_proveedor ORDER BY s.id_stock DESC";
-
+	$query="SELECT * FROM factura";
 	$result=mysqli_query($link, $query);
-	$result2=mysqli_query($link2, $query2);
 
 
-	/*$prodSed = $mysqli->query($query);
-
-	$vector_id= array();
-    $vector_nombre=array();
-
-    while($row0 = $prodSed2->fetch_assoc()){
-        array_push($vector_id,$row0['id_producto']);
-        array_push($vector_nombre,$row0['nombre_producto']);            
-    }
-
-
-    while($row = $prodSed->fetch_assoc()){
-     
-        $longitud = count($vector_id); 
-
-        for($i=0; $i<$longitud; $i++){
-
-            if ($row['producto_id_producto'] == $vector_id[$i]) {
-                $pdf->Cell(15,5,$row['id_stock'],1,0,'C',0);
-                $pdf->Cell(35,5,$row['fecha_registro'],1,0,'C',0);
-                $pdf->Cell(35,5,$row['noFactura'],1,0,'C',0);
-                $pdf->Cell(35,5,$vector_nombre[$i],1,0,'C',0);
-                $pdf->Cell(35,5,$row['cantidad'],1,0,'C',0);
-                $pdf->Cell(35,5,$row['total'],1,1,'C',0);
-               
-            }
-        }
-    }*/
-
-
-    $prodSed = $mysqli->query($query);
-
-	$vector_id= array();
-    $vector_nombre=array();
-
-    while($row0 = $prodSed->fetch_assoc()){
-        array_push($vector_id,$row0['id_producto']);
-        array_push($vector_nombre,$row0['nombre_producto']);            
-    }
-	
 ?>
 
 <table border="1">
-	<tr style="background-color:WHITE; height:100px">
-		<thead>
-			<th>ID</th>
-            <th>FECHA</th>
-            <th>NO.FACTURA</th>
-            <th>PRODUCTO</th>
-            <th>CANTIDAD</th>
-            <th>PAGO TOTAL</th>
-		</thead>
-	</tr>
+
 	<?php
-		while ($row=mysqli_fetch_assoc($result2)) {
-			
+		if ($valor==3) {
+			?>
 
-			    $longitud = count($vector_id); 
+			<tr>
+		    	<td colspan="3"><?php echo 'REPORTE DE VENTAS: MENSUAL'; ?></td>
+		    </tr>
+		    <tr>
+		    	<td colspan="3"><?php echo 'Fecha de generacion: '.date('m-d-Y h:i:s a', time()); ?></td>
+		    </tr>
+		    <tr>
+		    	<td><?php echo 'Inicio: '.$fecha_letra_inicial; ?></td>
+				<td><?php echo 'Fin: '.$fecha_letra_final; ?></td>
+				<td><?php echo 'Total ventas: '.$total_stock_mensuales; ?></td>
+		    </tr>
 
-        		for($i=0; $i<$longitud; $i++){
-
-            	if ($row['producto_id_producto'] == $vector_id[$i]) {
-
-            ?>
-				<tr>
-					<td><?php echo $row['id_stock']; ?></td>
-					<td><?php echo $row['fecha_registro']; ?></td>
-					<td><?php echo $row['noFactura']; ?></td>
-					<td><?php echo $vector_nombre[$i]; ?></td>
-					<td><?php echo $row['cantidad']; ?></td>
-					<td><?php echo $row['total']; ?></td>
-
-					
-				</tr>	
+			<tr style="background-color:WHITE; height:100px">
+				<thead>
+					<th>FECHA</th>
+					<th>NO. PRODUCTOS</th>
+					<th>PAGO TOTAL</th>
+				</thead>
+			</tr>		
 			<?php
-			
-				}
-	        }
+			foreach ($stock as $st) {
+		        ?>
+				<tr>
+						<td><?php echo $st->fecha_registro.'-'.$st->fecha_year; ?></td>
+						<td><?php echo $st->cantidad_rep; ?></td>
+						<td><?php echo $st->total; ?></td>
+				</tr>	
+				<?php
+	    	}
+    	}
+	?>
 
-		}
+
+	<?php
+		if ($valor==2) {
+			?>
+
+			<tr>
+		    	<td colspan="3"><?php echo 'REPORTE DE VENTAS: SEMANAL'; ?></td>
+		    </tr>
+		    <tr>
+		    	<td colspan="3"><?php echo 'Fecha de generacion: '.date('m-d-Y h:i:s a', time()); ?></td>
+		    </tr>
+		    <tr>
+		    	<td><?php echo 'Inicio: '.$desde; ?></td>
+				<td><?php echo 'Fin: '.$hasta; ?></td>
+				<td><?php echo 'Total ventas: '.$total_stock_semanales; ?></td>
+		    </tr>
+
+			<tr style="background-color:WHITE; height:100px">
+				<thead>
+					<th>FECHA</th>
+					<th>NO. PRODUCTOS</th>
+					<th>PAGO TOTAL</th>
+				</thead>
+			</tr>		
+			<?php
+			foreach ($stock as $st) {
+		        ?>
+				<tr>
+						<td><?php echo 'Semana del: '.$st->fecha_registro.'-'.$st->year; ?></td>
+						<td><?php echo $st->cantidad_rep; ?></td>
+						<td><?php echo $st->total; ?></td>
+				</tr>	
+				<?php
+	    	}
+    	}
+	?>
+
+
+	<?php
+		if ($valor==1) {
+			?>
+
+			<tr>
+		    	<td colspan="3"><?php echo 'REPORTE DE VENTAS: DIARIO'; ?></td>
+		    </tr>
+		    <tr>
+		    	<td colspan="3"><?php echo 'Fecha de generacion: '.date('m-d-Y h:i:s a', time()); ?></td>
+		    </tr>
+		    <tr>
+				<td><?php echo 'Fecha: '.$fecha_d; ?></td>
+				<td><?php echo 'Total compras: '.$total_stock[0]->pago_total; ?></td>
+		    </tr>
+
+			<tr style="background-color:WHITE; height:100px">
+				<thead>
+					<th>FECHA</th>
+					<th>NO. PRODUCTOS</th>
+					<th>PAGO TOTAL</th>
+				</thead>
+			</tr>		
+			<?php
+			foreach ($stock as $st) {
+		        ?>
+				<tr>
+						<td><?php echo $st->fecha_registro; ?></td>
+						<td><?php echo $st->cantidad_rep; ?></td>
+						<td><?php echo $st->total; ?></td>
+				</tr>	
+				<?php
+	    	}
+    	}
+	?>
+
+
+
+	<?php
+
+		if ($valor=='m') {
+			?>
+
+			<tr>
+		    	<td colspan="3"><?php echo 'REPORTE DE VENTAS: MENSUAL DETALLADO'; ?></td>
+		    </tr>
+		    <tr>
+		    	<td colspan="3"><?php echo 'Fecha de generacion: '.date('m-d-Y h:i:s a', time()); ?></td>
+		    </tr>
+		    <tr>
+		    	<td><?php echo 'Mes: '.$año; ?></td>
+				<td><?php echo 'Total ventas: '.$total_ventas; ?></td>
+		    </tr>
+
+			<tr style="background-color:WHITE; height:100px">
+				<thead>
+					<th>PRODUCTO</th>
+					<th>CANTIDAD</th>
+					<th>TOTAL</th>
+				</thead>
+			</tr>
+			<?php
+			foreach ($stock as $st) {
+		        ?>
+				<tr>
+						<td><?php echo $st->producto; ?></td>
+						<td><?php echo $st->cantidad; ?></td>
+						<td><?php echo $st->total; ?></td>
+				</tr>	
+				<?php
+	    	}
+    	}
+
+	?>
+
+
+	<?php
+
+		if ($valor=='s') {
+			?>
+
+			<tr>
+		    	<td colspan="3"><?php echo 'REPORTE DE VENTAS: SEMANAL DETALLADO'; ?></td>
+		    </tr>
+		    <tr>
+		    	<td colspan="3"><?php echo 'Fecha de generacion: '.date('m-d-Y h:i:s a', time()); ?></td>
+		    </tr>
+		    <tr>
+		    	<td><?php echo 'Fecha: '.$desde; ?></td>
+				<td><?php echo 'Total comprado: '.$total_inventario_diario; ?></td>
+		    </tr>
+
+			<tr style="background-color:WHITE; height:100px">
+				<thead>
+					<th>PRODUCTO</th>
+					<th>CANTIDAD</th>
+					<th>TOTAL</th>
+				</thead>
+			</tr>
+			<?php
+			foreach ($stock as $st) {
+		        ?>
+				<tr>
+						<td><?php echo $st->producto; ?></td>
+						<td><?php echo $st->cantidad; ?></td>
+						<td><?php echo $st->total; ?></td>
+				</tr>	
+				<?php
+	    	}
+    	}
+
 	?>
 
 	<?php
-		/*if ($row['producto_id_producto'] == $row2['id_producto']) {
-			while ($row2=mysqli_fetch_assoc($result)) {
-				?>
-					<tr>
-						<td><?php echo $row['nombre_producto']; ?></td>		
-					</tr>	
+
+		if ($valor=='d') {
+			?>
+
+			<tr>
+		    	<td colspan="3"><?php echo 'REPORTE DE VENTAS: DIARIO DETALLADO'; ?></td>
+		    </tr>
+		    <tr>
+		    	<td colspan="3"><?php echo 'Fecha de generacion: '.date('m-d-Y h:i:s a', time()); ?></td>
+		    </tr>
+		    <tr>
+		    	<td><?php echo 'Fecha: '.$desde; ?></td>
+				<td><?php echo 'Total comprado: '.$total_inventario_diario; ?></td>
+		    </tr>
+
+			<tr style="background-color:WHITE; height:100px">
+				<thead>
+					<th>PRODUCTO</th>
+					<th>CANTIDAD</th>
+					<th>TOTAL</th>
+				</thead>
+			</tr>
+			<?php
+			foreach ($stock as $st) {
+		        ?>
+				<tr>
+						<td><?php echo $st->producto; ?></td>
+						<td><?php echo $st->cantidad; ?></td>
+						<td><?php echo $st->total; ?></td>
+				</tr>	
 				<?php
-			}
-		}*/
-		
+	    	}
+    	}
+
 	?>
+
+
+	
+
 </table>
