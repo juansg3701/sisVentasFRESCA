@@ -33,13 +33,26 @@
 	<?php
 		if ($valor==3) {
 			?>
+
+			<tr>
+		    	<td colspan="3"><?php echo 'REPORTE DE VENTAS: MENSUAL'; ?></td>
+		    </tr>
+		    <tr>
+		    	<td colspan="3"><?php echo 'Fecha de generacion: '.date('m-d-Y h:i:s a', time()); ?></td>
+		    </tr>
+		    <tr>
+		    	<td><?php echo 'Inicio: '.$fecha_letra_inicial; ?></td>
+				<td><?php echo 'Fin: '.$fecha_letra_final; ?></td>
+				<td><?php echo 'Total ventas: '.$total_ventas_mensuales; ?></td>
+		    </tr>
+
 			<tr style="background-color:WHITE; height:100px">
 				<thead>
 					<th>FECHA</th>
 					<th>NO. PRODUCTOS</th>
 					<th>PAGO TOTAL</th>
 				</thead>
-			</tr>
+			</tr>		
 			<?php
 			foreach ($ventas as $ven) {
 		        ?>
@@ -58,6 +71,19 @@
 
 		if ($valor==2) {
 			?>
+
+			<tr>
+		    	<td colspan="3"><?php echo 'REPORTE DE VENTAS: SEMANAL'; ?></td>
+		    </tr>
+		    <tr>
+		    	<td colspan="3"><?php echo 'Fecha de generacion: '.date('m-d-Y h:i:s a', time()); ?></td>
+		    </tr>
+		    <tr>
+		    	<td><?php echo 'Inicio: '.$desde; ?></td>
+				<td><?php echo 'Fin: '.$hasta; ?></td>
+				<td><?php echo 'Total ventas: '.$total_ventas_semanales; ?></td>
+		    </tr>
+
 			<tr style="background-color:WHITE; height:100px">
 				<thead>
 					<th>FECHA</th>
@@ -84,6 +110,18 @@
 
 		if ($valor==1) {
 			?>
+
+			<tr>
+		    	<td colspan="4"><?php echo 'REPORTE DE VENTAS: DIARIO'; ?></td>
+		    </tr>
+		    <tr>
+		    	<td colspan="3"><?php echo 'Fecha de generacion: '.date('m-d-Y h:i:s a', time()); ?></td>
+		    </tr>
+		    <tr>
+		    	<td><?php echo 'Fecha: '.$fecha_d; ?></td>
+				<td><?php echo 'Total ventas: '.$total_ventas[0]->pago_total; ?></td>
+		    </tr>
+
 			<tr style="background-color:WHITE; height:100px">
 				<thead>
 					<th>FECHA</th>
@@ -113,6 +151,18 @@
 
 		if ($valor=='m') {
 			?>
+
+			<tr>
+		    	<td colspan="3"><?php echo 'REPORTE DE VENTAS: MENSUAL DETALLADO'; ?></td>
+		    </tr>
+		    <tr>
+		    	<td colspan="3"><?php echo 'Fecha de generacion: '.date('m-d-Y h:i:s a', time()); ?></td>
+		    </tr>
+		    <tr>
+		    	<td><?php echo 'Mes: '.$año; ?></td>
+				<td><?php echo 'Total ventas: '.$total_ventas; ?></td>
+		    </tr>
+
 			<tr style="background-color:WHITE; height:100px">
 				<thead>
 					<th>PRODUCTO</th>
@@ -138,6 +188,18 @@
 
 		if ($valor=='s') {
 			?>
+
+			<tr>
+		    	<td colspan="3"><?php echo 'REPORTE DE VENTAS: SEMANAL DETALLADO'; ?></td>
+		    </tr>
+		    <tr>
+		    	<td colspan="3"><?php echo 'Fecha de generacion: '.date('m-d-Y h:i:s a', time()); ?></td>
+		    </tr>
+		    <tr>
+		    	<td><?php echo 'Semana No.: '.$desde; ?></td>
+				<td><?php echo 'Total ventas: '.$total_ventas; ?></td>
+		    </tr>
+
 			<tr style="background-color:WHITE; height:100px">
 				<thead>
 					<th>PRODUCTO</th>
@@ -164,6 +226,18 @@
 	<?php
 		if ($valor=='d') {
 			?>
+
+			<tr>
+		    	<td colspan="3"><?php echo 'REPORTE DE VENTAS: DIARIO DETALLADO'; ?></td>
+		    </tr>
+		    <tr>
+		    	<td colspan="3"><?php echo 'Fecha de generacion: '.date('m-d-Y h:i:s a', time()); ?></td>
+		    </tr>
+		    <tr>
+		    	<td><?php echo 'Fecha: '.$fecha_d; ?></td>
+				<td><?php echo 'Total ventas: '.$total_ventas; ?></td>
+		    </tr>
+
 			<tr style="background-color:WHITE; height:100px">
 				<thead>
 					<th>PRODUCTO</th>

@@ -37,6 +37,15 @@ $pdf->Ln(15);
         $pdf->SetFillColor(13,16,64);
         $pdf->Cell(70, 15, '', 0,0);
         $pdf->Cell(15, 15, 'REPORTE DE VENTAS : '.$tipo, 0,1);
+
+        $pdf->Cell(35, 5, 'Fecha de generacion:  ', 0,0);
+        $pdf->Cell(20, 5, date('m-d-Y h:i:s a', time()), 0,1);
+        $pdf->Cell(20, 5, 'Fecha: ', 0,0);
+        $pdf->Cell(20, 5, $fecha_d, 0,1);
+        $pdf->Cell(20, 5, 'Total ventas: ', 0,0);
+        $pdf->Cell(20, 5, $total_ventas[0]->pago_total, 0,1);
+        $pdf->Cell(20, 5, '', 0,1);
+
         $pdf->SetTextColor(255,255,255);
         $pdf->Cell(47,5,'FECHA',1,0,"C",true);
         $pdf->Cell(47,5,'NO. PRODUCTOS',1,0,"C",true);
@@ -58,6 +67,18 @@ $pdf->Ln(15);
         $pdf->SetFillColor(13,16,64);
         $pdf->Cell(70, 15, '', 0,0);
         $pdf->Cell(15, 15, 'REPORTE DE VENTAS : '.$tipo, 0,1);
+
+        $pdf->Cell(35, 5, 'Fecha de generacion:  ', 0,0);
+        $pdf->Cell(20, 5, date('m-d-Y h:i:s a', time()), 0,1);
+        $pdf->Cell(20, 5, 'Inicio: ', 0,0);
+        $pdf->Cell(20, 5, $desde, 0,1);
+        $pdf->Cell(20, 5, 'Fin: ', 0,0);
+        $pdf->Cell(20, 5, $hasta, 0,1);
+        $pdf->Cell(20, 5, 'Total ventas: ', 0,0);
+        $pdf->Cell(20, 5, $total_ventas_semanales, 0,1);
+        $pdf->Cell(20, 5, '', 0,1);
+
+
         $pdf->SetTextColor(255,255,255);
         $pdf->Cell(60,5,'FECHA',1,0,"C",true);
         $pdf->Cell(60,5,'NO. PRODUCTOS',1,0,"C",true);
@@ -78,6 +99,19 @@ $pdf->Ln(15);
         $pdf->SetFillColor(13,16,64);
         $pdf->Cell(70, 15, '', 0,0);
         $pdf->Cell(15, 15, 'REPORTE DE VENTAS : '.$tipo, 0,1);
+
+       
+
+        $pdf->Cell(35, 5, 'Fecha de generacion:  ', 0,0);
+        $pdf->Cell(20, 5, date('m-d-Y h:i:s a', time()), 0,1);
+        $pdf->Cell(20, 5, 'Inicio: ', 0,0);
+        $pdf->Cell(20, 5, $fecha_letra_inicial, 0,1);
+        $pdf->Cell(20, 5, 'Fin: ', 0,0);
+        $pdf->Cell(20, 5, $fecha_letra_final, 0,1);
+        $pdf->Cell(20, 5, 'Total ventas: ', 0,0);
+        $pdf->Cell(20, 5, $total_ventas_mensuales, 0,1);
+        $pdf->Cell(20, 5, '', 0,1);
+
         $pdf->SetTextColor(255,255,255);
         $pdf->Cell(60,5,'FECHA',1,0,"C",true);
         $pdf->Cell(60,5,'NO. PRODUCTOS',1,0,"C",true);
@@ -98,17 +132,27 @@ $pdf->Ln(15);
         $pdf->SetFillColor(13,16,64);
         $pdf->Cell(70, 15, '', 0,0);
         $pdf->Cell(15, 15, 'REPORTE DE VENTAS : '.$tipo, 0,1);
+
+
+        $pdf->Cell(35, 5, 'Fecha de generacion:  ', 0,0);
+        $pdf->Cell(20, 5, date('m-d-Y h:i:s a', time()), 0,1);
+        $pdf->Cell(20, 5, 'Mes: ', 0,0);
+        $pdf->Cell(20, 5, $año, 0,1);
+        $pdf->Cell(20, 5, 'Total ventas: ', 0,0);
+        $pdf->Cell(20, 5, $total_ventas, 0,1);
+        $pdf->Cell(20, 5, '', 0,1);
+
         $pdf->SetTextColor(255,255,255);
-        $pdf->Cell(60,5,'PRODUCTO',1,0,"C",true);
-        $pdf->Cell(60,5,'CANTIDAD',1,0,"C",true);
-        $pdf->Cell(60,5,'TOTAL',1,1,"C",true);
+        $pdf->Cell(100,5,'PRODUCTO',1,0,"C",true);
+        $pdf->Cell(40,5,'CANTIDAD',1,0,"C",true);
+        $pdf->Cell(40,5,'TOTAL',1,1,"C",true);
         $pdf->SetTextColor(0,0,1);
 
         foreach ($ventas as $ven) {
             //$pdf->Cell(20,5,$ven->id_factura,1,0,'C',0);
-            $pdf->Cell(60,5,$ven->producto,1,0,'C',0);
-            $pdf->Cell(60,5,$ven->cantidad,1,0,'C',0);
-            $pdf->Cell(60,5,$ven->total,1,1,'C',0);
+            $pdf->Cell(100,5,$ven->producto,1,0,'C',0);
+            $pdf->Cell(40,5,$ven->cantidad,1,0,'C',0);
+            $pdf->Cell(40,5,$ven->total,1,1,'C',0);
         }
         
     }
@@ -118,17 +162,26 @@ $pdf->Ln(15);
         $pdf->SetFillColor(13,16,64);
         $pdf->Cell(70, 15, '', 0,0);
         $pdf->Cell(15, 15, 'REPORTE DE VENTAS : '.$tipo, 0,1);
+
+        $pdf->Cell(35, 5, 'Fecha de generacion:  ', 0,0);
+        $pdf->Cell(20, 5, date('m-d-Y h:i:s a', time()), 0,1);
+        $pdf->Cell(20, 5, 'Semana No.: ', 0,0);
+        $pdf->Cell(20, 5, $desde, 0,1);
+        $pdf->Cell(20, 5, 'Total ventas: ', 0,0);
+        $pdf->Cell(20, 5, $total_ventas, 0,1);
+        $pdf->Cell(20, 5, '', 0,1);
+
         $pdf->SetTextColor(255,255,255);
-        $pdf->Cell(60,5,'PRODUCTO',1,0,"C",true);
-        $pdf->Cell(60,5,'CANTIDAD',1,0,"C",true);
-        $pdf->Cell(60,5,'TOTAL',1,1,"C",true);
+        $pdf->Cell(100,5,'PRODUCTO',1,0,"C",true);
+        $pdf->Cell(40,5,'CANTIDAD',1,0,"C",true);
+        $pdf->Cell(40,5,'TOTAL',1,1,"C",true);
         $pdf->SetTextColor(0,0,1);
 
         foreach ($ventas as $ven) {
             //$pdf->Cell(20,5,$ven->id_factura,1,0,'C',0);
-            $pdf->Cell(60,5,$ven->producto,1,0,'C',0);
-            $pdf->Cell(60,5,$ven->cantidad,1,0,'C',0);
-            $pdf->Cell(60,5,$ven->total,1,1,'C',0);
+            $pdf->Cell(100,5,$ven->producto,1,0,'C',0);
+            $pdf->Cell(40,5,$ven->cantidad,1,0,'C',0);
+            $pdf->Cell(40,5,$ven->total,1,1,'C',0);
         }
         
     }
@@ -139,17 +192,26 @@ $pdf->Ln(15);
         $pdf->SetFillColor(13,16,64);
         $pdf->Cell(70, 15, '', 0,0);
         $pdf->Cell(15, 15, 'REPORTE DE VENTAS : '.$tipo, 0,1);
+
+        $pdf->Cell(35, 5, 'Fecha de generacion:  ', 0,0);
+        $pdf->Cell(20, 5, date('m-d-Y h:i:s a', time()), 0,1);
+        $pdf->Cell(20, 5, 'Fecha: ', 0,0);
+        $pdf->Cell(20, 5, $fecha_d, 0,1);
+        $pdf->Cell(20, 5, 'Total ventas: ', 0,0);
+        $pdf->Cell(20, 5, $total_ventas, 0,1);
+        $pdf->Cell(20, 5, '', 0,1);
+
         $pdf->SetTextColor(255,255,255);
-        $pdf->Cell(60,5,'PRODUCTO',1,0,"C",true);
-        $pdf->Cell(60,5,'CANTIDAD',1,0,"C",true);
-        $pdf->Cell(60,5,'TOTAL',1,1,"C",true);
+        $pdf->Cell(100,5,'PRODUCTO',1,0,"C",true);
+        $pdf->Cell(40,5,'CANTIDAD',1,0,"C",true);
+        $pdf->Cell(40,5,'TOTAL',1,1,"C",true);
         $pdf->SetTextColor(0,0,1);
 
         foreach ($ventas as $ven) {
             //$pdf->Cell(20,5,$ven->id_factura,1,0,'C',0);
-            $pdf->Cell(60,5,$ven->producto,1,0,'C',0);
-            $pdf->Cell(60,5,$ven->cantidad,1,0,'C',0);
-            $pdf->Cell(60,5,$ven->total,1,1,'C',0);
+            $pdf->Cell(100,5,$ven->producto,1,0,'C',0);
+            $pdf->Cell(40,5,$ven->cantidad,1,0,'C',0);
+            $pdf->Cell(40,5,$ven->total,1,1,'C',0);
         }
         
     }
