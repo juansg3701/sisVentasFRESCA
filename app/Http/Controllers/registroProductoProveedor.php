@@ -23,7 +23,7 @@ class registroProductoProveedor extends Controller
 	 				$query=trim($request->get('searchText'));
 
 	 		$sede=DB::table('sede')->get();
-	 		$proveedor=DB::table('proveedor')->get();
+	 		$proveedor=DB::table('proveedor')->orderBy('nombre_empresa','asc')->get();
 	 		$usuarios=DB::table('empleado')->get();
 	 		$transformacion=DB::table('categoria_producto_trans')->get();
 	 		$producto=ProductoSede::get();

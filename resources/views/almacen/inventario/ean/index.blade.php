@@ -216,6 +216,7 @@
 								</div>
 						<div class="form-group col-sm-8">
 							<select name="proveedor_id_proveedor" class="form-control">
+								<option value="{{$proveedor[0]->id_proveedor}}">Seleccione un proveedor</option>
 									@foreach($proveedor as $pr)
 								<option value="{{$pr->id_proveedor}}">{{$pr->nombre_empresa}}</option>
 								@endforeach

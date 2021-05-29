@@ -147,7 +147,7 @@
 							<select name="proveedor_id_proveedor" class="form-control" value="{{$stock->proveedor_id_proveedor}}">
 								@foreach($proveedor as $pr)
 								@if($stock->proveedor_id_proveedor==$pr->id_proveedor)
-								<option value="{{$pr->id_proveedor}}">{{$pr->nombre_proveedor}}</option>
+								<option value="{{$pr->id_proveedor}}">{{$pr->nombre_empresa}}</option>
 								@endif
 								@endforeach
 

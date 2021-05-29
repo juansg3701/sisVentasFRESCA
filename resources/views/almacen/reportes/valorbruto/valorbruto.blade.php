@@ -79,7 +79,7 @@
 
 								<div class="form-row">
 									<div class="form-group col-sm-4">
-										<div>Seleccione el a&ntilde;o:</div>
+										<div>Seleccione la opci&oacute;n:</div>
 									</div>
 									<div class="form-group col-sm-8">
 										<select class="form-control" name="opcion">

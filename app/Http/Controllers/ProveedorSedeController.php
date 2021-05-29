@@ -36,7 +36,7 @@ class ProveedorSedeController extends Controller
 	 			->where('sed.nombre_sede','LIKE', '%'.$query3.'%')
 	 			->where('pd.nombre_empresa','LIKE', '%'.$query4.'%')
 	 			->orderBy('s.id_stock', 'desc')
-	 			->paginate(100);
+	 			->paginate(50);
 	 			$pagination=1;
 	 		
 	 			}else{
@@ -137,7 +137,7 @@ class ProveedorSedeController extends Controller
 
 	 		
 	 	}
-
+	 	//metodo funcional en registroProductoProveedor
 	 	public function show($id){
 	 		$query=$id;
 
@@ -160,7 +160,7 @@ class ProveedorSedeController extends Controller
 
 	 	public function edit($id){
 	 		$sede=DB::table('sede')->get();
-	 		$proveedor=DB::table('proveedor')->get();
+	 		$proveedor=DB::table('proveedor')->orderBy('nombre_empresa','asc')->get();
 	 		$producto=ProductoSede::get();
 	 		$usuarios=DB::table('empleado')->get();
 	 		$transformacion=DB::table('categoria_producto_trans')->get();
