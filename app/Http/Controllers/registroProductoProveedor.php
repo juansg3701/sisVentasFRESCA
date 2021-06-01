@@ -86,6 +86,7 @@ class registroProductoProveedor extends Controller
 	 		$ps->total=$valor_total;
 	 		$ps->costo_compra=$valor_total;
 	 		$ps->cantidad_rep=$valor_cantidad;
+	 		$ps->pago_pendiente=$request->get('pago_pendiente');
 
 	 		$ps->save();
 
@@ -134,6 +135,7 @@ class registroProductoProveedor extends Controller
 	 		$ps->transformacion_stock_id=$request->get('transformacion_stock_id');
 	 		$ps->noFactura=$request->get('noFactura');
 	 		$ps->total=$request->get('total');
+	 		$ps->pago_pendiente=$request->get('pago_pendiente');
 	 		$ps->update();
 
 	 		return back()->with('msj','Producto actualizado');

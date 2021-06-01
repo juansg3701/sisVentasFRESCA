@@ -287,6 +287,23 @@
 						</div>
 					</div>
 
+					<div class="form-row ">
+
+						<div class="form-check col-sm-6">
+			  				<input class="form-check-input" type="radio" name="pago_pendiente" id="flexRadioDefault1" checked value="1">
+			  				<label class="form-check-label" for="flexRadioDefault1">
+			   				 Pagado
+			 				 </label>
+						</div>
+						<div class="form-check col-sm-6">
+		  					<input class="form-check-input" type="radio" name="pago_pendiente" id="flexRadioDefault2"  value="0">
+		  					<label class="form-check-label" for="flexRadioDefault2">
+		    				Pendiente
+		  					</label>
+						</div>
+					</div>
+					<br/>
+				
 					<div class="form-row">
 									<div class="form-group col-sm-4">
 										<div>Fecha:</div>
@@ -315,6 +332,7 @@
 					
 					<div align="center">
 					<button type="submit" class="btn btn-info">Registrar Producto</button>
+					
 					<a href="{{url('almacen/inventario/proveedor-sede')}}">
 					<button type="button" class="btn btn-danger">Volver</button></a>
 				</div>
@@ -332,8 +350,6 @@
 		</div>
 	</div>		                       
 		<script type="text/javascript">
-	
-
 	
 	function format(input)
 {

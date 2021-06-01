@@ -36,6 +36,7 @@ class ProveedorSedeFormRequest extends Request
             'total'=>'required|max:45',
             'costo_compra'=>'max:45',
             'cantidad_rep'=>'max:45',
+            'pago_pendiente'=>'max:5'
         ];
     }
 }
