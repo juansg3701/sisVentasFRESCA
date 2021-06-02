@@ -62,7 +62,12 @@ if(isset($_FILES["name"])){
                 //$x_producto_id_producto=1;
                 $x_transformacion_stock_id=6;
                 $x_noFactura='0';
+
+
+                $x_pago_pendiente=$sheet->getCell("F".$row)->getValue();
                
+
+
 
                 //$x_id_stock=$id_max + 1;
 
@@ -123,23 +128,33 @@ if(isset($_FILES["name"])){
                     $sede_i=$rows['id_sede'];
                 }
 
-                /*if(($x_id_producto!="" || $x_plu!="" || $x_ean!="" || $x_nombre!="" || $x_categoria_id_categoria!="" || $x_unidad_de_medida!="" && $x_impuestos_id_impuestos!="" || $x_descuento_id_descuento!="" || $x_stock_minimo!="" || $x_precio_1!="" || $x_precio_2!="" || $x_precio_3!="" || $x_precio_4!="" || $x_costo_compra!="" || $x_punto_venta_id_punto_venta!="") && ($x_id_producto==0 || $x_plu==0 || $x_ean==0 || $x_nombre==0 || $x_categoria_id_categoria==0 || $x_unidad_de_medida==0 || $x_impuestos_id_impuestos==0 || $x_descuento_id_descuento==0 || $x_stock_minimo==0 || $x_precio_1==0 || $x_precio_2==0 || $x_precio_3==0 || $x_precio_4==0 || $x_costo_compra==0 || $x_punto_venta_id_punto_venta==0)){}*/
+               
 
-
-
-                /*if (($x_ean!="" || $x_cantidad!="" || $x_sede_id_sede!="" || $x_proveedor_id_proveedor!="") && ($x_ean==0 || $x_cantidad==0 || $x_sede_id_sede==0 || $x_proveedor_id_proveedor==0)){*/
-
-                //if ($x_ean!="" && $x_cantidad!="" && $x_sede_id_sede!="" && $x_proveedor_id_proveedor!=""){
-
-                //if (($x_ean!="" || $x_cantidad!="" || $x_sede_id_sede!="" || $x_proveedor_id_proveedor!="") && ($x_cantidad==0)){
-
-                if (($x_ean!="" && $x_cantidad!="" && $x_sede_id_sede!="" && $x_proveedor_id_proveedor!="")){
+                if (($x_ean!="" && $x_cantidad!="" && $x_sede_id_sede!="" && $x_proveedor_id_proveedor!="" && $x_pago_pendiente!="")){
 
                     if($count_prov!=0 && $count_sed!=0){
 
-                        $sql = "insert into stock (id_stock, disponibilidad, cantidad, fecha_registro, producto_id_producto, sede_id_sede, proveedor_id_proveedor, empleado_id_empleado, transformacion_stock_id, noFactura, total, costo_compra, cantidad_rep) value ";
+                        if ($x_pago_pendiente=="s") {
+                            //$x_pago_pendiente=0;
+                            $sql = "insert into stock (id_stock, disponibilidad, cantidad, fecha_registro, producto_id_producto, sede_id_sede, proveedor_id_proveedor, empleado_id_empleado, transformacion_stock_id, noFactura, total, costo_compra, cantidad_rep, pago_pendiente) value ";
 
-                        $sql .= " (\"$x_id_stock\",\"$x_disponibilidad\",\"$x_cantidad\",\"$fecha_actual\",\"$x_producto_id_producto\",\"$sede_i\",\"$proveedor_i\",\"$id\",\"$x_transformacion_stock_id\",\"$x_noFactura\",\"$x_total\",\"$x_costo_compra\",\"$x_cantidad_rep\")";
+                            $sql .= " (\"$x_id_stock\",\"$x_disponibilidad\",\"$x_cantidad\",\"$fecha_actual\",\"$x_producto_id_producto\",\"$sede_i\",\"$proveedor_i\",\"$id\",\"$x_transformacion_stock_id\",\"$x_noFactura\",\"$x_total\",\"$x_costo_compra\",\"$x_cantidad_rep\",0 )";
+
+
+                        }
+                        if ($x_pago_pendiente=="n") {
+                            //$x_pago_pendiente=1;
+
+                            $sql = "insert into stock (id_stock, disponibilidad, cantidad, fecha_registro, producto_id_producto, sede_id_sede, proveedor_id_proveedor, empleado_id_empleado, transformacion_stock_id, noFactura, total, costo_compra, cantidad_rep, pago_pendiente) value ";
+
+                            $sql .= " (\"$x_id_stock\",\"$x_disponibilidad\",\"$x_cantidad\",\"$fecha_actual\",\"$x_producto_id_producto\",\"$sede_i\",\"$proveedor_i\",\"$id\",\"$x_transformacion_stock_id\",\"$x_noFactura\",\"$x_total\",\"$x_costo_compra\",\"$x_cantidad_rep\",1 )";
+                        }
+
+
+                        
+                        /*$sql = "insert into stock (id_stock, disponibilidad, cantidad, fecha_registro, producto_id_producto, sede_id_sede, proveedor_id_proveedor, empleado_id_empleado, transformacion_stock_id, noFactura, total, costo_compra, cantidad_rep, pago_pendiente) value ";
+
+                        $sql .= " (\"$x_id_stock\",\"$x_disponibilidad\",\"$x_cantidad\",\"$fecha_actual\",\"$x_producto_id_producto\",\"$sede_i\",\"$proveedor_i\",\"$id\",\"$x_transformacion_stock_id\",\"$x_noFactura\",\"$x_total\",\"$x_costo_compra\",\"$x_cantidad_rep\",\"$x_pago_pendiente\" )";*/
 
                     }else{
                         echo '<script language="javascript">alert("Los datos ingresados en proveedor o sede son incorrectos.  Error en el registro con nombre: '.$x_nombre.'");</script>';
@@ -152,28 +167,7 @@ if(isset($_FILES["name"])){
                 
 
 
-                /*if ($count_stock==0){
-
-	                if($count_prov!=0 && $count_sed!=0){
-
-	                	$sql = "insert into stock (id_stock, disponibilidad, cantidad, fecha_registro, producto_id_producto, sede_id_sede, proveedor_id_proveedor, empleado_id_empleado, transformacion_stock_id, noFactura, total, costo_compra, cantidad_rep) value ";
-
-	                	$sql .= " (\"$x_id_stock\",\"$x_disponibilidad\",\"$x_cantidad\",\"$fecha_actual\",\"$x_producto_id_producto\",\"$sede_i\",\"$proveedor_i\",\"$id\",\"$x_transformacion_stock_id\",\"$x_noFactura\",\"$x_total\",\"$x_costo_compra\",\"$x_cantidad_rep\")";
-
-	                }else{
-	                	echo '<script language="javascript">alert("Los datos ingresados en proveedor o sede son incorrectos.  Error en el registro con nombre: '.$x_nombre.'");</script>';
-	                }
-            	}else{
-
-            		if($count_prov!=0 && $count_sed!=0){	                	
-
-	                	$sql = "UPDATE stock SET cantidad=\"$x_cantidad\", producto_id_producto=\"$x_producto_id_producto\", sede_id_sede=\"$x_sede_id_sede\", proveedor_id_proveedor=\"$x_proveedor_id_proveedor\", empleado_id_empleado=\"$id\", fecha_registro=\"$fecha_actual\" WHERE id_stock = \"$x_id_stock\"";
-
-	                }else{
-	                	echo '<script language="javascript">alert("Los datos ingresados en proveedor o sede son incorrectos.  No se guardarán cambios en el registro con el id: '.$x_id_stock.'");</script>';
-	                }
-
-            	}*/
+             
 
 
 
