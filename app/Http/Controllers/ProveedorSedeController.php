@@ -26,17 +26,21 @@ class ProveedorSedeController extends Controller
 	 			$query2=trim($request->get('searchText2'));
 	 			$query3=trim($request->get('searchText3'));
 	 			$query4=trim($request->get('searchText4'));
+	 			$query5=trim($request->get('searchText5'));
+	 			$query6=trim($request->get('searchText6'));
 	 			$pagination=1;
 	 			if($query0=="" and $query1=="" and $query2==""){
 	 				$productos=DB::table('stock as s')
 	 			->join('sede as sed','s.sede_id_sede','=','sed.id_sede')
 	 			->join('proveedor as pd','s.proveedor_id_proveedor','=','pd.id_proveedor')
 	 			->join('categoria_producto_trans as cpt','s.transformacion_stock_id','=','cpt.id_categoria')
-	 			->select('s.id_stock','sed.nombre_sede','pd.nombre_empresa','s.cantidad','s.disponibilidad','s.sede_id_sede as sede_id_sede', 's.producto_id_producto','s.fecha_registro','s.empleado_id_empleado','cpt.nombre as nombreCategoria','s.noFactura as noFactura','s.total as total')
+	 			->select('s.id_stock','sed.nombre_sede','pd.nombre_empresa','s.cantidad','s.disponibilidad','s.sede_id_sede as sede_id_sede', 's.producto_id_producto','s.fecha_registro','s.empleado_id_empleado','cpt.nombre as nombreCategoria','s.noFactura as noFactura','s.total as total','s.pago_pendiente')
 	 			->where('sed.nombre_sede','LIKE', '%'.$query3.'%')
 	 			->where('pd.nombre_empresa','LIKE', '%'.$query4.'%')
+	 			->where('s.pago_pendiente','LIKE','%'.$query5.'%')
+	 			->where('s.fecha_registro','LIKE','%'.$query6.'%')
 	 			->orderBy('s.id_stock', 'desc')
-	 			->paginate(100);
+	 			->paginate(50);
 	 			$pagination=1;
 	 		
 	 			}else{
@@ -44,9 +48,11 @@ class ProveedorSedeController extends Controller
 	 			->join('sede as sed','s.sede_id_sede','=','sed.id_sede')
 	 			->join('proveedor as pd','s.proveedor_id_proveedor','=','pd.id_proveedor')
 	 			->join('categoria_producto_trans as cpt','s.transformacion_stock_id','=','cpt.id_categoria')
-	 			->select('s.id_stock','sed.nombre_sede','pd.nombre_empresa','s.cantidad','s.disponibilidad','s.sede_id_sede as sede_id_sede', 's.producto_id_producto','s.fecha_registro','s.empleado_id_empleado','cpt.nombre as nombreCategoria','s.noFactura as noFactura','s.total as total')
+	 			->select('s.id_stock','sed.nombre_sede','pd.nombre_empresa','s.cantidad','s.disponibilidad','s.sede_id_sede as sede_id_sede', 's.producto_id_producto','s.fecha_registro','s.empleado_id_empleado','cpt.nombre as nombreCategoria','s.noFactura as noFactura','s.total as total','s.pago_pendiente')
 	 			->where('sed.nombre_sede','LIKE', '%'.$query3.'%')
 	 			->where('pd.nombre_empresa','LIKE', '%'.$query4.'%')
+	 			->where('s.pago_pendiente','LIKE','%'.$query5.'%')
+	 			->where('s.fecha_registro','LIKE','%'.$query6.'%')
 	 			->orderBy('s.id_stock', 'desc')
 	 			->get();
 
@@ -81,7 +87,7 @@ class ProveedorSedeController extends Controller
 	 			$usuarios=DB::table('empleado')->get();
 
 
-	 			return view('almacen.inventario.proveedor-sede.index',["productos"=>$productos,"searchText0"=>$query0,"searchText1"=>$query1,"searchText2"=>$query2,"searchText3"=>$query3,"searchText4"=>$query4, "modulos"=>$modulos,"eanP"=>$eanP,"sedesP"=>$sedesP,"proveedoresP"=>$proveedoresP,"productosBuscar"=>$productosBuscar,"productosBuscar_transformar"=>$productosBuscar_transformar,"empleados"=>$empleados,"categoriaTrans"=>$categoriaTrans, "usuarios"=>$usuarios, "pagination"=>$pagination]);
+	 			return view('almacen.inventario.proveedor-sede.index',["productos"=>$productos,"searchText0"=>$query0,"searchText1"=>$query1,"searchText2"=>$query2,"searchText3"=>$query3,"searchText4"=>$query4,"searchText5"=>$query5,"searchText6"=>$query6, "modulos"=>$modulos,"eanP"=>$eanP,"sedesP"=>$sedesP,"proveedoresP"=>$proveedoresP,"productosBuscar"=>$productosBuscar,"productosBuscar_transformar"=>$productosBuscar_transformar,"empleados"=>$empleados,"categoriaTrans"=>$categoriaTrans, "usuarios"=>$usuarios, "pagination"=>$pagination]);
 	 		}
 	 	}
 	 	
@@ -121,6 +127,7 @@ class ProveedorSedeController extends Controller
 	 					$ps->total=$valor_total;
 	 					$ps->costo_compra=$valor_total;
 	 					$ps->cantidad_rep=$valor_cantidad;
+	 					$ps->pago_pendiente=1;
 				 		$ps->save();
 				 		$registro->cantidad=$cantidad_inicial-$cantidadR;
 				 		$registro->save();
@@ -137,7 +144,7 @@ class ProveedorSedeController extends Controller
 
 	 		
 	 	}
-
+	 	//metodo funcional en registroProductoProveedor
 	 	public function show($id){
 	 		$query=$id;
 
@@ -160,7 +167,7 @@ class ProveedorSedeController extends Controller
 
 	 	public function edit($id){
 	 		$sede=DB::table('sede')->get();
-	 		$proveedor=DB::table('proveedor')->get();
+	 		$proveedor=DB::table('proveedor')->orderBy('nombre_empresa','asc')->get();
 	 		$producto=ProductoSede::get();
 	 		$usuarios=DB::table('empleado')->get();
 	 		$transformacion=DB::table('categoria_producto_trans')->get();
@@ -191,6 +198,7 @@ class ProveedorSedeController extends Controller
 		 		$ps->transformacion_stock_id=$request->get('transformacion_stock_id');
 		 		$ps->noFactura=$request->get('noFactura');
 		 		$ps->total=$request->get('total');
+		 		$ps->pago_pendiente=$request->get('pago_pendiente');
 		 		$ps->update();
 	 			return back()->with('msj','Producto actualizado');
 

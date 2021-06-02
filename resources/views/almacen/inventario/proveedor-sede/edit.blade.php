@@ -147,7 +147,7 @@
 							<select name="proveedor_id_proveedor" class="form-control" value="{{$stock->proveedor_id_proveedor}}">
 								@foreach($proveedor as $pr)
 								@if($stock->proveedor_id_proveedor==$pr->id_proveedor)
-								<option value="{{$pr->id_proveedor}}">{{$pr->nombre_proveedor}}</option>
+								<option value="{{$pr->id_proveedor}}">{{$pr->nombre_empresa}}</option>
 								@endif
 								@endforeach
 
@@ -218,6 +218,40 @@
 					</div>
 
 							<input type="hidden" class="form-control" id="total" name="total" value="{{$stock->total}}" min="1">
+					@if($stock->pago_pendiente==0)
+					<div class="form-row">
+						<div class="form-check col-sm-6">
+			  				<input class="form-check-input" type="radio" name="pago_pendiente" id="flexRadioDefault1"  value="1">
+			  				<label class="form-check-label" for="flexRadioDefault1">
+			   				 Pagado
+			 				 </label>
+						</div>
+						<div class="form-check col-sm-6">
+		  					<input class="form-check-input" type="radio" name="pago_pendiente" id="flexRadioDefault2"  value="0" checked>
+		  					<label class="form-check-label" for="flexRadioDefault2">
+		    				Pendiente
+		  					</label>
+						</div>
+					</div>
+					<br/>
+					@else
+					<div class="form-row">
+						<div class="form-check col-sm-6">
+			  				<input class="form-check-input" type="radio" name="pago_pendiente" id="flexRadioDefault1" checked value="1">
+			  				<label class="form-check-label" for="flexRadioDefault1">
+			   				 Pagado
+			 				 </label>
+						</div>
+						<div class="form-check col-sm-6">
+		  					<input class="form-check-input" type="radio" name="pago_pendiente" id="flexRadioDefault2"  value="0">
+		  					<label class="form-check-label" for="flexRadioDefault2">
+		    				Pendiente
+		  					</label>
+						</div>
+					</div>
+					<br/>
+					@endif
+					
 					
 					<div class="form-row">
 									<div class="form-group col-sm-4">

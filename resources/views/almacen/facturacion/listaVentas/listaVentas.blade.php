@@ -1,12 +1,12 @@
 @extends ('layouts.admin')
 @section ('contenido')
 	<head>
-	<title>Facturación</title>
+	<title>Facturaci車n</title>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 </head>
 
 <body>
-	<!--Código de JQuery para mostrar/esconder los campos del atributo documento-->
+	<!--C車digo de JQuery para mostrar/esconder los campos del atributo documento-->
 	<script type="text/javascript">
 		$(function() {
     		$("#btn_search").on("click", function() {
@@ -40,12 +40,12 @@
 							<a href="{{url('almacen/facturacion/listaVentas')}}" class="btn btn-danger">Volver</a>
 						</div>
 						<div class="form-group col-sm-8" align="center">
-							<button id="btn_search" class="btn btn-outline-secondary btn-lg btn-block" style="display:hidden">Establecer filtros de búsqueda</button>
-							<button id="btn_search2" class="btn btn-outline-secondary btn-lg btn-block" style="display:none">Ocultar filtros de búsqueda</button>
+							<button id="btn_search" class="btn btn-outline-secondary btn-lg btn-block" style="display:hidden">Establecer filtros de b&uacute;squeda</button>
+							<button id="btn_search2" class="btn btn-outline-secondary btn-lg btn-block" style="display:none">Ocultar filtros de b&uacute;squeda</button>
 						</div>
 		
 						<div id="divBuscar" class="form-group col-sm-8" align="center" style="display:none">
-							<!--Incluir la ventana modal de búsqueda-->	
+							<!--Incluir la ventana modal de b迆squeda-->	
 						@include('almacen.facturacion.listaVentas.search')
 						</div>
 					</div>
@@ -109,11 +109,16 @@
 						@foreach($facturas as $f)
 						<tr>
 							<td>{{ $f->id_factura}}</td>
+							<?php $contar=0;?>
 							@foreach($notas as $n)
 								@if($n->factura_id_factura==$f->id_factura)
+								<?php $contar++;?>
 								<td>{{ $n->id_nota}}</td>	
 								@endif
 							@endforeach
+							@if($contar==0)
+							<td>Vac&iacute;o</td>
+							@endif
 							
 							<td>{{ $f->pago_total}}</td>
 							<td>{{ $f->noproductos}}</td>
@@ -184,7 +189,6 @@
 							<th>Sede</th>
 							<th>Opciones</th>
 							
-							<th>Opciones</th>
 						</thead>
 
 						@foreach($facturas as $f)

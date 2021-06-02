@@ -121,6 +121,7 @@
 						<table id="bootstrap-data-table" class="table table-striped table-bordered">
 						<thead>
 							<th>NO. FACTURA</th>
+							<th>ESTADO</th>
 							<th>IMAGEN</th>
 							<th>NOMBRE</th>
 							<th>PLU</th>
@@ -140,6 +141,11 @@
 					@if($ps->sede_id_sede==auth()->user()->sede_id_sede && auth()->user()->superusuario==0)
 						<tr>
 							<td>{{ $ps->noFactura}}</td>
+							<td>@if($ps->pago_pendiente==0)
+								Pendiente
+								@else
+								Pagado
+								@endif</td>
 							<td>
 							<label>
 									<a href="" title="Ver imagen" class="btn btn-light" data-target="#modal-infoImagen-{{$pb->id_producto}}" data-toggle="modal">
@@ -190,6 +196,11 @@
 						@if(auth()->user()->superusuario==1)
 						<tr>
 							<td>{{ $ps->noFactura}}</td>
+							<td>@if($ps->pago_pendiente==0)
+								Pendiente
+								@else
+								Pagado
+								@endif</td>
 							<td>
 							<label>
 									<a href="" title="Ver imagen" class="btn btn-light" data-target="#modal-infoImagen-{{$pb->id_producto}}" data-toggle="modal">

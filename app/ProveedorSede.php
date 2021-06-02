@@ -10,7 +10,7 @@ class ProveedorSede extends Model
     protected $primaryKey='id_stock';
     public $timestamps =false;
     
-    protected $fillable=['producto_id_producto','sede_id_sede','proveedor_id_proveedor','disponibilidad','cantidad','fecha_registro','empleado_id_empleado','transformacion_stock_id','noFactura','total','costo_compra','cantidad_rep'];
+    protected $fillable=['producto_id_producto','sede_id_sede','proveedor_id_proveedor','disponibilidad','cantidad','fecha_registro','empleado_id_empleado','transformacion_stock_id','noFactura','total','costo_compra','cantidad_rep','pago_pendiente'];
     protected $guarded=[];
 }
 

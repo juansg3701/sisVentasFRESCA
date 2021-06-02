@@ -20,8 +20,8 @@ role="dialog" tabindex="-1" id="modal-delete-{{$f->id_factura}}">
 							<th>Cantidad</th>
 							<th>Precio</th>
 							<th>Total</th>
-							<th>Descuento</th>
-							<th>Impuesto</th>
+							<th>Desc.</th>
+							<th>Imp.</th>
 							<th>Fecha</th>
 							<th>Empleado</th>
 						</thead>
