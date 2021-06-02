@@ -36,9 +36,7 @@
 				<div class="card">
 					<div class="card-header" align="center">
 						<h3 class="pb-2 display-5">FACTURAS REGISTRADAS</h3>
-						<div align="center">
-							<a href="{{url('almacen/facturacion/listaVentas')}}" class="btn btn-danger">Volver</a>
-						</div>
+						
 						<div class="form-group col-sm-8" align="center">
 							<button id="btn_search" class="btn btn-outline-secondary btn-lg btn-block" style="display:hidden">Establecer filtros de b&uacute;squeda</button>
 							<button id="btn_search2" class="btn btn-outline-secondary btn-lg btn-block" style="display:none">Ocultar filtros de b&uacute;squeda</button>

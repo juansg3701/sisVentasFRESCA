@@ -298,7 +298,7 @@
 						<div class="form-check col-sm-6">
 		  					<input class="form-check-input" type="radio" name="pago_pendiente" id="flexRadioDefault2"  value="0">
 		  					<label class="form-check-label" for="flexRadioDefault2">
-		    				Pendiente
+		    				Cr&eacute;dito
 		  					</label>
 						</div>
 					</div>

@@ -216,6 +216,25 @@
 							<input type="text" class="form-control" name="noFactura" value="{{$stock->noFactura}}">
 						</div>
 					</div>
+					
+					<div class="form-row">
+								<div class="form-group col-sm-4">
+									<div>Cantidad adquirida:</div>
+								</div>
+						<div class="form-group col-sm-8">
+							
+								<input type="text" step="any" class="form-control" value="{{$stock->cantidad_rep}}" disabled="true">
+						</div>
+					</div>
+					
+					<div class="form-row">
+						<div class="form-group col-sm-4">
+							<div>Total:</div>
+						</div>
+						<div class="form-group col-sm-8">
+							<input type="number" class="form-control"  value="{{$stock->total}}" disabled="true">
+						</div>
+					</div>
 
 							<input type="hidden" class="form-control" id="total" name="total" value="{{$stock->total}}" min="1">
 					@if($stock->pago_pendiente==0)
@@ -229,7 +248,7 @@
 						<div class="form-check col-sm-6">
 		  					<input class="form-check-input" type="radio" name="pago_pendiente" id="flexRadioDefault2"  value="0" checked>
 		  					<label class="form-check-label" for="flexRadioDefault2">
-		    				Pendiente
+		    				Cr&eacute;dito
 		  					</label>
 						</div>
 					</div>
@@ -245,7 +264,7 @@
 						<div class="form-check col-sm-6">
 		  					<input class="form-check-input" type="radio" name="pago_pendiente" id="flexRadioDefault2"  value="0">
 		  					<label class="form-check-label" for="flexRadioDefault2">
-		    				Pendiente
+		    				Cr&eacute;dito
 		  					</label>
 						</div>
 					</div>

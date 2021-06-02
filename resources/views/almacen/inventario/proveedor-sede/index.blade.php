@@ -142,7 +142,7 @@
 						<tr>
 							<td>{{ $ps->noFactura}}</td>
 							<td>@if($ps->pago_pendiente==0)
-								Pendiente
+								Cr&eacute;dito
 								@else
 								Pagado
 								@endif</td>
@@ -197,7 +197,7 @@
 						<tr>
 							<td>{{ $ps->noFactura}}</td>
 							<td>@if($ps->pago_pendiente==0)
-								Pendiente
+								Cr&eacute;dito
 								@else
 								Pagado
 								@endif</td>

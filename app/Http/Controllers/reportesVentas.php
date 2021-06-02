@@ -259,6 +259,8 @@ class reportesVentas extends Controller
 	 			$total_ventas=DB::table('factura as f')
 	 			->select(DB::raw('sum(f.pago_total) as pago_total'))
 	 			->where('f.fecha','LIKE', '%'.$fecha_d.'%')
+	 			->where('f.facturapaga','=',1)
+		 			->where('f.anulacion','=',0)
 	 			->orderBy('f.id_factura', 'desc')
 	 			->paginate(100);
 
@@ -279,6 +281,8 @@ class reportesVentas extends Controller
 		 			$total_ventas=DB::table('factura as f')
 		 			->select(DB::raw('sum(f.pago_total) as pago_total'))
 		 			->where('f.fecha','LIKE', '%'.$fecha_d.'%')
+		 			->where('f.facturapaga','=',1)
+		 			->where('f.anulacion','=',0)
 		 			->where('sed.id_sede','=',auth()->user()->sede_id_sede)
 		 			->orderBy('f.id_factura', 'desc')
 		 			->paginate(100);
@@ -367,8 +371,7 @@ class reportesVentas extends Controller
 	 			->paginate(100);
 
 	 			if(auth()->user()->superusuario==0){
-	 			
-	 			$ventas_semanal=DB::table('factura as f')
+	 				$ventas_semanal=DB::table('factura as f')
 	 			->join('empleado as e','f.empleado_id_empleado','=','e.id_empleado')
 	 			->join('cliente as c','f.cliente_id_cliente','=','c.id_cliente')
 	 	
@@ -682,180 +685,66 @@ class reportesVentas extends Controller
 	 			->groupBy(DB::raw('MONTH(f.fecha)'))
 	 			->paginate(100);
 
-
-		 		$total_ventas_mensuales=0;
 	 			foreach ($ventas as $key => $value) {	
-		 				$total_ventas_mensuales=intval($total_ventas_mensuales)+intval($ventas[$key]->pago_total);
 
-		 				switch ($ventas[$key]->fecha) {
-		 					case '1':
-		 						$ventas[$key]->fecha="Enero";
-		 					break;
+	 				switch ($ventas[$key]->fecha) {
+	 					case '1':
+	 						$ventas[$key]->fecha="Enero";
+	 					break;
 
-		 					case '2':
-		 						$ventas[$key]->fecha="Febrero";
-		 					break;
+	 					case '2':
+	 						$ventas[$key]->fecha="Febrero";
+	 					break;
 
-		 					case '3':
-		 						$ventas[$key]->fecha="Marzo";
-		 					break;
+	 					case '3':
+	 						$ventas[$key]->fecha="Marzo";
+	 					break;
 
-		 					case '4':
-		 						$ventas[$key]->fecha="Abril";
-		 					break;
+	 					case '4':
+	 						$ventas[$key]->fecha="Abril";
+	 					break;
 
-		 					case '5':
-		 						$ventas[$key]->fecha="Mayo";
-		 					break;
+	 					case '5':
+	 						$ventas[$key]->fecha="Mayo";
+	 					break;
 
-		 					case '6':
-		 						$ventas[$key]->fecha="Junio";
-		 					break;
+	 					case '6':
+	 						$ventas[$key]->fecha="Junio";
+	 					break;
 
-		 					case '7':
-		 						$ventas[$key]->fecha="Julio";
-		 					break;
+	 					case '7':
+	 						$ventas[$key]->fecha="Julio";
+	 					break;
 
-		 					case '8':
-		 						$ventas[$key]->fecha="Agosto";
-		 					break;
+	 					case '8':
+	 						$ventas[$key]->fecha="Agosto";
+	 					break;
 
-		 					case '9':
-		 						$ventas[$key]->fecha="Septiembre";
-		 					break;
+	 					case '9':
+	 						$ventas[$key]->fecha="Septiembre";
+	 					break;
 
-		 					case '10':
-		 						$ventas[$key]->fecha="Octubre";
-		 					break;
+	 					case '10':
+	 						$ventas[$key]->fecha="Octubre";
+	 					break;
 
-		 					case '11':
-		 						$ventas[$key]->fecha="Noviembre";
-		 					break;
+	 					case '11':
+	 						$ventas[$key]->fecha="Noviembre";
+	 					break;
 
-		 					case '12':
-		 						$ventas[$key]->fecha="Diciembre";
-		 					break;
-		 					
-		 					default:
-		 						$ventas[$key]->fecha="Ninguno";
-		 					break;
-		 				}
-		 			}
-		 			$fecha_letra_inicial=$desde;
-		 			switch ($fecha_letra_inicial) {
-		 					case '1':
-		 						$fecha_letra_inicial="Enero";
-		 					break;
-
-		 					case '2':
-		 						$fecha_letra_inicial="Febrero";
-		 					break;
-
-		 					case '3':
-		 						$fecha_letra_inicial="Marzo";
-		 					break;
-
-		 					case '4':
-		 						$fecha_letra_inicial="Abril";
-		 					break;
-
-		 					case '5':
-		 						$fecha_letra_inicial="Mayo";
-		 					break;
-
-		 					case '6':
-		 						$fecha_letra_inicial="Junio";
-		 					break;
-
-		 					case '7':
-		 						$fecha_letra_inicial="Julio";
-		 					break;
-
-		 					case '8':
-		 						$fecha_letra_inicial="Agosto";
-		 					break;
-
-		 					case '9':
-		 						$fecha_letra_inicial="Septiembre";
-		 					break;
-
-		 					case '10':
-		 						$fecha_letra_inicial="Octubre";
-		 					break;
-
-		 					case '11':
-		 						$fecha_letra_inicial="Noviembre";
-		 					break;
-
-		 					case '12':
-		 						$fecha_letra_inicial="Diciembre";
-		 					break;
-		 					
-		 					default:
-		 						$fecha_letra_inicial="Ninguno";
-		 					break;
-		 				}
-		 				$fecha_letra_final=$hasta;
-
-		 				switch ($fecha_letra_final) {
-		 					case '1':
-		 						$fecha_letra_final="Enero";
-		 					break;
-
-		 					case '2':
-		 						$fecha_letra_final="Febrero";
-		 					break;
-
-		 					case '3':
-		 						$fecha_letra_final="Marzo";
-		 					break;
-
-		 					case '4':
-		 						$fecha_letra_final="Abril";
-		 					break;
-
-		 					case '5':
-		 						$fecha_letra_final="Mayo";
-		 					break;
-
-		 					case '6':
-		 						$fecha_letra_final="Junio";
-		 					break;
-
-		 					case '7':
-		 						$fecha_letra_final="Julio";
-		 					break;
-
-		 					case '8':
-		 						$fecha_letra_final="Agosto";
-		 					break;
-
-		 					case '9':
-		 						$fecha_letra_final="Septiembre";
-		 					break;
-
-		 					case '10':
-		 						$fecha_letra_final="Octubre";
-		 					break;
-
-		 					case '11':
-		 						$fecha_letra_final="Noviembre";
-		 					break;
-
-		 					case '12':
-		 						$fecha_letra_final="Diciembre";
-		 					break;
-		 					
-		 					default:
-		 						$fecha_letra_final="Ninguno";
-		 					break;
-		 				}
-
-
+	 					case '12':
+	 						$ventas[$key]->fecha="Diciembre";
+	 					break;
+	 					
+	 					default:
+	 						$ventas[$key]->fecha="Ninguno";
+	 					break;
+	 				}
+		 		}
 		 		$tipo="MENSUAL";
 		 		$valor=3;
 
-				return view('almacen.reportes.ventas.reportePDF.pdf',["desde"=>$desde, "hasta"=>$hasta, "ventas"=>$ventas, "tipo"=>$tipo, "valor"=>$valor, "fecha_letra_final"=>$fecha_letra_final, "fecha_letra_inicial"=>$fecha_letra_inicial, "total_ventas_mensuales"=>$total_ventas_mensuales, "año"=>$año]);
+				return view('almacen.reportes.ventas.reportePDF.pdf',["desde"=>$desde, "hasta"=>$hasta, "ventas"=>$ventas, "tipo"=>$tipo, "valor"=>$valor]);
 
 		 	}
 
@@ -883,18 +772,12 @@ class reportesVentas extends Controller
 				$tipo="SEMANAL";
 		 		$valor=2;
 
-
-		 		$total_ventas_semanales=0;
-	 			foreach ($ventas as $key => $value) {	
-		 			$total_ventas_semanales=intval($total_ventas_semanales)+intval($ventas[$key]->pago_total);
-		 		}
-
-
-				return view('almacen.reportes.ventas.reportePDF.pdf',["desde"=>$desde, "hasta"=>$hasta, "ventas"=>$ventas, "tipo"=>$tipo, "valor"=>$valor, "total_ventas_semanales"=>$total_ventas_semanales]);
+				return view('almacen.reportes.ventas.reportePDF.pdf',["desde"=>$desde, "hasta"=>$hasta, "ventas"=>$ventas, "tipo"=>$tipo, "valor"=>$valor]);
 		 	}
 
 
 		 	if($valor==1){
+
 
 	 			$ventas=DB::table('factura as f')
 	 			->join('empleado as e','f.empleado_id_empleado','=','e.id_empleado')
@@ -911,14 +794,7 @@ class reportesVentas extends Controller
 				$tipo="DIARIO";
 		 		$valor=1;
 
-		 		$total_ventas=DB::table('factura as f')
-	 			->select(DB::raw('sum(f.pago_total) as pago_total'))
-	 			->where('f.fecha','LIKE', '%'.$fecha_d.'%')
-	 			->orderBy('f.id_factura', 'desc')
-	 			->paginate(100);
-
-
-				return view('almacen.reportes.ventas.reportePDF.pdf',["desde"=>$desde, "hasta"=>$hasta, "ventas"=>$ventas, "tipo"=>$tipo, "valor"=>$valor,"fecha_d"=>$fecha_d,"total_ventas"=>$total_ventas]);
+				return view('almacen.reportes.ventas.reportePDF.pdf',["desde"=>$desde, "hasta"=>$hasta, "ventas"=>$ventas, "tipo"=>$tipo, "valor"=>$valor]);
 		 	}
 
 
@@ -955,10 +831,7 @@ class reportesVentas extends Controller
 	 			}
 	 			$tipo_reporte_detallado="m";
 
-				return view('almacen.reportes.ventas.reportePDF.pdf',["desde"=>$desde, "hasta"=>$hasta, "ventas"=>$ventas, "tipo"=>$tipo, "valor"=>$valor,"total_ventas"=>$total_ventas_diarias,"tipo_reporte_detallado"=>$tipo_reporte_detallado, "año"=>$año]);
-
-
-
+				return view('almacen.reportes.ventas.reportePDF.pdf',["desde"=>$desde, "hasta"=>$hasta, "ventas"=>$ventas, "tipo"=>$tipo, "valor"=>$valor,"total_ventas"=>$total_ventas_diarias,"tipo_reporte_detallado"=>$tipo_reporte_detallado,]);
 		 	}
 
 		 	if($valor=='s'){
@@ -994,7 +867,7 @@ class reportesVentas extends Controller
 		 			}
 		 			$tipo_reporte_detallado="s";
 
-		 			return view('almacen.reportes.ventas.reportePDF.pdf',["desde"=>$desde, "hasta"=>$hasta, "ventas"=>$ventas, "tipo"=>$tipo, "valor"=>$valor,"total_ventas"=>$total_ventas_diarias,"tipo_reporte_detallado"=>$tipo_reporte_detallado, "año"=>$año]);
+		 			return view('almacen.reportes.ventas.reportePDF.pdf',["desde"=>$desde, "hasta"=>$hasta, "ventas"=>$ventas, "tipo"=>$tipo, "valor"=>$valor,"total_ventas"=>$total_ventas_diarias,"tipo_reporte_detallado"=>$tipo_reporte_detallado,]);
 
 		 	}
 
@@ -1030,7 +903,8 @@ class reportesVentas extends Controller
 		 			}
 		 			$tipo_reporte_detallado="d";
 
-		 			return view('almacen.reportes.ventas.reportePDF.pdf',["desde"=>$desde, "hasta"=>$hasta, "ventas"=>$ventas, "tipo"=>$tipo, "valor"=>$valor,"total_ventas"=>$total_ventas_diarias,"tipo_reporte_detallado"=>$tipo_reporte_detallado,"fecha_d"=>$fecha_d]);
+		 			return view('almacen.reportes.ventas.reportePDF.pdf',["desde"=>$desde, "hasta"=>$hasta, "ventas"=>$ventas, "tipo"=>$tipo, "valor"=>$valor,"total_ventas"=>$total_ventas_diarias,"tipo_reporte_detallado"=>$tipo_reporte_detallado,]);
+
 		 	}
 
 	 	} 
@@ -1081,7 +955,6 @@ class reportesVentas extends Controller
 
 		 	if($valor==3){
 
-
 	 			//Mensual General
 	 			$ventas=DB::table('factura as f')
 	 			->join('empleado as e','f.empleado_id_empleado','=','e.id_empleado')
@@ -1098,183 +971,69 @@ class reportesVentas extends Controller
 	 			->groupBy(DB::raw('MONTH(f.fecha)'))
 	 			->paginate(100);
 
-
-		 		$total_ventas_mensuales=0;
 	 			foreach ($ventas as $key => $value) {	
-		 				$total_ventas_mensuales=intval($total_ventas_mensuales)+intval($ventas[$key]->pago_total);
 
-		 				switch ($ventas[$key]->fecha) {
-		 					case '1':
-		 						$ventas[$key]->fecha="Enero";
-		 					break;
+	 				switch ($ventas[$key]->fecha) {
+	 					case '1':
+	 						$ventas[$key]->fecha="Enero";
+	 					break;
 
-		 					case '2':
-		 						$ventas[$key]->fecha="Febrero";
-		 					break;
+	 					case '2':
+	 						$ventas[$key]->fecha="Febrero";
+	 					break;
 
-		 					case '3':
-		 						$ventas[$key]->fecha="Marzo";
-		 					break;
+	 					case '3':
+	 						$ventas[$key]->fecha="Marzo";
+	 					break;
 
-		 					case '4':
-		 						$ventas[$key]->fecha="Abril";
-		 					break;
+	 					case '4':
+	 						$ventas[$key]->fecha="Abril";
+	 					break;
 
-		 					case '5':
-		 						$ventas[$key]->fecha="Mayo";
-		 					break;
+	 					case '5':
+	 						$ventas[$key]->fecha="Mayo";
+	 					break;
 
-		 					case '6':
-		 						$ventas[$key]->fecha="Junio";
-		 					break;
+	 					case '6':
+	 						$ventas[$key]->fecha="Junio";
+	 					break;
 
-		 					case '7':
-		 						$ventas[$key]->fecha="Julio";
-		 					break;
+	 					case '7':
+	 						$ventas[$key]->fecha="Julio";
+	 					break;
 
-		 					case '8':
-		 						$ventas[$key]->fecha="Agosto";
-		 					break;
+	 					case '8':
+	 						$ventas[$key]->fecha="Agosto";
+	 					break;
 
-		 					case '9':
-		 						$ventas[$key]->fecha="Septiembre";
-		 					break;
+	 					case '9':
+	 						$ventas[$key]->fecha="Septiembre";
+	 					break;
 
-		 					case '10':
-		 						$ventas[$key]->fecha="Octubre";
-		 					break;
+	 					case '10':
+	 						$ventas[$key]->fecha="Octubre";
+	 					break;
 
-		 					case '11':
-		 						$ventas[$key]->fecha="Noviembre";
-		 					break;
+	 					case '11':
+	 						$ventas[$key]->fecha="Noviembre";
+	 					break;
 
-		 					case '12':
-		 						$ventas[$key]->fecha="Diciembre";
-		 					break;
-		 					
-		 					default:
-		 						$ventas[$key]->fecha="Ninguno";
-		 					break;
-		 				}
-		 			}
-		 			$fecha_letra_inicial=$desde;
-		 			switch ($fecha_letra_inicial) {
-		 					case '1':
-		 						$fecha_letra_inicial="Enero";
-		 					break;
-
-		 					case '2':
-		 						$fecha_letra_inicial="Febrero";
-		 					break;
-
-		 					case '3':
-		 						$fecha_letra_inicial="Marzo";
-		 					break;
-
-		 					case '4':
-		 						$fecha_letra_inicial="Abril";
-		 					break;
-
-		 					case '5':
-		 						$fecha_letra_inicial="Mayo";
-		 					break;
-
-		 					case '6':
-		 						$fecha_letra_inicial="Junio";
-		 					break;
-
-		 					case '7':
-		 						$fecha_letra_inicial="Julio";
-		 					break;
-
-		 					case '8':
-		 						$fecha_letra_inicial="Agosto";
-		 					break;
-
-		 					case '9':
-		 						$fecha_letra_inicial="Septiembre";
-		 					break;
-
-		 					case '10':
-		 						$fecha_letra_inicial="Octubre";
-		 					break;
-
-		 					case '11':
-		 						$fecha_letra_inicial="Noviembre";
-		 					break;
-
-		 					case '12':
-		 						$fecha_letra_inicial="Diciembre";
-		 					break;
-		 					
-		 					default:
-		 						$fecha_letra_inicial="Ninguno";
-		 					break;
-		 				}
-		 				$fecha_letra_final=$hasta;
-
-		 				switch ($fecha_letra_final) {
-		 					case '1':
-		 						$fecha_letra_final="Enero";
-		 					break;
-
-		 					case '2':
-		 						$fecha_letra_final="Febrero";
-		 					break;
-
-		 					case '3':
-		 						$fecha_letra_final="Marzo";
-		 					break;
-
-		 					case '4':
-		 						$fecha_letra_final="Abril";
-		 					break;
-
-		 					case '5':
-		 						$fecha_letra_final="Mayo";
-		 					break;
-
-		 					case '6':
-		 						$fecha_letra_final="Junio";
-		 					break;
-
-		 					case '7':
-		 						$fecha_letra_final="Julio";
-		 					break;
-
-		 					case '8':
-		 						$fecha_letra_final="Agosto";
-		 					break;
-
-		 					case '9':
-		 						$fecha_letra_final="Septiembre";
-		 					break;
-
-		 					case '10':
-		 						$fecha_letra_final="Octubre";
-		 					break;
-
-		 					case '11':
-		 						$fecha_letra_final="Noviembre";
-		 					break;
-
-		 					case '12':
-		 						$fecha_letra_final="Diciembre";
-		 					break;
-		 					
-		 					default:
-		 						$fecha_letra_final="Ninguno";
-		 					break;
-		 				}
-
-
-		 		$tipo="MENSUAL";
+	 					case '12':
+	 						$ventas[$key]->fecha="Diciembre";
+	 					break;
+	 					
+	 					default:
+	 						$ventas[$key]->fecha="Ninguno";
+	 					break;
+	 				}
+		 		}
+		 	
+				$tipo="MENSUAL";
 		 		$valor=3;
 
-				return view('almacen.reportes.ventas.reporteExcel.excel',["desde"=>$desde, "hasta"=>$hasta, "ventas"=>$ventas, "tipo"=>$tipo, "valor"=>$valor, "fecha_letra_final"=>$fecha_letra_final, "fecha_letra_inicial"=>$fecha_letra_inicial, "total_ventas_mensuales"=>$total_ventas_mensuales]);
+				return view('almacen.reportes.ventas.reporteExcel.excel',["desde"=>$desde, "hasta"=>$hasta, "ventas"=>$ventas, "tipo"=>$tipo, "valor"=>$valor]);
 
 		 	}
-
 
 
 		 	if($valor==2){
@@ -1297,12 +1056,7 @@ class reportesVentas extends Controller
 				$tipo="SEMANAL";
 		 		$valor=2;
 
-		 		$total_ventas_semanales=0;
-	 			foreach ($ventas as $key => $value) {	
-		 			$total_ventas_semanales=intval($total_ventas_semanales)+intval($ventas[$key]->pago_total);
-		 		}
-
-				return view('almacen.reportes.ventas.reporteExcel.excel',["desde"=>$desde, "hasta"=>$hasta, "ventas"=>$ventas, "tipo"=>$tipo, "valor"=>$valor, "total_ventas_semanales"=>$total_ventas_semanales]);
+				return view('almacen.reportes.ventas.reporteExcel.excel',["desde"=>$desde, "hasta"=>$hasta, "ventas"=>$ventas, "tipo"=>$tipo, "valor"=>$valor]);
 		 	}
 
 
@@ -1326,17 +1080,7 @@ class reportesVentas extends Controller
 				$tipo="DIARIO";
 		 		$valor=1;
 
-
-		 		$total_ventas=DB::table('factura as f')
-	 			->select(DB::raw('sum(f.pago_total) as pago_total'))
-	 			->where('f.fecha','LIKE', '%'.$fecha_d.'%')
-	 			->orderBy('f.id_factura', 'desc')
-	 			->paginate(100);
-
-
-				
-
-				return view('almacen.reportes.ventas.reporteExcel.excel',["desde"=>$desde, "hasta"=>$hasta, "ventas"=>$ventas, "tipo"=>$tipo, "valor"=>$valor,"fecha_d"=>$fecha_d,"total_ventas"=>$total_ventas]);
+				return view('almacen.reportes.ventas.reporteExcel.excel',["desde"=>$desde, "hasta"=>$hasta, "ventas"=>$ventas, "tipo"=>$tipo, "valor"=>$valor]);
 		 	}
 
 		 	if($valor=='m'){
@@ -1372,7 +1116,7 @@ class reportesVentas extends Controller
 	 			}
 	 			$tipo_reporte_detallado="m";
 
-				return view('almacen.reportes.ventas.reporteExcel.excel',["desde"=>$desde, "hasta"=>$hasta, "ventas"=>$ventas, "tipo"=>$tipo, "valor"=>$valor,"total_ventas"=>$total_ventas_diarias,"tipo_reporte_detallado"=>$tipo_reporte_detallado, "año"=>$año]);
+				return view('almacen.reportes.ventas.reporteExcel.excel',["desde"=>$desde, "hasta"=>$hasta, "ventas"=>$ventas, "tipo"=>$tipo, "valor"=>$valor,"total_ventas"=>$total_ventas_diarias,"tipo_reporte_detallado"=>$tipo_reporte_detallado,]);
 		 	}
 
 
@@ -1409,7 +1153,7 @@ class reportesVentas extends Controller
 		 			}
 		 			$tipo_reporte_detallado="s";
 
-		 			return view('almacen.reportes.ventas.reporteExcel.excel',["desde"=>$desde, "hasta"=>$hasta, "ventas"=>$ventas, "tipo"=>$tipo, "valor"=>$valor,"total_ventas"=>$total_ventas_diarias,"tipo_reporte_detallado"=>$tipo_reporte_detallado, "año"=>$año]);
+		 			return view('almacen.reportes.ventas.reporteExcel.excel',["desde"=>$desde, "hasta"=>$hasta, "ventas"=>$ventas, "tipo"=>$tipo, "valor"=>$valor,"total_ventas"=>$total_ventas_diarias,"tipo_reporte_detallado"=>$tipo_reporte_detallado,]);
 
 		 	}
 
@@ -1444,10 +1188,13 @@ class reportesVentas extends Controller
 		 			}
 		 			$tipo_reporte_detallado="d";
 
-		 			return view('almacen.reportes.ventas.reporteExcel.excel',["desde"=>$desde, "hasta"=>$hasta, "ventas"=>$ventas, "tipo"=>$tipo, "valor"=>$valor,"total_ventas"=>$total_ventas_diarias,"tipo_reporte_detallado"=>$tipo_reporte_detallado,"fecha_d"=>$fecha_d]);
+		 			return view('almacen.reportes.ventas.reporteExcel.excel',["desde"=>$desde, "hasta"=>$hasta, "ventas"=>$ventas, "tipo"=>$tipo, "valor"=>$valor,"total_ventas"=>$total_ventas_diarias,"tipo_reporte_detallado"=>$tipo_reporte_detallado,]);
 
 		 	}
 
+
+
+			//return view('almacen.reportes.ventas.reporteExcel.excel',["desde"=>$desde, "hasta"=>$hasta]);
 	 	} 
 
 	 	public function downloadExcelReportValorBruto($id){
@@ -1549,10 +1296,49 @@ class reportesVentas extends Controller
 
 				return view('almacen.reportes.valorbruto.reporteExcel.excel',["desde"=>$desde, "hasta"=>$hasta, "productos"=>$productos]);
 		 	}
-	
+
+			//return view('almacen.reportes.ventas.reporteExcel.excel',["desde"=>$desde, "hasta"=>$hasta]);
 	 	} 
+
+
 
 }
 
 
 
+/*public function downloadExcelReport($id){
+			$i=RVentas::findOrFail($id);
+			$ini=$i->fechaInicial;
+			$fin=$i->fechaFinal;
+			$desde=$ini;
+		 	$hasta=$fin;
+
+		 	$cadena=$id;
+	 		$separador = ".";
+	 		$separada = explode($separador, $cadena);
+			$count=1;
+
+			$desde=0;
+			$hasta=0;
+			$valor=0;
+
+			if(count($separada)==3){
+				$desde=$separada[0];
+				$hasta=$separada[1];
+				$valor=$separada[2];
+			}
+
+			return view('almacen.reportes.ventas.reporteExcel.excel',["desde"=>$desde, "hasta"=>$hasta]);
+	 	} */
+
+	 	/*public function downloadPDFReport($id){
+			$i=RVentas::findOrFail($id);
+			$ini=$i->fechaInicial;
+			$fin=$i->fechaFinal;
+			$desde=$ini;
+		 	$hasta=$fin;
+
+		 	$productos="SELECT f.id_factura, f.pago_total, f.noproductos, tp.nombre as tipo_pago_id_tpago, f.fecha FROM factura as f, tipo_pago as tp, cliente as c, empleado as e WHERE f.tipo_pago_id_tpago=tp.id_tpago and f.empleado_id_empleado=e.id_empleado and f.cliente_id_cliente=c.id_cliente and f.fecha>='$desde' and f.fecha<='$hasta' ORDER BY f.id_factura DESC";
+
+			return view('almacen.reportes.ventas.reportePDF.pdf',["desde"=>$desde, "hasta"=>$hasta, "productos"=>$productos]);
+	 	}*/
