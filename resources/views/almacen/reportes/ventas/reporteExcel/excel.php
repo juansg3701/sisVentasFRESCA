@@ -159,7 +159,7 @@
 		    	<td colspan="3"><?php echo 'Fecha de generacion: '.date('m-d-Y h:i:s a', time()); ?></td>
 		    </tr>
 		    <tr>
-		    	<td><?php echo 'Mes: '.$año; ?></td>
+		    	<td><?php echo 'Mes: '.$desde; ?></td>
 				<td><?php echo 'Total ventas: '.$total_ventas; ?></td>
 		    </tr>
 

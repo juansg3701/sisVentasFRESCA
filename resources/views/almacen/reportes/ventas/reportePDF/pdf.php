@@ -137,7 +137,7 @@ $pdf->Ln(15);
         $pdf->Cell(35, 5, 'Fecha de generacion:  ', 0,0);
         $pdf->Cell(20, 5, date('m-d-Y h:i:s a', time()), 0,1);
         $pdf->Cell(20, 5, 'Mes: ', 0,0);
-        $pdf->Cell(20, 5, $año, 0,1);
+        $pdf->Cell(20, 5, $desde, 0,1);
         $pdf->Cell(20, 5, 'Total ventas: ', 0,0);
         $pdf->Cell(20, 5, $total_ventas, 0,1);
         $pdf->Cell(20, 5, '', 0,1);
