@@ -85,15 +85,13 @@ class reportesInventario extends Controller
 
 
 	 			$ventas=DB::table('stock as s')
-	 			->join('empleado as e','s.empleado_id_empleado','=','e.id_empleado')
-	 			->join('proveedor as p','s.proveedor_id_proveedor','=','p.id_proveedor')
 	 			->join('categoria_producto_trans as tp','s.transformacion_stock_id','=','tp.id_categoria')
 	 			->select('s.id_stock','s.total', 'tp.nombre as categoria', 's.fecha_registro','s.producto_id_producto','s.noFactura','s.cantidad')
 	 			->where('s.fecha_registro','>=',$r->fechaInicial)
 	 			->where('s.fecha_registro','<=',$r->fechaFinal)
 	 			->where('s.pago_pendiente','=',1)
 	 			->orderBy('s.id_stock', 'desc')
-	 			->paginate(50);
+	 			->get();
 
 	 			$productos_stock=DB::table('stock as s')
 	 			->join('empleado as e','s.empleado_id_empleado','=','e.id_empleado')
@@ -103,7 +101,7 @@ class reportesInventario extends Controller
 	 			->where('s.fecha_registro','<=',$r->fechaFinal)
 	 			->where('s.pago_pendiente','=',1)
 	 			->orderBy('s.id_stock', 'desc')
-	 			->paginate(50);
+	 			->get();
 
 	 			if(auth()->user()->superusuario==0){
 
@@ -127,8 +125,6 @@ class reportesInventario extends Controller
 
 
 	 			$ventas=DB::table('stock as s')
-	 			->join('empleado as e','s.empleado_id_empleado','=','e.id_empleado')
-	 			->join('proveedor as p','s.proveedor_id_proveedor','=','p.id_proveedor')
 	 			->join('categoria_producto_trans as tp','s.transformacion_stock_id','=','tp.id_categoria')
 	 			->select('s.id_stock','s.total', 'tp.nombre as categoria', 's.fecha_registro','s.producto_id_producto','s.noFactura','s.cantidad')
 	 			->where('s.id_sede','=',auth()->user()->sede_id_sede)
@@ -136,7 +132,7 @@ class reportesInventario extends Controller
 	 			->where('s.fecha_registro','<=',$r->fechaFinal)
 	 			->where('s.pago_pendiente','=',1)
 	 			->orderBy('s.id_stock', 'desc')
-	 			->paginate(50);
+	 			->get();
 
 	 			$productos_stock=DB::table('stock as s')
 	 			->join('empleado as e','s.empleado_id_empleado','=','e.id_empleado')
@@ -147,7 +143,7 @@ class reportesInventario extends Controller
 	 			->where('s.fecha_registro','<=',$r->fechaFinal)
 	 			->where('s.pago_pendiente','=',1)
 	 			->orderBy('s.id_stock', 'desc')
-	 			->paginate(50);
+	 			->get();
 
 	 			
 	 			}
@@ -203,7 +199,7 @@ class reportesInventario extends Controller
 	 			->where('s.fecha_registro','<=',$r->fechaFinal)
 	 			->where('s.pago_pendiente','=',1)
 	 			->orderBy('s.id_stock', 'desc')
-	 			->paginate(50);
+	 			->get();
 
 	 			$productos_stock=DB::table('stock as s')
 	 			->join('empleado as e','s.empleado_id_empleado','=','e.id_empleado')
@@ -213,7 +209,7 @@ class reportesInventario extends Controller
 	 			->where('s.fecha_registro','<=',$r->fechaFinal)
 	 			->where('s.pago_pendiente','=',1)
 	 			->orderBy('s.id_stock', 'desc')
-	 			->paginate(50);
+	 			->get();
 
 	 			if(auth()->user()->superusuario==0){
 
@@ -237,8 +233,6 @@ class reportesInventario extends Controller
 
 
 	 			$ventas=DB::table('stock as s')
-	 			->join('empleado as e','s.empleado_id_empleado','=','e.id_empleado')
-	 			->join('proveedor as p','s.proveedor_id_proveedor','=','p.id_proveedor')
 	 			->join('categoria_producto_trans as tp','s.transformacion_stock_id','=','tp.id_categoria')
 	 			->select('s.id_stock','s.total', 'tp.nombre as categoria', 's.fecha_registro','s.producto_id_producto','s.noFactura','s.cantidad')
 	 			->where('s.id_sede','=',auth()->user()->sede_id_sede)
@@ -246,7 +240,7 @@ class reportesInventario extends Controller
 	 			->where('s.fecha_registro','<=',$r->fechaFinal)
 	 			->where('s.pago_pendiente','=',1)
 	 			->orderBy('s.id_stock', 'desc')
-	 			->paginate(50);
+	 			->get();
 
 	 			$productos_stock=DB::table('stock as s')
 	 			->join('empleado as e','s.empleado_id_empleado','=','e.id_empleado')
@@ -257,7 +251,7 @@ class reportesInventario extends Controller
 	 			->where('s.fecha_registro','<=',$r->fechaFinal)
 	 			->where('s.pago_pendiente','=',1)
 	 			->orderBy('s.id_stock', 'desc')
-	 			->paginate(50);
+	 			->get();
 
 	 			
 	 			}
@@ -307,10 +301,7 @@ class reportesInventario extends Controller
 
 					//Detallado de semana
 					$stock2=DB::table('stock as s')
-					->join('empleado as e','s.empleado_id_empleado','=','e.id_empleado')
-					->join('proveedor as p','s.proveedor_id_proveedor','=','p.id_proveedor')
 					->join('sede as sed','s.sede_id_sede','=','sed.id_sede')
-					->join('categoria_producto_trans as cpt','s.transformacion_stock_id','=','cpt.id_categoria')
 					->select('s.producto_id_producto as producto',
 						DB::raw('sum(s.cantidad_rep) as cantidad'),
 						DB::raw('sum(s.total) as total'))
@@ -319,15 +310,12 @@ class reportesInventario extends Controller
 						->where('s.pago_pendiente','=',1)
 					->orderBy('s.id_stock','asc')
 					->groupBy('s.producto_id_producto')
-					->paginate(100);
+					->get();
 
 
 		 			if(auth()->user()->superusuario==0){
 						$stock2=DB::table('stock as s')
-						->join('empleado as e','s.empleado_id_empleado','=','e.id_empleado')
-						->join('proveedor as p','s.proveedor_id_proveedor','=','p.id_proveedor')
 						->join('sede as sed','s.sede_id_sede','=','sed.id_sede')
-						->join('categoria_producto_trans as cpt','s.transformacion_stock_id','=','cpt.id_categoria')
 						->select('s.producto_id_producto as producto',
 							DB::raw('sum(s.cantidad_rep) as cantidad'),
 							DB::raw('sum(s.total) as total'))
@@ -337,7 +325,7 @@ class reportesInventario extends Controller
 							->where('s.pago_pendiente','=',1)
 						->orderBy('s.id_stock','asc')
 						->groupBy('s.producto_id_producto')
-						->paginate(100);
+						->get();
 		 		
 		 		
 		 			}
@@ -363,10 +351,7 @@ class reportesInventario extends Controller
 
 					//Detallado de mes
 					$stock_m=DB::table('stock as s')
-						->join('empleado as e','s.empleado_id_empleado','=','e.id_empleado')
-						->join('proveedor as p','s.proveedor_id_proveedor','=','p.id_proveedor')
 						->join('sede as sed','s.sede_id_sede','=','sed.id_sede')
-						->join('categoria_producto_trans as cpt','s.transformacion_stock_id','=','cpt.id_categoria')
 						->select('s.producto_id_producto as producto',
 							DB::raw('sum(s.cantidad_rep) as cantidad'),
 							DB::raw('sum(s.total) as total'))
@@ -375,16 +360,13 @@ class reportesInventario extends Controller
 							->where('s.pago_pendiente','=',1)
 						->orderBy('s.id_stock','asc')
 						->groupBy('s.producto_id_producto')
-						->paginate(100);
+						->get();
 
 
 		 			if(auth()->user()->superusuario==0){
 				
 						$stock_m=DB::table('stock as s')
-						->join('empleado as e','s.empleado_id_empleado','=','e.id_empleado')
-						->join('proveedor as p','s.proveedor_id_proveedor','=','p.id_proveedor')
 						->join('sede as sed','s.sede_id_sede','=','sed.id_sede')
-						->join('categoria_producto_trans as cpt','s.transformacion_stock_id','=','cpt.id_categoria')
 						->select('s.producto_id_producto as producto',
 							DB::raw('sum(s.cantidad_rep) as cantidad'),
 							DB::raw('sum(s.total) as total'))
@@ -394,7 +376,7 @@ class reportesInventario extends Controller
 							->where('s.pago_pendiente','=',1)
 							->orderBy('s.id_stock','asc')
 						->groupBy('s.producto_id_producto')
-						->paginate(100);
+						->get();
 
 		 		
 		 			}
@@ -846,8 +828,6 @@ class reportesInventario extends Controller
 		 	if($valor==3){
 
 	 			$stock=DB::table('stock as s')
-	 			->join('empleado as e','s.empleado_id_empleado','=','e.id_empleado')
-	 			->join('proveedor as p','s.proveedor_id_proveedor','=','p.id_proveedor')
 	 			->join('sede as sed','s.sede_id_sede','=','sed.id_sede')
 	 			->select('s.id_stock',DB::raw('sum(s.total) as total'),
 				 DB::raw('sum(s.cantidad_rep) as cantidad_rep'), 
@@ -860,7 +840,7 @@ class reportesInventario extends Controller
 	 			->where('s.pago_pendiente','=',1)
 	 			->orderBy(DB::raw('MONTH(s.fecha_registro)'), 'asc')
 	 			->groupBy(DB::raw('MONTH(s.fecha_registro)'))
-	 			->paginate(100);
+	 			->get();
 
 
 
@@ -1043,8 +1023,6 @@ class reportesInventario extends Controller
 		 	if($valor==2){
 
 	 			$stock=DB::table('stock as s')
-	 			->join('empleado as e','s.empleado_id_empleado','=','e.id_empleado')
-	 			->join('proveedor as p','s.proveedor_id_proveedor','=','p.id_proveedor')
 	 			->join('sede as sed','s.sede_id_sede','=','sed.id_sede')
 	 			->select('s.id_stock',DB::raw('sum(s.total) as total'),
 				 DB::raw('sum(s.cantidad_rep) as cantidad_rep'), 
@@ -1056,7 +1034,7 @@ class reportesInventario extends Controller
 	 			->where('s.pago_pendiente','=',1)
 	 			->orderBy(DB::raw('WEEK(s.fecha_registro)'), 'asc')
 	 			->groupBy(DB::raw('WEEK(s.fecha_registro)'))
-	 			->paginate(100);
+	 			->get();
 
 				$tipo="SEMANAL";
 		 		$valor=2;
@@ -1073,15 +1051,13 @@ class reportesInventario extends Controller
 		 	if($valor==1){
 
 	 			$stock=DB::table('stock as s')
-	 			->join('empleado as e','s.empleado_id_empleado','=','e.id_empleado')
-	 			->join('proveedor as p','s.proveedor_id_proveedor','=','p.id_proveedor')
 	 			->join('sede as sed','s.sede_id_sede','=','sed.id_sede')
 	 			->join('categoria_producto_trans as cpt','s.transformacion_stock_id','=','cpt.id_categoria')
 	 			->select('s.id_stock','s.total','s.cantidad_rep', 's.fecha_registro','s.costo_compra')
 	 			->where('s.fecha_registro','LIKE', '%'.$fecha_d.'%')
 	 			->where('s.pago_pendiente','=',1)
 	 			->orderBy('s.id_stock','asc')
-	 			->paginate(100);
+	 			->get();
 
 				$tipo="DIARIO";
 		 		$valor=1;
@@ -1091,7 +1067,7 @@ class reportesInventario extends Controller
 	 			->where('s.fecha_registro','LIKE', '%'.$fecha_d.'%')
 	 			->where('s.pago_pendiente','=',1)
 	 			->orderBy('s.id_stock', 'desc')
-	 			->paginate(100);
+	 			->get();
 
 
 				return view('almacen.reportes.inventario.reportePDF.pdf',["desde"=>$desde, "hasta"=>$hasta, "stock"=>$stock, "tipo"=>$tipo, "valor"=>$valor,"fecha_d"=>$fecha_d,"total_stock"=>$total_stock]);
@@ -1105,8 +1081,6 @@ class reportesInventario extends Controller
 
 	 			//Detallado de mes
 				$stock=DB::table('stock as s')
-				->join('empleado as e','s.empleado_id_empleado','=','e.id_empleado')
-				->join('proveedor as p','s.proveedor_id_proveedor','=','p.id_proveedor')
 				->join('sede as sed','s.sede_id_sede','=','sed.id_sede')
 				->join('categoria_producto_trans as cpt','s.transformacion_stock_id','=','cpt.id_categoria')
 				->select('s.producto_id_producto as producto',
@@ -1117,7 +1091,7 @@ class reportesInventario extends Controller
 				->where('s.pago_pendiente','=',1)
 				->orderBy('s.id_stock','asc')
 				->groupBy('s.producto_id_producto')
-				->paginate(100);
+				->get();
 
 
 				$tipo="MENSUAL DETALLADO";
@@ -1146,8 +1120,6 @@ class reportesInventario extends Controller
 
 		 		//Detallado de semana
 					$stock=DB::table('stock as s')
-					->join('empleado as e','s.empleado_id_empleado','=','e.id_empleado')
-					->join('proveedor as p','s.proveedor_id_proveedor','=','p.id_proveedor')
 					->join('sede as sed','s.sede_id_sede','=','sed.id_sede')
 					->join('categoria_producto_trans as cpt','s.transformacion_stock_id','=','cpt.id_categoria')
 					->select('s.producto_id_producto as producto',
@@ -1158,7 +1130,7 @@ class reportesInventario extends Controller
 						->where('s.pago_pendiente','=',1)
 					->orderBy('s.id_stock','asc')
 					->groupBy('s.producto_id_producto')
-					->paginate(100);
+					->get();
 
 		 			$tipo="SEMANAL DETALLADO";
 		 			$valor='s';
@@ -1185,8 +1157,6 @@ class reportesInventario extends Controller
 
 		 		//Detallado de semana
 				$stock=DB::table('stock as s')
-				->join('empleado as e','s.empleado_id_empleado','=','e.id_empleado')
-				->join('proveedor as p','s.proveedor_id_proveedor','=','p.id_proveedor')
 				->join('sede as sed','s.sede_id_sede','=','sed.id_sede')
 				->join('categoria_producto_trans as cpt','s.transformacion_stock_id','=','cpt.id_categoria')
 				->select('s.producto_id_producto as producto',
@@ -1196,7 +1166,7 @@ class reportesInventario extends Controller
 				->where('s.pago_pendiente','=',1)
 				->orderBy('s.id_stock','asc')
 				->groupBy('s.producto_id_producto')
-				->paginate(100);
+				->get();
 
 	 			$tipo="DIARIO DETALLADO";
 	 			$valor='d';
@@ -1272,8 +1242,6 @@ class reportesInventario extends Controller
 		 	if($valor==3){
 
 	 			$stock=DB::table('stock as s')
-	 			->join('empleado as e','s.empleado_id_empleado','=','e.id_empleado')
-	 			->join('proveedor as p','s.proveedor_id_proveedor','=','p.id_proveedor')
 	 			->join('sede as sed','s.sede_id_sede','=','sed.id_sede')
 	 			->select('s.id_stock',DB::raw('sum(s.total) as total'),
 				 DB::raw('sum(s.cantidad_rep) as cantidad_rep'), 
@@ -1285,7 +1253,7 @@ class reportesInventario extends Controller
 	 			->where(DB::raw('YEAR(s.fecha_registro)'),'=',$año)
 	 			->orderBy(DB::raw('MONTH(s.fecha_registro)'), 'asc')
 	 			->groupBy(DB::raw('MONTH(s.fecha_registro)'))
-	 			->paginate(100);
+	 			->get();
 
 
 
@@ -1469,8 +1437,6 @@ class reportesInventario extends Controller
 		 	if($valor==2){
 
 	 			$stock=DB::table('stock as s')
-	 			->join('empleado as e','s.empleado_id_empleado','=','e.id_empleado')
-	 			->join('proveedor as p','s.proveedor_id_proveedor','=','p.id_proveedor')
 	 			->join('sede as sed','s.sede_id_sede','=','sed.id_sede')
 	 			->select('s.id_stock',DB::raw('sum(s.total) as total'),
 				 DB::raw('sum(s.cantidad_rep) as cantidad_rep'), 
@@ -1481,7 +1447,7 @@ class reportesInventario extends Controller
 	 			->where(DB::raw('YEAR(s.fecha_registro)'),'=',$año)
 	 			->orderBy(DB::raw('WEEK(s.fecha_registro)'), 'asc')
 	 			->groupBy(DB::raw('WEEK(s.fecha_registro)'))
-	 			->paginate(100);
+	 			->get();
 
 				$tipo="SEMANAL";
 		 		$valor=2;
@@ -1498,14 +1464,12 @@ class reportesInventario extends Controller
 		 	if($valor==1){
 
 	 			$stock=DB::table('stock as s')
-	 			->join('empleado as e','s.empleado_id_empleado','=','e.id_empleado')
-	 			->join('proveedor as p','s.proveedor_id_proveedor','=','p.id_proveedor')
 	 			->join('sede as sed','s.sede_id_sede','=','sed.id_sede')
 	 			->join('categoria_producto_trans as cpt','s.transformacion_stock_id','=','cpt.id_categoria')
 	 			->select('s.id_stock','s.total','s.cantidad_rep', 's.fecha_registro','s.costo_compra')
 	 			->where('s.fecha_registro','LIKE', '%'.$fecha_d.'%')
 	 			->orderBy('s.id_stock','asc')
-	 			->paginate(100);
+	 			->get();
 
 				$tipo="DIARIO";
 		 		$valor=1;
@@ -1514,7 +1478,7 @@ class reportesInventario extends Controller
 	 			->select(DB::raw('sum(s.total) as pago_total'))
 	 			->where('s.fecha_registro','LIKE', '%'.$fecha_d.'%')
 	 			->orderBy('s.id_stock', 'desc')
-	 			->paginate(100);
+	 			->get();
 
 
 				return view('almacen.reportes.inventario.reporteExcel.excel',["desde"=>$desde, "hasta"=>$hasta, "stock"=>$stock, "tipo"=>$tipo, "valor"=>$valor,"fecha_d"=>$fecha_d,"total_stock"=>$total_stock]);
@@ -1527,10 +1491,7 @@ class reportesInventario extends Controller
 
 	 			//Detallado de mes
 				$stock=DB::table('stock as s')
-				->join('empleado as e','s.empleado_id_empleado','=','e.id_empleado')
-				->join('proveedor as p','s.proveedor_id_proveedor','=','p.id_proveedor')
 				->join('sede as sed','s.sede_id_sede','=','sed.id_sede')
-				->join('categoria_producto_trans as cpt','s.transformacion_stock_id','=','cpt.id_categoria')
 				->select('s.producto_id_producto as producto',
 				 DB::raw('sum(s.cantidad_rep) as cantidad'),
 				 DB::raw('sum(s.total) as total'))
@@ -1538,7 +1499,7 @@ class reportesInventario extends Controller
 				->where(DB::raw('MONTH(s.fecha_registro)'),'=',$desde)
 				->orderBy('s.id_stock','asc')
 				->groupBy('s.producto_id_producto')
-				->paginate(100);
+				->get();
 
 
 				$tipo="MENSUAL DETALLADO";
@@ -1567,10 +1528,7 @@ class reportesInventario extends Controller
 
 		 		//Detallado de semana
 					$stock=DB::table('stock as s')
-					->join('empleado as e','s.empleado_id_empleado','=','e.id_empleado')
-					->join('proveedor as p','s.proveedor_id_proveedor','=','p.id_proveedor')
 					->join('sede as sed','s.sede_id_sede','=','sed.id_sede')
-					->join('categoria_producto_trans as cpt','s.transformacion_stock_id','=','cpt.id_categoria')
 					->select('s.producto_id_producto as producto',
 						DB::raw('sum(s.cantidad_rep) as cantidad'),
 						DB::raw('sum(s.total) as total'))
@@ -1579,7 +1537,7 @@ class reportesInventario extends Controller
 						->where('s.pago_pendiente','=',1)
 					->orderBy('s.id_stock','asc')
 					->groupBy('s.producto_id_producto')
-					->paginate(100);
+					->get();
 
 		 			$tipo="DIARIO DETALLADO";
 		 			$valor='s';
@@ -1608,10 +1566,7 @@ class reportesInventario extends Controller
 
 		 		//Detallado de semana
 				$stock=DB::table('stock as s')
-				->join('empleado as e','s.empleado_id_empleado','=','e.id_empleado')
-				->join('proveedor as p','s.proveedor_id_proveedor','=','p.id_proveedor')
 				->join('sede as sed','s.sede_id_sede','=','sed.id_sede')
-				->join('categoria_producto_trans as cpt','s.transformacion_stock_id','=','cpt.id_categoria')
 				->select('s.producto_id_producto as producto',
 					DB::raw('sum(s.cantidad_rep) as cantidad'),
 				 	DB::raw('sum(s.total) as total'))
@@ -1619,7 +1574,7 @@ class reportesInventario extends Controller
 				->where('s.pago_pendiente','=',1)
 				->orderBy('s.id_stock','asc')
 				->groupBy('s.producto_id_producto')
-				->paginate(100);
+				->get();
 
 	 			$tipo="DIARIO DETALLADO";
 	 			$valor='d';

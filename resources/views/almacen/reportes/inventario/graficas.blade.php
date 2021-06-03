@@ -109,7 +109,6 @@
             @endforeach
           </table>
         </div>
-        {{$stock->render()}}
         </div>
       </div>
     </div>
