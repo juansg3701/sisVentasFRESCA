@@ -28,14 +28,14 @@
                               <div align="center">
                
                              <br>
-                           <b> Inventario del:</b><br>
+                       
+
+                            <b> Inventario del:</b><br>
                             {{$fecha_d}}<br>
                             <b>Total comprado: </b>
-                            @if(count($total_stock)>0)
-                            $<?php echo number_format($total_stock[0]->pago_total , 2 , "," , ".") . "\n";?>
-                            @endif
+                            $<?php echo number_format($total_stock, 2 , "," , ".") . "\n";?>
+                         
                             <br>
-
                               </div>
                              <br>
                             <div align="center">
@@ -102,7 +102,6 @@
             @endforeach
           </table>
         </div>
-        {{$stock->render()}}
         </div>
       </div>
     </div>

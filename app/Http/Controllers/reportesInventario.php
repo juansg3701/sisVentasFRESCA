@@ -446,76 +446,55 @@ class reportesInventario extends Controller
 	 				//Reporte general
 	 				if($tipo_reporte==1){
 	 				$stock=DB::table('stock as s')
-	 			->join('empleado as e','s.empleado_id_empleado','=','e.id_empleado')
-	 			->join('proveedor as p','s.proveedor_id_proveedor','=','p.id_proveedor')
 	 			->join('sede as sed','s.sede_id_sede','=','sed.id_sede')
-	 			->join('categoria_producto_trans as cpt','s.transformacion_stock_id','=','cpt.id_categoria')
 	 			->select('s.id_stock','s.total','s.cantidad_rep', 's.fecha_registro','s.costo_compra')
 	 			->where('s.fecha_registro','LIKE', '%'.$fecha_d.'%')
 	 			->where('s.pago_pendiente','=',1)
 	 			->orderBy('s.id_stock','asc')
-	 			->paginate(100);
+	 			->get();
 
-	 			$total_stock=DB::table('stock as s')
-	 			->select(DB::raw('sum(s.total) as pago_total'))
-	 			->where('s.fecha_registro','LIKE', '%'.$fecha_d.'%')
-	 			->where('s.pago_pendiente','=',1)
-	 			->orderBy('s.id_stock', 'desc')
-	 			->paginate(100);
 
 	 				if(auth()->user()->superusuario==0){
 
 	 				$stock=DB::table('stock as s')
-	 			->join('empleado as e','s.empleado_id_empleado','=','e.id_empleado')
-	 			->join('proveedor as p','s.proveedor_id_proveedor','=','p.id_proveedor')
 	 			->join('sede as sed','s.sede_id_sede','=','sed.id_sede')
-	 			->join('categoria_producto_trans as cpt','s.transformacion_stock_id','=','cpt.id_categoria')
 	 			->select('s.id_stock','s.total','s.cantidad_rep', 's.fecha_registro','s.costo_compra')
 	 			->where('s.fecha_registro','LIKE', '%'.$fecha_d.'%')
 	 			->where('sed.id_sede','=',auth()->user()->sede_id_sede)
 	 			->where('s.pago_pendiente','=',1)
 	 			->orderBy('s.id_stock','asc')
-	 			->paginate(100);
+	 			->get();
 
-	 			$total_stock=DB::table('stock as s')
-	 			->select(DB::raw('sum(s.total) as pago_total'))
-	 			->where('s.fecha_registro','LIKE', '%'.$fecha_d.'%')
-	 			->where('sed.id_sede','=',auth()->user()->sede_id_sede)
-	 			->where('s.pago_pendiente','=',1)
-	 			->orderBy('s.id_stock', 'desc')
-	 			->paginate(100);
 	 				
+		 			}
+		 			$total_prueba=0;
+		 			foreach ($stock as $s) {
+		 				$total_prueba=intval($total_prueba)+intval($s->total);
 		 			}
 
 		 			return view("almacen.reportes.inventario.graficad",
 					 ["modulos"=>$modulos,"stock"=>$stock,"fecha_d"=>$fecha_d,
-					 "total_stock"=>$total_stock]);
+					 "total_stock"=>$total_prueba]);
 
 				}else{
 
 	 					//Reporte detallado
 					
 					$stock2=DB::table('stock as s')
-					->join('empleado as e','s.empleado_id_empleado','=','e.id_empleado')
-					->join('proveedor as p','s.proveedor_id_proveedor','=','p.id_proveedor')
 					->join('sede as sed','s.sede_id_sede','=','sed.id_sede')
-					->join('categoria_producto_trans as cpt','s.transformacion_stock_id','=','cpt.id_categoria')
 					->select('s.producto_id_producto as producto',
 						DB::raw('sum(s.cantidad_rep) as cantidad'),
 					 	DB::raw('sum(s.total) as total'))
 					->where('s.fecha_registro','LIKE', '%'.$fecha_d.'%')
-				//	->where('s.pago_pendiente','=',1)
+					->where('s.pago_pendiente','=',1)
 					->orderBy('s.id_stock','asc')
 					->groupBy('s.producto_id_producto')
-					->paginate(100);
+					->get();
 					
 				
 		 			if(auth()->user()->superusuario==0){	
 						$stock2=DB::table('stock as s')
-						->join('empleado as e','s.empleado_id_empleado','=','e.id_empleado')
-						->join('proveedor as p','s.proveedor_id_proveedor','=','p.id_proveedor')
 						->join('sede as sed','s.sede_id_sede','=','sed.id_sede')
-						->join('categoria_producto_trans as cpt','s.transformacion_stock_id','=','cpt.id_categoria')
 						->select('s.producto_id_producto as producto',
 							DB::raw('sum(s.cantidad_rep) as cantidad'),
 							DB::raw('sum(s.total) as total'))
@@ -524,7 +503,7 @@ class reportesInventario extends Controller
 						->where('s.pago_pendiente','=',1)
 						->orderBy('s.id_stock','asc')
 						->groupBy('s.producto_id_producto')
-						->paginate(100);
+						->get();
 		 			}
 
 					$productosDB=ProductoSede::get();
@@ -558,8 +537,6 @@ class reportesInventario extends Controller
 					//General
 
 	 			$stock_semanal=DB::table('stock as s')
-	 			->join('empleado as e','s.empleado_id_empleado','=','e.id_empleado')
-	 			->join('proveedor as p','s.proveedor_id_proveedor','=','p.id_proveedor')
 	 			->join('sede as sed','s.sede_id_sede','=','sed.id_sede')
 	 			->select('s.id_stock',DB::raw('sum(s.total) as total'),
 				 DB::raw('sum(s.cantidad_rep) as cantidad_rep'), 
@@ -571,13 +548,11 @@ class reportesInventario extends Controller
 	 			->where('s.pago_pendiente','=',1)
 	 			->orderBy(DB::raw('WEEK(s.fecha_registro)'), 'asc')
 	 			->groupBy(DB::raw('WEEK(s.fecha_registro)'))
-	 			->paginate(100);
+	 			->get();
 
 	 			if(auth()->user()->superusuario==0){
 
 	 				$stock_semanal=DB::table('stock as s')
-	 			->join('empleado as e','s.empleado_id_empleado','=','e.id_empleado')
-	 			->join('proveedor as p','s.proveedor_id_proveedor','=','p.id_proveedor')
 	 			->join('sede as sed','s.sede_id_sede','=','sed.id_sede')
 	 			->select('s.id_stock',DB::raw('sum(s.total) as total'),
 				 DB::raw('sum(s.cantidad_rep) as cantidad_rep'), 
@@ -590,7 +565,7 @@ class reportesInventario extends Controller
 	 			->where('s.pago_pendiente','=',1)
 	 			->orderBy(DB::raw('WEEK(s.fecha_registro)'), 'asc')
 	 			->groupBy(DB::raw('WEEK(s.fecha_registro)'))
-	 			->paginate(100);
+	 			->get();
 
 	 			}
 
@@ -623,8 +598,6 @@ class reportesInventario extends Controller
 					
 	 			//GENERAL MENSUAL
 				$stock_mensuales=DB::table('stock as s')
-	 			->join('empleado as e','s.empleado_id_empleado','=','e.id_empleado')
-	 			->join('proveedor as p','s.proveedor_id_proveedor','=','p.id_proveedor')
 	 			->join('sede as sed','s.sede_id_sede','=','sed.id_sede')
 	 			->select('s.id_stock',DB::raw('sum(s.total) as total'),
 				 DB::raw('sum(s.cantidad_rep) as cantidad_rep'), 
@@ -637,14 +610,12 @@ class reportesInventario extends Controller
 	 			->where('s.pago_pendiente','=',1)
 	 			->orderBy(DB::raw('MONTH(s.fecha_registro)'), 'asc')
 	 			->groupBy(DB::raw('MONTH(s.fecha_registro)'))
-	 			->paginate(100);
+	 			->get();
 
 
 	 			if(auth()->user()->superusuario==0){
 
 	 				$stock_mensuales=DB::table('stock as s')
-	 			->join('empleado as e','s.empleado_id_empleado','=','e.id_empleado')
-	 			->join('proveedor as p','s.proveedor_id_proveedor','=','p.id_proveedor')
 	 			->join('sede as sed','s.sede_id_sede','=','sed.id_sede')
 	 			->select('s.id_stock',DB::raw('sum(s.total) as total'),
 				 DB::raw('sum(s.cantidad_rep) as cantidad_rep'), 
@@ -657,7 +628,7 @@ class reportesInventario extends Controller
 	 			->where('s.pago_pendiente','=',1)
 	 			->orderBy(DB::raw('MONTH(s.fecha_registro)'), 'asc')
 	 			->groupBy(DB::raw('MONTH(s.fecha_registro)'))
-	 			->paginate(100);
+	 			->get();
 	
 	 			}
 
