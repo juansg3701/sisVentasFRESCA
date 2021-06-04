@@ -165,7 +165,6 @@
             @endforeach
           </table>
         </div>
-        {{$ventas->render()}}
         </div>
       </div>
     </div>

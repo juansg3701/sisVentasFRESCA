@@ -128,7 +128,7 @@ class reportesVentas extends Controller
 		 			->where('f.anulacion','=',0)
 		 			->orderBy('df.id_detallef', 'asc')
 		 			->groupBy('s.producto_id_producto')
-		 			->paginate(100);
+		 			->get();
 
 
 		 			if(auth()->user()->superusuario==0){
@@ -144,7 +144,7 @@ class reportesVentas extends Controller
 		 			->where('f.anulacion','=',0)
 		 			->orderBy('df.id_detallef', 'asc')
 		 			->groupBy('s.producto_id_producto')
-		 			->paginate(100);
+		 			->get();
 		 		
 		 			}
 
@@ -178,7 +178,7 @@ class reportesVentas extends Controller
 		 			->where('f.anulacion','=',0)
 		 			->orderBy('df.id_detallef', 'asc')
 		 			->groupBy('s.producto_id_producto')
-		 			->paginate(100);
+		 			->get();
 
 		 			if(auth()->user()->superusuario==0){
 		 				$ventas_m=DB::table('detalle_factura as df')
@@ -193,7 +193,7 @@ class reportesVentas extends Controller
 		 			->where('f.anulacion','=',0)
 		 			->orderBy('df.id_detallef', 'asc')
 		 			->groupBy('s.producto_id_producto')
-		 			->paginate(100);
+		 			->get();
 		 		
 		 			}
 
@@ -252,7 +252,7 @@ class reportesVentas extends Controller
 	 			->where('f.facturapaga','=',1)
 		 			->where('f.anulacion','=',0)
 	 			->orderBy('f.id_factura', 'asc')
-	 			->paginate(100);
+	 			->get();
 
 	 			$total_ventas=DB::table('factura as f')
 	 			->select(DB::raw('sum(f.pago_total) as pago_total'))
@@ -260,7 +260,7 @@ class reportesVentas extends Controller
 	 			->where('f.facturapaga','=',1)
 		 			->where('f.anulacion','=',0)
 	 			->orderBy('f.id_factura', 'desc')
-	 			->paginate(100);
+	 			->get();
 
 	 				if(auth()->user()->superusuario==0){
 	 				$ventas=DB::table('factura as f')
@@ -274,7 +274,7 @@ class reportesVentas extends Controller
 		 			->where('f.anulacion','=',0)
 		 			->where('sed.id_sede','=',auth()->user()->sede_id_sede)
 		 			->orderBy('f.id_factura', 'asc')
-		 			->paginate(100);
+		 			->get();
 
 		 			$total_ventas=DB::table('factura as f')
 		 			->select(DB::raw('sum(f.pago_total) as pago_total'))
@@ -283,7 +283,7 @@ class reportesVentas extends Controller
 		 			->where('f.anulacion','=',0)
 		 			->where('sed.id_sede','=',auth()->user()->sede_id_sede)
 		 			->orderBy('f.id_factura', 'desc')
-		 			->paginate(100);
+		 			->get();
 		 			}
 
 
@@ -302,7 +302,7 @@ class reportesVentas extends Controller
 		 			->where('f.anulacion','=',0)
 		 			->orderBy('df.id_detallef', 'asc')
 		 			->groupBy('s.producto_id_producto')
-		 			->paginate(100);
+		 			->get();
 
 
 		 			if(auth()->user()->superusuario==0){
@@ -316,7 +316,7 @@ class reportesVentas extends Controller
 		 			->where('sed.id_sede','=',auth()->user()->sede_id_sede)
 		 			->orderBy('df.id_detallef', 'asc')
 		 			->groupBy('s.producto_id_producto')
-		 			->paginate(100);
+		 			->get();
 
 		 		
 		 			}
@@ -366,7 +366,7 @@ class reportesVentas extends Controller
 		 		->where('f.anulacion','=',0)
 	 			->orderBy(DB::raw('WEEK(f.fecha)'), 'asc')
 	 			->groupBy(DB::raw('WEEK(f.fecha)'))
-	 			->paginate(100);
+	 			->get();
 
 	 			if(auth()->user()->superusuario==0){
 	 				$ventas_semanal=DB::table('factura as f')
@@ -383,7 +383,7 @@ class reportesVentas extends Controller
 		 		->where('f.anulacion','=',0)
 	 			->orderBy(DB::raw('WEEK(f.fecha)'), 'asc')
 	 			->groupBy(DB::raw('WEEK(f.fecha)'))
-	 			->paginate(100);
+	 			->get();
 	 			}
 
 	 			$total_ventas_semanales=0;
@@ -425,7 +425,7 @@ class reportesVentas extends Controller
 		 		->where('f.anulacion','=',0)
 	 			->orderBy('f.id_factura', 'asc')
 	 			->groupBy(DB::raw('MONTH(f.fecha)'))
-	 			->paginate(100);
+	 			->get();
 
 
 	 			if(auth()->user()->superusuario==0){
@@ -443,7 +443,7 @@ class reportesVentas extends Controller
 		 		->where('f.anulacion','=',0)
 	 			->orderBy('f.id_factura', 'asc')
 	 			->groupBy(DB::raw('MONTH(f.fecha)'))
-	 			->paginate(100);	
+	 			->get();	
 	 			}
 
 
@@ -682,7 +682,7 @@ class reportesVentas extends Controller
 		 		->where('f.anulacion','=',0)
 	 			->orderBy('f.id_factura', 'asc')
 	 			->groupBy(DB::raw('MONTH(f.fecha)'))
-	 			->paginate(100);
+	 			->get();
 
 	 			foreach ($ventas as $key => $value) {	
 
@@ -886,7 +886,7 @@ class reportesVentas extends Controller
 		 		->where('f.anulacion','=',0)
 	 			->orderBy(DB::raw('WEEK(f.fecha)'), 'asc')
 	 			->groupBy(DB::raw('WEEK(f.fecha)'))
-	 			->paginate(100);
+	 			->get();
 
 
 				$tipo="SEMANAL";
@@ -915,7 +915,7 @@ class reportesVentas extends Controller
 	 			->where('f.facturapaga','=',1)
 		 			->where('f.anulacion','=',0)
 	 			->orderBy('f.id_factura', 'asc')
-	 			->paginate(100);
+	 			->get();
 
 	 			$total_ventas=DB::table('factura as f')
 	 			->select(DB::raw('sum(f.pago_total) as pago_total'))
@@ -923,7 +923,7 @@ class reportesVentas extends Controller
 	 			->where('f.facturapaga','=',1)
 		 			->where('f.anulacion','=',0)
 	 			->orderBy('f.id_factura', 'desc')
-	 			->paginate(100);
+	 			->get();
 
 				$tipo="DIARIO";
 		 		$valor=1;
@@ -947,7 +947,7 @@ class reportesVentas extends Controller
 		 		->where('f.anulacion','=',0)
 		 		->orderBy('df.id_detallef', 'asc')
 		 		->groupBy('s.producto_id_producto')
-		 		->paginate(100);
+		 		->get();
 
 
 				$tipo="MENSUAL DETALLADO";
@@ -986,7 +986,7 @@ class reportesVentas extends Controller
 		 			->where('f.anulacion','=',0)
 		 			->orderBy('df.id_detallef', 'asc')
 		 			->groupBy('s.producto_id_producto')
-		 			->paginate(100);
+		 			->get();
 
 		 			$tipo="SEMANAL DETALLADO";
 		 			$valor='s';
@@ -1023,7 +1023,7 @@ class reportesVentas extends Controller
 		 			->where('f.anulacion','=',0)
 		 			->orderBy('df.id_detallef', 'asc')
 		 			->groupBy('s.producto_id_producto')
-		 			->paginate(100);
+		 			->get();
 
 		 			$tipo="DIARIO DETALLADO";
 		 			$valor='d';
@@ -1168,7 +1168,7 @@ class reportesVentas extends Controller
 		 		->where('f.anulacion','=',0)
 	 			->orderBy('f.id_factura', 'asc')
 	 			->groupBy(DB::raw('MONTH(f.fecha)'))
-	 			->paginate(100);
+	 			->get();
 
 	 			foreach ($ventas as $key => $value) {	
 
@@ -1369,7 +1369,7 @@ class reportesVentas extends Controller
 		 		->where('f.anulacion','=',0)
 	 			->orderBy(DB::raw('WEEK(f.fecha)'), 'asc')
 	 			->groupBy(DB::raw('WEEK(f.fecha)'))
-	 			->paginate(100);
+	 			->get();
 
 
 				$tipo="SEMANAL";
@@ -1402,7 +1402,7 @@ class reportesVentas extends Controller
 	 			->where('f.facturapaga','=',1)
 		 			->where('f.anulacion','=',0)
 	 			->orderBy('f.id_factura', 'asc')
-	 			->paginate(100);
+	 			->get();
 
 	 			$total_ventas=DB::table('factura as f')
 	 			->select(DB::raw('sum(f.pago_total) as pago_total'))
@@ -1410,7 +1410,7 @@ class reportesVentas extends Controller
 	 			->where('f.facturapaga','=',1)
 		 			->where('f.anulacion','=',0)
 	 			->orderBy('f.id_factura', 'desc')
-	 			->paginate(100);
+	 			->get();
 
 				$tipo="DIARIO";
 		 		$valor=1;
@@ -1434,7 +1434,7 @@ class reportesVentas extends Controller
 		 		->where('f.anulacion','=',0)
 		 		->orderBy('df.id_detallef', 'asc')
 		 		->groupBy('s.producto_id_producto')
-		 		->paginate(100);
+		 		->get();
 
 
 				$tipo="MENSUAL DETALLADO";
@@ -1475,7 +1475,7 @@ class reportesVentas extends Controller
 		 			->where('f.anulacion','=',0)
 		 			->orderBy('df.id_detallef', 'asc')
 		 			->groupBy('s.producto_id_producto')
-		 			->paginate(100);
+		 			->get();
 
 		 			$tipo="SEMANAL DETALLADO";
 		 			$valor='s';
@@ -1511,7 +1511,7 @@ class reportesVentas extends Controller
 		 			->where('f.anulacion','=',0)
 		 			->orderBy('df.id_detallef', 'asc')
 		 			->groupBy('s.producto_id_producto')
-		 			->paginate(100);
+		 			->get();
 
 		 			$tipo="DIARIO DETALLADO";
 		 			$valor='d';
@@ -1576,7 +1576,7 @@ class reportesVentas extends Controller
 		 		->where('f.anulacion','=',0)
 	 			->orderBy('f.id_factura', 'asc')
 	 			->groupBy(DB::raw('MONTH(f.fecha)'))
-	 			->paginate(100);
+	 			->get();
 
 	 			foreach ($productos as $key => $value) {	
 

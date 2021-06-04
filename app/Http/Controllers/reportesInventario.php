@@ -1251,6 +1251,7 @@ class reportesInventario extends Controller
 	 			->where(DB::raw('MONTH(s.fecha_registro)'),'>=',$desde)
 	 			->where(DB::raw('MONTH(s.fecha_registro)'),'<=',$hasta)
 	 			->where(DB::raw('YEAR(s.fecha_registro)'),'=',$año)
+	 			->where('s.pago_pendiente','=',1)
 	 			->orderBy(DB::raw('MONTH(s.fecha_registro)'), 'asc')
 	 			->groupBy(DB::raw('MONTH(s.fecha_registro)'))
 	 			->get();
@@ -1445,6 +1446,7 @@ class reportesInventario extends Controller
 	 			->where(DB::raw('WEEK(s.fecha_registro)'),'>=',$desde)
 	 			->where(DB::raw('WEEK(s.fecha_registro)'),'<=',$hasta)
 	 			->where(DB::raw('YEAR(s.fecha_registro)'),'=',$año)
+	 			->where('s.pago_pendiente','=',1)
 	 			->orderBy(DB::raw('WEEK(s.fecha_registro)'), 'asc')
 	 			->groupBy(DB::raw('WEEK(s.fecha_registro)'))
 	 			->get();
@@ -1468,6 +1470,7 @@ class reportesInventario extends Controller
 	 			->join('categoria_producto_trans as cpt','s.transformacion_stock_id','=','cpt.id_categoria')
 	 			->select('s.id_stock','s.total','s.cantidad_rep', 's.fecha_registro','s.costo_compra')
 	 			->where('s.fecha_registro','LIKE', '%'.$fecha_d.'%')
+	 			->where('s.pago_pendiente','=',1)
 	 			->orderBy('s.id_stock','asc')
 	 			->get();
 
@@ -1477,6 +1480,7 @@ class reportesInventario extends Controller
 		 		$total_stock=DB::table('stock as s')
 	 			->select(DB::raw('sum(s.total) as pago_total'))
 	 			->where('s.fecha_registro','LIKE', '%'.$fecha_d.'%')
+	 			->where('s.pago_pendiente','=',1)
 	 			->orderBy('s.id_stock', 'desc')
 	 			->get();
 
@@ -1497,6 +1501,7 @@ class reportesInventario extends Controller
 				 DB::raw('sum(s.total) as total'))
 				->where(DB::raw('YEAR(s.fecha_registro)'),'=',$hasta)
 				->where(DB::raw('MONTH(s.fecha_registro)'),'=',$desde)
+				->where('s.pago_pendiente','=',1)
 				->orderBy('s.id_stock','asc')
 				->groupBy('s.producto_id_producto')
 				->get();
