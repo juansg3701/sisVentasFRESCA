@@ -374,18 +374,22 @@ class reportesVentas extends Controller
 	 				$ventas_semanal=DB::table('factura as f')
 	 			->join('empleado as e','f.empleado_id_empleado','=','e.id_empleado')
 	 			->join('cliente as c','f.cliente_id_cliente','=','c.id_cliente')
-	 	
-	 			->join('sede as sed','e.sede_id_sede','=','sed.id_sede')
-	 			->select('f.id_factura',DB::raw('sum(f.pago_total) as pago_total'),DB::raw('sum(f.noproductos) as noproductos'), DB::raw('WEEK(f.fecha) as fecha'),DB::raw('YEAR(f.fecha) as year'))
+	 			->join('sede as sed','f.sede_id_sede','=','sed.id_sede')
+	 			->select('f.id_factura',
+				 DB::raw('sum(f.pago_total) as pago_total'),
+				 DB::raw('sum(f.noproductos) as noproductos'), 
+				 DB::raw('WEEK(f.fecha) as fecha'), 
+				 DB::raw('YEAR(f.fecha) as year'))
 	 			->where(DB::raw('WEEK(f.fecha)'),'>=',$fecha_semana_inicial)
 	 			->where(DB::raw('WEEK(f.fecha)'),'<=',$fecha_semana_final)
 	 			->where(DB::raw('YEAR(f.fecha)'),'=',$fecha_year)
-	 			->where('sed.id_sede','=',auth()->user()->sede_id_sede)
 	 			->where('f.facturapaga','=',1)
 		 		->where('f.anulacion','=',0)
+		 		->where('sed.id_sede','=',auth()->user()->sede_id_sede)
 	 			->orderBy(DB::raw('WEEK(f.fecha)'), 'asc')
 	 			->groupBy(DB::raw('WEEK(f.fecha)'))
 	 			->get();
+	 				
 	 			}
 
 	 			$total_ventas_semanales=0;
@@ -412,7 +416,7 @@ class reportesVentas extends Controller
 	 			->join('empleado as e','f.empleado_id_empleado','=','e.id_empleado')
 	 			->join('cliente as c','f.cliente_id_cliente','=','c.id_cliente')
 	 			->join('tipo_pago as tp','f.tipo_pago_id_tpago','=','tp.id_tpago')
-	 			->join('sede as sed','e.sede_id_sede','=','sed.id_sede')
+	 			->join('sede as sed','f.sede_id_sede','=','sed.id_sede')
 	 			->select('f.id_factura',
 				 DB::raw('sum(f.pago_total) as pago_total'),
 				 DB::raw('sum(f.noproductos) as noproductos'), 
@@ -431,21 +435,28 @@ class reportesVentas extends Controller
 
 
 	 			if(auth()->user()->superusuario==0){
-	 			$ventas_mensuales=DB::table('factura as f')
+	 				$ventas_mensuales=DB::table('factura as f')
 	 			->join('empleado as e','f.empleado_id_empleado','=','e.id_empleado')
 	 			->join('cliente as c','f.cliente_id_cliente','=','c.id_cliente')
 	 			->join('tipo_pago as tp','f.tipo_pago_id_tpago','=','tp.id_tpago')
-	 			->join('sede as sed','e.sede_id_sede','=','sed.id_sede')
-	 			->select('f.id_factura',DB::raw('sum(f.pago_total) as pago_total'),DB::raw('sum(f.noproductos) as noproductos'), 'tp.nombre as tipo_pago_id_tpago', DB::raw('MONTH(f.fecha) as fecha'), DB::raw('YEAR(f.fecha) as fecha_year'), DB::raw('MONTH(f.fecha) as fecha_mes'))
+	 			->join('sede as sed','f.sede_id_sede','=','sed.id_sede')
+	 			->select('f.id_factura',
+				 DB::raw('sum(f.pago_total) as pago_total'),
+				 DB::raw('sum(f.noproductos) as noproductos'), 
+				 'tp.nombre as tipo_pago_id_tpago', 
+				 DB::raw('MONTH(f.fecha) as fecha'), 
+				 DB::raw('YEAR(f.fecha) as fecha_year'),
+				 DB::raw('MONTH(f.fecha) as fecha_mes'))
 	 			->where(DB::raw('MONTH(f.fecha)'),'>=',$fecha_mes_inicial)
 	 			->where(DB::raw('MONTH(f.fecha)'),'<=',$fecha_mes_final)
 	 			->where(DB::raw('YEAR(f.fecha)'),'=',$fecha_year)
-	 			->where('sed.id_sede','=',auth()->user()->sede_id_sede)
 	 			->where('f.facturapaga','=',1)
 		 		->where('f.anulacion','=',0)
+		 		->where('sed.id_sede','=',auth()->user()->sede_id_sede)
 	 			->orderBy('f.id_factura', 'asc')
 	 			->groupBy(DB::raw('MONTH(f.fecha)'))
-	 			->get();	
+	 			->get();
+
 	 			}
 
 

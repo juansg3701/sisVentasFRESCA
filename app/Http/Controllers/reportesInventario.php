@@ -596,7 +596,6 @@ class reportesInventario extends Controller
 
 
 	 			if(auth()->user()->superusuario==0){
-
 	 				$stock_mensuales=DB::table('stock as s')
 	 			->join('sede as sed','s.sede_id_sede','=','sed.id_sede')
 	 			->select('s.id_stock',DB::raw('sum(s.total) as total'),
@@ -604,14 +603,14 @@ class reportesInventario extends Controller
 				 DB::raw('MONTH(s.fecha_registro) as fecha_registro'), 
 				 DB::raw('YEAR(s.fecha_registro) as fecha_year'),
 				 DB::raw('MONTH(s.fecha_registro) as fecha_mes'))
-	 			->where(DB::raw('date(s.fecha_registro)'),'>=',$fecha_mes_inicial)
-	 			->where(DB::raw('date(s.fecha_registro)'),'<=',$fecha_mes_final)
-	 			->where('sed.id_sede','=',auth()->user()->sede_id_sede)
+	 			->where(DB::raw('MONTH(s.fecha_registro)'),'>=',$fecha_mes_inicial)
+	 			->where(DB::raw('MONTH(s.fecha_registro)'),'<=',$fecha_mes_final)
+	 			->where(DB::raw('YEAR(s.fecha_registro)'),'=',$fecha_year)
 	 			->where('s.pago_pendiente','=',1)
+	 			->where('sed.id_sede','=',auth()->user()->sede_id_sede)
 	 			->orderBy(DB::raw('MONTH(s.fecha_registro)'), 'asc')
 	 			->groupBy(DB::raw('MONTH(s.fecha_registro)'))
 	 			->get();
-	
 	 			}
 
 
