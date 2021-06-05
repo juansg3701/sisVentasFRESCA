@@ -267,7 +267,7 @@ class reportesVentas extends Controller
 		 			->join('empleado as e','f.empleado_id_empleado','=','e.id_empleado')
 		 			->join('cliente as c','f.cliente_id_cliente','=','c.id_cliente')
 		 			->join('tipo_pago as tp','f.tipo_pago_id_tpago','=','tp.id_tpago')
-		 			->join('sede as sed','e.sede_id_sede','=','sed.id_sede')
+		 			->join('sede as sed','f.sede_id_sede','=','sed.id_sede')
 		 			->select('f.id_factura','f.pago_total','f.noproductos', 'tp.nombre as tipo_pago_id_tpago', 'f.fecha')
 		 			->where('f.fecha','LIKE', '%'.$fecha_d.'%')
 		 			->where('f.facturapaga','=',1)
@@ -277,6 +277,7 @@ class reportesVentas extends Controller
 		 			->get();
 
 		 			$total_ventas=DB::table('factura as f')
+		 			->join('sede as sed','f.sede_id_sede','=','sed.id_sede')
 		 			->select(DB::raw('sum(f.pago_total) as pago_total'))
 		 			->where('f.fecha','LIKE', '%'.$fecha_d.'%')
 		 			->where('f.facturapaga','=',1)
@@ -309,6 +310,7 @@ class reportesVentas extends Controller
 		 				$ventas2=DB::table('detalle_factura as df')
 		 			->join('stock as s','df.stock_id_stock','=','s.id_stock')
 		 			->join('factura as f','df.factura_id_factura','=','f.id_factura')
+		 			->join('sede as sed','f.sede_id_sede','=','sed.id_sede')
 		 			->select('s.producto_id_producto as producto',DB::raw('sum(df.cantidad) as cantidad'),DB::raw('sum(df.total) as total'))
 		 			->where('f.fecha','LIKE', '%'.$fecha_d.'%')
 		 			->where('f.facturapaga','=',1)
