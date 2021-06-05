@@ -100,7 +100,7 @@
 		    </tr>
 		    <tr>
 				<td><?php echo 'Fecha: '.$fecha_d; ?></td>
-				<td><?php echo 'Total compras: '.$total_stock[0]->pago_total; ?></td>
+				<td><?php echo 'Total compras: '.$total_stock; ?></td>
 		    </tr>
 
 			<tr style="background-color:WHITE; height:100px">

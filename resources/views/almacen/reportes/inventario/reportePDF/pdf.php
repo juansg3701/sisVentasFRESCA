@@ -88,7 +88,7 @@ $pdf->Ln(15);
         $pdf->Cell(20, 5, 'Fecha: ', 0,0);
         $pdf->Cell(20, 5, $fecha_d, 0,1);
         $pdf->Cell(20, 5, 'Total ventas: ', 0,0);
-        $pdf->Cell(20, 5, $total_stock[0]->pago_total, 0,1);
+        $pdf->Cell(20, 5, $total_stock, 0,1);
         $pdf->Cell(20, 5, '', 0,1);
 
         $pdf->SetTextColor(255,255,255);

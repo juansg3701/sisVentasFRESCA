@@ -1052,22 +1052,20 @@ class reportesInventario extends Controller
 
 	 			$stock=DB::table('stock as s')
 	 			->join('sede as sed','s.sede_id_sede','=','sed.id_sede')
-	 			->join('categoria_producto_trans as cpt','s.transformacion_stock_id','=','cpt.id_categoria')
 	 			->select('s.id_stock','s.total','s.cantidad_rep', 's.fecha_registro','s.costo_compra')
 	 			->where('s.fecha_registro','LIKE', '%'.$fecha_d.'%')
 	 			->where('s.pago_pendiente','=',1)
 	 			->orderBy('s.id_stock','asc')
 	 			->get();
 
+	 				
+		 			$total_stock=0;
+		 			foreach ($stock as $s) {
+		 				$total_stock=intval($total_stock)+intval($s->total);
+		 			}
+
 				$tipo="DIARIO";
 		 		$valor=1;
-
-		 		$total_stock=DB::table('stock as s')
-	 			->select(DB::raw('sum(s.total) as pago_total'))
-	 			->where('s.fecha_registro','LIKE', '%'.$fecha_d.'%')
-	 			->where('s.pago_pendiente','=',1)
-	 			->orderBy('s.id_stock', 'desc')
-	 			->get();
 
 
 				return view('almacen.reportes.inventario.reportePDF.pdf',["desde"=>$desde, "hasta"=>$hasta, "stock"=>$stock, "tipo"=>$tipo, "valor"=>$valor,"fecha_d"=>$fecha_d,"total_stock"=>$total_stock]);
@@ -1464,25 +1462,22 @@ class reportesInventario extends Controller
 
 
 		 	if($valor==1){
-
-	 			$stock=DB::table('stock as s')
+		 		$stock=DB::table('stock as s')
 	 			->join('sede as sed','s.sede_id_sede','=','sed.id_sede')
-	 			->join('categoria_producto_trans as cpt','s.transformacion_stock_id','=','cpt.id_categoria')
 	 			->select('s.id_stock','s.total','s.cantidad_rep', 's.fecha_registro','s.costo_compra')
 	 			->where('s.fecha_registro','LIKE', '%'.$fecha_d.'%')
 	 			->where('s.pago_pendiente','=',1)
 	 			->orderBy('s.id_stock','asc')
 	 			->get();
 
+	 				
+		 			$total_stock=0;
+		 			foreach ($stock as $s) {
+		 				$total_stock=intval($total_stock)+intval($s->total);
+		 			}
+
 				$tipo="DIARIO";
 		 		$valor=1;
-
-		 		$total_stock=DB::table('stock as s')
-	 			->select(DB::raw('sum(s.total) as pago_total'))
-	 			->where('s.fecha_registro','LIKE', '%'.$fecha_d.'%')
-	 			->where('s.pago_pendiente','=',1)
-	 			->orderBy('s.id_stock', 'desc')
-	 			->get();
 
 
 				return view('almacen.reportes.inventario.reporteExcel.excel',["desde"=>$desde, "hasta"=>$hasta, "stock"=>$stock, "tipo"=>$tipo, "valor"=>$valor,"fecha_d"=>$fecha_d,"total_stock"=>$total_stock]);
