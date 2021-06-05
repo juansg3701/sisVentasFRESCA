@@ -697,6 +697,32 @@ class reportesVentas extends Controller
 	 			->groupBy(DB::raw('MONTH(f.fecha)'))
 	 			->get();
 
+	 			if(auth()->user()->superusuario==0){
+	 				$ventas=DB::table('factura as f')
+		 			->join('empleado as e','f.empleado_id_empleado','=','e.id_empleado')
+		 			->join('cliente as c','f.cliente_id_cliente','=','c.id_cliente')
+		 			->join('tipo_pago as tp','f.tipo_pago_id_tpago','=','tp.id_tpago')
+		 			->join('sede as sed','f.sede_id_sede','=','sed.id_sede')
+		 			->select('f.id_factura',
+					 DB::raw('sum(f.pago_total) as pago_total'),
+					 DB::raw('sum(f.noproductos) as noproductos'), 
+					 'tp.nombre as tipo_pago_id_tpago', 
+					 DB::raw('MONTH(f.fecha) as fecha'), 
+					 DB::raw('YEAR(f.fecha) as fecha_year'),
+					 DB::raw('MONTH(f.fecha) as fecha_mes'))
+		 			->where(DB::raw('MONTH(f.fecha)'),'>=',$desde)
+		 			->where(DB::raw('MONTH(f.fecha)'),'<=',$hasta)
+		 			->where(DB::raw('YEAR(f.fecha)'),'=',$año)
+		 			->where('f.facturapaga','=',1)
+			 		->where('f.anulacion','=',0)
+			 		->where('sed.id_sede','=',auth()->user()->sede_id_sede)
+		 			->orderBy('f.id_factura', 'asc')
+		 			->groupBy(DB::raw('MONTH(f.fecha)'))
+		 			->get();
+	 			}
+
+
+
 	 			foreach ($ventas as $key => $value) {	
 
 	 				switch ($ventas[$key]->fecha) {
@@ -872,10 +898,6 @@ class reportesVentas extends Controller
 		 						$fecha_letra_final="Ninguno";
 		 					break;
 		 				}
-	 			//return view("almacen.reportes.ventas.graficam",["modulos"=>$modulos,"ventas"=>$ventas,"fecha_inicial"=>$fecha_mes_inicial,"fecha_final"=>$fecha_mes_final, "fecha_year"=>$fecha_year, "total_ventas"=>$total_ventas_mensuales,"fecha_letra_inicial"=>$fecha_letra_inicial,"fecha_letra_final"=>$fecha_letra_final]);
-
-
-
 
 				return view('almacen.reportes.ventas.reportePDF.pdf',["desde"=>$desde, "hasta"=>$hasta, "ventas"=>$ventas, "tipo"=>$tipo, "valor"=>$valor, "total_ventas_mensuales"=>$total_ventas_mensuales,"fecha_letra_inicial"=>$fecha_letra_inicial,"fecha_letra_final"=>$fecha_letra_final]);
 
@@ -900,6 +922,28 @@ class reportesVentas extends Controller
 	 			->orderBy(DB::raw('WEEK(f.fecha)'), 'asc')
 	 			->groupBy(DB::raw('WEEK(f.fecha)'))
 	 			->get();
+
+
+	 			if(auth()->user()->superusuario==0){
+	 				$ventas=DB::table('factura as f')
+		 			->join('empleado as e','f.empleado_id_empleado','=','e.id_empleado')
+		 			->join('cliente as c','f.cliente_id_cliente','=','c.id_cliente')
+		 			->join('sede as sed','f.sede_id_sede','=','sed.id_sede')
+		 			->select('f.id_factura',
+					 DB::raw('sum(f.pago_total) as pago_total'),
+					 DB::raw('sum(f.noproductos) as noproductos'), 
+					 DB::raw('WEEK(f.fecha) as fecha'), 
+					 DB::raw('YEAR(f.fecha) as year'))
+		 			->where(DB::raw('WEEK(f.fecha)'),'>=',$desde)
+		 			->where(DB::raw('WEEK(f.fecha)'),'<=',$hasta)
+		 			->where(DB::raw('YEAR(f.fecha)'),'=',$año)
+		 			->where('f.facturapaga','=',1)
+			 		->where('f.anulacion','=',0)
+			 		->where('sed.id_sede','=',auth()->user()->sede_id_sede)
+		 			->orderBy(DB::raw('WEEK(f.fecha)'), 'asc')
+		 			->groupBy(DB::raw('WEEK(f.fecha)'))
+		 			->get();
+	 			}
 
 
 				$tipo="SEMANAL";
@@ -938,6 +982,33 @@ class reportesVentas extends Controller
 	 			->orderBy('f.id_factura', 'desc')
 	 			->get();
 
+	 			if(auth()->user()->superusuario==0){
+	 				$ventas=DB::table('factura as f')
+		 			->join('empleado as e','f.empleado_id_empleado','=','e.id_empleado')
+		 			->join('cliente as c','f.cliente_id_cliente','=','c.id_cliente')
+		 			->join('tipo_pago as tp','f.tipo_pago_id_tpago','=','tp.id_tpago')
+		 			->join('sede as sed','f.sede_id_sede','=','sed.id_sede')
+		 			->select('f.id_factura','f.pago_total','f.noproductos', 'tp.nombre as tipo_pago_id_tpago', 'f.fecha')
+		 			->where('f.fecha','LIKE', '%'.$fecha_d.'%')
+		 			->where('f.facturapaga','=',1)
+		 			->where('f.anulacion','=',0)
+		 			->where('sed.id_sede','=',auth()->user()->sede_id_sede)
+		 			->orderBy('f.id_factura', 'asc')
+		 			->get();
+
+		 			$total_ventas=DB::table('factura as f')
+		 			->join('sede as sed','f.sede_id_sede','=','sed.id_sede')
+		 			->select(DB::raw('sum(f.pago_total) as pago_total'))
+		 			->where('f.fecha','LIKE', '%'.$fecha_d.'%')
+		 			->where('f.facturapaga','=',1)
+		 			->where('f.anulacion','=',0)
+		 			->where('sed.id_sede','=',auth()->user()->sede_id_sede)
+		 			->orderBy('f.id_factura', 'desc')
+		 			->get();
+		 		}
+
+
+
 				$tipo="DIARIO";
 		 		$valor=1;
 
@@ -961,6 +1032,22 @@ class reportesVentas extends Controller
 		 		->orderBy('df.id_detallef', 'asc')
 		 		->groupBy('s.producto_id_producto')
 		 		->get();
+
+		 		if(auth()->user()->superusuario==0){
+		 			$ventas=DB::table('detalle_factura as df')
+		 			->join('stock as s','df.stock_id_stock','=','s.id_stock')
+		 			->join('factura as f','df.factura_id_factura','=','f.id_factura')
+		 			->join('sede as sed','f.sede_id_sede','=','sed.id_sede')
+		 			->select('s.producto_id_producto as producto',DB::raw('sum(df.cantidad) as cantidad'),DB::raw('sum(df.total) as total'),DB::raw('WEEK(f.fecha) as prueba'))
+		 			->where(DB::raw('YEAR(f.fecha)'),'=',$hasta)
+	 				->where(DB::raw('MONTH(f.fecha)'),'=',$desde)
+	 				->where('sed.id_sede','=',auth()->user()->sede_id_sede)
+		 			->where('f.facturapaga','=',1)
+		 			->where('f.anulacion','=',0)
+		 			->orderBy('df.id_detallef', 'asc')
+		 			->groupBy('s.producto_id_producto')
+		 			->get();
+		 		}
 
 
 				$tipo="MENSUAL DETALLADO";
@@ -1004,6 +1091,22 @@ class reportesVentas extends Controller
 		 			$tipo="SEMANAL DETALLADO";
 		 			$valor='s';
 
+		 			if(auth()->user()->superusuario==0){
+			 			$ventas=DB::table('detalle_factura as df')
+			 			->join('stock as s','df.stock_id_stock','=','s.id_stock')
+			 			->join('factura as f','df.factura_id_factura','=','f.id_factura')
+			 			->join('sede as sed','f.sede_id_sede','=','sed.id_sede')
+			 			->select('s.producto_id_producto as producto',DB::raw('sum(df.cantidad) as cantidad'),DB::raw('sum(df.total) as total'),DB::raw('WEEK(f.fecha) as prueba'))
+			 			->where(DB::raw('YEAR(f.fecha)'),'=',$hasta)
+		 				->where(DB::raw('WEEK(f.fecha)'),'=',$desde)
+		 				->where('sed.id_sede','=',auth()->user()->sede_id_sede)
+			 			->where('f.facturapaga','=',1)
+			 			->where('f.anulacion','=',0)
+			 			->orderBy('df.id_detallef', 'asc')
+			 			->groupBy('s.producto_id_producto')
+			 			->get();
+		 			}
+
 
 		 			$productosDB=ProductoSede::get();
 					$total_ventas_diarias=0;
@@ -1038,6 +1141,21 @@ class reportesVentas extends Controller
 		 			->groupBy('s.producto_id_producto')
 		 			->get();
 
+		 			if(auth()->user()->superusuario==0){
+		 				$ventas=DB::table('detalle_factura as df')
+			 			->join('stock as s','df.stock_id_stock','=','s.id_stock')
+			 			->join('factura as f','df.factura_id_factura','=','f.id_factura')
+			 			->join('sede as sed','f.sede_id_sede','=','sed.id_sede')
+			 			->select('s.producto_id_producto as producto',DB::raw('sum(df.cantidad) as cantidad'),DB::raw('sum(df.total) as total'))
+			 			->where('f.fecha','LIKE', '%'.$fecha_d.'%')
+			 			->where('f.facturapaga','=',1)
+			 			->where('f.anulacion','=',0)
+			 			->where('sed.id_sede','=',auth()->user()->sede_id_sede)
+			 			->orderBy('df.id_detallef', 'asc')
+			 			->groupBy('s.producto_id_producto')
+			 			->get();
+		 			}
+
 		 			$tipo="DIARIO DETALLADO";
 		 			$valor='d';
 
@@ -1056,21 +1174,9 @@ class reportesVentas extends Controller
 
 		 			return view('almacen.reportes.ventas.reportePDF.pdf',["desde"=>$desde, "hasta"=>$hasta, "ventas"=>$ventas, "tipo"=>$tipo, "valor"=>$valor,"total_ventas"=>$total_ventas_diarias,"tipo_reporte_detallado"=>$tipo_reporte_detallado,"fecha_d"=>$fecha_d]);
 
-
-
-
-
-
-
 		 	}
 
 	 	} 
-
-
-
-
-
-
 
 
 
@@ -1183,6 +1289,32 @@ class reportesVentas extends Controller
 	 			->groupBy(DB::raw('MONTH(f.fecha)'))
 	 			->get();
 
+	 			if(auth()->user()->superusuario==0){
+	 				$ventas=DB::table('factura as f')
+		 			->join('empleado as e','f.empleado_id_empleado','=','e.id_empleado')
+		 			->join('cliente as c','f.cliente_id_cliente','=','c.id_cliente')
+		 			->join('tipo_pago as tp','f.tipo_pago_id_tpago','=','tp.id_tpago')
+		 			->join('sede as sed','f.sede_id_sede','=','sed.id_sede')
+		 			->select('f.id_factura',
+					 DB::raw('sum(f.pago_total) as pago_total'),
+					 DB::raw('sum(f.noproductos) as noproductos'), 
+					 'tp.nombre as tipo_pago_id_tpago', 
+					 DB::raw('MONTH(f.fecha) as fecha'), 
+					 DB::raw('YEAR(f.fecha) as fecha_year'),
+					 DB::raw('MONTH(f.fecha) as fecha_mes'))
+		 			->where(DB::raw('MONTH(f.fecha)'),'>=',$desde)
+		 			->where(DB::raw('MONTH(f.fecha)'),'<=',$hasta)
+		 			->where(DB::raw('YEAR(f.fecha)'),'=',$año)
+		 			->where('f.facturapaga','=',1)
+			 		->where('f.anulacion','=',0)
+			 		->where('sed.id_sede','=',auth()->user()->sede_id_sede)
+		 			->orderBy('f.id_factura', 'asc')
+		 			->groupBy(DB::raw('MONTH(f.fecha)'))
+		 			->get();
+
+	 			}
+
+
 	 			foreach ($ventas as $key => $value) {	
 
 	 				switch ($ventas[$key]->fecha) {
@@ -1358,10 +1490,6 @@ class reportesVentas extends Controller
 		 						$fecha_letra_final="Ninguno";
 		 					break;
 		 				}
-	 			//return view("almacen.reportes.ventas.graficam",["modulos"=>$modulos,"ventas"=>$ventas,"fecha_inicial"=>$fecha_mes_inicial,"fecha_final"=>$fecha_mes_final, "fecha_year"=>$fecha_year, "total_ventas"=>$total_ventas_mensuales,"fecha_letra_inicial"=>$fecha_letra_inicial,"fecha_letra_final"=>$fecha_letra_final]);
-
-
-
 
 				return view('almacen.reportes.ventas.reporteExcel.excel',["desde"=>$desde, "hasta"=>$hasta, "ventas"=>$ventas, "tipo"=>$tipo, "valor"=>$valor, "total_ventas_mensuales"=>$total_ventas_mensuales,"fecha_letra_inicial"=>$fecha_letra_inicial,"fecha_letra_final"=>$fecha_letra_final]);
 
@@ -1383,6 +1511,27 @@ class reportesVentas extends Controller
 	 			->orderBy(DB::raw('WEEK(f.fecha)'), 'asc')
 	 			->groupBy(DB::raw('WEEK(f.fecha)'))
 	 			->get();
+
+	 			if(auth()->user()->superusuario==0){
+	 				$ventas=DB::table('factura as f')
+		 			->join('empleado as e','f.empleado_id_empleado','=','e.id_empleado')
+		 			->join('cliente as c','f.cliente_id_cliente','=','c.id_cliente')
+		 			->join('sede as sed','f.sede_id_sede','=','sed.id_sede')
+		 			->select('f.id_factura',
+					 DB::raw('sum(f.pago_total) as pago_total'),
+					 DB::raw('sum(f.noproductos) as noproductos'), 
+					 DB::raw('WEEK(f.fecha) as fecha'), 
+					 DB::raw('YEAR(f.fecha) as year'))
+		 			->where(DB::raw('WEEK(f.fecha)'),'>=',$desde)
+		 			->where(DB::raw('WEEK(f.fecha)'),'<=',$hasta)
+		 			->where(DB::raw('YEAR(f.fecha)'),'=',$año)
+		 			->where('f.facturapaga','=',1)
+			 		->where('f.anulacion','=',0)
+			 		->where('sed.id_sede','=',auth()->user()->sede_id_sede)
+		 			->orderBy(DB::raw('WEEK(f.fecha)'), 'asc')
+		 			->groupBy(DB::raw('WEEK(f.fecha)'))
+		 			->get();
+	 			}
 
 
 				$tipo="SEMANAL";
@@ -1425,6 +1574,33 @@ class reportesVentas extends Controller
 	 			->orderBy('f.id_factura', 'desc')
 	 			->get();
 
+
+
+	 			if(auth()->user()->superusuario==0){
+	 				$ventas=DB::table('factura as f')
+		 			->join('empleado as e','f.empleado_id_empleado','=','e.id_empleado')
+		 			->join('cliente as c','f.cliente_id_cliente','=','c.id_cliente')
+		 			->join('tipo_pago as tp','f.tipo_pago_id_tpago','=','tp.id_tpago')
+		 			->join('sede as sed','f.sede_id_sede','=','sed.id_sede')
+		 			->select('f.id_factura','f.pago_total','f.noproductos', 'tp.nombre as tipo_pago_id_tpago', 'f.fecha')
+		 			->where('f.fecha','LIKE', '%'.$fecha_d.'%')
+		 			->where('f.facturapaga','=',1)
+		 			->where('f.anulacion','=',0)
+		 			->where('sed.id_sede','=',auth()->user()->sede_id_sede)
+		 			->orderBy('f.id_factura', 'asc')
+		 			->get();
+
+		 			$total_ventas=DB::table('factura as f')
+		 			->join('sede as sed','f.sede_id_sede','=','sed.id_sede')
+		 			->select(DB::raw('sum(f.pago_total) as pago_total'))
+		 			->where('f.fecha','LIKE', '%'.$fecha_d.'%')
+		 			->where('f.facturapaga','=',1)
+		 			->where('f.anulacion','=',0)
+		 			->where('sed.id_sede','=',auth()->user()->sede_id_sede)
+		 			->orderBy('f.id_factura', 'desc')
+		 			->get();
+		 		}
+
 				$tipo="DIARIO";
 		 		$valor=1;
 
@@ -1448,6 +1624,22 @@ class reportesVentas extends Controller
 		 		->orderBy('df.id_detallef', 'asc')
 		 		->groupBy('s.producto_id_producto')
 		 		->get();
+
+		 		if(auth()->user()->superusuario==0){
+		 			$ventas=DB::table('detalle_factura as df')
+		 			->join('stock as s','df.stock_id_stock','=','s.id_stock')
+		 			->join('factura as f','df.factura_id_factura','=','f.id_factura')
+		 			->join('sede as sed','f.sede_id_sede','=','sed.id_sede')
+		 			->select('s.producto_id_producto as producto',DB::raw('sum(df.cantidad) as cantidad'),DB::raw('sum(df.total) as total'),DB::raw('WEEK(f.fecha) as prueba'))
+		 			->where(DB::raw('YEAR(f.fecha)'),'=',$hasta)
+	 				->where(DB::raw('MONTH(f.fecha)'),'=',$desde)
+	 				->where('sed.id_sede','=',auth()->user()->sede_id_sede)
+		 			->where('f.facturapaga','=',1)
+		 			->where('f.anulacion','=',0)
+		 			->orderBy('df.id_detallef', 'asc')
+		 			->groupBy('s.producto_id_producto')
+		 			->get();
+		 		}
 
 
 				$tipo="MENSUAL DETALLADO";
@@ -1490,6 +1682,22 @@ class reportesVentas extends Controller
 		 			->groupBy('s.producto_id_producto')
 		 			->get();
 
+		 			if(auth()->user()->superusuario==0){
+			 			$ventas=DB::table('detalle_factura as df')
+			 			->join('stock as s','df.stock_id_stock','=','s.id_stock')
+			 			->join('factura as f','df.factura_id_factura','=','f.id_factura')
+			 			->join('sede as sed','f.sede_id_sede','=','sed.id_sede')
+			 			->select('s.producto_id_producto as producto',DB::raw('sum(df.cantidad) as cantidad'),DB::raw('sum(df.total) as total'),DB::raw('WEEK(f.fecha) as prueba'))
+			 			->where(DB::raw('YEAR(f.fecha)'),'=',$hasta)
+		 				->where(DB::raw('WEEK(f.fecha)'),'=',$desde)
+		 				->where('sed.id_sede','=',auth()->user()->sede_id_sede)
+			 			->where('f.facturapaga','=',1)
+			 			->where('f.anulacion','=',0)
+			 			->orderBy('df.id_detallef', 'asc')
+			 			->groupBy('s.producto_id_producto')
+			 			->get();
+		 			}
+
 		 			$tipo="SEMANAL DETALLADO";
 		 			$valor='s';
 
@@ -1526,6 +1734,22 @@ class reportesVentas extends Controller
 		 			->groupBy('s.producto_id_producto')
 		 			->get();
 
+
+		 			if(auth()->user()->superusuario==0){
+		 				$ventas=DB::table('detalle_factura as df')
+			 			->join('stock as s','df.stock_id_stock','=','s.id_stock')
+			 			->join('factura as f','df.factura_id_factura','=','f.id_factura')
+			 			->join('sede as sed','f.sede_id_sede','=','sed.id_sede')
+			 			->select('s.producto_id_producto as producto',DB::raw('sum(df.cantidad) as cantidad'),DB::raw('sum(df.total) as total'))
+			 			->where('f.fecha','LIKE', '%'.$fecha_d.'%')
+			 			->where('f.facturapaga','=',1)
+			 			->where('f.anulacion','=',0)
+			 			->where('sed.id_sede','=',auth()->user()->sede_id_sede)
+			 			->orderBy('df.id_detallef', 'asc')
+			 			->groupBy('s.producto_id_producto')
+			 			->get();
+		 			}
+
 		 			$tipo="DIARIO DETALLADO";
 		 			$valor='d';
 
@@ -1546,9 +1770,6 @@ class reportesVentas extends Controller
 
 		 	}
 
-
-
-			//return view('almacen.reportes.ventas.reporteExcel.excel',["desde"=>$desde, "hasta"=>$hasta]);
 	 	} 
 
 	 	public function downloadExcelReportValorBruto($id){
@@ -1572,10 +1793,6 @@ class reportesVentas extends Controller
 		 	//dd($desde.' '.$hasta);
 
 		 	if($valor==3){
-
-		 		/*$productos=DB::table('factura as f')
-		 		->select('f.id_factura')
-	 			->paginate(100);*/
 
 		 		$productos=DB::table('factura as f')
 	 			->join('empleado as e','f.empleado_id_empleado','=','e.id_empleado')
@@ -1651,48 +1868,10 @@ class reportesVentas extends Controller
 				return view('almacen.reportes.valorbruto.reporteExcel.excel',["desde"=>$desde, "hasta"=>$hasta, "productos"=>$productos]);
 		 	}
 
-			//return view('almacen.reportes.ventas.reporteExcel.excel',["desde"=>$desde, "hasta"=>$hasta]);
+			
 	 	} 
 
 
 
 }
 
-
-
-/*public function downloadExcelReport($id){
-			$i=RVentas::findOrFail($id);
-			$ini=$i->fechaInicial;
-			$fin=$i->fechaFinal;
-			$desde=$ini;
-		 	$hasta=$fin;
-
-		 	$cadena=$id;
-	 		$separador = ".";
-	 		$separada = explode($separador, $cadena);
-			$count=1;
-
-			$desde=0;
-			$hasta=0;
-			$valor=0;
-
-			if(count($separada)==3){
-				$desde=$separada[0];
-				$hasta=$separada[1];
-				$valor=$separada[2];
-			}
-
-			return view('almacen.reportes.ventas.reporteExcel.excel',["desde"=>$desde, "hasta"=>$hasta]);
-	 	} */
-
-	 	/*public function downloadPDFReport($id){
-			$i=RVentas::findOrFail($id);
-			$ini=$i->fechaInicial;
-			$fin=$i->fechaFinal;
-			$desde=$ini;
-		 	$hasta=$fin;
-
-		 	$productos="SELECT f.id_factura, f.pago_total, f.noproductos, tp.nombre as tipo_pago_id_tpago, f.fecha FROM factura as f, tipo_pago as tp, cliente as c, empleado as e WHERE f.tipo_pago_id_tpago=tp.id_tpago and f.empleado_id_empleado=e.id_empleado and f.cliente_id_cliente=c.id_cliente and f.fecha>='$desde' and f.fecha<='$hasta' ORDER BY f.id_factura DESC";
-
-			return view('almacen.reportes.ventas.reportePDF.pdf',["desde"=>$desde, "hasta"=>$hasta, "productos"=>$productos]);
-	 	}*/

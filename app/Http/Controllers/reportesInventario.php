@@ -842,6 +842,24 @@ class reportesInventario extends Controller
 	 			->get();
 
 
+	 			if(auth()->user()->superusuario==0){
+	 				$stock=DB::table('stock as s')
+		 			->join('sede as sed','s.sede_id_sede','=','sed.id_sede')
+		 			->select('s.id_stock',DB::raw('sum(s.total) as total'),
+					 DB::raw('sum(s.cantidad_rep) as cantidad_rep'), 
+					 DB::raw('MONTH(s.fecha_registro) as fecha_registro'), 
+					 DB::raw('YEAR(s.fecha_registro) as fecha_year'),
+					 DB::raw('MONTH(s.fecha_registro) as fecha_mes'))
+		 			->where(DB::raw('MONTH(s.fecha_registro)'),'>=',$desde)
+		 			->where(DB::raw('MONTH(s.fecha_registro)'),'<=',$hasta)
+		 			->where(DB::raw('YEAR(s.fecha_registro)'),'=',$año)
+		 			->where('s.pago_pendiente','=',1)
+		 			->where('sed.id_sede','=',auth()->user()->sede_id_sede)
+		 			->orderBy(DB::raw('MONTH(s.fecha_registro)'), 'asc')
+		 			->groupBy(DB::raw('MONTH(s.fecha_registro)'))
+		 			->get();
+	 			}
+
 
 	 			$total_stock_mensuales=0;
 	 			foreach ($stock as $key => $value) {	
@@ -1035,6 +1053,24 @@ class reportesInventario extends Controller
 	 			->groupBy(DB::raw('WEEK(s.fecha_registro)'))
 	 			->get();
 
+	 			if(auth()->user()->superusuario==0){
+
+	 				$stock=DB::table('stock as s')
+		 			->join('sede as sed','s.sede_id_sede','=','sed.id_sede')
+		 			->select('s.id_stock',DB::raw('sum(s.total) as total'),
+					 DB::raw('sum(s.cantidad_rep) as cantidad_rep'), 
+					 DB::raw('WEEK(s.fecha_registro) as fecha_registro'),
+					 DB::raw('YEAR(s.fecha_registro) as year'))
+		 			->where(DB::raw('WEEK(s.fecha_registro)'),'>=',$desde)
+		 			->where(DB::raw('WEEK(s.fecha_registro)'),'<=',$hasta)
+		 			->where(DB::raw('YEAR(s.fecha_registro)'),'=',$año)
+		 			->where('sed.id_sede','=',auth()->user()->sede_id_sede)
+		 			->where('s.pago_pendiente','=',1)
+		 			->orderBy(DB::raw('WEEK(s.fecha_registro)'), 'asc')
+		 			->groupBy(DB::raw('WEEK(s.fecha_registro)'))
+		 			->get();
+	 			}
+
 				$tipo="SEMANAL";
 		 		$valor=2;
 
@@ -1056,6 +1092,17 @@ class reportesInventario extends Controller
 	 			->where('s.pago_pendiente','=',1)
 	 			->orderBy('s.id_stock','asc')
 	 			->get();
+
+	 			if(auth()->user()->superusuario==0){
+	 				$stock=DB::table('stock as s')
+		 			->join('sede as sed','s.sede_id_sede','=','sed.id_sede')
+		 			->select('s.id_stock','s.total','s.cantidad_rep', 's.fecha_registro','s.costo_compra')
+		 			->where('s.fecha_registro','LIKE', '%'.$fecha_d.'%')
+		 			->where('sed.id_sede','=',auth()->user()->sede_id_sede)
+		 			->where('s.pago_pendiente','=',1)
+		 			->orderBy('s.id_stock','asc')
+		 			->get();	
+		 		}
 
 	 				
 		 			$total_stock=0;
@@ -1090,6 +1137,20 @@ class reportesInventario extends Controller
 				->groupBy('s.producto_id_producto')
 				->get();
 
+				if(auth()->user()->superusuario==0){
+					$stock=DB::table('stock as s')
+					->join('sede as sed','s.sede_id_sede','=','sed.id_sede')
+					->select('s.producto_id_producto as producto',
+					 DB::raw('sum(s.cantidad_rep) as cantidad'),
+					 DB::raw('sum(s.total) as total'))
+					->where(DB::raw('YEAR(s.fecha_registro)'),'=',$hasta)
+					->where(DB::raw('MONTH(s.fecha_registro)'),'=',$desde)
+					->where('sed.id_sede','=',auth()->user()->sede_id_sede)
+					->where('s.pago_pendiente','=',1)
+					->orderBy('s.id_stock','asc')
+					->groupBy('s.producto_id_producto')
+					->get();
+		 		}
 
 				$tipo="MENSUAL DETALLADO";
 		 		$valor='m';
@@ -1129,6 +1190,21 @@ class reportesInventario extends Controller
 					->groupBy('s.producto_id_producto')
 					->get();
 
+					if(auth()->user()->superusuario==0){
+						$stock=DB::table('stock as s')
+						->join('sede as sed','s.sede_id_sede','=','sed.id_sede')
+						->select('s.producto_id_producto as producto',
+							DB::raw('sum(s.cantidad_rep) as cantidad'),
+							DB::raw('sum(s.total) as total'))
+							->where(DB::raw('YEAR(s.fecha_registro)'),'=',$hasta)
+							->where(DB::raw('WEEK(s.fecha_registro)'),'=',$desde)
+							->where('sed.id_sede','=',auth()->user()->sede_id_sede)
+							->where('s.pago_pendiente','=',1)
+						->orderBy('s.id_stock','asc')
+						->groupBy('s.producto_id_producto')
+						->get();
+		 			}
+
 		 			$tipo="SEMANAL DETALLADO";
 		 			$valor='s';
 
@@ -1164,6 +1240,20 @@ class reportesInventario extends Controller
 				->orderBy('s.id_stock','asc')
 				->groupBy('s.producto_id_producto')
 				->get();
+
+				if(auth()->user()->superusuario==0){	
+					$stock=DB::table('stock as s')
+					->join('sede as sed','s.sede_id_sede','=','sed.id_sede')
+					->select('s.producto_id_producto as producto',
+						DB::raw('sum(s.cantidad_rep) as cantidad'),
+						DB::raw('sum(s.total) as total'))
+					->where('s.fecha_registro','LIKE', '%'.$fecha_d.'%')
+					->where('sed.id_sede','=',auth()->user()->sede_id_sede)
+					->where('s.pago_pendiente','=',1)
+					->orderBy('s.id_stock','asc')
+					->groupBy('s.producto_id_producto')
+					->get();
+		 		}
 
 	 			$tipo="DIARIO DETALLADO";
 	 			$valor='d';
@@ -1253,7 +1343,23 @@ class reportesInventario extends Controller
 	 			->groupBy(DB::raw('MONTH(s.fecha_registro)'))
 	 			->get();
 
-
+	 			if(auth()->user()->superusuario==0){
+	 				$stock=DB::table('stock as s')
+		 			->join('sede as sed','s.sede_id_sede','=','sed.id_sede')
+		 			->select('s.id_stock',DB::raw('sum(s.total) as total'),
+					 DB::raw('sum(s.cantidad_rep) as cantidad_rep'), 
+					 DB::raw('MONTH(s.fecha_registro) as fecha_registro'), 
+					 DB::raw('YEAR(s.fecha_registro) as fecha_year'),
+					 DB::raw('MONTH(s.fecha_registro) as fecha_mes'))
+		 			->where(DB::raw('MONTH(s.fecha_registro)'),'>=',$desde)
+		 			->where(DB::raw('MONTH(s.fecha_registro)'),'<=',$hasta)
+		 			->where(DB::raw('YEAR(s.fecha_registro)'),'=',$año)
+		 			->where('s.pago_pendiente','=',1)
+		 			->where('sed.id_sede','=',auth()->user()->sede_id_sede)
+		 			->orderBy(DB::raw('MONTH(s.fecha_registro)'), 'asc')
+		 			->groupBy(DB::raw('MONTH(s.fecha_registro)'))
+		 			->get();
+	 			}
 
 	 			$total_stock_mensuales=0;
 	 			foreach ($stock as $key => $value) {	
@@ -1448,6 +1554,24 @@ class reportesInventario extends Controller
 	 			->groupBy(DB::raw('WEEK(s.fecha_registro)'))
 	 			->get();
 
+	 			if(auth()->user()->superusuario==0){
+
+	 				$stock=DB::table('stock as s')
+		 			->join('sede as sed','s.sede_id_sede','=','sed.id_sede')
+		 			->select('s.id_stock',DB::raw('sum(s.total) as total'),
+					 DB::raw('sum(s.cantidad_rep) as cantidad_rep'), 
+					 DB::raw('WEEK(s.fecha_registro) as fecha_registro'),
+					 DB::raw('YEAR(s.fecha_registro) as year'))
+		 			->where(DB::raw('WEEK(s.fecha_registro)'),'>=',$desde)
+		 			->where(DB::raw('WEEK(s.fecha_registro)'),'<=',$hasta)
+		 			->where(DB::raw('YEAR(s.fecha_registro)'),'=',$año)
+		 			->where('sed.id_sede','=',auth()->user()->sede_id_sede)
+		 			->where('s.pago_pendiente','=',1)
+		 			->orderBy(DB::raw('WEEK(s.fecha_registro)'), 'asc')
+		 			->groupBy(DB::raw('WEEK(s.fecha_registro)'))
+		 			->get();
+	 			}
+
 				$tipo="SEMANAL";
 		 		$valor=2;
 
@@ -1468,6 +1592,17 @@ class reportesInventario extends Controller
 	 			->where('s.pago_pendiente','=',1)
 	 			->orderBy('s.id_stock','asc')
 	 			->get();
+
+	 			if(auth()->user()->superusuario==0){
+	 				$stock=DB::table('stock as s')
+		 			->join('sede as sed','s.sede_id_sede','=','sed.id_sede')
+		 			->select('s.id_stock','s.total','s.cantidad_rep', 's.fecha_registro','s.costo_compra')
+		 			->where('s.fecha_registro','LIKE', '%'.$fecha_d.'%')
+		 			->where('sed.id_sede','=',auth()->user()->sede_id_sede)
+		 			->where('s.pago_pendiente','=',1)
+		 			->orderBy('s.id_stock','asc')
+		 			->get();	
+		 		}
 
 	 				
 		 			$total_stock=0;
@@ -1499,6 +1634,21 @@ class reportesInventario extends Controller
 				->orderBy('s.id_stock','asc')
 				->groupBy('s.producto_id_producto')
 				->get();
+
+				if(auth()->user()->superusuario==0){
+					$stock=DB::table('stock as s')
+					->join('sede as sed','s.sede_id_sede','=','sed.id_sede')
+					->select('s.producto_id_producto as producto',
+					 DB::raw('sum(s.cantidad_rep) as cantidad'),
+					 DB::raw('sum(s.total) as total'))
+					->where(DB::raw('YEAR(s.fecha_registro)'),'=',$hasta)
+					->where(DB::raw('MONTH(s.fecha_registro)'),'=',$desde)
+					->where('sed.id_sede','=',auth()->user()->sede_id_sede)
+					->where('s.pago_pendiente','=',1)
+					->orderBy('s.id_stock','asc')
+					->groupBy('s.producto_id_producto')
+					->get();
+		 		}
 
 
 				$tipo="MENSUAL DETALLADO";
@@ -1538,6 +1688,22 @@ class reportesInventario extends Controller
 					->groupBy('s.producto_id_producto')
 					->get();
 
+
+					if(auth()->user()->superusuario==0){
+						$stock=DB::table('stock as s')
+						->join('sede as sed','s.sede_id_sede','=','sed.id_sede')
+						->select('s.producto_id_producto as producto',
+							DB::raw('sum(s.cantidad_rep) as cantidad'),
+							DB::raw('sum(s.total) as total'))
+							->where(DB::raw('YEAR(s.fecha_registro)'),'=',$hasta)
+							->where(DB::raw('WEEK(s.fecha_registro)'),'=',$desde)
+							->where('sed.id_sede','=',auth()->user()->sede_id_sede)
+							->where('s.pago_pendiente','=',1)
+						->orderBy('s.id_stock','asc')
+						->groupBy('s.producto_id_producto')
+						->get();
+		 			}
+
 		 			$tipo="DIARIO DETALLADO";
 		 			$valor='s';
 
@@ -1574,6 +1740,20 @@ class reportesInventario extends Controller
 				->orderBy('s.id_stock','asc')
 				->groupBy('s.producto_id_producto')
 				->get();
+
+				if(auth()->user()->superusuario==0){	
+					$stock=DB::table('stock as s')
+					->join('sede as sed','s.sede_id_sede','=','sed.id_sede')
+					->select('s.producto_id_producto as producto',
+						DB::raw('sum(s.cantidad_rep) as cantidad'),
+						DB::raw('sum(s.total) as total'))
+					->where('s.fecha_registro','LIKE', '%'.$fecha_d.'%')
+					->where('sed.id_sede','=',auth()->user()->sede_id_sede)
+					->where('s.pago_pendiente','=',1)
+					->orderBy('s.id_stock','asc')
+					->groupBy('s.producto_id_producto')
+					->get();
+		 		}
 
 	 			$tipo="DIARIO DETALLADO";
 	 			$valor='d';

@@ -87,7 +87,7 @@ $pdf->Ln(15);
         $pdf->Cell(20, 5, date('m-d-Y h:i:s a', time()), 0,1);
         $pdf->Cell(20, 5, 'Fecha: ', 0,0);
         $pdf->Cell(20, 5, $fecha_d, 0,1);
-        $pdf->Cell(20, 5, 'Total ventas: ', 0,0);
+        $pdf->Cell(20, 5, 'Total compras: ', 0,0);
         $pdf->Cell(20, 5, $total_stock, 0,1);
         $pdf->Cell(20, 5, '', 0,1);
 
@@ -119,7 +119,7 @@ $pdf->Ln(15);
         $pdf->Cell(20, 5, date('m-d-Y h:i:s a', time()), 0,1);
         $pdf->Cell(25, 5, 'Mes: ', 0,0);
         $pdf->Cell(20, 5, $año, 0,1);
-        $pdf->Cell(25, 5, 'Total comprado: ', 0,0);
+        $pdf->Cell(25, 5, 'Total compras: ', 0,0);
         $pdf->Cell(20, 5, $total_ventas, 0,1);
         $pdf->Cell(20, 5, '', 0,1);
 
@@ -148,7 +148,7 @@ $pdf->Ln(15);
         $pdf->Cell(20, 5, date('m-d-Y h:i:s a', time()), 0,1);
         $pdf->Cell(25, 5, 'Semana No.: ', 0,0);
         $pdf->Cell(20, 5, $desde, 0,1);
-        $pdf->Cell(25, 5, 'Total comprado: ', 0,0);
+        $pdf->Cell(25, 5, 'Total compras: ', 0,0);
         $pdf->Cell(20, 5, $total_inventario_diario, 0,1);
         $pdf->Cell(20, 5, '', 0,1);
 
@@ -177,7 +177,7 @@ $pdf->Ln(15);
         $pdf->Cell(20, 5, date('m-d-Y h:i:s a', time()), 0,1);
         $pdf->Cell(25, 5, 'Fecha: ', 0,0);
         $pdf->Cell(20, 5, $desde, 0,1);
-        $pdf->Cell(25, 5, 'Total comprado: ', 0,0);
+        $pdf->Cell(25, 5, 'Total compras: ', 0,0);
         $pdf->Cell(20, 5, $total_inventario_diario, 0,1);
         $pdf->Cell(20, 5, '', 0,1);
 
