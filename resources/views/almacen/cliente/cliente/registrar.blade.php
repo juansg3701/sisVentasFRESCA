@@ -89,7 +89,7 @@
 										<div>Correo:</div>
 									</div>
 									<div class="form-group col-sm-8">
-										<input type="email" class="form-control" name="correo">
+										<input type="text" class="form-control" name="correo">
 									</div>
 								</div>
 								<div class="form-row">
@@ -97,7 +97,7 @@
 										<div>Teléfono:</div>
 									</div>
 									<div class="form-group col-sm-8">
-										<input type="number" class="form-control" name="telefono">
+										<input type="text" class="form-control" name="telefono">
 									</div>
 								</div>
 								<div class="form-row">

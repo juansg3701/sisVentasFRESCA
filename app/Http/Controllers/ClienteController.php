@@ -114,12 +114,8 @@ class ClienteController extends Controller
 	 		->where('nit','=',$nitR)
 	 		->orderBy('id_cliente','desc')->get();
 
-	 		$CorreoRegis=DB::table('cliente')
-	 		->where('correo','=',$correoR)
-	 		->orderBy('id_cliente','desc')->get();
 
 	 		if(count($DocumenRegis)==0){
-	 			if(count($CorreoRegis)==0){
 	 				$cliente = new Cliente;
 			 		$cliente->nombre=$request->get('nombre');
 			 		$cliente->direccion=$request->get('direccion');
@@ -139,9 +135,6 @@ class ClienteController extends Controller
 
 				 		return back()->with('msj','Cliente guardado');
 
-	 			}else{
-	 				return back()->with('errormsj','Correo ya registrado!');
-	 			}
 
 	 		}else{
 	 			return back()->with('errormsj','¡Documento ya registrado!');
@@ -183,13 +176,8 @@ class ClienteController extends Controller
 	 		->where('documento','=',$documentoR)
 	 		->orderBy('id_cliente','desc')->get();
 
-	 		$CorreoRegis=DB::table('cliente')
-	 		->where('id_cliente','!=',$id)
-	 		->where('correo','=',$correoR)
-	 		->orderBy('id_cliente','desc')->get();
 
 	 		if(count($DocumenRegis)==0){
-	 			if(count($CorreoRegis)==0){
 	 				$cliente = Cliente::findOrFail($id);
 			 		$cliente->nombre=$request->get('nombre');
 			 		$cliente->direccion=$request->get('direccion');
@@ -206,10 +194,7 @@ class ClienteController extends Controller
 			 		//$cliente->cartera_activa=$request->get('cartera_activa');
 			 		$cliente->update();
 			 		return back()->with('msj','Cliente actualizado');
-
-	 			}else{
-	 				return back()->with('errormsj','Correo ya registrado!');
-	 			}
+	 			
 
 	 		}else{
 	 			return back()->with('errormsj','¡Documento ya registrado!');
@@ -219,13 +204,19 @@ class ClienteController extends Controller
 
 	 	public function destroy($id){
 	 		$id=$id;
-	 		$cliente=Cliente::findOrFail($id);
-			$cliente->delete();
-			return back()->with('msj','Cliente eliminado');
 
-	 		/*$existe=DB::table('factura')
+			$existe=DB::table('factura')
 	 		->where('cliente_id_cliente','=',$id)
 	 		->orderBy('id_factura', 'desc')->get();
+
+	 		if(count($existe)==0){
+	 			$cliente=Cliente::findOrFail($id);
+		 		$cliente->delete();
+		 		return back()->with('msj','Cliente eliminado');
+	 		}else{
+	 				return back()->with('errormsj','¡Cliente relacionado con factura o cartera!');
+	 			}
+	 		/*
 
 	 		$existeC=DB::table('cartera')
 	 		->where('cliente_id_cliente','=',$id)

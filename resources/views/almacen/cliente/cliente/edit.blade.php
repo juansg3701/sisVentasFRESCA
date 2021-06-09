@@ -120,7 +120,7 @@
 										<div>Tel&eacute;fono:</div>
 									</div>
 									<div class="form-group col-sm-8">
-										<input type="number" class="form-control" name="telefono" value="{{$cliente->telefono}}">
+										<input type="text" class="form-control" name="telefono" value="{{$cliente->telefono}}">
 									</div>
 								</div>
 								<div class="form-row">
