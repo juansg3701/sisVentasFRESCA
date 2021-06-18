@@ -335,7 +335,7 @@
   var costo=parseFloat(costo_compra)+parseFloat(excedente);
 
         
-        if(ean==='' || nombre==='' || unidad==='' || precio1==='' || precio2==='' || precio3===''
+        if(ean==='' || ean===' ' || nombre==='' || unidad==='' || precio1==='' || precio2==='' || precio3===''
         	|| precio4==='' || stock==='' || costo_compra===''){
             Swal.fire({
                 icon: 'error',

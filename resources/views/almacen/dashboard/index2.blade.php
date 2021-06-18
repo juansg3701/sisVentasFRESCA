@@ -54,6 +54,7 @@
               $<?php echo number_format($total_ventas[0]->pago_total , 2 , "," , ".") . "\n";?>
               @endif
             <br>
+            <br><b>Gr&aacute;fica diaria por valor de cada venta:</b></br>
           </div>
             <br>   
         </div>
@@ -101,7 +102,7 @@
   //ARREGLAR PARA SUMAR POR DIAS LAS VENTAS Y DEJAR EL TOTAL
   var buyerData = {
     labels : [@foreach($ventas as $ps)
-              "{{$ps->fecha}}",
+              "",
               @endforeach],
     datasets : [
       {
@@ -118,7 +119,7 @@
   }
   var barData2 = {
     labels : [@foreach($stock_semanal as $ps)
-              "{{$ps->fecha_registro}}",
+              "Semana: {{$ps->fecha_registro}}",
               @endforeach],
     datasets : [
       {
