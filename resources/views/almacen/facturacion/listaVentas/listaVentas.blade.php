@@ -20,10 +20,7 @@
     			$("#btn_search").prop("style", "display:hidden");
     		});
 		});
-	</script>
-
-	
-	
+	</script>	
 </body>
 @stop
 @section('tabla')
@@ -78,9 +75,8 @@
 							<td>{{ $f->nombre_sede}}</td>
 
 								<td>
-							@include('almacen.facturacion.listaVentas.modal')
-							
-								<a href="" data-target="#modal-delete-{{$f->id_factura}}" data-toggle="modal"><button class="btn btn-primary">Ver productos</button></a>
+						
+								<a href="{{URL::action('FacturaController@show',$f->id_factura)}}"><button class="btn btn-primary">Ver productos</button></a>
 						
 							</td>
 						</tr>
@@ -127,8 +123,7 @@
 							<td>{{ $f->nombre_sede}}</td>
 
 								<td>
-							@include('almacen.facturacion.listaVentas.modal')
-								<a href="" data-target="#modal-delete-{{$f->id_factura}}" data-toggle="modal"><button class="btn btn-primary">Ver productos</button></a>
+							<a href="{{URL::action('FacturaController@show',$f->id_factura)}}"><button class="btn btn-primary">Ver productos</button></a>
 						
 							</td>
 						</tr>
@@ -164,8 +159,7 @@
 							<td>{{ $f->nombre_sede}}</td>
 
 								<td>
-								@include('almacen.facturacion.listaVentas.modal')
-								<a href="" data-target="#modal-delete-{{$f->id_factura}}" data-toggle="modal"><button class="btn btn-primary">Ver productos</button></a>
+								<a href="{{URL::action('FacturaController@show',$f->id_factura)}}"><button class="btn btn-primary">Ver productos</button></a>
 						
 							</td>
 						</tr>
@@ -201,8 +195,8 @@
 							<td>{{ $f->nombre_sede}}</td>
 
 								<td>
-								<a href="" data-target="#modal-delete-{{$f->id_factura}}" data-toggle="modal"><button class="btn btn-primary">Ver productos</button></a>
-								@include('almacen.facturacion.listaVentas.modal')
+
+								<a href="{{URL::action('FacturaController@show',$f->id_factura)}}"><button class="btn btn-primary">Ver productos</button></a>
 								
 							</td>
 						</tr>

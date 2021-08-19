@@ -15,7 +15,6 @@ class CargoFormRequest extends Request
     {
         return true;
     }
-
     /**
      * Get the validation rules that apply to the request.
      *
@@ -24,7 +23,6 @@ class CargoFormRequest extends Request
     public function rules()
     {
         return [
-            //'id_sede'=>'required|max:45',
             'nombre'=>'required|max:45',
             'descripcion'=>'required|max:45',
             'empleado_id_empleado'=>'|max:45',

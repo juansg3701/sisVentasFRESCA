@@ -19,21 +19,9 @@ class CategoriaProducto extends Controller
 	 	public function index(Request $request){
 	 		if ($request) {
 	 			$query=trim($request->get('searchText'));
-	 			/*$categorias=DB::table('categoria_productos')
-	 			->where('nombre','LIKE', '%'.$query.'%')
-	 			->orderBy('id_categoria', 'desc')
-	 			->paginate(10);*/
 
 	 			$usuarios=DB::table('empleado')->get();
 	 			$sedes=DB::table('sede')->get();
-
-	 			/*$categorias=Categoria::where('nombre','LIKE', '%'.$query.'%')
-	 			->join('empleado as u','empleado_id_empleado','=','u.id_empleado')
-	 			->join('sede as s','sede_id_sede','=','s.id_sede')
-	 			->select('id_categoria','nombre','descripcion','s.nombre_sede as sede_id_sede','u.nombre as empleado_id_empleado', 'fecha')
-	 			->orderBy('id_categoria', 'desc')
-	 			->paginate(10);*/
-
 
 	 			$categorias=Categoria::where('nombre','LIKE', '%'.$query.'%')
 	 			->orderBy('id_categoria', 'desc')

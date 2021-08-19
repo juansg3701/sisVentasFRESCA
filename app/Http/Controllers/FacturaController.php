@@ -43,7 +43,7 @@ class FacturaController extends Controller
  			->orderBy('f.id_factura', 'desc')
  			->paginate(10);
 
- 			if(auth()->user()->superusuario==0){
+ 			if(auth()->user()->superusuario=="0"){
 	 			$facturas=DB::table('factura as f')
  			->join('tipo_pago as tp','f.tipo_pago_id_tpago','=','tp.id_tpago')
  			->join('empleado as e','f.empleado_id_empleado','=','e.id_empleado')
@@ -206,16 +206,18 @@ class FacturaController extends Controller
 	 		$descuentos = Descuentos::get();
 	 		$pro = ProductoSede::get();
 	 		$impuestos = Impuesto::get();
+            //no poner nombre a futuro
 
+            
 	 		foreach ($productos as $key => $value) {
 	 	
 
 	 			foreach ($pro as $keyp => $valuep) {
-	 				if($productos[$key]->stock_id_stock==$pro[$keyp]->id_producto){
-	 					$productos[$key]->stock_id_stock=$pro[$keyp]->nombre;
-	 				}
+	 				
 	 			}
 	 		}
+	 		
+
 	 		return view('almacen.facturacion.listaVentas.listaVentas',["modulos"=>$modulos,"facturas"=>$facturas,"searchText"=>$query, "searchText0"=>$query0,"searchText1"=>$query1,"productos"=>$productos,"notas"=>$notas]);
 	 	}
  	}
@@ -233,7 +235,33 @@ class FacturaController extends Controller
  	}
 
  	public function show($id){
+ 		$cargoUsuario=auth()->user()->tipo_cargo_id_cargo;
+			$modulos=DB::table('cargo_modulo')
+	 		->where('id_cargo','=',$cargoUsuario)
+	 		->orderBy('id_cargo', 'desc')->get();
 
+ 		$productos=DB::table('detalle_factura as df')
+			->join('empleado as e','df.empleado_id_empleado','=','e.id_empleado')
+			->join('stock as s','df.stock_id_stock','=','s.id_stock')
+			->select('df.id_detallef','df.cantidad','df.precio_venta','df.total_descuento','df.total_impuesto','df.total','df.factura_id_factura','s.producto_id_producto as stock_id_stock','df.descuento_id_descuento','df.impuesto_id_impuestos','df.fecha','e.nombre as nombre_empleado','df.factura_id_factura as factura_id_factura')
+			->where('df.factura_id_factura','=',$id)
+	 		->orderBy('df.id_detallef', 'desc')->get(); 
+
+	 			 		$descuentos = Descuentos::get();
+	 		$pro = ProductoSede::get();
+	 		$impuestos = Impuesto::get();
+
+	 		foreach ($productos as $key => $value) {
+	 	
+
+	 			foreach ($pro as $keyp => $valuep) {
+	 				if($productos[$key]->stock_id_stock==$pro[$keyp]->id_producto){
+	 					$productos[$key]->stock_id_stock=$pro[$keyp]->nombre;
+	 				}
+	 			}
+	 		}
+
+	 		return view('almacen.facturacion.listaVentas.detalleLista',["modulos"=>$modulos,"productos"=>$productos]);
 
 	}
 

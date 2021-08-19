@@ -10,6 +10,7 @@ role="dialog" tabindex="-1" id="modal-cargar">
 					<span aria-hidden="true">×</span>
 				</button>
                 
+                
 			</div>
 			
 			<div id="formulario">
