@@ -29,6 +29,45 @@
 		</thead>
 	</tr>-->
 
+	<?php
+
+		if ($valor==4) {
+			?>
+
+			<tr>
+		    	<td colspan="3"><?php echo 'REPORTE DE VENTAS: FECHAS DETALLADAS'; ?></td>
+		    </tr>
+		    <tr>
+		    	<td colspan="3"><?php echo 'Fecha de generacion: '.date('m-d-Y h:i:s a', time()); ?></td>
+		    </tr>
+		    <tr>
+		    	<td><?php echo 'Fecha inicio: '.$desde; ?></td>
+		    	<td><?php echo 'Fecha final: '.$hasta; ?></td>
+				<td><?php echo 'Total ventas: '.$total_ventas[0]->pago_total; ?></td>
+		    </tr>
+
+			<tr style="background-color:WHITE; height:100px">
+				<thead>
+					<th>FECHA</th>
+					<th>NO. PRODUCTOS</th>
+					<th>PAGO TOTAL</th>
+				</thead>
+			</tr>
+			<?php
+			foreach ($ventas as $ven) {
+		        ?>
+				<tr>
+						<td><?php echo $ven->fecha; ?></td>
+						<td><?php echo $ven->noproductos; ?></td>
+						<td><?php echo $ven->pago_total; ?></td>
+						
+				</tr>	
+				<?php
+
+	    	}
+    	}
+
+	?>
 
 	<?php
 		if ($valor==3) {

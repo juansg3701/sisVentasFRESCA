@@ -263,5 +263,63 @@
 
 	{!!Form::close()!!}	
 
+	{!!Form::model(0,['method'=>'PATCH','route'=>['almacen.reportes.ventas.update',0]])!!}
+    {{Form::token()}}
+    
+	<div class="col-md-12">
+		<div class="card">
+			<div class="card-header" align="center">
+				<h3 class="pb-2 display-5"> Reporte de ventas </h3>
+			</div><br>
+			<div class="row" align="center">	
+				<div class="col-sm-3" align="center"></div>
+				 	<div class="col-sm-6" align="center">
+						<div class="card" align="center">
+			                <div class="card-header" align="center">
+			                     <strong>Formulario de consulta</strong>
+			                </div><br>
+			                <div class="card-body card-block" align="center">
+								<div class="form-row">
+									<div class="form-group col-sm-4">
+										<div>Seleccione la fecha inicial:</div>
+									</div>
+									<div class="form-group col-sm-8">
+										<input type="date" name="fecha_inicial" class="form-control">
+									</div>
+								</div>
+
+								<div class="form-row">
+									<div class="form-group col-sm-4">
+										<div>Seleccione la fecha final:</div>
+									</div>
+									<div class="form-group col-sm-8">
+										<input type="date" name="fecha_final" class="form-control">
+									</div>
+								</div>
+				
+								<input type="hidden" name="tipo" value="4">
+								
+								
+								<div class="form-row">
+									<div class="form-group col-sm-12">
+										
+										<div align="center">
+											<button type="submit" class="btn btn-info">Generar Reporte</button>
+											<a href="{{url('/')}}" class="btn btn-danger">Volver</a>
+										</div>
+									
+									</div>
+								</div>
+			               </div>
+			        	</div>
+					</div>
+				<div class="col-sm-3" align="center"></div>
+			</div>
+
+		</div>
+	</div>	
+
+	{!!Form::close()!!}	
+
 </body>
 @stop

@@ -407,11 +407,9 @@ class reportesVentas extends Controller
 	 			$fecha_mes_inicial=$request->get('fecha_mes_inicial');
 	 			$fecha_mes_final=$request->get('fecha_mes_final');
 	 			$fecha_year=$request->get('fecha_year');
-
 	 			if($fecha_mes_inicial>$fecha_mes_final || $fecha_mes_inicial=="" || $fecha_mes_final==""){
 	 				return back()->with('errormsj','¡¡La fecha inicial no debe ser mayor a la final!!');
 	 			}else{
-
 	 			$ventas_mensuales=DB::table('factura as f')
 	 			->join('empleado as e','f.empleado_id_empleado','=','e.id_empleado')
 	 			->join('cliente as c','f.cliente_id_cliente','=','c.id_cliente')
@@ -629,7 +627,62 @@ class reportesVentas extends Controller
 		 				}
 	 			return view("almacen.reportes.ventas.graficam",["modulos"=>$modulos,"ventas"=>$ventas_mensuales,"fecha_inicial"=>$fecha_mes_inicial,"fecha_final"=>$fecha_mes_final, "fecha_year"=>$fecha_year, "total_ventas"=>$total_ventas_mensuales,"fecha_letra_inicial"=>$fecha_letra_inicial,"fecha_letra_final"=>$fecha_letra_final]);
 	 			}
+	 		}
 
+	 		// reporte fechas definidas
+	 		if ($tipo_consulta==4) {
+	 			$fecha_inicial=$request->get('fecha_inicial');
+	 			$fecha_final=$request->get('fecha_final');
+
+	 			if($fecha_inicial>$fecha_final || $fecha_inicial=="" || $fecha_final==""){
+	 				return back()->with('errormsj','¡¡La fecha inicial no debe ser mayor a la final!!');
+	 			}else{
+	 				$ventas=DB::table('factura as f')
+		 			->join('empleado as e','f.empleado_id_empleado','=','e.id_empleado')
+		 			->join('cliente as c','f.cliente_id_cliente','=','c.id_cliente')
+		 			->join('tipo_pago as tp','f.tipo_pago_id_tpago','=','tp.id_tpago')
+		 			->join('sede as sed','f.sede_id_sede','=','sed.id_sede')
+		 			->select('f.id_factura',
+					 DB::raw('sum(f.pago_total) as pago_total'),
+					 DB::raw('sum(f.noproductos) as noproductos'), 
+					 'tp.nombre as tipo_pago_id_tpago', 
+					 'f.fecha as fecha')
+		 			->where('f.fecha','>=',$fecha_inicial)
+		 			->where('f.fecha','<=',$fecha_final)
+		 			->where('f.facturapaga','=',1)
+			 		->where('f.anulacion','=',0)
+		 			->orderBy('f.id_factura', 'asc')
+		 			->groupBy('f.id_factura')
+		 			->get();
+
+
+		 			if(auth()->user()->superusuario==0){
+		 				$ventas=DB::table('factura as f')
+		 			->join('empleado as e','f.empleado_id_empleado','=','e.id_empleado')
+		 			->join('cliente as c','f.cliente_id_cliente','=','c.id_cliente')
+		 			->join('tipo_pago as tp','f.tipo_pago_id_tpago','=','tp.id_tpago')
+		 			->join('sede as sed','f.sede_id_sede','=','sed.id_sede')
+		 			->select('f.id_factura',
+					 DB::raw('sum(f.pago_total) as pago_total'),
+					 DB::raw('sum(f.noproductos) as noproductos'), 
+					 'tp.nombre as tipo_pago_id_tpago', 
+					 'f.fecha as fecha')
+		 			->where('f.fecha','>=',$fecha_inicial)
+		 			->where('f.fecha','<=',$fecha_final)
+		 			->where('f.facturapaga','=',1)
+			 		->where('f.anulacion','=',0)
+			 		->where('sed.id_sede','=',auth()->user()->sede_id_sede)
+		 			->orderBy('f.id_factura', 'asc')
+		 			->groupBy('f.id_factura')
+		 			->get();
+		 			}
+
+		 			$total_ventas=0;
+	 				foreach ($ventas as $key => $value) {	
+		 				$total_ventas=intval($total_ventas)+intval($ventas[$key]->pago_total);
+		 			}
+		 			return view("almacen.reportes.ventas.graficar",["modulos"=>$modulos,"ventas"=>$ventas,"fecha_inicial"=>$fecha_inicial,"fecha_final"=>$fecha_final, "total_ventas"=>$total_ventas]);
+	 			}
 	 		}
 
 	 	}	
@@ -1767,8 +1820,65 @@ class reportesVentas extends Controller
 		 			$tipo_reporte_detallado="d";
 
 		 			return view('almacen.reportes.ventas.reporteExcel.excel',["desde"=>$desde, "hasta"=>$hasta, "ventas"=>$ventas, "tipo"=>$tipo, "valor"=>$valor,"total_ventas"=>$total_ventas_diarias,"tipo_reporte_detallado"=>$tipo_reporte_detallado, "fecha_d"=>$fecha_d]);
-
 		 	}
+
+		 	if($valor==4){
+		 		//excel por fechas
+					$ventas=DB::table('factura as f')
+	 			->join('empleado as e','f.empleado_id_empleado','=','e.id_empleado')
+	 			->join('cliente as c','f.cliente_id_cliente','=','c.id_cliente')
+	 			->join('tipo_pago as tp','f.tipo_pago_id_tpago','=','tp.id_tpago')
+	 			->join('sede as sed','e.sede_id_sede','=','sed.id_sede')
+	 			->select('f.id_factura','f.pago_total','f.noproductos', 'tp.nombre as tipo_pago_id_tpago', 'f.fecha')
+	 			->where('f.fecha','>=',$desde)
+		 			->where('f.fecha','<=',$hasta)
+	 			->where('f.facturapaga','=',1)
+		 			->where('f.anulacion','=',0)
+	 			->orderBy('f.id_factura', 'asc')
+	 			->get();
+
+	 			$total_ventas=DB::table('factura as f')
+	 			->select(DB::raw('sum(f.pago_total) as pago_total'))
+	 			->where('f.fecha','>=',$desde)
+		 			->where('f.fecha','<=',$hasta)
+	 			->where('f.facturapaga','=',1)
+		 			->where('f.anulacion','=',0)
+	 			->orderBy('f.id_factura', 'desc')
+	 			->get();
+
+
+
+	 			if(auth()->user()->superusuario==0){
+	 				$ventas=DB::table('factura as f')
+		 			->join('empleado as e','f.empleado_id_empleado','=','e.id_empleado')
+		 			->join('cliente as c','f.cliente_id_cliente','=','c.id_cliente')
+		 			->join('tipo_pago as tp','f.tipo_pago_id_tpago','=','tp.id_tpago')
+		 			->join('sede as sed','f.sede_id_sede','=','sed.id_sede')
+		 			->select('f.id_factura','f.pago_total','f.noproductos', 'tp.nombre as tipo_pago_id_tpago', 'f.fecha')
+		 			->where('f.fecha','LIKE', '%'.$fecha_d.'%')
+		 			->where('f.facturapaga','=',1)
+		 			->where('f.anulacion','=',0)
+		 			->where('sed.id_sede','=',auth()->user()->sede_id_sede)
+		 			->orderBy('f.id_factura', 'asc')
+		 			->get();
+
+		 			$total_ventas=DB::table('factura as f')
+		 			->join('sede as sed','f.sede_id_sede','=','sed.id_sede')
+		 			->select(DB::raw('sum(f.pago_total) as pago_total'))
+		 			->where('f.fecha','>=',$desde)
+		 			->where('f.fecha','<=',$hasta)
+		 			->where('f.facturapaga','=',1)
+		 			->where('f.anulacion','=',0)
+		 			->where('sed.id_sede','=',auth()->user()->sede_id_sede)
+		 			->orderBy('f.id_factura', 'desc')
+		 			->get();
+		 		}
+
+				$tipo="FECHA";
+		 		$valor=4;
+
+				return view('almacen.reportes.ventas.reporteExcel.excel',["desde"=>$desde, "hasta"=>$hasta, "ventas"=>$ventas, "tipo"=>$tipo, "valor"=>$valor, "fecha_d"=>$fecha_d, "total_ventas"=>$total_ventas]);
+							 	}
 
 	 	} 
 
